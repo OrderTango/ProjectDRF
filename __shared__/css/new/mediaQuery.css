@@ -1,0 +1,310 @@
+/* Media Query CSS For All pages START */
+@media (min-width:320px) and (max-width: 480px)  {
+    /* Landing Page Mobile CSS START */
+
+    .col-12 {
+        flex: 0% !important
+    }
+    .navbar-brand {
+        margin-left: 5px
+    }
+    #guideSteps {
+        padding-top: 10px;
+        padding-bottom: 5px;
+    }
+    #languageIconRow {
+        height: 80px;
+    }
+    #readyToRegisterId {
+        text-align: center;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        margin-right: 0px !important;
+        padding-right: 0px !important
+    }
+    #validateId {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        margin-right: 0px !important;
+        padding-right: 0px !important
+    }
+    #onBoardId {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        margin-right: 0px !important;
+        padding-right: 0px !important
+    }
+    #languageIconRow {
+        margin-right: 0px !important
+    }
+    #guideRow {
+        margin-right: 0px !important
+    }
+    #unLockRow { 
+        margin-right: 0px !important
+    }
+    #unLockIcon {
+        width: 320px
+    }
+    /* Landing Page Mobile CSS END */
+    /* Login Page Mobile CSS START */
+    #guideRowLogin {
+        margin-right: 9px
+    }
+    .footer_login {
+        position: relative
+    }
+    .loginfield > #id_email, .loginfield > #id_password {
+        width: 190px !important
+    }
+    .footer_fgpassword {
+        position: absolute !important
+    }
+    /* Login Page Mobile CSS END */
+    /* Signup Page Mobile CSS END */
+    #bodyleft {
+        order: 2 !important
+    }
+    #bodyright {
+        order: 1 !important
+    }
+    #guideIconDiv {
+        display: flex;
+        margin-left: 10px;
+    }
+    .languageIconRow {
+        background: #f7f5fa !important;
+    }
+    #languageIconDiv {
+        margin-top: 20px !important
+    }
+    #logoRight {
+        margin-bottom: 0px !important
+    }
+    #id_email, #id_sec_question {
+        width: 150px !important
+    }
+    #id_contactNo {
+        width: 100px !important
+    }
+    #formsec1 {
+        padding-bottom: 5px !important
+    }
+    #unitlabel{
+        margin-left: 0px !important
+    }
+    #addressTwoDiv {
+       position: relative !important;
+       margin-top: 50px !important
+    }
+    .footer-right {
+        position: relative !important
+    }
+    #bgFooter {
+        background: #f7f5fa !important
+    }
+    #id_unit1 {
+        margin-left: 0px !important
+    }
+    #languageIconLeft {
+        justify-content: center !important
+    }
+    #languageIconRight {
+        margin-left: 15px !important
+    }
+    #id_countryCode{
+        width: 70px !important;
+        padding: 4px !important
+    }
+    /* Signup Page Mobile CSS END */
+    /* Dashboard Page CSS Start */
+    #companyNameInfo {
+        margin-top: 0px !important
+    }
+    #section3col {
+        margin-bottom: 10px
+    }
+    .floatClass {
+        float: left
+    }
+    .paddingBottomTabs {
+        padding-bottom: 10px
+    }
+    #sideBarRight {
+        margin-top: 0px !important
+    }
+    .sideBarAlignClass {
+        margin-top: 5% !important;
+        margin-bottom: 5% !important;
+    }
+    /* Dashboard Page CSS End */
+    /* Landing Dashboard Page CSS Start */
+    .subscribeModuleTab {
+        padding-left: 30px !important
+    }
+    #subModule {
+        display: block;
+        text-align: center
+    }
+    #subModule > li {
+        display: inline
+    }
+    .nonActive {
+        padding-top: 10px;
+        padding-left: 30px;
+        padding-bottom: 10px
+    }
+    .card {
+        margin-left: 35px !important;
+        border-radius: 10px !important;
+        width: 90% !important;
+        border: 0;
+    }
+    .viewDataTable {
+        margin-left: 5% !important;
+    }
+    /* Landing Dashboard Page CSS End */
+
+}
+@media (min-width:600px) and (max-width:801px) {
+    /* Landing Page Tablet CSS START */
+    .card {
+        border-radius: 10px !important;
+        width: 60% !important;
+        border: 0;
+    }
+    .col-sm-12 {
+        flex: 0% !important
+    }
+    .navbar-brand {
+        margin-left: 0px
+    }
+    #guideSteps {
+        padding-top: 20px;
+        padding-bottom: 10px;
+    }
+    .guideImages {
+        width: 425px;
+    }
+    #readyToRegisterId {
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 10px
+    }
+    #validateId {
+        text-align: center;
+        margin-left: 10px;
+        margin-top: 10px;
+        margin-bottom: 10px
+    }
+    #onBoardId {
+        text-align: center;
+        margin-left: 10px;
+        margin-top: 10px;
+        margin-bottom: 10px
+    }
+    #reg_learnMore, #reg_watchVideo, #val_learnMore, #val_watchVideo, #onb_learnMore, #onb_watchVideo {
+        width: 125px
+    }
+    /* Landing Page Tablet CSS END */
+    /* Login Page Tablet CSS END */
+    .footer_login {
+        position: absolute !important
+    }
+    .loginfield > #id_email, .loginfield > #id_password {
+        width: 200px !important
+    }
+    /* Login Page Tablet CSS END */
+    /* Signup Page Tablet CSS END */
+    #allStartFirstId {
+        margin-left: 20px !important
+    }
+    #languageIconLeft {
+        margin-top: 10px !important;
+        justify-content: center !important;
+        background-color: #f7f5fa !important
+    }
+    #logoRight {
+        padding-left: 125px !important
+    }
+    #bodyleft {
+        order : 2 !important;
+    }
+    #bodyright {
+        order : 1 !important;
+    }
+    #goDigitalImage {
+        height: 300px !important
+    }
+    #addressTwoDiv {
+        position: relative !important;
+        margin-top: 50px !important
+    }
+    #unitlabel{
+        margin-left: 0px !important
+    }
+    #bgFooter {
+        position: relative !important;
+        margin-top: 20% !important
+    }
+    /* Signup Page Tablet CSS END */
+    /* Dashboard Page Tablet CSS END */
+    #onBoardTab {
+        padding-left: 30px
+    }
+    #showUser {
+        margin-left: 10px
+    }
+    #iconCompanyLogo {
+        margin-top: 10px
+    }
+    #section3col {
+        margin-top: 0px !important;
+        margin-bottom: 5px !important
+    }
+    .floatClass {
+        float: right !important
+    }
+    #sideBarRight {
+        margin-top: 0px !important
+    }
+    .sideBarAlignClass {
+        margin-top: 5% !important;
+        margin-bottom: 5% !important;
+    }
+    .divcontent {
+        min-height: 80px !important
+    }
+    /* Dashboard Page Tablet CSS END */
+     /* Landing Dashboard Page Tablet CSS Start */
+    .subscribeModuleTab {
+        padding-left: 30px !important
+    }
+    #subModule {
+        display: block;
+    }
+    #subModule > li {
+        display: inline
+    }
+    .nonActive {
+        padding-top: 10px;
+        padding-left: 30px;
+        padding-bottom: 10px
+    }
+    /* Landing Dashboard Page Tablet CSS End */
+}
+/* For Desktop Start */
+@media only screen and (min-width:801px) {
+    #iconCompanyLogo {
+        float: right
+    }
+    #stockCountDiv {
+        padding-top: 10px
+    }
+    #slide-submenu {
+        border: 1px solid black;
+        display: none !important
+    }
+}
+/* For Desktop End */
+/* Media Query CSS For All pages END */

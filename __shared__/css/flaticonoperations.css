@@ -1,0 +1,86 @@
+	/*
+  	Flaticon icon font: Flaticon
+  	Creation date: 03/04/2019 11:43
+  	*/
+
+@font-face {
+  font-family: "Flaticon";
+  src: url("../icon/Flaticon.eot");
+  src: url("../icon/Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("../icon/Flaticon.woff2") format("woff2"),
+       url("../icon/Flaticon.woff") format("woff"),
+       url("../icon/Flaticon.ttf") format("truetype"),
+       url("../icon/Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("../icon/Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+  font-family: Flaticon;
+font-style: normal;
+}
+
+.flaticon-user-avatar-with-check-markO:before { content: "\f100"; color: #881999; vertical-align: middle; font-size: 40px; }
+.flaticon-production-plantO:before { content: "\f101"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-production-plant-1O:before { content: "\f102"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-dashboardO:before { content: "\f103"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-group-of-people-in-a-formationO:before { content: "\f104"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-group-of-users-silhouetteO:before { content: "\f105"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-signing-the-contractO:before { content: "\f106"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-location-pointerO:before { content: "\f107"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-four-squares-with-frame-shapeO:before { content: "\f108"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-logistics-delivery-truck-in-movementO:before { content: "\f109"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-delivery-truckO:before { content: "\f10a"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-money-abacus-tool-to-countO:before { content: "\f10b"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-magnifier-on-calendar-pageO:before { content: "\f10c"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-abacusO:before { content: "\f10d"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-user-key-on-screenO:before { content: "\f10e"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-pilot-hatO:before { content: "\f10f"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-market-storeO:before { content: "\f110"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-api-pageO:before { content: "\f111"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-mapO:before { content: "\f112"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-analyticsO:before { content: "\f113"; color: #881999; vertical-align: middle; font-size: 25px; font-weight: bold; }
+.flaticon-viral-marketingO:before { content: "\f114"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-certificateO:before { content: "\f115"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-diagramO:before { content: "\f116"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-padlockO:before { content: "\f117"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-adminO:before { content: "\f118"; color: #881999; vertical-align: middle; font-size: 40px ; }
+.flaticon-admin-1O:before { content: "\f119"; color: #881999; vertical-align: middle; font-size: 40px !important; }
+.flaticon-collaborationO:before { content: "\f11a"; color: #881999; vertical-align: middle; font-size: 25px; font-weight: bold; }
+.flaticon-warehouseO:before { content: "\f11b"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-documentO:before { content: "\f11c"; color: #881999; vertical-align: middle; font-size: 25px; font-weight: bold; }
+.flaticon-customerO:before { content: "\f11d"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-customer-1O:before { content: "\f11e"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-meetingO:before { content: "\f11f"; color: #881999; vertical-align: middle; font-size: 25px; font-weight: bold; }
+.flaticon-keyO:before { content: "\f120"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-apiO:before { content: "\f121"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-hatO:before { content: "\f122"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-loginO:before { content: "\f123"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-fileO:before { content: "\f124"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-inventoryO:before { content: "\f125"; color: #881999; vertical-align: middle; font-size: 25px; font-weight: bold; }
+.flaticon-inventory-1O:before { content: "\f126"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-exchangeO:before { content: "\f127"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-auditO:before { content: "\f128"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-protectionO:before { content: "\f129"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-boxO:before { content: "\f12a"; color: #881999; vertical-align: middle; font-size: 25px; font-weight: bold; }
+.flaticon-valueO:before { content: "\f12b"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-productO:before { content: "\f12c"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-hierarchical-structureO:before { content: "\f12d"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-packing-listO:before { content: "\f12e"; color: #881999; vertical-align: middle; font-size: 25px; font-weight: bold; }
+.flaticon-trackingO:before { content: "\f12f"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-updateO:before { content: "\f130"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-speedometerO:before { content: "\f131"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-planningO:before { content: "\f132"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-orderO:before { content: "\f133"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-shopping-groceriesO:before { content: "\f134"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-popcorn-makerO:before { content: "\f135"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-zoomO:before { content: "\f136"; color: #881999; vertical-align: middle; font-size: 25px; }
+.flaticon-userO:before { content: "\f137"; color: #881999; vertical-align: middle; font-size: 25px; }

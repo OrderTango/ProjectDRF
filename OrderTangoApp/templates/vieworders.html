@@ -1,0 +1,522 @@
+{% extends 'operationalpanelbase.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/operationalpanel.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/placeOrder.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'datatables/css/datatables.min.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'datatables/css/responsive.bootstrap4.min.css' %}"/>
+
+<script type="text/javascript" src="{% static 'datatables/js/datatables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'datatables/js/dataTables.responsive.min.js' %}"></script>
+<script src ="{% static 'js/jquery-ui.js' %}"></script>
+<script src ="{% static 'js/script.js' %}"></script>
+<style>
+table.dataTable {
+    margin-top: 0% !important;
+    margin-left: 1.5% !important;
+    border-collapse: collapse !important;
+}
+thead {
+    border: 1px solid #edeac0;
+    background-color: #fdf7e3
+}
+.page-link {
+    background-color: #fffdf2 !important
+}
+.marginTen {
+    margin: 10px 0px 10px 0px
+}
+.subHeadClass {
+    border-bottom: none
+}
+#bodyDiv {
+    background-color: #fffdf2;
+    margin-right: -15px !important;
+    padding: 0.5% 2% 0.5% 2%;
+}
+#bodyContent {
+    margin-left: -15px;
+    padding-right: 0px
+}
+.page-link {
+    background-color: #fffdf2 !important
+}
+
+.goodsIssueTextBox{
+    width:60px;
+    border: 1px solid #bb99c0;
+    border-radius: 8px;
+}
+</style>
+<div class="row headColor">
+  <div class="col-md-2 col-sm-4 col-24" id="sideBarLeft">
+        {% include "operationalpanelsidebar.html" %}
+  </div>
+  <div class="col-md-10 paddingLeftRightZero" id="bodyContent">
+        <div id="bodyDiv">
+            <div class="row">
+                <div class="col-md-4 col-sm-3 col-6">
+                    <a href="/vieworders" class="subHeadClass" id="orderBtn">View Orders</a>
+                </div>
+            </div>
+            <div class="row marginTen">
+                <div class="offset-md-6 col-md-6">
+                    <span class="input-group pull-right" id="searchOptionInputGroup">
+                            <input type="text" id="searchOption" maxlength="20">
+                            <div class="input-group-append">
+                              <span id="spanSearchIcon">
+                                <i class="fa fa-search"></i>
+                              </span>
+                            </div>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-3 col-6 " align="center" >
+                    <table class="table hover viewOrderTable" id="viewOrderTable">
+                         <thead>
+
+                         </thead>
+                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include "rightsidebar.html" %}
+<div class="modal fade" id="exampleModalCenter" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modalBorderClass">
+          <div class="modal-header">
+            <h5 class="modal-title modalTitleHead" id="exampleModalLongTitle"> </h5>
+               <span id="modalCloseBtn">
+
+              </span>
+          </div>
+          <div class="modal-body">
+              <div id="success_msg" class="success_msg"> </div>
+              <div id="error_msg" class="error_msg"> </div>
+                <form role="form">
+                    {% csrf_token %}
+                    <div id="modalBody">
+
+                    </div>
+                </form>
+          </div>
+          <div class="modal-footer" id="modalFooter">
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- The Modal -->
+<div class="modal" id="viewProductModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog viewProductModaldia" style="max-width: 80% !important;">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title" id="viewProductModalTitle"> View Order</h4>
+        <button type="button" class="close viewProductModalClose" data-dismiss="modal" aria-hidden="true">x</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="row" >
+            <div class="col-md-12 col-sm-3 col-6 " >
+                <table class="table hover viewProductDataTable" id="viewProductDataTable">
+                     <thead>
+
+                     </thead>
+                 </table>
+            </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn viewProductModalClose" id="viewProductModalClose" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function() {
+
+        checkTreeCollapse();
+
+        function checkTreeCollapse() {
+            $(".tree-container li.tree-li").removeClass("is-child")
+            $(".tree-container li.tree-li").each(function () {
+                if ($(this).find("ul.tree-ul li").length > 0) {
+                    $(this).addClass("is-child")
+                }
+            });
+            $(".tree-container li.tree-li span.text").unbind("click");
+            $(".tree-container li.tree-li.is-child span.text").click(function () {
+                $(this).parent(".tree-li").toggleClass("diactive");
+                $(this).parent(".tree-li").find(".tree-ul:first").toggleClass("diactive");
+            });
+        }
+
+        $('#iconsec').on('click',function() {
+                 $('#fileuploaddata').val(null);
+                 $('#imageModel').show();
+                 $('#imageModel').modal('toggle');
+           });
+
+         $('.imageUpload').on('click', function() {
+                $('#exampleModalLongTitle').empty();
+                $('#modalBody').empty();
+                $('#modalFooter').empty();
+                if ($(this).attr('id') == 'changeDomainName') {
+                    var modalBody = "<div class='form-group formGroup'><label for='recipient-name' class='col-form-label fontWeightBold'>New Domain Name:</label><input type='text' class='form-control' name='domainName' id='domainName' autofocus></div>";
+                    var modalFooter = "<input type='button' id='updateDomainName' class='btn btn-primary modalBtnClass' value='Save changes'>";
+                    appendDynamicContent('Change Domain Name', modalBody, modalFooter);
+                }
+                else if ($(this).attr('id') == 'iconMF') {
+                    var modalBody = "<div class='form-group formGroup'><input type='hidden' name='idContainer' value='iconProfileLogo' id='idContainer'><label for='recipient-name' class='col-form-label fontWeightBold'>Profile Image:</label><input type='file' style='height: 50px' class='form-control' name='fileuploaddata' id='fileuploaddata'><br/><p style='font-size:13px;'>allowed only Jpg,png formats below 5 MB</p></div>";
+                    var modalFooter = "<input type='button' class='btn btn-default modalBtnClass' id='uploadImageSubmit' value='Submit' data-dismiss='modal'>";
+                    appendDynamicContent('Change Profile Image', modalBody, modalFooter);
+                }
+                else if ($(this).attr('id') == 'iconCompanyLogo') {
+                    var modalBody = "<div class='form-group formGroup'><input type='hidden' name='idContainer' value='iconCompanyLogo' id='idContainer'><label for='recipient-name' class='col-form-label fontWeightBold'>Company Logo:</label><input type='file' style='height: 50px' class='form-control' name='fileuploaddata' id='fileuploaddata'><br/><p style='font-size:13px;'>allowed only Jpg,png formats below 5 MB</p></div>";
+                    var modalFooter = "<input type='button' class='btn btn-default modalBtnClass' id='uploadImageSubmit' value='Submit' data-dismiss='modal'>";
+                    appendDynamicContent('Change Company Logo', modalBody, modalFooter);
+                }
+            });
+
+
+         var viewOrderTable = $('#viewOrderTable').DataTable( {"bFilter": false,
+                    "bLengthChange": false,
+                    "targets": 'no-sort',
+                    "bSort": false,
+                    "info": false,
+                    "searching": true,
+                    "order": [],
+                    "pagingType": "full_numbers",
+                    language: {
+                            paginate: {
+                                previous: false,
+                                next: false,
+                                first: '<img src="{% static 'images/leftsidearrow.png' %}" width=15 />',
+                                last: '<img src="{% static 'images/rightsidearrow.png' %}" width=15 />'
+                            }
+                    },
+                    "columns": [
+                            { "title": "S.No" },
+                            { "title": "Company Name" },
+                            { "title": "No Of Order"},
+                            { "title": "Order Date"},
+                            { "title": "Expected Delivery"},
+                            { "title": "Delivery Location"},
+                            { "title": "Action"},
+                    ]});
+
+            function pullConfirmOrderTable(confirmProductTableList){
+                viewOrderTable.clear().draw();
+                if (confirmProductTableList.length > 0) {
+                 $.each(confirmProductTableList, function( index, value ) {
+                 var sno = index+1;
+                    var statusSpan = "<span id='statusbox"+value.id+"'></span>";
+                    var action = "<input class='cartAddBtn viewProductBtn' id='cartAddBtn_"+value.ordNumber+"_"+value.customerId+"' type='button' value='View'>";
+                    var orderDate = value.orderDate;
+                     var result = orderDate.split('-');
+                     var year = result[0];
+                     var month = result[1];
+                     var day = result[2];
+                   viewOrderTable.row.add([sno,value.customerId__cusCompanyName,value.customerIdCount,day+"/"+month+"/"+year,value.expectedTime+"<br/>"+value.expectedDate,value.customer_address_Line1+"<br/>"+value.customer_state__stateName+"<br/> "+ value.customer_country__countryName+"-"+value.customer_postalCode ,action]).draw();
+                 });
+                }
+                else {
+                    $('#viewOrderTable_paginate').hide();
+                }
+             }
+
+            /*var data = {"type":"orders_from_customer"};
+            $.ajax({
+              url: "/viewAllDetailsType",
+              type: "POST",
+              dataType : "json",
+              contentType : "application/json",
+              data: JSON.stringify(data),
+              success: function (result)
+              {
+                var data = result;
+
+                if (data.status == 'success') {
+                confirmProductTableList = data.totalItems[0].totalItem;
+                pullConfirmOrderTable(confirmProductTableList);
+              }
+              else if(data.status == 'error'){
+                 alert(data.error_msg);
+              }
+              }
+            });*/
+
+            $.ajax({
+              url: "/viewPlacedOrderDetails",
+              type: "POST",
+              dataType : "json",
+              contentType : "application/json",
+
+              success: function (result)
+              {
+                var data = result;
+
+                if (data.status == 'success') {
+                confirmProductTableList = data.totalItems[0].totalItem;
+                pullConfirmOrderTable(confirmProductTableList);
+
+              }
+              else if(data.status == 'error' && data.error_msg != 'sessionexpired'){
+                 alert(data.error_msg);
+              }
+              else if (data.status == 'error' && data.error_msg == 'sessionexpired') {
+                    alert('Session has expired.');
+                        setTimeout(function() {
+                            window.location.href = data.redirect_url;
+                        }, 2000);
+
+                    }
+              }
+            });
+
+
+            var viewProductDataTable = $('#viewProductDataTable').DataTable( {"bFilter": false,
+                              "bLengthChange": false,
+                                "targets": 'no-sort',
+                                "bSort": false,
+                                "info": false,
+                                "searching": true,
+                                "order": [],
+                                "pagingType": "full_numbers",
+                                language: {
+                                        paginate: {
+                                            previous: false,
+                                            next: false,
+                                            first: '<img src="{% static 'images/leftsidearrow.png' %}" width=15 />',
+                                            last: '<img src="{% static 'images/rightsidearrow.png' %}" width=15 />'
+                                        }
+                                },
+                            "columns": [
+                                    { "title": "S.No" },
+                                    { "title": "Product Code"},
+                                    { "title": "Product Name"},
+                                    { "title": "Qty"},
+                                    { "title": "Updated Qty"},
+                                    { "title": "Price"},
+                                    { "title": "Status"},
+                                    { "title": "Goods Receive"},
+                                    { "title": "Goods Issue"},
+                                    { "title": "Action"},
+
+                                ]
+                        });
+
+
+            $(document).on('click',	'.viewProductBtn', function() {
+
+                id = $(this).attr('id');
+                var result = id.split('_');
+                var ordNumber = result[1];
+                var customerId = result[2];
+                var data = {"ordNumber":ordNumber};
+                    $.ajax({
+                      url: "/viewPlacedOrderDetails",
+                      type: "POST",
+                      dataType : "json",
+                      contentType : "application/json",
+                      data: JSON.stringify(data),
+                      success: function (result)
+                      {
+                        var data = result;
+
+                        if (data.status == 'success') {
+                        confirmProductTableList = data.totalItems[0].totalItem;
+                        viewProductDataTable.clear().draw();
+                         $.each(confirmProductTableList, function( index, value ) {
+                         var sno = index+1;
+                         var goodsIssue = "<input type='number'  class='goodsIssueTextBox' id='goodsIssue_"+value.itemCode+"' value = "+value.goodsIssue+">";
+                           var action = "<input class='viewCusProdConfirmBtn' id='"+value.ordNumber+"_"+value.itemCode+"_"+customerId+"' type='button' value='Submit'>";
+                           if(value.orderdetail__ordstatus == 'Accept'){
+                           var status = "<select name='acceptOrReject' id='acceptOrRejectStatus_"+value.itemCode+"' class='acceptOrReject'><option value="+value.orderdetail__ordstatus+">"+value.orderdetail__ordstatus+"</option><option value='Pending'>Pending</option><option value='Reject'>Reject</option><option value='Closed'>Closed</option> </select>";
+                               }else if(value.orderdetail__ordstatus == 'Pending'){
+                           var status = "<select name='acceptOrReject' id='acceptOrRejectStatus_"+value.itemCode+"' class='acceptOrReject'><option value="+value.orderdetail__ordstatus+">"+value.orderdetail__ordstatus+"</option><option value='Accept'>Accept</option><option value='Reject'>Reject</option><option value='Closed'>Closed</option> </select>";
+                               }else if(value.orderdetail__ordstatus == 'Reject'){
+                           var status = "<select name='acceptOrReject' id='acceptOrRejectStatus_"+value.itemCode+"' class='acceptOrReject'><option value="+value.orderdetail__ordstatus+">"+value.orderdetail__ordstatus+"</option><option value='Pending'>Pending</option><option value='Accept'>Accept</option><option value='Closed'>Closed</option> </select>";
+                               }else{
+                             action = "";
+                            var status = "<select name='acceptOrReject' id='acceptOrRejectStatus_"+value.itemCode+"' class='acceptOrReject' disabled=true><option value="+value.orderdetail__ordstatus+">"+value.orderdetail__ordstatus+"</option><option value='Pending'>Pending</option><option value='Accept'>Accept</option><option value='Reject'>Reject</option> </select>";
+                             var goodsIssue = "<input type='number'  class='goodsIssueTextBox' id='goodsIssue_"+value.itemCode+"' value = "+value.goodsIssue+" disabled=true>";
+                               }
+
+                           var comment = "<textarea  class='commentTextBox' id='comment_"+value.ordNumber+"'>"+value.comment+"</textarea>";
+
+                           viewProductDataTable.row.add([sno,value.itemCode,value.itemName,value.actualQuantity+" "+value.uOm,value.quantity,value.price+" "+value.priceUnit,status,value.goodsReceive,goodsIssue,action]).draw();
+
+                         });
+                         $('#viewProductModal').modal('show');
+
+                      }
+                      else if(data.status == 'error' && data.error_msg != 'sessionexpired'){
+                         alert(data.error_msg);
+                      }
+                      else if (data.status == 'error' && data.error_msg == 'sessionexpired') {
+                                alert('Session has expired.');
+                                setTimeout(function() {
+                                    window.location.href = data.redirect_url;
+                                }, 2000);
+
+                            }
+                      }
+                    });
+            });
+
+             $(document).on('click','.viewCusProdConfirmBtn', function() {
+                var id = $(this).attr('id');
+                var result = id.split('_');
+                var orderNo = result[0];
+                var itemCode = result[1];
+                var customerId = result[2];
+                var comment =  $('#comment_'+orderNo).val();
+                var goodsIssue =  $('#goodsIssue_'+itemCode).val();
+                var status =  $('#acceptOrRejectStatus_'+itemCode).val();
+                 var data = {"ordNumber":orderNo,"status":status,"customerId":customerId,"itemCode":itemCode,'goodsIssue':goodsIssue};
+                    $.ajax({
+                      url: "/orderFulfillmentSupplier",
+                      type: "POST",
+                      dataType : "json",
+                      contentType : "application/json",
+                      data: JSON.stringify(data),
+                      success: function (result)
+                      {
+                        var data = result;
+
+                        if (data.status == 'success') {
+
+                            alert(data.success_msg);
+                            var data = {"ordNumber":orderNo};
+                    $.ajax({
+                      url: "/viewPlacedOrderDetails",
+                      type: "POST",
+                      dataType : "json",
+                      contentType : "application/json",
+                      data: JSON.stringify(data),
+                      success: function (result)
+                      {
+                        var data = result;
+
+                        if (data.status == 'success') {
+                        confirmProductTableList = data.totalItems[0].totalItem;
+                        viewProductDataTable.clear().draw();
+                         $.each(confirmProductTableList, function( index, value ) {
+                         var sno = index+1;
+
+                           var action = "<input class='viewCusProdConfirmBtn' id='"+value.ordNumber+"_"+value.itemCode+"_"+customerId+"' type='button' value='Submit'>";
+                            var goodsIssue = "<input type='number'  class='goodsIssueTextBox' id='goodsIssue_"+value.itemCode+"' value = "+value.goodsIssue+">";
+                           if(value.orderdetail__ordstatus == 'Accept'){
+                           var status = "<select name='acceptOrReject' id='acceptOrRejectStatus_"+value.itemCode+"' class='acceptOrReject'><option value="+value.orderdetail__ordstatus+">"+value.orderdetail__ordstatus+"</option><option value='Pending'>Pending</option><option value='Reject'>Reject</option><option value='Closed'>Closed</option> </select>";
+                               }else if(value.orderdetail__ordstatus == 'Pending'){
+                           var status = "<select name='acceptOrReject' id='acceptOrRejectStatus_"+value.itemCode+"' class='acceptOrReject'><option value="+value.orderdetail__ordstatus+">"+value.orderdetail__ordstatus+"</option><option value='Accept'>Accept</option><option value='Reject'>Reject</option><option value='Closed'>Closed</option> </select>";
+                               }else if(value.orderdetail__ordstatus == 'Reject'){
+                           var status = "<select name='acceptOrReject' id='acceptOrRejectStatus_"+value.itemCode+"' class='acceptOrReject'><option value="+value.orderdetail__ordstatus+">"+value.orderdetail__ordstatus+"</option><option value='Pending'>Pending</option><option value='Accept'>Accept</option><option value='Closed'>Closed</option> </select>";
+                               }else{
+                             action = "";
+                             var status = "<select name='acceptOrReject' id='acceptOrRejectStatus_"+value.itemCode+"' class='acceptOrReject' disabled=true><option value="+value.orderdetail__ordstatus+">"+value.orderdetail__ordstatus+"</option><option value='Pending'>Pending</option><option value='Accept'>Accept</option><option value='Reject'>Reject</option> </select>";
+                             var goodsIssue = "<input type='number'  class='goodsIssueTextBox' id='goodsIssue_"+value.itemCode+"' value = "+value.goodsIssue+" disabled=true>";
+                               }
+
+                           var comment = "<textarea  class='commentTextBox' id='comment_"+value.ordNumber+"'>"+value.comment+"</textarea>";
+
+                           viewProductDataTable.row.add([sno,value.itemCode,value.itemName,value.actualQuantity+" "+value.uOm,value.quantity,value.price+" "+value.priceUnit,status,value.goodsReceive,goodsIssue,action]).draw();
+
+                         });
+                         $('#viewProductModal').modal('show');
+
+                      }
+                      else if(data.status == 'error' && data.error_msg != 'sessionexpired'){
+                         alert(data.error_msg);
+                      }
+                      else if (data.status == 'error' && data.error_msg == 'sessionexpired') {
+                                alert('Session has expired.');
+                                setTimeout(function() {
+                                    window.location.href = data.redirect_url;
+                                }, 2000);
+
+                            }
+                      }
+                    });
+                        }
+                        }
+                        });
+
+           });
+
+
+            function appendDynamicContent(modalHead, modalBody, modalFooter) {
+                $('#exampleModalLongTitle').append(modalHead);
+                $('#modalBody').append(modalBody);
+                $('#modalFooter').append(modalFooter);
+                $('#exampleModalCenter').modal({backdrop: 'static', keyboard: false})
+                $('#exampleModalCenter').modal('toggle');
+                $('#exampleModalCenter').show();
+            }
+
+        $('#submit').on('click', function() {
+                $('#success_msg').empty();
+                $('#error_msg').empty();
+                if ($('#domainName').val() != '') {
+                    var data = "csrfmiddlewaretoken="+$('input[name=csrfmiddlewaretoken]').val()+"&domainName="+$('#domainName').val();
+                    $.ajax({
+                      url: "/renameSchemaURL",
+                      type: "POST",
+                      dataType: "text",
+                      data: data,
+                      async:false,
+                      success: function (result)
+                      {
+                        var data = JSON.parse(result);
+                        if (data.status == 'success') {
+                            $('#success_msg').append(data.success_msg);
+                            $("#domainName").prop("disabled",true);
+                            $("#submit").prop("disabled",true);
+                            setTimeout(function() {
+                                $('#success_msg').empty();
+                                window.location.href = data.redirect_url;
+                            }, 3000);
+                        }
+                        else if (data.status == 'error' && data.error_msg != 'sessionexpired') {
+                            $('#error_msg').append(data.error_msg);
+                        }
+                        else if (data.status == 'error' && data.error_msg == 'sessionexpired') {
+                            $('#domainName').val('');
+                            $('#error_msg').append('Session expired.');
+                            $("#domainName").prop("disabled",true);
+                            $("#submit").prop("disabled",true);
+                            setTimeout(function() {
+                                window.location.href = data.redirect_url;
+                            }, 3000);
+                        }
+                      }
+                     });
+                }
+                else {
+                    $('#error_msg').append('Please enter domain name');
+                }
+            });
+
+            /* Customize search option for DataTable Start */
+                    $('#searchOption').on( 'keyup', function () {
+                          $('#viewOrderTable').DataTable().search(this.value).draw();
+                    });
+            /* Customize search option for DataTable End */
+
+  });
+</script>
+{% endblock %}

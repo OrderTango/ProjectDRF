@@ -1,0 +1,5 @@
+planId,planCode,planName,planDesc,status,cost,currencyType_id
+1,plan1,Freemium,,active,,
+2,plan2,Advanced,,active,,
+3,plan3,Professional,,active,,
+4,plan4,Enterprise,,active,,

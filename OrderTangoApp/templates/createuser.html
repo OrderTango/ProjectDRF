@@ -1,0 +1,398 @@
+{% extends 'administrationpanelbase.html' %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/viewall.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/manualUploadForm.css' %}"/>
+<style>
+#id_userName,#id_password,#id_confirm_password,#id_designation,#id_role,#id_DOJ{
+    height: 30px;
+    width: 250px !important;
+    border: 1px solid #bb99c0;
+    border-radius: 8px;
+    padding: 4px !important;
+}
+#subUserFormSubmit, #subUserFormSubmit:hover {
+    background: #ffd500;
+    color: #881999;
+    font-weight: bold;
+    border: 2px solid #881999;
+}
+</style>
+<div class="row">
+  <div class="col-md-3 col-sm-4 col-24">
+    <div class="row">
+      {% if user.profilepic %}
+         <div class="offset-md-2 offset-sm-2 offset-3 col-md-2 col-sm-2 col-2" id="iconsec"><img class="img-responsive imageUpload" id="iconMF" src="{{ user.profilepic.url }}" alt=""/></div>
+       {% else %}
+        <div class="offset-md-2 offset-sm-2 offset-3 col-md-2 col-sm-2 col-2" id="iconsec"><img class="img-responsive imageUpload" id="iconMF" src="{% static 'images/user-icon-1.png' %}" alt=""/></div>
+       {% endif %}
+      <div class="col-md-7 col-sm-7 col-4" id="showUser"> <p>Signed in As </p><p class="wordWrap">{{ username }}</p></div>
+    </div>
+  </div>
+  <div class="col-md-6 col-sm-8 col-24">
+    <div class="row justify-content-center" id="companyInfoContent">
+       {% if user.userCompanyId.companyImage %}
+        <div class="col-md-2 col-2"><img class="img-responsive imageUpload" id="iconCompanyLogo" src="{{ user.userCompanyId.companyImage.url }}" alt=""/></div>
+       {% else %}
+       <div class="col-md-2 col-2"><img class="img-responsive imageUpload" id="iconCompanyLogo" src="{% static 'images/companyLogo.png' %}" alt=""/></div>
+       {% endif %}
+      <div class="col-md-6 ml-2 col-6" id="companyNameInfo"><p>{{ user.userCompanyId.companyName }}</p></div>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-12 col-24" align="center" id="section3col"><span id="section3span">Order Management </span><br> Operations Panel</div>
+</div>
+     <div class="row">
+    {% include "administrationpanelsidebar.html" %}
+     <div class="col-md-8 paddingLeftZero" id="bodyContent">
+            <div class="row">
+                <div class="col-md-2 col-sm-3 col-6 navTabClass navHeading" id="onBoardTab">
+                    <a href="{% url 'dashboard' %}" class="anchorlink " id="onBoardAnchor"><img src="{% static 'images/OnBoard.png' %}" class="sideBarIcons">Onboarding</a>
+                </div>
+                <div class="col-md-2 col-sm-3 col-6 navTabClass" id="viewTab">
+                    <a href="#" class="anchorlink activeNav" id="viewAnchor"><img src="{% static 'images/UserIcon.png' %}" class="sideBarIcons">Create User</a>
+                </div>
+                <div class="offset-md-4 offset-sm-1 offset-3 col-md-4 col-sm-5 col-9 paddingTen">
+                    <a id="switchToOP" href="{% url 'operationalpanel' %}"><span class="floatClass"><strong style="color: #464646;">Switch to Operations panel</strong></span></a>
+                </div>
+           </div>
+
+            <div id="subUserFormContent" style="margin-top:20px">
+                 <div class="col-md-12" id="subUserFormDiv">
+                   <form class="post-form" id="subUserForm" role="form">
+                    {% csrf_token %}
+                    <div class="customerManualForm">
+                        <div class="form-group row customerDetailsForm">
+                         <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{subUserForm.firstName.label_tag }}</label>
+                                    {{ subUserForm.firstName }}
+                        </div>
+                        <div class="row customerDetailsForm">
+                         <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{subUserForm.lastName.label_tag }}</label>
+                                    {{ subUserForm.lastName }}
+                        </div>
+                        <div class="row customerDetailsForm">
+                         <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{subUserForm.userName.label_tag }}</label>
+                                    {{ subUserForm.userName }}
+                        </div>
+                        <div class="row customerDetailsForm">
+                         <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{subUserForm.password.label_tag }}</label>
+                                    {{ subUserForm.password }}
+                        </div>
+                        <div class="offset-3 offset-sm-4 offset-md-3" id="passwordError"></div>
+                        <div class="row customerDetailsForm">
+                         <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{subUserForm.confirm_password.label_tag }}</label>
+                                    {{ subUserForm.confirm_password }}
+                        </div>
+                        <div class="offset-3 offset-sm-4 offset-md-3" id="confirmPasswordError"></div>
+                        <div class="row customerDetailsForm">
+                         <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{subUserForm.designation.label_tag }}</label>
+                                    {{ subUserForm.designation }}
+                        </div>
+                        <div class="row customerDetailsForm">
+                         <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{subUserForm.role.label_tag }}</label>
+                                    {{ subUserForm.role }}
+                        </div>
+                        <div class="row customerDetailsForm">
+                         <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{subUserForm.contactNo.label_tag }}</label>
+                                    {{ subUserForm.contactNo }}
+                        </div>
+                        <div class="row customerDetailsForm">
+                         <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{subUserForm.DOJ.label_tag }}</label>
+                                    {{ subUserForm.DOJ }}
+                        </div>
+
+                        <div class="row customerDetailsForm">
+                         <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{subUserForm.profilepic.label_tag }}</label>
+                                    {{ subUserForm.profilepic }}
+                        </div>
+                     </div>
+                    </form>
+                     <div class="offset-md-3 col-md-4 col-sm-4 col-12 " style="padding-bottom:100px">
+                       <a href="#" id="hitBtn"><input type="button" id="subUserFormSubmit" class="btn btn-primary" value="Submit"> </a>
+                    </div>
+
+                </div>
+            </div>
+     </div>
+
+         {% include "rightsidebar.html" %}
+
+	</div>
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modalBorderClass">
+          <div class="modal-header">
+            <h5 class="modal-title modalTitleHead" id="exampleModalLongTitle">Change Domain Name</h5>
+          </div>
+           <div class="modal-body">
+              <div id="success_msg" class="success_msg"> </div>
+              <div id="error_msg" class="error_msg"> </div>
+                <form role="form">
+                    {% csrf_token %}
+                    <div id="modalBody">
+
+                    </div>
+                </form>
+          </div>
+          <div class="modal-footer " id="modalFooter">
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+<div class="modal" id="viewProfileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog viewProfileModal" style="max-width: 60%;">
+    <div class="modal-content" style="background-color: #f7f3fa;">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title" id="viewProfileModalTitle"> Profile </h4>
+        <button type="button" class="close viewProfileModalClose" data-dismiss="modal" aria-hidden="true">x</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body" id="profileModalBody">
+        <div class="row" >
+            <div class="col-md-12 col-sm-3 col-6 " >
+                <div class="col-md-12" id="viewProfileModalFormDiv">
+                    <form class="registrationform" id="updateProfileForm" role="form" method='POST'>
+
+                        {% csrf_token %}
+                        <div id="formsec1">
+                          <div class="form-group row registrationformdiv">
+                              <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.firstName.label_tag }}<span class="mandatory">*</span></label>
+                            {{ ProfileForm.firstName }}
+                          </div>
+                          <div class="offset-3 offset-sm-4 offset-md-3" id="firstNameError">{{ ProfileForm.firstName.errors }}</div>
+                          <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.lastName.label_tag }}<span class="mandatory">*</span></label>
+                             {{ ProfileForm.lastName }}
+                          </div>
+                          <div class="offset-3 offset-sm-4 offset-md-3" id="lastNameError">{{ ProfileForm.lastName.errors }} </div>
+                        </div>
+                        <div id="formsec2">
+
+                          <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.country.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.country }}
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="countryError"> {{ companyProfileForm.country.errors }} </div>
+                          <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.address_Line1.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.address_Line1 }}
+                            <label class="col-5 col-md-1 col-form-label unitlabel" id="unitlabel">Unit<span class="mandatory">*</span></label>
+                             {{ companyProfileForm.unit1 }}
+                            <p id="hyphen">-</p>
+                            {{ companyProfileForm.unit2 }}
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="address1Error"> {{ companyProfileForm.address_Line1.errors }} </div>
+                          <div class="form-group row registrationformdiv" id="addressTwoDiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.address_Line2.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.address_Line2 }}
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="address2Error"> {{ companyProfileForm.address_Line2.errors }} </div>
+                          <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.state.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.state }}
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="stateError"> {{ companyProfileForm.state.errors }} </div>
+                          <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.postalCode.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.postalCode }}
+
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="postalCodeError"> {{ companyProfileForm.postalCode.errors }} </div>
+                            <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.sec_question.label_tag }}<span class="mandatory">*</span></label>
+                            {{ ProfileForm.sec_question }}
+
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="secQuestionError"> {{ ProfileForm.sec_question.errors }} </div>
+                            <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.sec_answer.label_tag }}<span class="mandatory">*</span></label>
+                            {{ ProfileForm.sec_answer }}
+                            <div class="col-12 offset-sm-4 col-md-6" id="submitBtnDiv">  <input type="submit" id="profileUpdateButton" value="Update"> </div>
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="secAnswerError"> {{ ProfileForm.sec_answer.errors }} </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn editProductModalClose" id="editProductModalClose" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+ <div class="modal" id="loader"><!-- Place at bottom of page --></div>
+
+<script>
+            $body = $("body");
+            $('#iconsec').on('click',function() {
+                 $('#fileuploaddata').val(null);
+                 $('#imageModel').show();
+                    $('#imageModel').modal('toggle');
+
+            });
+
+             $('#profilePicture').on('click',function() {
+              $('#fileuploaddata').val(null);
+                $('#imageModel').modal('toggle');
+                 $('#imageModel').show();
+
+            });
+
+            /*$('#iconCompanyLogo').on('click',function() {
+                $('#fileuploaddata').val(null);
+                $('#idContainer').val('iconCompanyLogo');
+                $('#imageModel').modal('toggle');
+                $('#imageModel').show();
+            });*/
+
+            $('#slide-submenu').on('click',function() {
+                $(this).closest('.list-group').fadeOut('slide',function(){
+                    $('.mini-submenu').fadeIn();
+                });
+            });
+
+
+        $(document).ready(function() {
+
+            var date = new Date();
+            $("#id_DOJ").datepicker({
+                dateFormat: "dd/mm/yy",
+                defaultDate: 'Select',
+                onSelect: function () {
+                    selectedDate = $.datepicker.formatDate("dd/mm/yyyy", $(this).datepicker('getDate'));
+                }
+            });
+
+            $("#id_DOJ").datepicker("setDate", 'Select');
+
+
+            checkTreeCollapse();
+            function checkTreeCollapse() {
+                $(".tree-container li.tree-li").removeClass("is-child")
+                $(".tree-container li.tree-li").each(function () {
+                    if ($(this).find("ul.tree-ul li").length > 0) {
+                        $(this).addClass("is-child")
+                    }
+                });
+                $(".tree-container li.tree-li span.text").unbind("click");
+                $(".tree-container li.tree-li.is-child span.text").click(function () {
+                    $(this).parent(".tree-li").toggleClass("diactive");
+                    $(this).parent(".tree-li").find(".tree-ul:first").toggleClass("diactive");
+                });
+            }
+            window.scrollTo(0,0);
+            window.document.body.scrollTop++;
+
+               $('#submit').on('click', function() {
+                $('#success_msg').empty();
+                $('#error_msg').empty();
+                if ($('#domainName').val() != '') {
+                    var data = "csrfmiddlewaretoken="+$('input[name=csrfmiddlewaretoken]').val()+"&domainName="+$('#domainName').val();
+                    $.ajax({
+                      url: "/renameSchemaURL",
+                      type: "POST",
+                      dataType: "text",
+                      data: data,
+                      async:false,
+                      success: function (result)
+                      {
+                        var data = JSON.parse(result);
+                        if (data.status == 'success') {
+                            $('#success_msg').append(data.success_msg);
+                            $("#domainName").prop("disabled",true);
+                            $("#submit").prop("disabled",true);
+                            setTimeout(function() {
+                                $('#success_msg').empty();
+                                window.location.href = data.redirect_url;
+                            }, 3000);
+                        }
+                        else if (data.status == 'error' && data.error_msg != 'sessionexpired') {
+                            $('#error_msg').append(data.error_msg);
+                        }
+                        else if (data.status == 'error' && data.error_msg == 'sessionexpired') {
+                            $('#domainName').val('');
+                            $('#error_msg').append('Session expired.');
+                            $("#domainName").prop("disabled",true);
+                            $("#submit").prop("disabled",true);
+                            setTimeout(function() {
+                                window.location.href = data.redirect_url;
+                            }, 3000);
+                        }
+                      }
+                     });
+                }
+                else {
+                    $('#error_msg').append('Please enter domain name');
+                }
+            });
+            $(document).on('click', '#subUserFormSubmit', function() {
+
+                        var firstName = $('#id_firstName').val();
+                        var lastName = $('#id_lastName').val();
+                        var userName = $('#id_userName').val();
+                        var password = $('#id_password').val();
+                        var confirmPassword = $('#id_confirm_password').val();
+                        var designation = $('#id_designation').val();
+                        var role = $('#id_role').val();
+                        var contactNo = $('#id_contactNo').val();
+                        var DOJ = $('#id_DOJ').val();
+                        var file_data = $('#id_profilepic')[0].files[0];
+                        var formData = new FormData();
+                        formData.append('myfile', file_data);
+                        formData.append('firstName', firstName);
+                        formData.append('lastName', lastName);
+                        formData.append('userName', userName);
+                        formData.append('password', password);
+                        formData.append('confirmPassword', confirmPassword);
+                        formData.append('designation', designation);
+                        formData.append('contactNo', contactNo);
+                        formData.append('role', role);
+                        formData.append('DOJ', DOJ);
+                         $.ajax({
+                              url: "/createSubUser",
+                              type: "POST",
+                              dataType: "json",
+                              data: formData,
+                              contentType: false,
+                              processData: false,
+                              async:false,
+                              success: function (result)
+                              {
+                                if (result.status == 'success') {
+                                    setTimeout(function() {
+                                        location.reload();
+                                    },2000);
+                                    alert(result.success_msg);
+
+                                }
+                                else if (result.status == 'error') {
+                                    alert(result.error_msg);
+                                }
+                                else if(result.status == 'error' && result.error_msg == 'sessionexpired'){
+                                    setTimeout(function() {
+                                        window.location.href = data.redirect_url;
+                                    }, 2000);
+                                    alert('Session has expired.');
+                                }
+                              }
+                         });
+            });
+
+    });
+
+
+</script>
+{% endblock %}

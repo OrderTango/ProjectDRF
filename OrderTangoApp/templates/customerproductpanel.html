@@ -1,0 +1,852 @@
+{% extends 'operationalpanelbase.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/operationalpanel.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/placeOrder.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'datatables/css/datatables.min.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'datatables/css/responsive.bootstrap4.min.css' %}"/>
+
+<script type="text/javascript" src="{% static 'datatables/js/datatables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'datatables/js/dataTables.responsive.min.js' %}"></script>
+<script src ="{% static 'js/jquery-ui.js' %}"></script>
+<script src ="{% static 'js/script.js' %}"></script>
+<style>
+    .ui-dialog{
+        width: 35% !important;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%) !important;
+        background-color: white;
+
+    }
+    .ui-dialog-buttonpane{
+        padding: 0em !important;
+    }
+    .ui-dialog-titlebar{
+        background-color: #cbc1e8;
+        color: black;
+        font-weight: bold;
+    }
+    .ui-dialog-buttonset{
+        justify-content: middle;
+    }
+    table.dataTable {
+        margin-top: 0% !important;
+        margin-left: 1.5% !important;
+        border-collapse: collapse !important;
+    }
+    thead {
+        border: 1px solid #edeac0;
+        background-color: #fdf7e3
+    }
+    .subHeadClass {
+        border-bottom: none
+    }
+    #bodyDiv {
+        background-color: #fffdf2;
+        margin-right: -15px !important;
+        padding: 0.5% 2% 0.5% 2%;
+    }
+    #bodyContent {
+        margin-left: -15px;
+        padding-right: 0px
+    }
+    .page-link {
+        background-color: #fffdf2 !important
+    }
+    .discount,.absoluteDiscount{
+        width: 80px !important;
+        border: 1px solid #c9a6c0;
+        border-radius: 8px !important;
+        text-align: center;
+    }
+</style>
+ <div class="row headColor">
+  <div class="col-md-2 col-sm-4 col-24" id="sideBarLeft">
+        {% include "operationalpanelsidebar.html" %}
+  </div>
+  <div class="col-md-10 paddingLeftZero" id="bodyContent">
+      <div id="bodyDiv">
+        <div class="row addMarginFiveTB">
+            <div class="col-md-4 col-sm-3 col-6">
+                <a href="{% url 'customerProductPanel' %}" class="subHeadClass" id="orderBtn">Customer Product Panel</a>
+            </div>
+        </div><br/>
+        <div class="row">
+            <p>Choose By: </p>
+            <div class="col-md-6 col-sm-6 col-12">
+                <select id="select_category" class="select_catsub">
+                    <option value="">Select</option>
+                    <option value="product">Product</option>
+                    <option value="customer">Customer</option>
+                    <option value="catalog">Catalog</option>
+                </select>
+                <select id="select_suppliers" class="select_catsub">
+                    <option value="">Select</option>
+                </select>
+                <input type="text" class = "price" placeholder="Discount %" id="discount"  maxlength = '2' />
+                <input type="text" class = "price" placeholder="Absolute" id="absolute" maxlength="8" />
+                <input type="text" class = "price" id="priceId" maxlength="8" readonly/>
+                <input type="hidden"  id="actualPrice" maxlength="8" />
+                <label id="priceUnit" ></label>
+            </div>
+            <div class="col-md-5 col-sm-6 col-12" id="submitAndSearchBtnDiv">
+                <div class="pull-right">
+                    <a href="#" id="hitBtn"> <img class="img-responsive" id="hitBtnImg" style="height:30px" src="{% static 'images/register/submit.png' %}" alt=""/></a>
+                    <span class="input-group" id="searchOptionInputGroup">
+                        <input type="text" name="searchOption" id="searchOption" maxlength="20">
+                        <div class="input-group-append">
+                          <span id="spanSearchIcon">
+                            <i class="fa fa-search"></i>
+                          </span>
+                        </div>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-3 col-6" align="center">
+                <div id="product">
+                    <table class="table hover addProductTable" id="addProductTable">
+                         <thead>
+                            <tr>
+                               <th rowspan="1" class="header">S.No</th>
+                               <th rowspan="1" class="header">Product Code</th>
+                               <th rowspan="1" class="header">Product Name</th>
+                               <th rowspan="1" class="header">Category</th>
+                               <th rowspan="1" class="header">Sales Price</th>
+                               <th rowspan="1" class="header">Discount %</th>
+                               <th rowspan="1" class="header">Absolute Discount</th>
+                               <th rowspan="1" class="header">Actual Price</th>
+                               <th rowspan="1" style="width:20%" class="header"><input type="checkbox" class="selectAllList" id="selectAllProduct" name="selectAllProduct" /></th>
+                            </tr>
+                         </thead>
+                    </table>
+                </div>
+                <div id="customer">
+                    <table class="table hover addProductTable" id="addCustomerTable">
+                         <thead>
+                            <tr>
+                               <th rowspan="1" class="header">S.No</th>
+                               <th rowspan="1" class="header">Company Name</th>
+                               <th rowspan="1" class="header">Email ID</th>
+                               <th rowspan="1" class="header">Contact.No</th>
+                               <th rowspan="1" class="header">Country</th>
+                               <th rowspan="1" class="header">State</th>
+                               <th rowspan="1" style="width:20%" class="header"><input type="checkbox" class="selectAllList" id="selectAllCustomer" name="selectAllCustomer" /></th>
+                            </tr>
+                         </thead>
+                     </table>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+{% include "rightsidebar.html" %}
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modalBorderClass">
+          <div class="modal-header">
+            <h5 class="modal-title modalTitleHead" id="exampleModalLongTitle"> </h5>
+               <span id="modalCloseBtn">
+
+              </span>
+          </div>
+          <div class="modal-body">
+              <div id="success_msg" class="success_msg"> </div>
+              <div id="error_msg" class="error_msg"> </div>
+                <form role="form">
+                    {% csrf_token %}
+                    <div id="modalBody">
+
+                    </div>
+                </form>
+          </div>
+          <div class="modal-footer" id="modalFooter">
+
+          </div>
+        </div>
+      </div>
+    </div>
+<script>
+
+check = function (e,value){
+   		if (!e.target.validity.valid) {
+      	e.target.value = value.substring(0,value.length - 1);
+        return false;
+      }
+    	var idx = value.indexOf('.');
+      if (idx >= 0) {
+        if (value.length - idx > 3 ) {
+          e.target.value = value.substring(0,value.length - 1);
+          return false;
+        }
+      }
+      return true;
+    }
+
+/*window.alert = function(message){
+            $(document.createElement('div'))
+                .attr({title: 'Alert'})
+                .html(message)
+                .dialog({
+                    buttons: {OK: function(){$(this).dialog('close');}},
+                    close: function(){$(this).remove();},
+                    draggable: true,
+                    modal: true,
+                    resizable: false,
+                    width: 'auto'
+                });
+        };*/
+
+        //$('#priceUnit').css('display', 'none');
+
+  $(document).ready(function() {
+                $('#product').hide();
+                $('#customer').hide();
+                $('.price').hide();
+                var addProductTableList = new Array();
+                var myaddProductTableList = new Array();
+                var addProductTable = $('#addProductTable').DataTable({
+                    "bFilter": false,
+                    "bLengthChange": false,
+                    "targets": 'no-sort',
+                    "bSort": false,
+                    "info": false,
+                    "searching": true,
+                    "order": [],
+                    "pagingType": "full_numbers",
+                    language: {
+                            paginate: {
+                                previous: false,
+                                next: false,
+                                first: '<img src="{% static 'images/leftsidearrow.png' %}" width=15 />',
+                                last: '<img src="{% static 'images/rightsidearrow.png' %}" width=15 />'
+                            }
+                        },
+                        fields: [ {
+                            label: "Price"
+                        }],
+                     } );
+                var addCustomerTable = $('#addCustomerTable').DataTable({
+                    "bFilter": false,
+                    "bLengthChange": false,
+                    "targets": 'no-sort',
+                    "bSort": false,
+                    "info": false,
+                    "searching": true,
+                    "order": [],
+                    "pagingType": "full_numbers",
+                    language: {
+                            paginate: {
+                                previous: false,
+                                next: false,
+                                first: '<img src="{% static 'images/leftsidearrow.png' %}" width=15 />',
+                                last: '<img src="{% static 'images/rightsidearrow.png' %}" width=15 />'
+                            }
+                    },
+                 } );
+               $(document).on('keypress', '.price, .qtytextbox', function(event) {
+                    var text = $(this).val();
+                    var arr = text.split('.');
+                    if (event.which != 8  && event.which != 0  && (event.which < 48 || event.which > 57) && (event.which != 46  || (text.indexOf('.') >= 0 && text.indexOf('.') != -1 ))) {
+                       return false;
+                    }
+                    if(arr[1] >=0){
+                        if (arr[1].length > 1){
+                            return false;
+                        }
+                        }
+               });
+                $(document).on('change', '.price', function() {
+                     var actual = $('#actualPrice').val();
+                     var discount = $('#discount').val();
+                     var discounted = 0;
+                     if(discount != "" && discount >0) {
+                        discounted =( parseInt(actual) *  parseInt(discount))/100;
+                     }
+                     var absolute = $('#absolute').val();
+                     var absoluted = discounted;
+                     if(absolute != "" && absolute >0){
+                        absoluted =  discounted + parseFloat(absolute);
+                     }
+                     if(absoluted > parseFloat(actual)){
+                        alert("Please Enter valid discount");
+                        $('#'+$(this).attr('id')).val(0);
+                        return false;
+                     }
+                     else{
+                        $('#priceId').val(parseFloat(actual)-parseFloat(absoluted));
+                     }
+                     if(discount == "" && absolute == ""){
+                        $('#priceId').val(actual);
+                     }
+
+                    });
+
+
+
+         $('#iconsec').on('click',function() {
+                 $('#fileuploaddata').val(null);
+                 $('#imageModel').show();
+                 $('#imageModel').modal('toggle');
+           });
+
+           $('.imageUpload').on('click', function() {
+                $('#exampleModalLongTitle').empty();
+                $('#modalBody').empty();
+                $('#modalFooter').empty();
+                if ($(this).attr('id') == 'changeDomainName') {
+
+                    var modalBody = "<div class='form-group formGroup'><label for='recipient-name' class='col-form-label fontWeightBold'>New Domain Name:</label><input type='text' class='form-control' name='domainName' id='domainName' autofocus></div>";
+                    var modalFooter = "<input type='button' id='updateDomainName' class='btn btn-primary modalBtnClass' value='Save changes'>";
+                    appendDynamicContent('Change Domain Name', modalBody, modalFooter);
+                }
+                else if ($(this).attr('id') == 'iconMF') {
+                    var modalBody = "<div class='form-group formGroup'><input type='hidden' name='idContainer' value='iconProfileLogo' id='idContainer'><label for='recipient-name' class='col-form-label fontWeightBold'>Profile Image:</label><input type='file' style='height: 50px' class='form-control' name='fileuploaddata' id='fileuploaddata'><br/><p style='font-size:13px;'>allowed only Jpg,png formats below 5 MB</p></div>";
+                    var modalFooter = "<input type='button' class='btn btn-default modalBtnClass' id='uploadImageSubmit' value='Submit' data-dismiss='modal'>";
+                    appendDynamicContent('Change Profile Image', modalBody, modalFooter);
+                }
+                else if ($(this).attr('id') == 'iconCompanyLogo') {
+                    var modalBody = "<div class='form-group formGroup'><input type='hidden' name='idContainer' value='iconCompanyLogo' id='idContainer'><label for='recipient-name' class='col-form-label fontWeightBold'>Company Logo:</label><input type='file' style='height: 50px' class='form-control' name='fileuploaddata' id='fileuploaddata'><br/><p style='font-size:13px;'>allowed only Jpg,png formats below 5 MB</p></div>";
+                    var modalFooter = "<input type='button' class='btn btn-default modalBtnClass' id='uploadImageSubmit' value='Submit' data-dismiss='modal'>";
+                    appendDynamicContent('Change Company Logo', modalBody, modalFooter);
+                }
+            });
+
+               $(document).on("cut copy paste",".price, .qtytextbox",function(e) {
+                    e.preventDefault();
+                });
+               $('.selectAllList').on('click', function() {
+                    if ($(this).attr('id') == 'selectAllProduct') {
+                        if (addProductTableList.length > 0) {
+                            if($(this).prop("checked") == true) {
+                                addProductTable.$("input[type='checkbox']").prop('checked', true);
+                            }
+                            else if($(this).prop("checked") == false) {
+                                addProductTable.$("input[type='checkbox']").prop('checked', false);
+                            }
+                        }
+                    }
+                    else if ($(this).attr('id') == 'selectAllCustomer') {
+                        if (addProductTableList.length > 0) {
+                            if($(this).prop("checked") == true) {
+                                addCustomerTable.$("input[type='checkbox']").prop('checked', true);
+                            }
+                            else if($(this).prop("checked") == false) {
+                                addCustomerTable.$("input[type='checkbox']").prop('checked', false);
+                            }
+                        }
+                    }
+               });
+
+               function pullProductTable(addProductTableListData){
+                    $('#product').show();
+                    addProductTable.clear().draw();
+                    if (addProductTableListData.length > 0) {
+                        $.each(addProductTableListData, function( index, value ) {
+                            var sno = index+1;
+                            var discount = "<input class='discount' name='discount' id='discount_"+value.itemCode+"_"+value.salesItem__salesPrice+"_"+value.salesItem__salesCurrency__currencyTypeCode+"' value='' type='number' onInput='return check(event,value)' min='0' max='100' step='0.01'><span>%</span>";
+                            var actualSalesPrice = "<input class='actualSalesPrice' name='actualSalesPrice' id='actualSalesPrice_"+value.itemCode+"' value='"+value.salesItem__salesPrice+" "+value.salesItem__salesCurrency__currencyTypeCode+"' type='text' readonly>";
+                            var absoluteDiscount = "<input class='absoluteDiscount' name='absoluteDiscount' id='absoluteDiscount_"+value.itemCode+"_"+value.salesItem__salesPrice+"_"+value.salesItem__salesCurrency__currencyTypeCode+"' value='' type='number'><span>"+value.salesItem__salesCurrency__currencyTypeCode+"</span>";
+                            var qtyinput = "<input class='qtytextbox' name='qtytextbox' id='pricebox"+value.itemCode+"' value="+value.salesItem__salesPrice+" type='text' readonly><span>"+value.salesItem__salesCurrency__currencyTypeCode+"</span>";
+                            var action = "<input class='AddProductBtn' type='checkbox' id="+value.itemCode+" value= "+value.itemCode+">";
+                            addProductTable.row.add([sno,value.itemCode,value.itemName,value.itemCategory__prtCatName,value.salesItem__salesPrice+" "+value.salesItem__salesCurrency__currencyTypeCode ,discount,absoluteDiscount,qtyinput,action]).draw();
+                        });
+                        $('#submitAndSearchBtnDiv').show();
+                    }
+                    else {
+                        $('#submitAndSearchBtnDiv').hide();
+                    }
+               }
+
+
+$(document).on('change', '.discount', function() {
+    var discountId=$(this).attr('id');
+    var disVal = $('#'+discountId).val();
+    var float = disVal/100;
+    var result = discountId.split('_');
+    var actualSalesPrice = $('#pricebox'+result[1]).val();
+    var actualSalesPriceRes = actualSalesPrice.split(' ');
+    var salesPrice = result[2];
+    var res = float*salesPrice;
+    var actRes = salesPrice - res;
+    var absoluteDisVal = $('#absoluteDiscount_'+result[1]+'_'+result[2]+'_'+result[3]).val();
+    if (absoluteDisVal != ''){
+        var actVal = parseFloat(actRes)-parseFloat(absoluteDisVal);
+        var roundedString = actVal.toFixed(2);
+        var rounded = Number(roundedString);
+
+        if(absoluteDisVal < actRes){
+            $('#pricebox'+result[1]).empty();
+            $('#pricebox'+result[1]).val(rounded);
+        }
+        else{
+            $('#absoluteDiscount_'+result[1]+'_'+result[2]+'_'+result[3]).val('');
+            $('#absoluteDiscount_'+result[1]+'_'+result[2]+'_'+result[3]).focus();
+            var actVal = parseFloat(actRes);
+            var roundedString = actVal.toFixed(2);
+            var rounded = Number(roundedString);
+            $('#pricebox'+result[1]).empty();
+            $('#pricebox'+result[1]).val(rounded);
+            alert('Absolute Discount Should be less than Actual price ');
+            return false;
+        }
+        }
+
+    else{
+        var roundedString = actRes.toFixed(2);
+        var rounded = Number(roundedString);
+        $('#pricebox'+result[1]).empty();
+        $('#pricebox'+result[1]).val(rounded);
+    }
+
+});
+
+$(document).on('change', '.absoluteDiscount', function() {
+    var discountId=$(this).attr('id');
+    var result = discountId.split('_');
+    var absoluteDisVal = $('#'+discountId).val();
+    var actualSalesPrice = $('#pricebox'+result[1]).val();
+    var actualSalesPriceRes = actualSalesPrice.split(' ');
+    var disVal = $('#discount_'+result[1]+'_'+result[2]+'_'+result[3]).val();
+    if(absoluteDisVal == ''){
+        absoluteDisVal = 0;
+    }
+    if(disVal == ''){
+        disVal = 0;
+    }
+    if (disVal != ''){
+            var float = disVal/100;
+            var salesPrice = result[2];
+            var res = float*salesPrice;
+            var actRes = salesPrice - res;
+            var actVal = parseFloat(actRes)-parseFloat(absoluteDisVal);
+            var roundedString = actVal.toFixed(2);
+            var rounded = Number(roundedString);
+        if(absoluteDisVal < actRes){
+            $('#pricebox'+result[1]).empty();
+            $('#pricebox'+result[1]).val(rounded);
+        }
+        else{
+            $('#'+discountId).val('');
+            $('#'+discountId).focus();
+            alert('Absolute Discount Should be less than Actual price ');
+            return false;
+        }
+    }
+    else{
+            var salesPrice = result[2];
+            if(parseFloat(absoluteDisVal) > parseFloat(salesPrice)){
+                 $('#'+discountId).val('');
+                $('#'+discountId).focus();
+                alert('Absolute Discount Should be less than Actual price ');
+                $('#pricebox'+result[1]).empty();
+                $('#pricebox'+result[1]).val(parseFloat(salesPrice));
+                return false;
+            }
+            else{
+                var actVal = parseFloat(salesPrice)-parseFloat(absoluteDisVal);
+                var roundedString = actVal.toFixed(2);
+                var rounded = Number(roundedString);
+                $('#pricebox'+result[1]).empty();
+                $('#pricebox'+result[1]).val(rounded);
+            }
+
+
+    }
+
+});
+
+
+                function pullCustomerTable(addProductTableListData){
+                    $('#customer').show();
+                    addCustomerTable.clear().draw();
+                    if (addProductTableListData.length > 0) {
+                        $.each(addProductTableListData, function( index, value ) {
+                            var sno = index+1;
+                            var action = "<input class='AddCustomerBtn' type='checkbox' id="+value.customerId+" value= "+value.customerId+">";
+                            addCustomerTable.row.add([sno,value.cusCompanyName,value.cusEmail,"+"+value.cusCountryCode__countryCodeType+"-"+value.cusContactNo,value.cusCountry__countryName,value.cusState__stateName,action]).draw();
+                        });
+                        $('#submitAndSearchBtnDiv').show();
+                    }
+                    else {
+                        $('#submitAndSearchBtnDiv').hide();
+                    }
+                }
+
+         /* Hide Submit Btn & Search Btn Div Start */
+            $('#submitAndSearchBtnDiv').hide();
+         /* Hide Submit Btn & Search Btn Div End */
+         $(document).on('change', '.select_catsub', function() {
+                var changeId= $(this).attr('id');
+                var cat = $('#select_category').val();
+                var supVal = $('#select_suppliers').val();
+                var catsup = new Object();
+                var sup = new Array();
+                 $('.group').hide();
+                 //$('#'+$(this).val()).show();
+                 if(cat != "" && supVal != "" && $('input:checkbox.AddCustomerBtn:checked').length == 0 && $('input:checkbox.AddProductBtn:checked').length == 0 && changeId != 'select_category'){
+                    sup.push(supVal);
+                    catsup.type = cat;
+                    catsup.sup = supVal;
+                    //console.log(JSON.stringify(catsup));
+                    $('#product').hide();
+                    $('#customer').hide();
+                     $('.price').hide();
+                     $('#priceUnit').empty();
+
+                 $.ajax({
+                      url: "/listOfItemsCustomer",
+                      type: "POST",
+                      dataType : "json",
+					  contentType : "application/json",
+                      data: JSON.stringify(catsup),
+                      success: function (result)
+                      {
+                        if (result.status == 'success') {
+                            addProductTableList = result.totalItems[0].totalItem;
+                            if (cat=='customer'){
+                                pullProductTable(addProductTableList);
+                             }else if (cat=='catalog'){
+                                pullCustomerTable(addProductTableList);
+                             }
+                             else{
+                                 $('.price').show();
+                                 $('#priceId').val(result.totalItems[0].price);
+                                 $('#actualPrice').val(result.totalItems[0].price);
+                                 $('#priceUnit').append(result.totalItems[0].priceUnit);
+                                 pullCustomerTable(addProductTableList);
+                             }
+                        }
+                        else if (result.status == 'error'){
+                           addProductTable.clear().draw();
+                           addCustomerTable.clear().draw();
+                        }
+					  }
+                    });
+                    }
+
+                    else if(cat != "" ){
+
+                    catsup.type = cat;
+                    catsup.sup = sup;
+                    //console.log(JSON.stringify(catsup));
+                    $('#product').hide();
+                    $('#customer').hide();
+                     $('.price').hide();
+                     $('#priceUnit').empty();
+
+                 $.ajax({
+                      url: "/listOfItemsCustomer",
+                      type: "POST",
+                      dataType : "json",
+					  contentType : "application/json",
+                      data: JSON.stringify(catsup),
+                      success: function (result)
+                      {
+                        if (result.status == 'success') {
+                            addProductTableList = result.totalItems[0].totalItem;
+                            $('#select_suppliers').empty();
+                            $('#select_suppliers').append($('<option>', {value:'', text:'Select'}));
+                            if (cat=='customer'){
+                            for(i = 0; i < result.totalItems[0].totalCategory.length; i++){
+                                 $('#select_suppliers').append($('<option>', {value:result.totalItems[0].totalCategory[i].customerId, text:result.totalItems[0].totalCategory[i].cusCompanyName}));
+                                }
+                             }
+                             else if(cat=='catalog'){
+                             for(i = 0; i < result.totalItems[0].totalCategory.length; i++){
+                                 $('#select_suppliers').append($('<option>', {value:result.totalItems[0].totalCategory[i].salePrdtCatId, text:result.totalItems[0].totalCategory[i].catalogName}));
+                                }
+                             }
+                             else{
+                             for(i = 0; i < result.totalItems[0].totalCategory.length; i++){
+                                 $('#select_suppliers').append($('<option>', {value:result.totalItems[0].totalCategory[i].itemCode, text:result.totalItems[0].totalCategory[i].itemName}));
+                                }
+                             }
+                        }
+                        else if (result.status == 'error'){
+                           addProductTable.clear().draw();
+                           addCustomerTable.clear().draw();
+                        }
+					  }
+                    });
+
+                    }
+
+                    else{
+                         $('#product').hide();
+                         $('#customer').hide();
+                         $('.price').hide();
+                         $('#priceUnit').empty();
+                         $('#select_suppliers').empty();
+                         $('#select_suppliers').append($('<option>', {value:'', text:'Select'}));
+                        addProductTable.clear().draw();
+                         addCustomerTable.clear().draw();
+                    }
+
+
+            });
+             $(document).on('click', '#select_suppliers', function() {
+
+                   if($('input:checkbox.AddCustomerBtn:checked').length > 0){
+                      alert("You have selected the customer(s).");
+                    }
+                   else if($('input:checkbox.AddProductBtn:checked').length > 0){
+                      alert("You have selected the product(s).");
+                    }
+             });
+              $(document).on('click', '#select_category', function() {
+
+                   if($('input:checkbox.AddCustomerBtn:checked').length > 0){
+                      alert("You have selected the customer(s).");
+                    }
+                   else if($('input:checkbox.AddProductBtn:checked').length > 0){
+                      alert("You have selected the product(s).");
+                    }
+             });
+
+            $(document).on('click', '.AddProductBtn', function() {
+                    var codeId=$(this).attr('id');
+                 if($('#select_suppliers').val()==""){
+                      $('#'+codeId).prop('checked',false);
+                      alert("Please Select Customer");
+                 }
+
+                 else if($('#pricebox'+codeId).val()==""){
+                     $('#'+codeId).prop('checked',false);
+                        alert("Please enter the price")
+                 }
+
+            });
+            $(document).on('click', '.AddCustomerBtn', function() {
+                var codeId=$(this).attr('id');
+                 if($('#select_suppliers').val()==""){
+                      $('#'+codeId).prop('checked',false);
+                      alert("Please Select Product");
+                 }
+            });
+
+
+
+            $(document).on('click',	'#hitBtn', function() {
+
+                var cateGory = $('#select_category').val();
+                var prductOrCustomer = $('#select_suppliers').val();
+                var myArray = new Array();
+                var returnStatus;
+                if(cateGory==""){
+                    alert("Please Select Products/Customer/Catalog");
+                }
+                else if (cateGory == "product"){
+                    if($('#select_suppliers').val()==""){
+                        returnStatus = 'false';
+                        alert("Please Select Product");
+                    }
+                    else if($('input:checkbox.AddCustomerBtn:checked').length == 0){
+                        returnStatus = 'false';
+                        alert("Please Select Customer");
+                    }
+                    else if($('#priceId').val() ==""){
+                        returnStatus = 'false';
+                        alert("Please enter the price");
+                    }
+                    else if(parseFloat($('#priceId').val()) == 0) {
+                        returnStatus = 'false';
+                        alert("Price should not be zero");
+                    }
+                    else if($('#priceId').val() == ".") {
+                        returnStatus = 'false';
+                        alert("Enter valid price");
+                    }
+                    else if($('#priceId').val()[$('#priceId').val().length-1] == '.'){
+                        returnStatus = 'false';
+                        alert("Enter valid price");
+                    }
+                    else if ($('#priceId').val() != "" && parseFloat($('#priceId').val()) > 0) {
+                        returnStatus = 'true';
+                        $("input:checkbox.AddCustomerBtn:checked").each(function(){
+                                var totalItem = new Object();
+                                totalItem.customerId=($(this).val());
+                                myArray.push(totalItem);
+                        });
+                        var catsup ={"type":cateGory,"price":$('#priceId').val(),"primaryObject":prductOrCustomer,"data":myArray}
+                    }
+                }
+                else if (cateGory == "customer"){
+                    if($('#select_suppliers').val()==""){
+                        returnStatus = 'false';
+                        alert("Please Select Customer");
+                    }
+                    else if($('input:checkbox.AddProductBtn:checked').length == 0){
+                      returnStatus = 'false';
+                      alert("Please Select Product");
+                    }
+                    else {
+                        $("input:checkbox.AddProductBtn:checked").each(function() {
+                            var id = 'pricebox'+$(this).attr('id');
+                            if ($('#pricebox'+$(this).val()).val() == '') {
+                                $('#'+id+'').focus();
+                                returnStatus = 'false';
+                                return false;
+                                alert('Please enter the price');
+                            }
+                            else if (parseFloat($('#pricebox'+$(this).val()).val()) == 0) {
+                                $('#'+id+'').focus();
+                                returnStatus = 'false';
+                                return false;
+                                alert("Price should not be zero");
+                            }
+
+                            else if ($('#pricebox'+$(this).val()).val() == ".") {
+                                $('#'+id+'').focus();
+                                returnStatus = 'false';
+                                return false;
+                                alert("Enter valid price");
+                            }
+
+                            else if ($('#pricebox'+$(this).val()).val() != '' && parseFloat($('#pricebox'+$(this).val()).val()) > 0) {
+                                returnStatus = 'true';
+                                var totalItem = new Object();
+                                totalItem.itemCode = $(this).val();
+                                totalItem.price   = $('#pricebox'+$(this).val()).val();
+                                myArray.push(totalItem);
+                            }
+                        });
+                        var catsup ={"type":cateGory,"primaryObject":prductOrCustomer,"data":myArray}
+                    }
+                }
+                else if (cateGory == "catalog"){
+                    if($('#select_suppliers').val()==""){
+                        returnStatus = 'false';
+                        alert("Please Select Catalog");
+                    }
+                    else if($('input:checkbox.AddCustomerBtn:checked').length == 0){
+                      returnStatus = 'false';
+                      alert("Please Select Customer");
+                    }
+                    else {
+                       returnStatus = 'true';
+                        $("input:checkbox.AddCustomerBtn:checked").each(function(){
+                                var totalItem = new Object();
+                                totalItem.customerId=($(this).val());
+                                myArray.push(totalItem);
+                        });
+                        var catsup ={"type":cateGory,"primaryObject":prductOrCustomer,"data":myArray}
+                    }
+                }
+                if (returnStatus == 'true') {
+                 $("#hitBtn").prop("disabled", true);
+                     $.ajax({
+                      url: "/assignProductForCustomer",
+                      type: "POST",
+                      dataType : "json",
+					  contentType : "application/json",
+                      data: JSON.stringify(catsup),
+                      success: function (result)
+                      {
+                        if (result.status == 'success') {
+                        $("#hitBtn").prop("disabled", false);
+                            setTimeout(function() {
+                                    location.reload();
+                                }, 3000);
+                             alert(result.success_msg);
+                        }
+                        else if(result.status == 'error' && result.error_msg == 'sessionexpired'){
+                            setTimeout(function() {
+                                window.location.href = data.redirect_url;
+                            }, 2000);
+                            alert('Session has expired.');
+                        }
+
+					  }
+                    });
+                }
+            });
+
+            checkTreeCollapse();
+            function checkTreeCollapse() {
+                $(".tree-container li.tree-li").removeClass("is-child")
+                $(".tree-container li.tree-li").each(function () {
+                    if ($(this).find("ul.tree-ul li").length > 0) {
+                        $(this).addClass("is-child")
+                    }
+                });
+                $(".tree-container li.tree-li span.text").unbind("click");
+                $(".tree-container li.tree-li.is-child span.text").click(function () {
+                    $(this).parent(".tree-li").toggleClass("diactive");
+                    $(this).parent(".tree-li").find(".tree-ul:first").toggleClass("diactive");
+                });
+            }
+            window.scrollTo(0,0);
+            window.document.body.scrollTop++;
+
+            function appendDynamicContent(modalHead, modalBody, modalFooter) {
+                $('#exampleModalLongTitle').append(modalHead);
+                $('#modalBody').append(modalBody);
+                $('#modalFooter').append(modalFooter);
+                $('#exampleModalCenter').modal({backdrop: 'static', keyboard: false})
+                $('#exampleModalCenter').modal('toggle');
+                $('#exampleModalCenter').show();
+            }
+
+            $('#submit').on('click', function() {
+                $('#success_msg').empty();
+                $('#error_msg').empty();
+                if ($('#domainName').val() != '') {
+                    var data = "csrfmiddlewaretoken="+$('input[name=csrfmiddlewaretoken]').val()+"&domainName="+$('#domainName').val();
+                    $.ajax({
+                      url: "/renameSchemaURL",
+                      type: "POST",
+                      dataType: "text",
+                      data: data,
+                      async:false,
+                      success: function (result)
+                      {
+                        var data = JSON.parse(result);
+                        if (data.status == 'success') {
+                            $('#success_msg').append(data.success_msg);
+                            $("#domainName").prop("disabled",true);
+                            $("#submit").prop("disabled",true);
+                            setTimeout(function() {
+                                $('#success_msg').empty();
+                                window.location.href = data.redirect_url;
+                            }, 3000);
+                        }
+                        else if (data.status == 'error' && data.error_msg != 'sessionexpired') {
+                            $('#error_msg').append(data.error_msg);
+                        }
+                        else if (data.status == 'error' && data.error_msg == 'sessionexpired') {
+                            $('#domainName').val('');
+                            $('#error_msg').append('Session expired.');
+                            $("#domainName").prop("disabled",true);
+                            $("#submit").prop("disabled",true);
+                            setTimeout(function() {
+                                window.location.href = data.redirect_url;
+                            }, 3000);
+                        }
+                      }
+                     });
+                }
+                else {
+                    $('#error_msg').append('Please enter domain name');
+                }
+            });
+
+             /* Customize search option for DataTable Start */
+                $(document).on("keyup", "#searchOption", function(e) {
+                  if($('#product').css('display') == 'none') {
+                    $('#addCustomerTable').DataTable().search(this.value).draw();
+                  }
+                  else {
+                    $('#addProductTable').DataTable().search(this.value).draw();
+                  }
+                });
+             /* Customize search option for DataTable End */
+
+    });
+</script>
+{% endblock %}

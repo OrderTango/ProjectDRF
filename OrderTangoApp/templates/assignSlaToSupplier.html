@@ -1,0 +1,487 @@
+{% extends 'administrationpanelbase.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/administrationpanel.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/manualUploadForm.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.css' %}"/>
+<script src ="{% static 'js/jquery-ui.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+<style>
+
+    .headingSla {
+        color: #881999;
+        margin-left: 13px;
+    }
+    .sampleModalPopup {
+        max-width: 35%
+    }
+    #customerFileUpload {
+        display: none;
+    }
+    #profileModalBody{
+        max-height: calc(100vh - 200px);
+        overflow-y: auto;
+    }
+    .modal-dialog {
+        max-width: 800px;
+    }
+    .mandatory {
+        color: red
+    }
+    .ui-dialog-content{
+            color:red !important;
+            font-size: 17px ;
+        }
+    .ui-dialog{
+        width: 35% !important;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%) !important;
+        background-color: white;
+
+    }
+    .ui-dialog-buttonpane{
+        padding: 0em !important;
+    }
+    .ui-dialog-titlebar{
+        background-color: #cbc1e8;
+        color: black;
+        font-weight: bold;
+    }
+    .ui-dialog-buttonset{
+        justify-content: middle;
+    }
+
+    #assignSlaSubmit{
+        background: #ffd500;
+        color: #881999;
+        font-weight: bold;
+        border: 2px solid #881999;
+        border-radius: .25rem;
+        cursor: pointer;
+    }
+    #select_sla, #select_suppliers{
+        width: 253px;
+        height: 30px;
+        border: 1px solid #bb99c0;
+        border-radius: 8px;
+        padding: 4px !important;
+    }
+    #selectsites{
+        overflow-y: scroll;
+        height: 100px;
+        margin-left:20px;
+        border: 1px solid #881999;
+        border-radius: 5px;
+    }
+    #bodyContent {
+        margin-left: -15px;
+        background-color: #f9f3fa;
+    }
+@media (min-width:320px) and (max-width: 480px)  {
+    #basicDataDetailsForm{
+        margin-left:20px !important;
+    }
+    #id_firstName,#id_lastName,#id_email,#id_site,#id_companyName,#id_address_Line1,#id_address_Line2,#id_country,#id_state,#id_postalCode,#id_usradd_country,#id_usradd_address_Line1,#id_usradd_address_Line2,#id_usradd_state,#id_usradd_postalCode{
+        width:175px !important;
+    }
+    #id_countryCode{
+        width:40px !important;
+    }
+    #id_contactNo{
+        width:130px !important;
+    }
+    #id_unit1,#id_unit2,#id_usradd_unit1,#id_usradd_unit2{
+       width:78px !important;
+    }
+}
+</style>
+ <div class="row">
+      <div class="col-md-2 col-sm-4 col-24" id="sideBarLeft">
+            {% include "administrationpanelsidebar.html" %}
+      </div>
+      <div class="col-md-10 paddingLeftZero" id="bodyContent">
+        <div id="supplierProductDiv">
+            <div class="row">
+                <div class="col-md-6 col-sm-3 col-6">
+                    <h4 class="headingSla"> Assign SLA </h4>
+                </div>
+            </div>
+                    <div class='row'>
+                       <div class='offset-md-1 col-md-12' >
+                       <label class="col-md-2">Select SLA:</label>
+                        <select id="select_sla" class="col-md-3">
+                            <option value="">Select</option>
+                            {% for sla in sla %}
+                            <option value="{{sla.slaId}}">{{sla.slaType}}</option>
+                            {% endfor %}
+                        </select>
+                       </div>
+                    </div>
+
+                   <div class='row'>
+                       <div class='offset-md-1 col-md-12' >
+                       <label class="col-md-2">Select Supplier:</label>
+                        <select id="select_suppliers" class="col-md-3">
+                            <option value="">Select</option>
+                            {% for sup in sup %}
+                            <option value="{{sup.supplierId}}">{{sup.supCompanyName}}</option>
+                            {% endfor %}
+                        </select>
+                       </div>
+                   </div>
+
+                   <div class='offset-md-1 col-md-11 row' id="dynamicDataDiv" style="">
+                        <div class='row' >
+                           <div class="col-md-2"><label>Select Site:</label></div>
+                           <div class="col-md-3" id="selectsites" style="">
+                           </div>
+                        </div>
+                   </div>
+                <br/>
+
+
+            <div class="row" id="assignSlaSubmitBtn">
+                <div class='offset-md-3 col-md-2'>
+                    <input type="button" id="assignSlaSubmit" class="btn btn-primary" value="Submit">
+                </div>
+            </div>
+        </div>
+      </div>
+ </div>
+{% include "rightsidebar.html" %}
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modalBorderClass">
+          <div class="modal-header">
+            <h5 class="modal-title modalTitleHead" id="exampleModalLongTitle"> </h5>
+              <span id="modalCloseBtn">
+
+              </span>
+          </div>
+          <div class="modal-body">
+              <div id="success_msg" class="success_msg"> </div>
+              <div id="error_msg" class="error_msg"> </div>
+                <form role="form">
+                    {% csrf_token %}
+                    <div id="modalBody">
+
+                    </div>
+                </form>
+          </div>
+          <div class="modal-footer" id="modalFooter">
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="sampleModalPopup" tabindex="-1" role="dialog" aria-labelledby="sampleModalPopupTitle" data-toggle="modal" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered sampleModalPopup" role="document">
+        <div class="modal-content modalBorderClass">
+          <div class="modal-header">
+            <h5 class="modal-title modalTitleHead" id="exampleModalTitle"></h5>
+            <button type="button" class="close sampleModalPopupCloseBtn" id="popupCloseBtn" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">x</span>
+            </button>
+          </div>
+          <div class="modal-body" id="samplePopupBodyContent">
+
+          </div>
+          <div class="modal-footer">
+                <input type="button" id="submit" class="btn btn-primary modalBtnClass sampleModalPopupCloseBtn" data-dismiss="modal" aria-label="Close" value="Close">
+          </div>
+        </div>
+      </div>
+    </div>
+
+<div class="modal" id="viewProfileModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog viewProfileModal" style="max-width: 60%;">
+    <div class="modal-content" style="background-color: #f7f3fa;">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title" id="viewProfileModalTitle"> Profile </h4>
+        <button type="button" class="close viewProfileModalClose" data-dismiss="modal" aria-hidden="true">x</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body" id="profileModalBody">
+        <div class="row" >
+            <div class="col-md-12 col-sm-3 col-6 " >
+                <div class="col-md-12" id="viewProfileModalFormDiv">
+                    <form class="registrationform" id="updateProfileForm" role="form" method='POST'>
+
+                        {% csrf_token %}
+                        <div id="formsec1">
+                          <div class="form-group row registrationformdiv">
+                              <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.firstName.label_tag }}<span class="mandatory">*</span></label>
+                            {{ ProfileForm.firstName }}
+                          </div>
+                          <div class="offset-3 offset-sm-4 offset-md-3" id="firstNameError">{{ ProfileForm.firstName.errors }}</div>
+                          <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.lastName.label_tag }}<span class="mandatory">*</span></label>
+                             {{ ProfileForm.lastName }}
+                          </div>
+                          <div class="offset-3 offset-sm-4 offset-md-3" id="lastNameError">{{ ProfileForm.lastName.errors }} </div>
+                        </div>
+                        <div id="formsec2">
+
+                          <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.country.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.country }}
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="countryError"> {{ companyProfileForm.country.errors }} </div>
+                          <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.address_Line1.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.address_Line1 }}
+                            <label class="col-5 col-md-1 col-form-label unitlabel" id="unitlabel">Unit<span class="mandatory">*</span></label>
+                             {{ companyProfileForm.unit1 }}
+                            <p id="hyphen">-</p>
+                            {{ companyProfileForm.unit2 }}
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="address1Error"> {{ companyProfileForm.address_Line1.errors }} </div>
+                          <div class="form-group row registrationformdiv" id="addressTwoDiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.address_Line2.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.address_Line2 }}
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="address2Error"> {{ companyProfileForm.address_Line2.errors }} </div>
+                          <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.state.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.state }}
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="stateError"> {{ companyProfileForm.state.errors }} </div>
+                          <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.postalCode.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.postalCode }}
+
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="postalCodeError"> {{ companyProfileForm.postalCode.errors }} </div>
+                            <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.sec_question.label_tag }}<span class="mandatory">*</span></label>
+                            {{ ProfileForm.sec_question }}
+
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="secQuestionError"> {{ ProfileForm.sec_question.errors }} </div>
+                            <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.sec_answer.label_tag }}<span class="mandatory">*</span></label>
+                            {{ ProfileForm.sec_answer }}
+                            <div class="col-12 offset-sm-4 col-md-6" id="submitBtnDiv">  <input type="submit" id="profileUpdateButton" value="Update"> </div>
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="secAnswerError"> {{ ProfileForm.sec_answer.errors }} </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn editProductModalClose" id="editProductModalClose" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+    <div class="modal" id="loader"><!-- Place at bottom of page --></div>
+
+<script>
+           $body = $("body");
+           function load_states(country_id) {
+                if(country_id == ''){
+                $("#id_cusState").empty().append('<option value="">Select</option>');
+                }
+                else{
+                    $.ajax({
+                    url: "/load-states",
+                    data: {
+                    "country_id": country_id
+                    },
+                    success: function (data) {
+                        var states = JSON.parse(data.states);
+                        var stateAppendValues = "";
+                        $.each(states, function (key, val) {
+                        stateAppendValues = stateAppendValues + "<option value="+val.pk+">"+val.fields.stateName+"</option>";
+                        });
+                        $("#id_cusState").empty().append(stateAppendValues);
+                    }
+                    });
+                }
+           }
+
+            function load_shipping_states(country_id) {
+                $.ajax({
+                    url: "/load-states",
+                    data: {
+                      "country_id": country_id
+                    },
+                    success: function (data) {
+                      var states = JSON.parse(data.states);
+                      var stateAppendValues = "";
+                         $.each(states, function (key, val) {
+                        stateAppendValues = stateAppendValues + "<option value="+val.pk+">"+val.fields.stateName+"</option>";
+                        });
+                          $("#id_cusShipState").empty().append(stateAppendValues);
+                    }
+                });
+            }
+
+
+            $('#slide-submenu').on('click',function() {
+                $(this).closest('.list-group').fadeOut('slide',function(){
+                    $('.mini-submenu').fadeIn();
+                });
+            });
+
+
+        $(document).ready(function() {
+
+$('#dynamicDataDiv').css('display','none');
+
+$(document).on('change', '#select_suppliers', function() {
+     var supId = $(this).val();
+     var data = {'supId':supId};
+        $.ajax({
+              url: "/fetchSupplierSites",
+              type: "POST",
+              dataType : "json",
+              contentType : "application/json",
+              data: JSON.stringify(data),
+              success: function (data)
+              {
+              if (data.status == 'success') {
+              var sites = data.userData;
+              if(sites != ''){
+              $('#selectsites').empty();
+              $('#selectsites').append("<input type='checkbox' id='selectAllSites' > <label> All </label><br>");
+              $.each(sites, function( index, value ) {
+                   $('#selectsites').append("<input type='checkbox' class='sites' value='"+value.siteId+"' > <label> "+value.siteName+" </label><br>");
+
+                });
+
+                $('#dynamicDataDiv').css('display','block');
+                }
+                else{
+                    alert('No new sites found');
+                    location.reload();
+                }
+                }
+              }
+            });
+ });
+
+$(document).on('click', '#selectAllSites', function() {
+     if ($('#selectAllSites').prop('checked') == true) {
+        $(".sites").prop('checked', true);
+     }
+     else if ($('#selectAllSites').prop('checked') == false) {
+        $(".sites").prop('checked', false);
+     }
+  });
+
+
+
+$(document).on('click', '#assignSlaSubmit', function() {
+var sitesArray = [];
+var sla = $('#select_sla').val();
+var supplier = $('#select_suppliers').val();
+$(".sites:checked").each(function() {
+     sitesArray.push($(this).val());
+  });
+if(sla == ''){
+    alert('Please Select SLA');
+    $('#select_sla').focus();
+    return false;
+}
+else if(supplier == ''){
+    alert('Please Select Supplier');
+   $('#select_suppliers').focus();
+    return false;
+}
+else if(sitesArray == ''){
+    alert('Please Select Sites');
+    return false;
+}
+else{
+
+var data = {'sla':sla,'supplierId':supplier,'data':sitesArray};
+    $.ajax({
+          url: "/saveSlaForSupplierFromCus",
+          type: "POST",
+          dataType : "json",
+          contentType : "application/json",
+          data: JSON.stringify(data),
+          success: function (data)
+          {
+          if (data.status == 'success') {
+            alert(data.success_msg);
+            location.reload();
+            }
+          }
+        });
+    }
+
+});
+
+    $(document).on('click', '#companyLogoUpdateBtn', function() {
+        var form_data = new FormData();
+        var file_data = $('#companyLogo').prop('files')[0];
+         var data = "csrfmiddlewaretoken="+$('input[name=csrfmiddlewaretoken]').val()+"companyLogoPath="+file_data;
+
+            $.ajax({
+              url: "/logoupdate",
+              type: "POST",
+              dataType: "text",
+              data: data,
+              async:false,
+              success: function (data)
+              {
+
+              }
+            });
+    });
+
+    $('#domainName').val('');
+
+    $('#exampleModalCenter').on('shown.bs.modal', function() {
+      $('#domainName').focus();
+    });
+
+    $('#popupCloseBtn').on('click', function() {
+        $('#domainName').val('');
+        $('#successmsg').empty();
+        $('#errormsg').empty();
+    });
+
+
+    $('.mini-submenu').on('click',function(){
+        $(this).next('.list-group').toggle('slide');
+        $('.mini-submenu').hide();
+    })
+
+
+    $(document).on('keyup', '#googleLink', function() {
+        if ($('#googleLink').val() != '') {
+            $("#dragDropDiv").css("pointer-events","none");
+            $("#dragDropDiv").css("background","#ccc");
+        }
+        else if ($('#googleLink').val() == '') {
+            $("#dragDropDiv").css("pointer-events","auto");
+            $("#dragDropDiv").css("background","#fff");
+        }
+    });
+
+    function drop(event) {
+      event.stopPropagation();
+      event.preventDefault();
+      var input = document.getElementById("customerFileUpload");
+      input.files = event.dataTransfer.files; //It returns a FileList object
+    }
+    });
+
+</script>
+{% endblock %}

@@ -1,0 +1,260 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/new/registration.css' %}"/>
+<style>
+/* Hide Language Icon Start */
+.languageIcons {
+    display: none
+}
+/* Hide Language Icon End */
+
+</style>
+    <div class="container-fluid">
+            <div class="row">
+        <div class="col-md-6" id="logoLeft">
+             <div class="row">
+                <div class="col-md-6">
+                    <a class="navbar-brand" id="allStartFirstId" href="#"><img class="allstartatfirst"
+                                                                                    src="{% static 'images/register/allstartatfirst.png' %}"></a> <br />
+                    <span id="guideIconDiv">
+                    <a href="#"><img class="registerlearnmore"
+                                                                src="{% static 'images/register/learnmore.png' %}"></a>
+                        <a href="#" id="watchVideoReg"><img class="registerwatchvideo"
+                                                                src="{% static 'images/register/watchvideo.png' %}"></a>
+                    </span>
+                </div>
+                <div class="col-md-6 languageIconRow languageIcons" id="languageIconDiv">
+                    <ul class="nav" id="languageIconLeft">
+                         <li class="active">
+                            <img class="img-responsive languageIconClass" id="englishIcon" src="{% static 'images/register/english.png' %}" alt="English" />
+                          </li>
+                          <li>
+                            <img class="img-responsive languageIconClass" id="hindiIcon" src="{% static 'images/register/hindi.png' %}" alt="Hindi" />
+                          </li>
+                    </ul>
+                </div>
+             </div>
+        </div>
+        <div class="col-md-6 languageIconRow" id="logoRight">
+            <div class="col-12 col-md-6">
+
+            </div>
+             <div class="col-12 col-sm-12 col-md-6 languageIcons">
+                 <ul class="nav" id="languageIconRight">
+                         <li>
+                            <img class="img-responsive languageIconClass" id="bahasaIcon" src="{% static 'images/register/bahasa.png' %}" alt="English" />
+                          </li>
+                          <li>
+                            <img class="img-responsive languageIconClass" id="tamilIcon" src="{% static 'images/register/tamil.png' %}" alt="Hindi" />
+                          </li>
+                    </ul>
+             </div>
+        </div>
+    </div>
+      <div class="row">
+
+          <div id="bodyleft" class="col-md-6">
+          <hr size="20" class="registerhorizontalline">
+
+            <form class="registrationform" role="form" action='/registration/' method='POST'>
+                <p id="valuedcustomer">Valued Customer</p>
+                {% csrf_token %}
+                <div id="formsec1">
+                    {{ form.wsid }}
+                    {{ companyform.companyWsid }}
+                   <div class="form-group row registrationformdiv">
+                      <label class="col-5 col-md-3 col-form-label registrationformlabel">{{form.plan.label_tag }}<span class="mandatory">*</span></label>
+                        {{ form.plan }}
+                  </div>
+                  <div class="form-group row registrationformdiv">
+                      <label class="col-5 col-md-3 col-form-label registrationformlabel">{{form.firstName.label_tag }}<span class="mandatory">*</span></label>
+                    {{ form.firstName }}
+                  </div>
+                  <div class="offset-3 offset-sm-4 offset-md-2" id="firstNameError">{{ form.firstName.errors }}</div>
+                  <div class="form-group row registrationformdiv">
+                    <label class="col-5 col-md-3 col-form-label registrationformlabel">{{form.lastName.label_tag }}<span class="mandatory">*</span></label>
+                     {{ form.lastName }}
+                  </div>
+                  <div class="offset-3 offset-sm-4 offset-md-2" id="lastNameError">{{ form.lastName.errors }} </div>
+                  <div class="form-group row registrationformdiv">
+                    <label class="col-5 col-md-3 col-form-label registrationformlabel">{{form.contactNo.label_tag }}<span class="mandatory">*</span></label>
+                    {{ form.countryCode }}
+                    {{ form.contactNo }}
+                  </div>
+                     <div class="offset-3 offset-sm-4 offset-md-2" id="contactNoError">{{ form.contactNo.errors }} </div>
+                  <div class="form-group row registrationformdiv">
+                    <label class="col-5 col-md-3 col-form-label registrationformlabel">{{form.email.label_tag }}<span class="mandatory">*</span></label>
+                    {{ form.email }}
+                  </div>
+                    <div class="offset-3 offset-sm-4 offset-md-2" id="emailError">{{ form.email.errors }} </div>
+                  <div class="form-group row registrationformdiv">
+                    <label class="col-5 col-md-3 col-form-label registrationformlabel">{{form.password.label_tag }}<span class="mandatory">*</span></label>
+                   {{ form.password }}
+                  </div>
+                    <div class="offset-3 offset-sm-4 offset-md-2" id="passwordError">{{ form.password.errors }} </div>
+                  <div class="form-group row registrationformdiv">
+                    <label class="col-5 col-md-3 col-form-label registrationformlabel">{{form.confirm_password.label_tag }}<span class="mandatory">*</span></label>
+                    {{ form.confirm_password }}
+                  </div>
+                    <div class="offset-3 offset-sm-4 offset-md-2" id="confirmPasswordError"> {{ form.confirm_password.errors }}</div>
+                </div>
+                <hr size="20" class="registerhorizontalline">
+                 <p id="companyinformation">Company Information</p>
+                <div id="formsec2">
+                  <div class="form-group row registrationformdiv">
+                    <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyform.companyName.label_tag }}<span class="mandatory">*</span></label>
+                    {{ companyform.companyName }}
+                  </div>
+                    <div class="offset-3 offset-sm-4 offset-md-2" id="companyNameError"> {{ companyform.companyName.errors }} </div>
+                  <div class="form-group row registrationformdiv">
+                    <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyform.country.label_tag }}<span class="mandatory">*</span></label>
+                    {{ companyform.country }}
+                  </div>
+                    <div class="offset-3 offset-sm-4 offset-md-2" id="countryError"> {{ companyform.country.errors }} </div>
+                  <div class="form-group row registrationformdiv">
+                    <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyform.address_Line1.label_tag }}<span class="mandatory">*</span></label>
+                    {{ companyform.address_Line1 }}
+                    <label class="col-5 col-md-1 col-form-label unitlabel" id="unitlabel">Unit<span class="mandatory">*</span></label>
+                     {{ companyform.unit1 }}
+                    <p id="hyphen">-</p>
+                    {{ companyform.unit2 }}
+                  </div>
+                    <div class="offset-3 offset-sm-4 offset-md-2" id="address1Error"> {{ companyform.address_Line1.errors }} </div>
+                  <div class="form-group row registrationformdiv" id="addressTwoDiv">
+                    <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyform.address_Line2.label_tag }}<span class="mandatory">*</span></label>
+                    {{ companyform.address_Line2 }}
+                  </div>
+                    <div class="offset-3 offset-sm-4 offset-md-2" id="address2Error"> {{ companyform.address_Line2.errors }} </div>
+                  <div class="form-group row registrationformdiv">
+                    <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyform.state.label_tag }}<span class="mandatory">*</span></label>
+                    {{ companyform.state }}
+                  </div>
+                    <div class="offset-3 offset-sm-4 offset-md-2" id="stateError"> {{ companyform.state.errors }} </div>
+                  <div class="form-group row registrationformdiv">
+                    <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyform.postalCode.label_tag }}<span class="mandatory">*</span></label>
+                    {{ companyform.postalCode }}
+
+                  </div>
+                    <div class="offset-3 offset-sm-4 offset-md-2" id="postalCodeError"> {{ companyform.postalCode.errors }} </div>
+                    <div class="form-group row registrationformdiv">
+                    <label class="col-5 col-md-3 col-form-label registrationformlabel">{{form.sec_question.label_tag }}<span class="mandatory">*</span></label>
+                    {{ form.sec_question }}
+
+                  </div>
+                    <div class="offset-3 offset-sm-4 offset-md-2" id="secQuestionError"> {{ form.sec_question.errors }} </div>
+                    <div class="form-group row registrationformdiv">
+                    <label class="col-5 col-md-3 col-form-label registrationformlabel">{{form.sec_answer.label_tag }}<span class="mandatory">*</span></label>
+                    {{ form.sec_answer }}
+                    <!--<div class="col-12 col-md-6" id="submitBtnDiv">  <input type="submit" id="registerbutton" value=""> </div>-->
+                       <!--<div class="col-12 col-md-6" id="submitBtnDiv">  <button type="submit" id="registerbtn">Register <img class="img-responsive" style="height:28px" src="{% static 'images/newLogo.png' %}"/></button></div>-->
+                  </div>
+                    <div class="offset-3 offset-sm-4 offset-md-2" id="secAnswerError"> {{ form.sec_answer.errors }} </div>
+                    <br/>
+                    <div class="form-group row registrationformdiv">
+                    <!--<div class="col-12 col-md-6" id="submitBtnDiv">  <input type="submit" id="registerbutton" value=""> </div>-->
+                        <br/><div class="col-12 col-md-6" id="submitBtnDiv">  <button type="submit" id="registerbtn">Register <img class="img-responsive" style="height:28px" src="{% static 'images/newLogo.png' %}"/></button></div>
+                  </div>
+
+                </div>
+
+            </form>
+             <br/><br/>
+          </div>
+
+           <div id="bodyright" class="col-md-6 col-lg-6 col-xl-6">
+                <div class="row " style="height: 60% !important;">
+                    <img class="col-12 col-md-12 col-lg-12 col-xl-12 godigital img-responsive" id="goDigitalImage" style="height:100%" src="{% static 'images/register/newgodigi.png' %}">
+
+                </div>
+               <div class="row" style="height: 40% !important;">
+
+                </div>
+            </div>
+          </div>
+          <div class="row" id="bgFooter">
+            <div class="col-md-6 col-lg-6 col-xl-6">
+            </div>
+            <div class="col-md-6 col-lg-6 col-xl-6">
+                 <div class="footer-right">
+                    <img class="bottomImage img-responsive" src="{% static 'images/register/newfootimg.png' %}">
+                </div>
+            </div>
+
+          </div>
+
+    </div>
+<script>
+
+var planArrayValue = document.getElementById('id_plan');
+var planIdArray = [];
+var planNameArray = [];
+for (i = 0; i < planArrayValue.options.length; i++) {
+   planIdArray[i] = planArrayValue.options[i].value;
+   planNameArray[i] = planArrayValue.options[i].text;
+}
+
+var url_string = window.location.href;
+var url = new URL(url_string);
+
+var planIndex = planNameArray.indexOf(url.searchParams.get("plan"));
+$('#id_plan').find('option[value="'+planIdArray[planIndex]+'"]').attr("selected",true);
+
+function load_states(country_id){
+if(country_id == ''){
+$("#id_state").empty().append('<option value="">Select</option>');
+}
+else{
+$.ajax({
+url: "/load-states",
+data: {
+"country_id": country_id
+},
+success: function (data) {
+var states = JSON.parse(data.states);
+var stateAppendValues = "";
+$.each(states, function (key, val) {
+stateAppendValues = stateAppendValues + "<option value="+val.pk+">"+val.fields.stateName+"</option>";
+});
+$("#id_state").empty().append(stateAppendValues);
+}
+});
+}
+}
+
+  $(function() {
+
+        $('ul#languageIconLeft li').on( 'click', function() {
+              $( this ).parent().find( 'li.active' ).removeClass( 'active' );
+              $('ul#languageIconRight li').removeClass( 'active' );
+              $( this ).addClass( 'active' );
+        });
+        $('ul#languageIconRight li').on( 'click', function() {
+              $( this ).parent().find( 'li.active' ).removeClass( 'active' );
+              $('ul#languageIconLeft li').removeClass( 'active' );
+              $( this ).addClass( 'active' );
+        });
+        if('{{ form.email.errors }}' != ''){
+            document.getElementById("id_email").focus();
+        }
+        else if('{{ form.confirm_password.errors }}' != ''){
+            document.getElementById("id_password").focus();
+        }
+        else{
+            document.getElementById("id_firstName").focus();
+        }
+  });
+$('input#registerbtn').click( function() {
+       var pwd = $('#id_password').val();
+        var cpwd = $('#id_confirm_password').val();
+        if(pwd.length > 0 && pwd.slice(-1) == " "){
+            return false;
+            alert("Space at the end are not allowed in password field");
+        }
+        if(cpwd.length > 0 && cpwd.slice(-1) == " "){
+            return false;
+            alert("Space at the end are not allowed in confirm password field");
+        }
+});
+</script>
+{% endblock %}

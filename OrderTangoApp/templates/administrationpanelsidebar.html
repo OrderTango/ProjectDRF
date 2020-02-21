@@ -1,0 +1,310 @@
+<style>
+.navbar-global {
+  background-color: indigo;
+}
+
+.navbar-global .navbar-brand {
+  color: white;
+}
+
+.navbar-global .navbar-user > li > a
+{
+  color: white;
+}
+
+.navbar-primary {
+  bottom: 0px;
+  left: 0px;
+  position: relative;
+  top: 0px;
+  z-index: 8;
+  overflow: hidden;
+  -webkit-transition: all 0.1s ease-in-out;
+  -moz-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+}
+
+.navbar-primary.collapsed {
+  width: 70px;
+}
+
+.navbar-primary.collapsed .glyphicon {
+  font-size: 22px;
+}
+
+.navbar-primary.collapsed .nav-label {
+  display: none;
+}
+
+.navbar-primary-right {
+  bottom: 0px;
+  right: 0px;
+  position: relative;
+  z-index: 8;
+  overflow: hidden;
+  -webkit-transition: all 0.1s ease-in-out;
+  -moz-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+}
+
+.navbar-primary-right.collapsed-right {
+  width: 60px;
+}
+
+.navbar-primary-right.collapsed-right .glyphicon {
+  font-size: 22px;
+}
+
+.navbar-primary-right.collapsed-right .nav-label {
+  display: none;
+}
+
+.navbar-primary-menu,
+.navbar-primary-menu li {
+  margin:0; padding:0;
+  list-style: none;
+}
+
+.navbar-primary-menu li a {
+  display: block;
+  padding: 2px 4px 2px 10px;
+  text-align: left;
+  color: black;
+}
+
+.navbar-primary-menu li a:hover {
+  text-decoration: none;
+  color: black;
+}
+
+.navbar-primary-menu li a .glyphicon {
+  margin-right: 6px;
+}
+
+.navbar-primary-menu li a:hover .glyphicon {
+  color: orchid;
+}
+
+#adminManagementIcon {
+  background: #9e4faa;
+  padding-bottom: 3%;
+}
+#orderManagementIcon {
+  background: #ffd500;
+  padding-bottom: 15%;
+}
+#adminManagementIcon li a {
+  color: #ffffff;
+  font-size: 13px !important;
+}
+#adminManagementIcon li a span {
+  margin-left: 2%;
+}
+#orderManagementIcon li a {
+  color: #474747;
+  font-size: 13px !important;
+}
+#orderManagementIcon li a span {
+  margin-left: 2%;
+}
+.overflowAuto {
+    overflow: auto
+}
+.adminHead {
+    color: #fff;
+    font-weight: bold
+}
+.operationHead {
+    font-weight: bold
+}
+/* ---------------------------------------------------
+    Right SIDEBAR STYLE
+----------------------------------------------------- */
+
+#sidebar {
+    width: 250px;
+    position: fixed;
+    top: 11%;
+    right: -270px;
+    height: 100%;
+    z-index: 999;
+    background: #fff;
+    border: 1px solid #881999;
+    transition: all 0.3s;
+    overflow-y: scroll;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+#sidebar.active {
+    right: 0;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 998;
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+}
+.overlay.active {
+    display: block;
+    opacity: 1;
+}
+a[data-toggle="collapse"] {
+    position: relative;
+}
+/* Right Sidebar Style */
+#sideBarLeft {
+    background-color: #ffffff
+}
+/* Menu Alignment Style Start */
+.menuChildClass {
+    margin-left: 10%
+}
+.menuGrandChildClass {
+    margin-left: 20%
+}
+#profileInfoDiv {
+    margin-top: 5%;
+    margin-bottom: 5%
+}
+/* Menu Alignment Style End */
+</style>
+{% load static %}
+<nav class="navbar-primary">
+  <ul class="navbar-primary-menu">
+    <li class="overflowAuto" id="overFlowLeft">
+        <a href="#" class="btn-expand-collapse-left"><span class="nav-label pull-right"><img class="img-responsive imageUpload" height="25" src="{% static 'images/close.png' %}" alt=""/></span></a>
+    </li>
+    <li id="profileInfoDiv">
+      <div class="row justify-content-center" id="logoCompany">
+          {% if user.profilepic %}
+            <img class="img-responsive imageUpload iconMF" id="iconMF" src="{{ user.profilepic.url }}" alt=""/>
+          {% else %}
+            <img class="img-responsive imageUpload iconMF" id="iconMF" src="{% static 'images/user-icon-1.png' %}" alt=""/>
+          {% endif %}
+      </div>
+      <div class="row justify-content-center">
+        <span class="nav-label commonFontSize">Signed in As </span>
+      </div>
+      <div class="row justify-content-center">
+        <span class="nav-label commonFontSize">{{ user.firstName }} {{ user.lastName }}</span>
+      </div>
+    </li>
+  </ul>
+  <ul class="navbar-primary-menu" id="adminManagementIcon">
+    <li>
+        <div class="row justify-content-center" id="logoCompany">
+            <!--<img class="img-responsive imageUpload iconMF"  src="{% static 'images/ad_op_icon.png' %}" alt=""/>-->
+            <i class="flaticon-user-avatar-with-check-mark"></i>
+        </div>
+        <div class="row justify-content-center">
+            <span class="nav-label commonFontSize adminHead">Admin</span>
+        </div>
+    </li>
+    <li><a href="{% url 'dashboard' %}"><i class="flaticon-four-squares-with-frame-shape"></i> <span class="nav-label">Dashboard</span></a></li>
+    <li>
+            <a href="#dataadministrationmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                <i class="flaticon-file"></i> <span class="nav-label">Data Administration</span>
+            </a>
+            <ul class="collapse list-unstyled menuChildClass" id="dataadministrationmenu">
+                <li>
+                    <a href="#onboardingmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="flaticon-pilot-hat"></i>
+                        <span class="nav-label">Onboarding</span></a>
+                </li>
+                 <ul class="collapse list-unstyled menuGrandChildClass" id="onboardingmenu">
+                    <li>
+                        <a href="{% url 'administrationpanel' %}?module=customer"><i class="flaticon-customer"></i><span class="nav-label">Customer</span></a>
+                    </li>
+                    <li>
+                        <a href="{% url 'administrationpanel' %}?module=vendor"><i class="flaticon-shopping-groceries"></i><span class="nav-label">Vendor</span></a>
+                    </li>
+                    <li>
+                        <a href="{% url 'administrationpanel' %}?module=product"><i class="flaticon-product"></i><span class="nav-label">Product</span></a>
+                    </li>
+                </ul>
+
+            </ul>
+
+    </li>
+    <li>
+        <a href="#useradministrationmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            <i class="flaticon-user-key-on-screen"></i> <span class="nav-label">User Administration</span>
+        </a>
+        <ul class="collapse list-unstyled menuChildClass" id="useradministrationmenu">
+            <li><a href="{% url 'viewUser' %}"><i class="flaticon-zoom"></i> <span class="nav-label">View User</span></a></li>
+        </ul>
+    </li>
+    <li><a href="{% url 'createOrViewSLA' %}"><i class="flaticon-signing-the-contract"></i> <span class="nav-label">Service Level Agreement</span></a></li>
+    <li><a href="{% url 'fetchAllSupplierForSlaAssign' %}"><i class="flaticon-signing-the-contract"></i> <span class="nav-label">SLA To Suppliers</span></a></li>
+    <li>
+        <a href="#companyhierarchymenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            <i class="flaticon-hierarchical-structure"></i><span class="nav-label">Company Hierarchy</span>
+        </a>
+        <ul class="collapse list-unstyled menuChildClass" id="companyhierarchymenu">
+            <li><a href="{% url 'viewArea' %}"><i class="flaticon-map"></i> <span class="nav-label">Area</span></a></li>
+            <li>
+                <a href="{% url 'viewSite' %}"  >
+                    <i class="flaticon-viral-marketing"></i> <span class="nav-label">Site</span>
+                </a>
+            </li>
+            <li>
+                <a href="#"  >
+                    <i class="flaticon-market-store"></i> <span class="nav-label">Store</span>
+                </a>
+            </li>
+
+        </ul>
+    </li>
+    <li>
+        <a href="#securitymenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            <i class="flaticon-protection"></i> <span class="nav-label">Security & Permission</span>
+        </a>
+        <ul class="collapse list-unstyled menuChildClass" id="securitymenu">
+            <li><a href="#"><i class="flaticon-login"></i> <span class="nav-label">User Access</span></a></li>
+            <li><a href="#"><i class="flaticon-audit"></i> <span class="nav-label">Audit Logs</span></a></li>
+            <li><a href="#"><i class="flaticon-api"></i> <span class="nav-label">Integration / API</span></a></li>
+            <li><a href="#"><i class="flaticon-protection"></i> <span class="nav-label">Security & Permission</span></a></li>
+        </ul>
+    </li>
+  </ul>
+  <ul class="navbar-primary-menu" id="orderManagementIcon">
+    <li>
+        <div class="row justify-content-center" id="logoCompany">
+            <i class="flaticon-admin-1O"></i>
+        </div>
+        <div class="row justify-content-center">
+            <span class="nav-label commonFontSize operationHead">Operations</span>
+        </div>
+    </li>
+    <li><a href="{% url 'operationalpanel' %}"><i class="flaticon-four-squares-with-frame-shapeO"></i> <span class="nav-label">Dashboard</span></a></li>
+    <li>
+       <a href="#ordermgmtmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="flaticon-boxO"></i>
+                <span class="nav-label">Order Management</span></a>
+        <ul class="collapse list-unstyled menuChildClass" id="ordermgmtmenu">
+            <li><a href="{% url 'placeOrder' %}"><i class="flaticon-planningO"></i><span class="nav-label">Order</span></a></li>
+            <li><a href="{% url 'customerProductPanel' %}"><i class="flaticon-meetingO"></i><span class="nav-label">Customer Catalog</span></a></li>
+            <li><a href="{% url 'supplierProductPanel' %}"><i class="flaticon-collaborationO"></i><span class="nav-label">Supplier Catalog</span></a></li>
+            <li><a href="{% url 'productsalescatalog' %}"><i class="flaticon-collaborationO"></i><span class="nav-label">Sales Catalog</span></a></li>
+            <li><a href="{% url 'productpurchasecatalog' %}"><i class="flaticon-collaborationO"></i><span class="nav-label">Purchase Catalog</span></a></li>
+            <li><a href="{% url 'vieworders' %}"><i class="flaticon-packing-listO"></i><span class="nav-label">View Orders</span></a></li>
+            <li><a href="#"><i class="flaticon-analyticsO"></i><span class="nav-label">Reports</span></a></li>
+        </ul>
+    </li>
+    <li>
+        <a href="#inventorymgmtmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="flaticon-inventoryO"></i>
+            <span class="nav-label">Inventory Management</span></a>
+        <ul class="collapse list-unstyled menuChildClass" id="inventorymgmtmenu">
+            <li><a href="#"><i class="flaticon-magnifier-on-calendar-pageO"></i><span class="nav-label">View Stocks</span></a></li>
+            <li><a href="#"><i class="flaticon-updateO"></i><span class="nav-label">Update Stocks</span></a></li>
+            <li><a href="#"><i class="flaticon-abacusO"></i><span class="nav-label">Stock Counts</span></a></li>
+            <li><a href="#"><i class="flaticon-trackingO"></i><span class="nav-label">Transfer Stocks</span></a></li>
+            <li><a href="#"><i class="flaticon-documentO"></i><span class="nav-label">Record Wastage</span></a></li>
+        </ul>
+    </li>
+    </li>
+  </ul>
+</nav>

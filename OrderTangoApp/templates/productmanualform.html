@@ -1,0 +1,305 @@
+{% load static %}
+<style>
+
+</style>
+<div id="productManual">
+    <div id="productManualTabDiv">
+        <div class="row bgColor paddingLeftRightTen" id="productManualTabId">
+            <div class="col-md-8 productTabOptionDiv">
+                <span class="col-md-2 nonActive tabOption tabOptionActive borderLeftRadiusTab" id="tabOption0_P">
+                    <a href="#" class="customerManual uploadActive" id="basicData_p">Basic Data</a>
+                </span>
+                <span class="col-md-2 nonActive tabOption" id="tabOption1_P">
+                    <a href="#" class="customerManual" id="purchaseInfo_p">Purchase Info</a>
+                </span>
+                <span class="col-md-2 nonActive tabOption" id="tabOption2_P">
+                    <a href="#" class="customerManual" id="salesInfo_p">Sales Info</a>
+                </span>
+                 <span class="col-md-2 nonActive tabOption" id="tabOption3_P">
+                    <a href="#" class="customerManual" id="measurement_p">Measurement</a>
+                </span>
+                <span class="col-md-2 nonActive tabOption" id="tabOption4_P">
+                    <a href="#" class="customerManual" id="storage_p">Storage</a>
+                </span>
+                <span class="col-md-2 nonActive tabOption borderRightRadiusTab" id="tabOption5_P">
+                    <a href="#" class="customerManual" id="parameter_p">Parameter</a>
+                </span>
+            </div>
+            <div class="col-md-4">
+                <img src="{% static 'images/register/watchvideo.png' %}" class="img-responsive pull-right watchVideo">
+            </div>
+        </div>
+    </div>
+    <div id="productManualFormContent">
+        <div class="col-md-12" id="productManualFormDiv">
+            <form class="post-form" id="productManualForm" role="form">
+                {% csrf_token %}
+                <div class="customerManualForm" id="basicDataDetail">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div>
+                                   <h3> Product </h3>
+                            </div>
+
+                            <input type="text" name="type" maxlength="50" id="id_type" value="product" style="display:none">
+
+                            <div class="form-group row customerDetailsForm">
+                             <label class="col-5 col-md-6 col-form-label customerDetailsFormLabel">{{itemMasterAddForm.itemName.label_tag }}<span class="mandatory">*</span></label>
+                                        {{ itemMasterAddForm.itemName }}
+                            </div>
+                            <div class="form-group row customerDetailsForm">
+                             <label class="col-5 col-md-6 col-form-label customerDetailsFormLabel">{{itemMasterAddForm.itemCode.label_tag }}<span class="mandatory">*</span></label>
+                                        {{ itemMasterAddForm.itemCode }}
+                            </div>
+                            <div class="form-group row customerDetailsForm">
+                             <label class="col-5 col-md-6 col-form-label customerDetailsFormLabel">{{itemMasterAddForm.alterItemName.label_tag }}</label>
+                                        {{ itemMasterAddForm.alterItemName }}
+                            </div>
+                            <div class="form-group row customerDetailsForm">
+                             <label class="col-5 col-md-6 col-form-label customerDetailsFormLabel">{{itemMasterAddForm.alterItemCode.label_tag }}</label>
+                                        {{ itemMasterAddForm.alterItemCode }}
+                            </div>
+                            <div class="form-group row customerDetailsForm">
+                             <label class="col-5 col-md-6 col-form-label customerDetailsFormLabel">{{itemMasterAddForm.brandName.label_tag }}<span class="mandatory">*</span></label>
+                                        {{ itemMasterAddForm.brandName }}
+                            </div>
+                            <div class="form-group row customerDetailsForm">
+                             <label class="col-5 col-md-6 col-form-label customerDetailsFormLabel">{{itemMasterAddForm.itemDesc.label_tag }}<span class="mandatory">*</span></label>
+                                        {{ itemMasterAddForm.itemDesc }}
+                            </div>
+                            <div class="form-group row customerDetailsForm">
+                             <label class="col-5 col-md-6 col-form-label customerDetailsFormLabel">{{itemMasterAddForm.packingUnit.label_tag }}</label>
+                                        {{ itemMasterAddForm.packingUnit }}
+                            </div>
+                            <div class="form-group row customerDetailsForm">
+                             <label class="col-5 col-md-6 col-form-label customerDetailsFormLabel">{{itemMasterAddForm.manufacturingLeadTime.label_tag }}</label>
+                                        {{ itemMasterAddForm.manufacturingLeadTime }}
+                            </div>
+                            <div class="form-group row customerDetailsForm">
+                             <label class="col-5 col-md-6 col-form-label customerDetailsFormLabel">{{itemMasterAddForm.articleType.label_tag }}<span class="mandatory">*</span></label>
+                                        {{ itemMasterAddForm.articleType }}
+                            </div>
+                            <div class="form-group row customerDetailsForm">
+                             <label class="col-5 col-md-6 col-form-label customerDetailsFormLabel">{{itemMasterAddForm.itemCategory.label_tag }}<span class="mandatory">*</span></label>
+                                        {{ itemMasterAddForm.itemCategory }}
+                            </div>
+                            <div class="form-group row customerDetailsForm">
+                             <label class="col-5 col-md-6 col-form-label customerDetailsFormLabel">{{itemMasterAddForm.itemMerchantCategory.label_tag }}</label>
+                                        {{ itemMasterAddForm.itemMerchantCategory }}
+                            </div>
+                            <div class="form-group row customerDetailsForm">
+                             <label class="col-5 col-md-6 col-form-label customerDetailsFormLabel">{{itemMasterAddForm.itemMerchantCategoryOne.label_tag }}</label>
+                                        {{ itemMasterAddForm.itemMerchantCategoryOne }}
+                            </div>
+                            <div class="form-group row customerDetailsForm">
+                             <label class="col-5 col-md-6 col-form-label customerDetailsFormLabel">{{itemMasterAddForm.itemMerchantCategoryTwo.label_tag }}</label>
+                                        {{ itemMasterAddForm.itemMerchantCategoryTwo }}
+                            </div>
+                            <div class="form-group row customerDetailsForm">
+                             <label class="col-5 col-md-6 col-form-label customerDetailsFormLabel">{{itemMasterAddForm.itemStorageCondition.label_tag }}<span class="mandatory">*</span></label>
+                                        {{ itemMasterAddForm.itemStorageCondition }}
+                            </div>
+                            <div class="form-group row customerDetailsForm">
+                             <label class="col-5 col-md-6 col-form-label customerDetailsFormLabel">{{itemMasterAddForm.baseUom.label_tag }}<span class="mandatory">*</span></label>
+                                        {{ itemMasterAddForm.baseUom }}
+                            </div>
+                             <div class="form-group row customerDetailsForm">
+                             <label class="col-5 col-md-6 col-form-label customerDetailsFormLabel">{{itemMasterAddForm.selfManufacturing.label_tag }}</label>
+                                        {{ itemMasterAddForm.selfManufacturing }}
+                            </div>
+
+                            <div class="form-group row customerDetailsForm">
+                             <label class="col-5 col-md-6 col-form-label customerDetailsFormLabel">{{ itemMasterAddForm.productDetail.label_tag}}</label>
+                                 {{ itemMasterAddForm.productDetail}}
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div>
+                                   <h3> Attribute </h3>
+                            </div>
+
+                            <div class="form-group row customerDetailsForm">
+                             <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{attributeForm.attributeColor.label_tag }}</label>
+                                        {{ attributeForm.attributeColor }}
+                            </div>
+                            <div class="form-group row customerDetailsForm">
+                             <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{attributeForm.attributeSize.label_tag }}</label>
+                                        {{ attributeForm.attributeSize }}
+                            </div>
+                            <div class="form-group row customerDetailsForm">
+                             <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{attributeForm.attributeDesign.label_tag }}</label>
+                                        {{ attributeForm.attributeDesign }}
+                            </div>
+                            <div class="form-group row customerDetailsForm">
+                             <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{attributeForm.attributeStyle.label_tag }}</label>
+                                        {{ attributeForm.attributeStyle }}
+                            </div>
+                            <div class="form-group row customerDetailsForm">
+                             <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{attributeForm.attributeOther.label_tag }}</label>
+                                        {{ attributeForm.attributeOther }}
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="cfNextBtn btn btn-primary" id="purchaseInfo_basicData_Detail_NBtn">Next</button>
+                </div>
+                <div class="customerManualForm" id="purchaseInfoDetail">
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{purchasingForm.purchasingUom.label_tag }}<span class="mandatory">*</span></label>
+                                {{ purchasingForm.purchasingUom }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{purchasingForm.purchasingTax.label_tag }}<span class="mandatory">*</span></label>
+                                {{ purchasingForm.purchasingTax }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{purchasingForm.purchasingPrice.label_tag }}<span class="mandatory">*</span></label>
+                                {{ purchasingForm.purchasingPrice }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{purchasingForm.purchasingCurrency.label_tag }}<span class="mandatory">*</span></label>
+                                {{ purchasingForm.purchasingCurrency }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{purchasingForm.purchasingPriceUnit.label_tag }}<span class="mandatory">*</span></label>
+                                {{ purchasingForm.purchasingPriceUnit }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{purchasingForm.purchasingUomForKg.label_tag }}<span class="mandatory">*</span></label>
+                                {{ purchasingForm.purchasingUomForKg }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{purchasingForm.purchasingOrderText.label_tag }}<span class="mandatory">*</span></label>
+                                {{ purchasingForm.purchasingOrderText }}
+                    </div>
+                    <button type="button" class="cfBackBtn btn btn-primary" id="basicData_Detail_BBtn">Back</button>
+                    <button type="button" class="cfNextBtn btn btn-primary" id="salesInfo_purchaseInfo_basicData_Detail_NBtn">Next</button>
+                </div>
+
+                <div class="customerManualForm" id="salesInfoDetail">
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{salesForm.salesUom.label_tag }}<span class="mandatory">*</span></label>
+                                {{ salesForm.salesUom }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{salesForm.salesTax.label_tag }}<span class="mandatory">*</span></label>
+                                {{ salesForm.salesTax }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{salesForm.salesCategoryGrp.label_tag }}</label>
+                                {{ salesForm.salesCategoryGrp }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{salesForm.salesOrderText.label_tag }}</label>
+                                {{ salesForm.salesOrderText }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{salesForm.salesPrice.label_tag }}<span class="mandatory">*</span></label>
+                                {{ salesForm.salesPrice }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{salesForm.salesCurrency.label_tag }}<span class="mandatory">*</span></label>
+                                {{ salesForm.salesCurrency }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{salesForm.salesPriceUnit.label_tag }}</label>
+                                {{ salesForm.salesPriceUnit }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{salesForm.salesUomForKg.label_tag }}</label>
+                                {{ salesForm.salesUomForKg }}
+                    </div>
+                    <button type="button" class="cfBackBtn btn btn-primary" id="purchaseInfo_Detail_BBtn">Back</button>
+                    <button type="button" class="cfNextBtn btn btn-primary" id="measurement_salesInfo_purchaseInfo_basicData_Detail_NBtn">Next</button>
+                </div>
+
+                <div class="customerManualForm" id="measurementDetail">
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{measurementForm.measurementDimension.label_tag }}</label>
+                                {{ measurementForm.measurementDimension }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{measurementForm.measurementDimensionUnit.label_tag }}</label>
+                                {{ measurementForm.measurementDimensionUnit }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{measurementForm.measurementLength.label_tag }}</label>
+                                {{ measurementForm.measurementLength }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{measurementForm.measurementWidth.label_tag }}</label>
+                                {{ measurementForm.measurementWidth }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{measurementForm.measurementHeight.label_tag }}</label>
+                                {{ measurementForm.measurementHeight }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{measurementForm.measurementWeight.label_tag }}</label>
+                                {{ measurementForm.measurementWeight }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{measurementForm.measurementWeightUnit.label_tag }}</label>
+                                {{ measurementForm.measurementWeightUnit }}
+                    </div>
+
+                    <button type="button" class="cfBackBtn btn btn-primary" id="salesInfo_Detail_BBtn">Back</button>
+                    <button type="button" class="cfNextBtn btn btn-primary" id="storage_measurement_salesInfo_purchaseInfo_basicData_Detail_NBtn">Next</button>
+                </div>
+
+                <div class="customerManualForm" id="storageDetail">
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{storageForm.storageShelfLife.label_tag }}</label>
+                                {{ storageForm.storageShelfLife }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{storageForm.storageCase.label_tag }}</label>
+                                {{ storageForm.storageCase }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{storageForm.storageTier.label_tag }}</label>
+                                {{ storageForm.storageTier }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{storageForm.storagePallet.label_tag }}</label>
+                                {{ storageForm.storagePallet }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{storageForm.storageDept.label_tag }}</label>
+                                {{ storageForm.storageDept }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{storageForm.storageRack.label_tag }}</label>
+                                {{ storageForm.storageRack }}
+                    </div>
+
+                    <button type="button" class="cfBackBtn btn btn-primary" id="measurement_Detail_BBtn">Back</button>
+                    <button type="button" class="cfNextBtn btn btn-primary" id="parameter_storage_measurement_salesInfo_purchaseInfo_basicData_Detail_NBtn">Next</button>
+                </div>
+
+                <div class="customerManualForm" id="parameterDetail">
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{parameterForm.alterNateParamOne.label_tag }}</label>
+                                {{ parameterForm.alterNateParamOne }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{parameterForm.alterNateParamTwo.label_tag }}</label>
+                                {{ parameterForm.alterNateParamTwo }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{parameterForm.alterNateParamThree.label_tag }}</label>
+                                {{ parameterForm.alterNateParamThree }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{parameterForm.alterNateParamFour.label_tag }}</label>
+                                {{ parameterForm.alterNateParamFour }}
+                    </div>
+
+                    <button type="button" class="cfBackBtn btn btn-primary" id="storage_Detail_BBtn">Back</button>
+                    <button type="button" class="btn btn-primary submitBtn" id="productDataSaveButton">Submit</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

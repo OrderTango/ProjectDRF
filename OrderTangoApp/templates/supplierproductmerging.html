@@ -1,0 +1,601 @@
+{% extends 'administrationpanelbase.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/administrationpanel.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/manualUploadForm.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.css' %}"/>
+<script src ="{% static 'js/jquery-ui.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'datatables/css/datatables.min.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'datatables/css/responsive.bootstrap4.min.css' %}"/>
+
+<script type="text/javascript" src="{% static 'datatables/js/datatables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'datatables/js/dataTables.responsive.min.js' %}"></script>
+<style>
+
+.headingSla {
+color: #881999;
+margin-left: 13px;
+}
+.supplierProductModalPopup {
+max-width: 35% !important;
+}
+#customerFileUpload {
+display: none;
+}
+#profileModalBody{
+max-height: calc(100vh - 200px);
+overflow-y: auto;
+}
+.modal-dialog {
+max-width: 800px;
+}
+.mandatory {
+color: red
+}
+.ui-dialog-content{
+color:red !important;
+font-size: 17px ;
+}
+.ui-dialog{
+width: 35% !important;
+top: 30%;
+left: 50%;
+transform: translate(-50%, -50%) !important;
+background-color: white;
+
+}
+.ui-dialog-buttonpane{
+padding: 0em !important;
+}
+.ui-dialog-titlebar{
+background-color: #cbc1e8;
+color: black;
+font-weight: bold;
+}
+.ui-dialog-buttonset{
+justify-content: middle;
+}
+#ownProduct{
+height: 30px;
+width: 250px !important;
+border: 1px solid #bb99c0;
+border-radius: 8px;
+padding: 4px !important;
+}
+#assignSlaSubmit{
+background: #ffd500;
+color: #881999;
+font-weight: bold;
+border: 2px solid #881999;
+border-radius: .25rem;
+cursor: pointer;
+}
+#assignSLADiv {
+background-color: #f9f3fa;
+padding: 2%
+}
+#bodyContent {
+margin-left: -15px;
+background-color: #f9f3fa;
+}
+.action{
+border: 0px;
+font-size: 13px;
+border-radius: 5px;
+color: #ffffff;
+background-color: #984fa5;
+padding: 5px;
+cursor: pointer;
+text-decoration: none;
+}
+@media (min-width:320px) and (max-width: 480px) {
+#basicDataDetailsForm{
+margin-left:20px !important;
+}
+#id_firstName,#id_lastName,#id_email,#id_site,#id_companyName,#id_address_Line1,#id_address_Line2,#id_country,#id_state,#id_postalCode,#id_usradd_country,#id_usradd_address_Line1,#id_usradd_address_Line2,#id_usradd_state,#id_usradd_postalCode{
+width:175px !important;
+}
+#id_countryCode{
+width:40px !important;
+}
+#id_contactNo{
+width:130px !important;
+}
+#id_unit1,#id_unit2,#id_usradd_unit1,#id_usradd_unit2{
+width:78px !important;
+}
+}
+</style>
+<div class="row">
+<div class="col-md-2 col-sm-4 col-24" id="sideBarLeft">
+{% include "administrationpanelsidebar.html" %}
+</div>
+<div class="col-md-10 paddingLeftZero" id="bodyContent">
+<div id="supplierProductDiv">
+<div class="row">
+<div class="col-md-6 col-sm-3 col-6">
+<h4 class="headingSla"> Supplier Product </h4>
+</div>
+</div>
+
+<div class="row" id="assignSlaSubmitBtn">
+<div class='col-md-12 col-sm-6 col-12'>
+<div class="pull-right">
+<input type="button" id="assignSlaSubmit" class="btn btn-primary" value="Submit">
+</div>
+</div>
+</div>
+<div id="dynamicDiv">
+<table class="table hover viewMergeProductTable" id="viewMergeProductTable">
+<thead>
+<tr>
+<th rowspan="1" class="header">S.No</th>
+<th rowspan="1" class="header">Product Code</th>
+<th rowspan="1" class="header">Product Name</th>
+<th rowspan="1" class="header">Status</th>
+<th rowspan="1" class="header">Status</th>
+<th rowspan="1" class="header">Action</th>
+</tr>
+</thead>
+
+
+<tbody>
+{% for assignItems in assignItems %}
+<tr>
+<td></td>
+<td>{{assignItems.supplierItemCode}}</td>
+<td>{{assignItems.supplierItemName}}</td>
+<td><span id="statusbox{{assignItems.supplierItemCode}}"></span></td>
+<td><span id="status{{assignItems.supplierItemCode}}"></span></td>
+<td><input class="action" id="add_{{assignItems.supplierItemCode}}_{{assignItems.supplierId_id}}" type="button" value="Add"> <input class="action" id="merge_{{assignItems.supplierItemCode}}_{{assignItems.supplierId_id}}" type="button" value="Merge"> <input class="action" id="reject_{{assignItems.supplierItemCode}}_{{assignItems.supplierId_id}}" type="button" value="Reject"></td>
+</tr>
+{% endfor %}
+</tbody>
+
+
+</table>
+</div>
+
+</div>
+</div>
+</div>
+{% include "rightsidebar.html" %}
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal-content modalBorderClass">
+<div class="modal-header">
+<h5 class="modal-title modalTitleHead" id="exampleModalLongTitle"> </h5>
+<span id="modalCloseBtn">
+
+</span>
+</div>
+<div class="modal-body">
+<div id="success_msg" class="success_msg"> </div>
+<div id="error_msg" class="error_msg"> </div>
+<form role="form">
+{% csrf_token %}
+<div id="modalBody">
+
+</div>
+</form>
+</div>
+<div class="modal-footer" id="modalFooter">
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="modal fade" id="sampleModalPopup" tabindex="-1" role="dialog" aria-labelledby="sampleModalPopupTitle" data-toggle="modal" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered sampleModalPopup" role="document">
+<div class="modal-content modalBorderClass">
+<div class="modal-header">
+<h5 class="modal-title modalTitleHead" id="exampleModalTitle"></h5>
+<button type="button" class="close sampleModalPopupCloseBtn" id="popupCloseBtn" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">x</span>
+</button>
+</div>
+<div class="modal-body" id="samplePopupBodyContent">
+
+</div>
+<div class="modal-footer">
+<input type="button" id="submit" class="btn btn-primary modalBtnClass sampleModalPopupCloseBtn" data-dismiss="modal" aria-label="Close" value="Close">
+</div>
+</div>
+</div>
+</div>
+
+<div class="modal" id="viewProfileModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog viewProfileModal" style="max-width: 60%;">
+<div class="modal-content" style="background-color: #f7f3fa;">
+
+<!-- Modal Header -->
+<div class="modal-header">
+<h4 class="modal-title" id="viewProfileModalTitle"> Profile </h4>
+<button type="button" class="close viewProfileModalClose" data-dismiss="modal" aria-hidden="true">x</button>
+</div>
+
+<!-- Modal body -->
+<div class="modal-body" id="profileModalBody">
+<div class="row" >
+<div class="col-md-12 col-sm-3 col-6 " >
+<div class="col-md-12" id="viewProfileModalFormDiv">
+<form class="registrationform" id="updateProfileForm" role="form" method='POST'>
+
+{% csrf_token %}
+<div id="formsec1">
+<div class="form-group row registrationformdiv">
+<label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.firstName.label_tag }}<span class="mandatory">*</span></label>
+{{ ProfileForm.firstName }}
+</div>
+<div class="offset-3 offset-sm-4 offset-md-3" id="firstNameError">{{ ProfileForm.firstName.errors }}</div>
+<div class="form-group row registrationformdiv">
+<label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.lastName.label_tag }}<span class="mandatory">*</span></label>
+{{ ProfileForm.lastName }}
+</div>
+<div class="offset-3 offset-sm-4 offset-md-3" id="lastNameError">{{ ProfileForm.lastName.errors }} </div>
+</div>
+<div id="formsec2">
+
+<div class="form-group row registrationformdiv">
+<label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.country.label_tag }}<span class="mandatory">*</span></label>
+{{ companyProfileForm.country }}
+</div>
+<div class="offset-3 offset-sm-4 offset-md-3" id="countryError"> {{ companyProfileForm.country.errors }} </div>
+<div class="form-group row registrationformdiv">
+<label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.address_Line1.label_tag }}<span class="mandatory">*</span></label>
+{{ companyProfileForm.address_Line1 }}
+<label class="col-5 col-md-1 col-form-label unitlabel" id="unitlabel">Unit<span class="mandatory">*</span></label>
+{{ companyProfileForm.unit1 }}
+<p id="hyphen">-</p>
+{{ companyProfileForm.unit2 }}
+</div>
+<div class="offset-3 offset-sm-4 offset-md-3" id="address1Error"> {{ companyProfileForm.address_Line1.errors }} </div>
+<div class="form-group row registrationformdiv" id="addressTwoDiv">
+<label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.address_Line2.label_tag }}<span class="mandatory">*</span></label>
+{{ companyProfileForm.address_Line2 }}
+</div>
+<div class="offset-3 offset-sm-4 offset-md-3" id="address2Error"> {{ companyProfileForm.address_Line2.errors }} </div>
+<div class="form-group row registrationformdiv">
+<label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.state.label_tag }}<span class="mandatory">*</span></label>
+{{ companyProfileForm.state }}
+</div>
+<div class="offset-3 offset-sm-4 offset-md-3" id="stateError"> {{ companyProfileForm.state.errors }} </div>
+<div class="form-group row registrationformdiv">
+<label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.postalCode.label_tag }}<span class="mandatory">*</span></label>
+{{ companyProfileForm.postalCode }}
+
+</div>
+<div class="offset-3 offset-sm-4 offset-md-3" id="postalCodeError"> {{ companyProfileForm.postalCode.errors }} </div>
+<div class="form-group row registrationformdiv">
+<label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.sec_question.label_tag }}<span class="mandatory">*</span></label>
+{{ ProfileForm.sec_question }}
+
+</div>
+<div class="offset-3 offset-sm-4 offset-md-3" id="secQuestionError"> {{ ProfileForm.sec_question.errors }} </div>
+<div class="form-group row registrationformdiv">
+<label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.sec_answer.label_tag }}<span class="mandatory">*</span></label>
+{{ ProfileForm.sec_answer }}
+<div class="col-12 offset-sm-4 col-md-6" id="submitBtnDiv"> <input type="submit" id="profileUpdateButton" value="Update"> </div>
+</div>
+<div class="offset-3 offset-sm-4 offset-md-3" id="secAnswerError"> {{ ProfileForm.sec_answer.errors }} </div>
+</div>
+
+</form>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Modal footer -->
+<div class="modal-footer">
+<button type="button" class="btn editProductModalClose" id="editProductModalClose" data-dismiss="modal">Close</button>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="modal fade" id="supplierProductModalPopup" tabindex="-1" role="dialog" aria-labelledby="sampleModalPopupTitle" data-toggle="modal" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered supplierProductModalPopup" role="document">
+<div class="modal-content modalBorderClass ">
+<div class="modal-header">
+<h5 class="modal-title modalTitleHead" id="supplierProductModalPopupTitle"> Own Product </h5>
+<button type="button" class="close supplierProductModalPopupCloseBtn" id="supplierProductModalPopupCloseBtn" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">x</span>
+</button>
+</div>
+<div class="modal-body" id="supplierProductModalPopupBodyContent">
+<input id="supplierProductData" type="text" value="" style="display:none">
+<input id="supplierId" type="text" value="" style="display:none">
+<div class="row">
+<label class="col-md-4 ">Select Product</label>
+<select class="col-md-7 " id="ownProduct">
+<option value="">Select</option>
+{% for ownItems in ownItems %}
+<option value="{{ownItems.itemMasterId}}">{{ownItems.itemName}}</option>
+{% endfor %}
+</select>
+</div>
+</div>
+<div class="modal-footer">
+<input type="button" id="productAdd" class="btn btn-primary modalBtnClass supplierProductModalPopupCloseBtn" data-dismiss="modal" aria-label="Close" value="Add">
+</div>
+</div>
+</div>
+</div>
+
+<div class="modal" id="loader"><!-- Place at bottom of page --></div>
+
+<script>
+
+
+var dataholdArrayNew = [];
+var type;
+
+var addSerialNumber = function () {
+var i = 0;
+$('table tr').each(function(index) {
+$(this).find('td:nth-child(1)').html(index-1+1);
+});
+};
+
+addSerialNumber();
+
+$body = $("body");
+function load_states(country_id) {
+if(country_id == ''){
+$("#id_cusState").empty().append('<option value="">Select</option>');
+}
+else{
+$.ajax({
+url: "/load-states",
+data: {
+"country_id": country_id
+},
+success: function (data) {
+var states = JSON.parse(data.states);
+var stateAppendValues = "";
+$.each(states, function (key, val) {
+stateAppendValues = stateAppendValues + "<option value="+val.pk+">"+val.fields.stateName+"</option>";
+});
+$("#id_cusState").empty().append(stateAppendValues);
+}
+});
+}
+}
+
+function load_shipping_states(country_id) {
+$.ajax({
+url: "/load-states",
+data: {
+"country_id": country_id
+},
+success: function (data) {
+var states = JSON.parse(data.states);
+var stateAppendValues = "";
+$.each(states, function (key, val) {
+stateAppendValues = stateAppendValues + "<option value="+val.pk+">"+val.fields.stateName+"</option>";
+});
+$("#id_cusShipState").empty().append(stateAppendValues);
+}
+});
+}
+
+
+$('#slide-submenu').on('click',function() {
+$(this).closest('.list-group').fadeOut('slide',function(){
+$('.mini-submenu').fadeIn();
+});
+});
+
+var viewMergeProductTable = $('#viewMergeProductTable').DataTable({
+"bFilter": false,
+"bLengthChange": false,
+"targets": 'no-sort',
+"bSort": false,
+"info": false,
+"searching": true,
+"order": [],
+"pagingType": "full_numbers",
+language: {
+paginate: {
+previous: false,
+next: false,
+first: '<img src="{% static 'images/leftsidearrow.png' %}" width=15 />',
+last: '<img src="{% static 'images/rightsidearrow.png' %}" width=15 />'
+}
+},
+
+columnDefs: [
+{ "width": "2%", "targets": 0 },
+{ "width": "20%", "targets": 1 },
+{ "width": "20%", "targets": 2 },
+{ "width": "20%", "targets": 3 },
+{ "width": "20%", "targets": 4 },
+
+], });
+viewMergeProductTable.column(3).visible(false);
+
+$(document).ready(function() {
+
+$(document).on('click', '.action', function() {
+var id = $(this).attr('id');
+var res = id.split('_');
+$('#supplierId').empty();
+$('#supplierId').val(res[2]);
+if(res[0] == 'add'){
+$("#statusbox"+res[1]).html("");
+$("#statusbox"+res[1]).html('Added');
+$("#status"+res[1]).html("");
+$("#status"+res[1]).html('Added');
+removeByAttr(dataholdArrayNew, 'productCode', res[1]);
+var dataholdObj = {'productCode':res[1],'type':res[0]};
+dataholdArrayNew.push(dataholdObj);
+}
+else if(res[0] == 'merge'){
+$('#supplierProductData').empty();
+$('#supplierProductData').val(res[1]);
+$('#supplierProductModalPopup').modal();
+}
+else if(res[0] == 'reject'){
+$("#statusbox"+res[1]).html("");
+$("#statusbox"+res[1]).html("Reject");
+$("#status"+res[1]).html("");
+$("#status"+res[1]).html('Rejected');
+removeByAttr(dataholdArrayNew, 'productCode', res[1]);
+var dataholdObj = {'productCode':res[1],'type':res[0]};
+dataholdArrayNew.push(dataholdObj);
+}
+});
+
+$(document).on('click', '#productAdd', function() {
+var supProduct = $('#supplierProductData').val();
+var supId = $('#supplierId').val();
+var ownProduct = $("#ownProduct").val();
+if(ownProduct == ''){
+alert('Please Select Product');
+return false;
+}
+else{
+
+$("#statusbox"+supProduct).html("");
+$("#statusbox"+supProduct).html(ownProduct);
+$("#status"+supProduct).html("");
+$("#status"+supProduct).html('Merged');
+removeByAttr(dataholdArrayNew, 'productCode', supProduct);
+var dataholdObj = {'productCode':supProduct,'type':'merge','productId':ownProduct};
+dataholdArrayNew.push(dataholdObj);
+}
+});
+
+var removeByAttr = function(dataholdArrayNew, attr, value){
+var i = dataholdArrayNew.length;
+while(i--){
+if( dataholdArrayNew[i] && dataholdArrayNew[i].hasOwnProperty(attr) && (arguments.length > 2 && dataholdArrayNew[i][attr] === value ) ){
+dataholdArrayNew.splice(i,1);
+}
+}
+return dataholdArrayNew;
+}
+
+
+$(document).on('click', '#assignSlaSubmit', function() {
+var supId = $('#supplierId').val();
+var data = {'supplierId':supId,'data':dataholdArrayNew};
+$.ajax({
+url: "/addOrMergingOrRejectProducts",
+type: "POST",
+dataType : "json",
+contentType : "application/json",
+data: JSON.stringify(data),
+success: function (data)
+{
+if (data.status == 'success') {
+alert(data.success_msg);
+location.reload();
+}
+else if (data.status == 'error' && data.error_msg == 'matchedData') {
+                                showMessage(data.status, 'Alert!', data.matchedDataContent);
+                            }
+                            else if (data.status == 'error' && data.error_msg == 'sessionexpired') {
+
+                                setTimeout(function() {
+                                    window.location.href = data.redirect_url;
+                                }, 2000);
+                                alert('Session has expired.');
+                            }
+}
+});
+});
+function showMessage(status, msgTitle, msgBody) {
+                $('#exampleModalTitle').empty();
+                $('#samplePopupBodyContent').empty();
+                $('#exampleModalTitle').append(msgTitle);
+                $('#samplePopupBodyContent').append(msgBody);
+                $('.sampleModalPopup').css('max-width','35%');
+                if (status == 'error') {
+                    $('.sampleModalPopup').css('max-width','80%');
+                    $('.sampleModalPopupCloseBtn').on('click', function() {
+                        location.reload();
+                    });
+                }
+                $('#sampleModalPopup').modal('show');
+            }
+
+$(document).on('click', '#companyLogoUpdateBtn', function() {
+var form_data = new FormData();
+var file_data = $('#companyLogo').prop('files')[0];
+var data = "csrfmiddlewaretoken="+$('input[name=csrfmiddlewaretoken]').val()+"companyLogoPath="+file_data;
+
+$.ajax({
+url: "/logoupdate",
+type: "POST",
+dataType: "text",
+data: data,
+async:false,
+success: function (data)
+{
+
+}
+});
+});
+
+$('#domainName').val('');
+
+$('#exampleModalCenter').on('shown.bs.modal', function() {
+$('#domainName').focus();
+});
+
+$('#popupCloseBtn').on('click', function() {
+$('#domainName').val('');
+$('#successmsg').empty();
+$('#errormsg').empty();
+});
+
+
+$('.mini-submenu').on('click',function(){
+$(this).next('.list-group').toggle('slide');
+$('.mini-submenu').hide();
+})
+
+
+$(document).on('keyup', '#googleLink', function() {
+if ($('#googleLink').val() != '') {
+$("#dragDropDiv").css("pointer-events","none");
+$("#dragDropDiv").css("background","#ccc");
+}
+else if ($('#googleLink').val() == '') {
+$("#dragDropDiv").css("pointer-events","auto");
+$("#dragDropDiv").css("background","#fff");
+}
+});
+
+function drop(event) {
+event.stopPropagation();
+event.preventDefault();
+var input = document.getElementById("customerFileUpload");
+input.files = event.dataTransfer.files; //It returns a FileList object
+}
+
+/* Customize search option for DataTable Start */
+$('#searchOption').on( 'keyup', function () {
+$('#viewMergeProductTable').DataTable().search(this.value).draw();
+});
+/* Customize search option for DataTable End */
+/* Customize search option for Product DataTable Start */
+$('#searchOptionOrder').on( 'keyup', function () {
+$('#viewMergeProductTable').DataTable().search(this.value).draw();
+});
+$(document).on('keyup', '#searchOptionOrder', function () {
+$('#viewMergeProductTable').DataTable().search(this.value).draw();
+});
+/* Customize search option for Product DataTable End */
+
+});
+
+</script>
+{% endblock %}
+

@@ -1,0 +1,5 @@
+quantityTypeId,quantityTypeCode,quantityTypeName,quantityTypeDesc
+1,Kg,Kilogram,Weight in Kg
+2,Ltr,Liter,Weight in Ltr
+3,Nos,Number,Weight in Nos
+4,Mtr,Meter,Weight in Mtr

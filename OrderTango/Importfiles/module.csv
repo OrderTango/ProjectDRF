@@ -1,0 +1,9 @@
+moduleId,moduleCode,moduleName,baseModuleId_id,moduleDesc
+1,Module1,Administration Panel,1,
+2,Module2,Operational Panel,1,
+3,Module1,Administration Panel,2,
+4,Module2,Operational Panel,2,
+5,Module1,Administration Panel,3,
+6,Module2,Operational Panel,3,
+7,Module1,Administration Panel,4,
+8,Module2,Operational Panel,4,

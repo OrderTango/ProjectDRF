@@ -1,0 +1,99 @@
+.customerManualForm{
+    padding-top:2% !important;
+}
+#customerManualFormDiv, #supplierManualFormDiv, #productManualFormDiv, #customerUploadFormDiv, #supplierUploadFormDiv, #productUploadFormDiv {
+    margin: 0px;
+    margin-top: -3px;
+    border: 1px solid #f2e4f5;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+#customerDataDetailsForm, #supplierDataDetailsForm, #basicDataDetailsForm {
+    padding: 5px !important
+}
+#id_type,#id_storeName,#id_site, #id_firstName, #id_lastName, #id_contactNo, #id_email, #id_sec_question, #id_sec_answer, #id_companyName,
+#id_address_Line1, #id_address_Line2, #id_country, #id_state, #id_postalCode, #id_usradd_country, #id_usradd_address_Line1, #id_usradd_address_Line2, #id_usradd_state, #id_usradd_postalCode, #id_itemCode, #id_itemName, #id_itemDesc, #id_itemStatus,
+ #id_price, #id_priceUnit, #id_sellCount, #id_sellUnit, #id_uOm, #id_stockCount, #id_stockUnit,#id_itemCategory,#id_cusCompanyName,
+ #id_cusEmail,#id_cusContactNo,#id_cusAddress_Line1,#id_cusAddress_Line2,#id_cusPostalCode,#id_contactPerson,#id_cusCountry,#id_cusState,
+ #id_cusShipCountry,#id_cusShipState,#id_cusShipAddress_Line1,#id_cusShipAddress_Line2,#id_cusShipPostalCode,
+ #id_supCompanyName,#id_supEmail,#id_supContactNo,#id_supAddress_Line1,#id_supAddress_Line2,#id_supPostalCode,#id_supContactPerson,
+ #id_supCountry,#id_supState,#id_supShipCountry,#id_supShipState,#id_supShipAddress_Line1,#id_supShipAddress_Line2,#id_supShipPostalCode,
+ #id_purchasingUom,#id_purchasingTax,#id_purchasingPrice,#id_purchasingCurrency,#id_purchasingPriceUnit,#id_purchasingUomForKg,#id_purchasingOrderText,
+ #id_salesUom,#id_salesTax,#id_salesCategoryGrp,#id_salesOrderText,#id_salesPrice,#id_salesCurrency,#id_salesPriceUnit,#id_salesUomForKg,
+ #id_measurementDimension,#id_measurementDimensionUnit,#id_measurementLength,#id_productDetail,
+ #id_measurementWidth,#id_measurementHeight,#id_measurementWeight,#id_measurementWeightUnit,#id_storageShelfLife,#id_storageCase,
+ #id_storageTier,#id_storagePallet,#id_storageDept,#id_storageRack,#id_alterNateParamOne,#id_alterNateParamTwo,#id_alterNateParamThree,#id_alterNateParamFour,
+ #id_articleType,#id_itemMerchantCategory,#id_itemMerchantCategoryOne,#id_itemMerchantCategoryTwo,#id_itemStorageCondition,
+ #id_baseUom,#id_itemName,#id_itemCode,#id_alterItemName,#id_alterItemCode,#id_brandName,#id_itemDesc,#id_packingUnit,#id_manufacturingLeadTime,#id_attributeColor,#id_attributeSize,#id_attributeDesign,#id_attributeStyle,#id_attributeOther,#id_area,#id_cusAlterNateEmail,#id_supAlterNateEmail{
+height: 30px;
+width: 250px !important;
+border: 1px solid #bb99c0;
+border-radius: 8px;
+padding: 4px !important
+}
+#id_countryCode, #id_unit1, #id_unit2, #id_usradd_unit1, #id_usradd_unit2,#id_cusCountryCode,#id_cusUnit1,#id_cusUnit2,#id_cusShipUnit1,#id_cusShipUnit2,#id_supCountryCode,#id_supUnit1,#id_supUnit2,#id_supShipUnit1,#id_supShipUnit2 {
+height: 30px;
+width: 100px !important;
+border: 1px solid #bb99c0;
+border-radius: 8px;
+padding: 4px !important;
+margin-right: 5px
+}
+
+#id_unit2, #id_usradd_unit2 {
+    margin-left: 5px
+}
+.cfBackBtn, .cfNextBtn, .cfBackBtn:hover, .cfNextBtn:hover  {
+    background: #d9c1e8;
+    color: #881999;
+    font-weight: bold;
+    border: 2px solid #d9c1e8
+}
+.submitBtn, .submitBtn:hover {
+    background: #ffd500;
+    color: #881999;
+    font-weight: bold;
+    border: 2px solid #881999
+}
+#updatebutton, #updatebutton:hover {
+    background: #ffd500;
+    color: #881999;
+    font-weight: bold;
+    border: 2px solid #881999
+}
+#id_emailSent,#id_supEmailSent,#id_selfManufacturing,#pselfManufacturing{
+    width: 20px !important;
+    height: 19px !important;
+    margin-top: 2% !important;
+}
+#id_sameAddress,#id_supSameAddress,#id_cusSameEmail,#id_supSameEmail{
+    width: 20px !important;
+    height: 19px !important;
+    margin-top: 1% !important;
+}
+#firstName, #lastName, #question, #sec_answer, #address_Line1, #address_Line2, #country, #state, #postalCode,{
+    height: 30px;
+    width: 250px !important;
+    border: 1px solid #bb99c0;
+    border-radius: 8px;
+    padding: 4px !important
+}
+#unit1, #unit2{
+    height: 30px;
+    width: 100px !important;
+    border: 1px solid #bb99c0;
+    border-radius: 8px;
+    padding: 4px !important;
+    margin-right: 5px
+}
+#ppurchasingUom,#ppurchasingTax,#ppurchasingPrice,#ppurchasingCurrency,#ppurchasingPriceUnit,#ppurchasingUomForKg,#ppurchasingOrderText,
+#psalesUom,#psalesTax,#psalesCategoryGrp,#psalesOrderText,#psalesPrice,#psalesCurrency,#psalesPriceUnit,#psalesUomForKg,#pmeasurementDimension,#pmeasurementDimensionUnit,#pmeasurementLength,
+#pmeasurementWidth,#pmeasurementHeight,#pmeasurementWeight,#pmeasurementWeightUnit,#pstorageShelfLife,#pstorageCase,#pstorageTier,#pstoragePallet,#pstorageDept,#pstorageRack,#palterNateParamOne,#palterNateParamTwo,#palterNateParamThree,#palterNateParamFour,
+#particleType,#pitemMerchantCategory,#pitemMerchantCategoryOne,#pitemMerchantCategoryTwo,#pitemStorageCondition,#pbaseUom,#pitemName,#pitemCategory,#pitemCode,#palterItemName,#palterItemCode,#pbrandName,#pitemDesc,#ppackingUnit,#pmanufacturingLeadTime,
+#pattributeColor,#pattributeSize,#pattributeDesign,#pattributeStyle,#pattributeOther,#pproductDetail{
+height: 30px;
+width: 250px !important;
+border: 1px solid #bb99c0;
+border-radius: 8px;
+padding: 4px !important
+}

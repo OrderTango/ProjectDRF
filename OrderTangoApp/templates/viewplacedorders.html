@@ -1,0 +1,617 @@
+{% extends 'operationalpanelbase.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/operationalpanel.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/placeOrder.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'datatables/css/datatables.min.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'datatables/css/responsive.bootstrap4.min.css' %}"/>
+
+<script type="text/javascript" src="{% static 'datatables/js/datatables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'datatables/js/dataTables.responsive.min.js' %}"></script>
+<script src ="{% static 'js/jquery-ui.js' %}"></script>
+<style>
+    .table td, .table th {
+        vertical-align: middle !important;
+    }
+            .ui-dialog-content{
+            color:red !important;
+            font-size: 17px ;
+        }
+        .ui-dialog{
+            width: 35% !important;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%) !important;
+            background-color: white;
+
+        }
+        .ui-dialog-buttonpane{
+            padding: 0em !important;
+        }
+        .ui-dialog-titlebar{
+            background-color: #cbc1e8;
+            color: black;
+            font-weight: bold;
+        }
+        .ui-dialog-buttonset{
+            justify-content: middle;
+        }
+</style>
+<div class="row paddingBottom2Percent headColor">
+  <div class="col-md-3 col-sm-4 col-24">
+    <div class="row">
+        {% if user.profilepic %}
+         <div class="offset-md-2 offset-sm-2 offset-3 col-md-2 col-sm-2 col-2" id="iconsec"><img class="img-responsive imageUpload" id="iconMF" src="{{ user.profilepic.url }}" alt=""/></div>
+       {% else %}
+        <div class="offset-md-2 offset-sm-2 offset-3 col-md-2 col-sm-2 col-2" id="iconsec"><img class="img-responsive imageUpload" id="iconMF" src="{% static 'images/user-icon-1.png' %}" alt=""/></div>
+       {% endif %}
+      <div class="col-md-7 col-sm-7 col-4" id="showUser"> <p>Signed in As </p><p class="wordWrap">{{ user.firstName }} {{ user.lastName }}</p></div>
+    </div>
+  </div>
+  <div class="col-md-6 col-sm-8 col-24">
+    <div class="row justify-content-center" id="companyInfoContent">
+        {% if company.companyImage %}
+        <div class="col-md-2 col-2"><img class="img-responsive imageUpload" id="iconCompanyLogo" src="{{ company.companyImage.url }}" alt=""/></div>
+       {% else %}
+       <div class="col-md-2 col-2"><img class="img-responsive imageUpload" id="iconCompanyLogo" src="{% static 'images/companyLogo.png' %}" alt=""/></div>
+       {% endif %}
+      <div class="col-md-6 ml-2 col-6" id="companyNameInfo"><p>{{ company.companyName }}</p></div>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-12 col-24" align="center" id="section3col"><span id="section3span">Order Management </span><br> Operations Panel</div>
+</div>
+<div class="row paddingBottom2Percent">
+{% include "ordermgmtsidebar.html" %}
+    <div class="col-md-8 bodyContentClass paddingLeftRightZero" id="bodyContent">
+        <div class="row removeMarginsFromRow borderBottom addMarginFiveTB">
+            <div class="col-md-4 col-sm-3 col-6">
+                <a href="{% url 'dashboard' %}" class="headClass" id="homeBtn">Home > </a>
+                <a href="{% url 'placeOrder' %}" class="subHeadClass" id="orderBtn">Placed Orders</a>
+            </div>
+            <div class="offset-md-4 offset-sm-1 offset-3 col-md-4 col-sm-5 col-9 pul-right">
+                <a id="switchToOP" href="{% url 'dashboard' %}"><span class="floatClass"><strong style="color: #464646;">Switch to Administration panel</strong></span></a>
+            </div>
+        </div>
+
+            <div class="row" >
+                <div class="col-md-12 col-sm-3 col-6 " align="center" >
+                    <table class="table hover viewOrderTable" id="viewOrderTable">
+                         <thead>
+
+                         </thead>
+                     </table>
+                </div>
+            </div>
+
+
+    </div>
+
+    {% include "rightsidebar.html" %}
+
+</div>
+
+<div class="modal fade" id="exampleModalCenter" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modalBorderClass">
+          <div class="modal-header">
+            <h5 class="modal-title modalTitleHead" id="exampleModalLongTitle"> </h5>
+              <span id="modalCloseBtn">
+
+              </span>
+          </div>
+
+          <div class="modal-body">
+              <div id="success_msg" class="success_msg"> </div>
+              <div id="error_msg" class="error_msg"> </div>
+                <form role="form">
+                    {% csrf_token %}
+                    <div id="modalBody">
+
+                    </div>
+                </form>
+          </div>
+          <div class="modal-footer" id="modalFooter">
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- The Modal -->
+<div class="modal" id="viewPlacedOrderModal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog viewPlacedOrderModaldia" style="max-width: 95% !important;">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title" id="viewPlacedOrderModalTitle"> View Placed Orders</h4>
+        <button type="button" class="close viewPlacedOrderModalClose" data-dismiss="modal" aria-hidden="true">x</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="row" >
+            <div class="col-md-12 col-sm-3 col-6 " >
+                <table class="table hover viewPlacedOrderDataTable" id="viewPlacedOrderDataTable">
+                     <thead>
+
+                     </thead>
+                 </table>
+            </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn viewPlacedOrderModalClose" id="viewPlacedOrderModalClose" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+
+/*window.alert = function(message){
+
+    $(document.createElement('div'))
+        .attr({title: 'Alert', 'class': 'alert'})
+        .html(message)
+        .dialog({
+            buttons: {OK: function(){$(this).dialog('close');}},
+            close: function(){$(this).remove();},
+            draggable: true,
+            modal: true,
+            resizable: false,
+            width: 'auto'
+        });
+};*/
+
+  $(function() {
+
+        checkTreeCollapse();
+
+        function checkTreeCollapse() {
+            $(".tree-container li.tree-li").removeClass("is-child")
+            $(".tree-container li.tree-li").each(function () {
+                if ($(this).find("ul.tree-ul li").length > 0) {
+                    $(this).addClass("is-child")
+                }
+            });
+            $(".tree-container li.tree-li span.text").unbind("click");
+            $(".tree-container li.tree-li.is-child span.text").click(function () {
+                $(this).parent(".tree-li").toggleClass("diactive");
+                $(this).parent(".tree-li").find(".tree-ul:first").toggleClass("diactive");
+            });
+        }
+
+        $('#iconsec').on('click',function() {
+                 $('#fileuploaddata').val(null);
+                 $('#imageModel').show();
+                 $('#imageModel').modal('toggle');
+           });
+
+         $('.imageUpload').on('click', function() {
+                $('#exampleModalLongTitle').empty();
+                $('#modalBody').empty();
+                $('#modalFooter').empty();
+                if ($(this).attr('id') == 'changeDomainName') {
+                    var modalBody = "<div class='form-group formGroup'><label for='recipient-name' class='col-form-label fontWeightBold'>New Domain Name:</label><input type='text' class='form-control' name='domainName' id='domainName' autofocus></div>";
+                    var modalFooter = "<input type='button' id='updateDomainName' class='btn btn-primary modalBtnClass' value='Save changes'>";
+                    appendDynamicContent('Change Domain Name', modalBody, modalFooter);
+                }
+                else if ($(this).attr('id') == 'iconMF') {
+                    var modalBody = "<div class='form-group formGroup'><input type='hidden' name='idContainer' value='iconProfileLogo' id='idContainer'><label for='recipient-name' class='col-form-label fontWeightBold'>Profile Image:</label><input type='file' style='height: 50px' class='form-control' name='fileuploaddata' id='fileuploaddata'><br/><p style='font-size:13px;'>allowed only Jpg,png formats below 5 MB</p></div>";
+                    var modalFooter = "<input type='button' class='btn btn-default modalBtnClass' id='uploadImageSubmit' value='Submit' data-dismiss='modal'>";
+                    appendDynamicContent('Change Profile Image', modalBody, modalFooter);
+                }
+                else if ($(this).attr('id') == 'iconCompanyLogo') {
+                    var modalBody = "<div class='form-group formGroup'><input type='hidden' name='idContainer' value='iconCompanyLogo' id='idContainer'><label for='recipient-name' class='col-form-label fontWeightBold'>Company Logo:</label><input type='file' style='height: 50px' class='form-control' name='fileuploaddata' id='fileuploaddata'><br/><p style='font-size:13px;'>allowed only Jpg,png formats below 5 MB</p></div>";
+                    var modalFooter = "<input type='button' class='btn btn-default modalBtnClass' id='uploadImageSubmit' value='Submit' data-dismiss='modal'>";
+                    appendDynamicContent('Change Company Logo', modalBody, modalFooter);
+                }
+            });
+
+
+         var viewOrderTable = $('#viewOrderTable').DataTable( {"bFilter": false,
+                    "lengthChange": false,
+                    "targets": 'no-sort',
+                    "bSort": false,
+                    "order": [],
+                    "columns": [
+                            { "title": "S.No" },
+                            { "title": "Shopping Cart Id" },
+                            { "title": "Order Date"},
+                            { "title": "Expected Date"},
+                            { "title": "Delivery Location"},
+                            { "title": "Action"},
+
+                        ]});
+
+            function pullConfirmOrderTable(confirmProductTableList){
+            viewOrderTable.clear().draw();
+
+             $.each(confirmProductTableList, function( index, value ) {
+             var sno = index+1;
+                //var statusSpan = "<span id='statusbox"+value.id+"'></span>";
+                var action = "<input class='cartAddBtn orderViewBtn' id='cartAddBtn_"+value.ordNumber+"' type='button' value='View'>";
+                 var orderDate = value.orderDate;
+                 var result = orderDate.split('-');
+                 var year = result[0];
+                 var month = result[1];
+                 var day = result[2];
+               viewOrderTable.row.add([sno,value.ordNumber,value.productId__supplierId__supCompanyName,day+"/"+month+"/"+year,value.shopCartId__expectedTime+"<br/>"+value.shopCartId__expectedDate,action]).draw();
+             });
+             }
+
+            //var data = {"type":"orders_to_supplier"};
+            $.ajax({
+              url: "/viewOrderDetails",
+              type: "POST",
+              dataType : "json",
+              contentType : "application/json",
+              //data: JSON.stringify(data),
+              success: function (result)
+              {
+                var data = result;
+                if (data.status == 'success') {
+                confirmProductTableList = data.totalItems[0].totalItem;
+                pullConfirmOrderTable(confirmProductTableList);
+
+              }
+              else if(data.status == 'error' && data.error_msg != 'sessionexpired'){
+                    alert(data.error_msg);
+              }
+              else if (data.status == 'error' && data.error_msg == 'sessionexpired') {
+                    alert('Session has expired.');
+                    setTimeout(function() {
+                        window.location.href = data.redirect_url;
+                    }, 2000);
+                }
+
+              }
+            });
+
+
+            /*$.ajax({
+              url: "/viewPlacedOrderDetails",
+              type: "POST",
+              dataType : "json",
+              contentType : "application/json",
+
+              success: function (result)
+              {
+                var data = result;
+
+                if (data.status == 'success') {
+                confirmProductTableList = data.totalItems[0].totalItem;
+                pullConfirmOrderTable(confirmProductTableList);
+
+              }
+              else if(data.status == 'error' && result.error_msg != 'sessionexpired'){
+                 alert(data.error_msg);
+              }
+              else if(result.status == 'error' && result.error_msg == 'sessionexpired'){
+                    alert('Session has expired.');
+                    setTimeout(function() {
+                        window.location.href = data.redirect_url;
+                    }, 2000);
+
+                }
+              }
+            });*/
+
+            function appendDynamicContent(modalHead, modalBody, modalFooter) {
+                $('#exampleModalLongTitle').append(modalHead);
+                $('#modalBody').append(modalBody);
+                $('#modalFooter').append(modalFooter);
+                $('#exampleModalCenter').modal({backdrop: 'static', keyboard: false})
+                $('#exampleModalCenter').modal('toggle');
+                $('#exampleModalCenter').show();
+            }
+
+        $('#submit').on('click', function() {
+                $('#success_msg').empty();
+                $('#error_msg').empty();
+                if ($('#domainName').val() != '') {
+                    var data = "csrfmiddlewaretoken="+$('input[name=csrfmiddlewaretoken]').val()+"&domainName="+$('#domainName').val();
+                    $.ajax({
+                      url: "/renameSchemaURL",
+                      type: "POST",
+                      dataType: "text",
+                      data: data,
+                      async:false,
+                      success: function (result)
+                      {
+                        var data = JSON.parse(result);
+                        if (data.status == 'success') {
+                            $('#success_msg').append(data.success_msg);
+                            $("#domainName").prop("disabled",true);
+                            $("#submit").prop("disabled",true);
+                            setTimeout(function() {
+                                $('#success_msg').empty();
+                                window.location.href = data.redirect_url;
+                            }, 3000);
+                        }
+                        else if (data.status == 'error' && data.error_msg != 'sessionexpired') {
+                            $('#error_msg').append(data.error_msg);
+                        }
+                        else if (data.status == 'error' && data.error_msg == 'sessionexpired') {
+                            $('#domainName').val('');
+                            $('#error_msg').append('Session expired.');
+                            $("#domainName").prop("disabled",true);
+                            $("#submit").prop("disabled",true);
+                            setTimeout(function() {
+                                window.location.href = data.redirect_url;
+                            }, 3000);
+                        }
+                      }
+                     });
+                }
+                else {
+                    $('#error_msg').append('Please enter domain name');
+                }
+            });
+
+            var viewPlacedOrderDataTable = $('#viewPlacedOrderDataTable').DataTable( {"bFilter": false,
+                            "lengthChange": false,
+                            "targets": 'no-sort',
+                            "bSort": false,
+                            "order": [],
+                            "columns": [
+                                    { "title": "S.No" },
+                                    { "title": "Order Number" },
+                                    { "title": "Company Name"},
+                                    { "title": "Product Code"},
+                                    { "title": "Product Name"},
+                                    { "title": "Qty"},
+                                    { "title": "Price"},
+                                    { "title": "Status"},
+                                    { "title": "Comment"},
+                                    { "title": "Action"},
+
+                                ],
+                                columnDefs: [
+                                     { "width": "2%", "targets": 0 },
+                                     { "width": "10%", "targets": 1 },
+                                     { "width": "15%", "targets": 2 },
+                                     { "width": "10%", "targets": 3 },
+                                     { "width": "13%", "targets": 4 },
+                                     { "width": "10%", "targets": 5 },
+                                     { "width": "10%", "targets": 6 },
+                                     { "width": "10%", "targets": 7 },
+                                     { "width": "10%", "targets": 8 },
+                                     { "width": "10%", "targets": 9 },
+
+                                ] });
+
+
+            $(document).on('click',	'.orderViewBtn', function() {
+
+                id = $(this).attr('id');
+                var result = id.split('_');
+                var shopCartId = result[1];
+                var data = {"ordNumber":shopCartId};
+                    $.ajax({
+                      url: "/viewOrderDetails",
+                      type: "POST",
+                      dataType : "json",
+                      contentType : "application/json",
+                      data: JSON.stringify(data),
+                      success: function (result)
+                      {
+                        var data = result;
+
+                        if (data.status == 'success') {
+                        confirmPlaceOrderTableList = data.totalItems[0].totalItem;
+                        viewPlacedOrderDataTable.clear().draw();
+                         $.each(confirmPlaceOrderTableList, function( index, value ) {
+                         var sno = index+1;
+                           //var action = "<input class='viewCusProdUpdateBtn' id='"+value.itemCode+"_"+value.ordNumber+"' type='button' value='Accept'>&nbsp;<input class='viewProdRemoveBtn' id='"+value.itemCode+"_"+value.customerId_id+"_"+value.ordNumber+"' type='button' value='Reject'>";
+                           var status = "<select name='acceptOrReject' id='acceptOrRejectStatus_"+value.ordNumber+"' class='acceptOrReject'><option value="+value.ordstatus+">"+value.ordstatus+"</option><option value='pending'>Pending</option><option value='Accept'>Accept</option><option value='Reject'>Reject</option> </select>";
+                           var qtyinput = "<input class='qtytextbox' name='qtytextbox' id='qtytextbox_"+value.productId__itemCode+"' value='"+value.quantity+" "+value.uOm__type+"' type='text' >";
+
+                           var comment = "<textarea  class='commentTextBox' id='comment_"+value.ordNumber+"'>"+value.comment+"</textarea>";
+
+                           if(value.ordstatus == 'Accept' || value.ordstatus == 'Reject'){
+                                var action = " ";
+                           }
+                           else{
+                                var action = "<a id='editPlacedOrders_"+value.ordNumber+"_"+shopCartId+"_"+value.productId__itemCode+"' class='editPlacedOrders' href='#'><i class='fa fa-pencil-square-o' aria-hidden='true' style='color:green'></i></a>&nbsp;<a class='saveBtn' id='saveBtn_"+value.ordNumber+"_"+shopCartId+"_"+value.productId__itemCode+"' style='display:none;' href='#' ><i class='fa fa-floppy-o' aria-hidden='true' style='color:green'></i></a>&nbsp;<a class='deleteBtn' id='deleteBtn_"+value.ordNumber+"_"+shopCartId+"' href='#' ><i class='fa fa-trash-o' aria-hidden='true' style='color:red'></i></a>";
+                           }
+                           viewPlacedOrderDataTable.row.add([sno,value.ordNumber,value.productId__relId__trdersId__companyName,value.productId__itemCode,value.productId__itemName,qtyinput,value.price+" "+value.priceUnit__type,status,comment,action]).draw();
+
+                         });
+                         $(".acceptOrReject").prop("disabled", true);
+                         $(".qtytextbox").prop("disabled", true);
+                         $('#viewPlacedOrderModal').modal('show');
+
+                      }
+                      else if(data.status == 'error' && data.error_msg != 'sessionexpired'){
+                         alert(data.error_msg);
+                      }
+                      else if (data.status == 'error' && data.error_msg == 'sessionexpired') {
+                            alert('Session has expired.');
+                            setTimeout(function() {
+                                window.location.href = data.redirect_url;
+                            }, 2000);
+
+                        }
+                      }
+                    });
+            });
+
+      $(document).on('click', '.editPlacedOrders', function() {
+        var id = $(this).attr('id');
+        var result = id.split('_');
+         $('#editPlacedOrders_'+result[1]+'_'+result[2]+'_'+result[3]).css('display', 'none');
+         $('#saveBtn_'+result[1]+'_'+result[2]+'_'+result[3]).css('display', 'block');
+         $('#saveBtn_'+result[1]+'_'+result[2]+'_'+result[3]).css('float', 'left');
+         $('#saveBtn_'+result[1]+'_'+result[2]+'_'+result[3]).css('padding', '5px');
+         $('#deleteBtn_'+result[1]+'_'+result[2]).css('float', 'left');
+         $('#deleteBtn_'+result[1]+'_'+result[2]).css('padding', '5px');
+         $('#qtytextbox_'+result[3]).empty();
+         $('#qtytextbox_'+result[3]).val('');
+         $('#qtytextbox_'+result[3]).prop("disabled", false);
+         $('#qtytextbox_'+result[3]).focus();
+         $('#qtytextbox_'+result[3]).keypress(function(event) {
+              if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+              }
+            });
+
+
+      });
+
+      $(document).on('click', '.saveBtn', function() {
+        var id = $(this).attr('id');
+        var result = id.split('_');
+        var ordNumber = result[1];
+        var shopCartId = result[2];
+        var productCode = result[3];
+
+        var qty = $('#qtytextbox_'+result[3]).val();
+        if(qty == ''){
+
+            $('#qtytextbox_'+result[1]).focus();
+            return false;
+            alert('Please enter Qty');
+        }
+        else{
+
+            var data = {"orderNo":ordNumber,"type":"update","quantity":qty,"productCode":productCode};
+                $.ajax({
+                  url: "/placedOrderUpdate",
+                  type: "POST",
+                  dataType : "json",
+                  contentType : "application/json",
+                  data: JSON.stringify(data),
+                  success: function (result)
+                  {
+                    var data = result;
+                    if (data.status == 'success') {
+
+                          var data = {"shopCartId":shopCartId};
+                            $.ajax({
+                              url: "/viewOrderDetails",
+                              type: "POST",
+                              dataType : "json",
+                              contentType : "application/json",
+                              data: JSON.stringify(data),
+                              success: function (result)
+                              {
+                                var data = result;
+
+                                if (data.status == 'success') {
+                                alert(data.success_msg);
+                                confirmPlaceOrderTableList = data.totalItems[0].totalItem;
+                                viewPlacedOrderDataTable.clear().draw();
+                                 $.each(confirmPlaceOrderTableList, function( index, value ) {
+                                 var sno = index+1;
+                                   //var action = "<input class='viewCusProdUpdateBtn' id='"+value.itemCode+"_"+value.ordNumber+"' type='button' value='Accept'>&nbsp;<input class='viewProdRemoveBtn' id='"+value.itemCode+"_"+value.customerId_id+"_"+value.ordNumber+"' type='button' value='Reject'>";
+                                   var status = "<select name='acceptOrReject' id='acceptOrRejectStatus_"+value.ordNumber+"' class='acceptOrReject'><option value="+value.ordstatus+">"+value.ordstatus+"</option><option value='pending'>Pending</option><option value='Accept'>Accept</option><option value='Reject'>Reject</option> </select>";
+                                   var qtyinput = "<input class='qtytextbox' name='qtytextbox' id='qtytextbox_"+value.ordNumber+"' value='"+value.quantity+" "+value.uOm__type+"' type='text' >";
+
+                                   var comment = "<textarea  class='commentTextBox' id='comment_"+value.ordNumber+"'>"+value.comment+"</textarea>";
+                                   var action = "<a id='editPlacedOrders_"+value.ordNumber+"_"+shopCartId+"' class='editPlacedOrders' href='#'><i class='fa fa-pencil-square-o' aria-hidden='true' style='color:green'></i></a>&nbsp;<a class='saveBtn' id='saveBtn_"+value.ordNumber+"_"+shopCartId+"' style='display:none;' href='#' ><i class='fa fa-floppy-o' aria-hidden='true' style='color:green'></i></a>&nbsp;<a class='deleteBtn' id='deleteBtn_"+value.ordNumber+"_"+shopCartId+"' href='#' ><i class='fa fa-trash-o' aria-hidden='true' style='color:red'></i></a>";
+                                    viewPlacedOrderDataTable.row.add([sno,value.ordNumber,value.productId__relId__trdersId__companyName,value.productId__itemCode,value.productId__itemName,qtyinput,value.price+" "+value.priceUnit__type,status,comment,action]).draw();
+
+                                 });
+                                 $(".acceptOrReject").prop("disabled", true);
+                                 $(".qtytextbox").prop("disabled", true);
+                                 $('#viewPlacedOrderModal').modal('show');
+
+                              }
+                              else if(data.status == 'error' && data.error_msg != 'sessionexpired'){
+
+                                 $('#viewPlacedOrderModal').modal('hide');
+                                 alert(data.error_msg);
+                              }
+                              else if (data.status == 'error' && data.error_msg == 'sessionexpired') {
+                                        alert('Session has expired.');
+                                        setTimeout(function() {
+                                            window.location.href = data.redirect_url;
+                                        }, 2000);
+                                    }
+                              }
+                            });
+
+
+                    }
+                  }
+                });
+        }
+      });
+
+      $(document).on('click', '.deleteBtn', function() {
+        var id = $(this).attr('id');
+        var result = id.split('_');
+        var ordNumber = result[1];
+        var shopCartId = result[2];
+
+            var data = {"orderNo":ordNumber,"type":"delete"};
+                $.ajax({
+                  url: "/placedOrderDelete",
+                  type: "POST",
+                  dataType : "json",
+                  contentType : "application/json",
+                  data: JSON.stringify(data),
+                  success: function (result)
+                  {
+                    var data = result;
+                    if (data.status == 'success') {
+
+                         var data = {"shopCartId":shopCartId};
+                            $.ajax({
+                              url: "/viewOrderDetails",
+                              type: "POST",
+                              dataType : "json",
+                              contentType : "application/json",
+                              data: JSON.stringify(data),
+                              success: function (result)
+                              {
+                                var data = result;
+
+                                if (data.status == 'success') {
+                                alert(data.success_msg);
+                                confirmPlaceOrderTableList = data.totalItems[0].totalItem;
+                                viewPlacedOrderDataTable.clear().draw();
+                                 $.each(confirmPlaceOrderTableList, function( index, value ) {
+                                 var sno = index+1;
+                                   //var action = "<input class='viewCusProdUpdateBtn' id='"+value.itemCode+"_"+value.ordNumber+"' type='button' value='Accept'>&nbsp;<input class='viewProdRemoveBtn' id='"+value.itemCode+"_"+value.customerId_id+"_"+value.ordNumber+"' type='button' value='Reject'>";
+                                   var status = "<select name='acceptOrReject' id='acceptOrRejectStatus_"+value.ordNumber+"' class='acceptOrReject'><option value="+value.ordstatus+">"+value.ordstatus+"</option><option value='pending'>Pending</option><option value='Accept'>Accept</option><option value='Reject'>Reject</option> </select>";
+                                   var qtyinput = "<input class='qtytextbox' name='qtytextbox' id='qtytextbox_"+value.ordNumber+"' value='"+value.quantity+" "+value.uOm__type+"' type='text' >";
+
+                                   var comment = "<textarea  class='commentTextBox' id='comment_"+value.ordNumber+"'>"+value.comment+"</textarea>";
+                                   var action = "<a id='editPlacedOrders_"+value.ordNumber+"_"+shopCartId+"' class='editPlacedOrders' href='#'><i class='fa fa-pencil-square-o' aria-hidden='true' style='color:green' ></i></a>&nbsp;<a class='saveBtn' id='saveBtn_"+value.ordNumber+"_"+shopCartId+"' style='display:none;' href='#' ><i class='fa fa-floppy-o' aria-hidden='true' style='color:green' ></i></a>&nbsp;<a class='deleteBtn' id='deleteBtn_"+value.ordNumber+"_"+shopCartId+"' href='#' ><i class='fa fa-trash-o' aria-hidden='true' style='color:red' ></i></a>";
+                                    viewPlacedOrderDataTable.row.add([sno,value.ordNumber,value.productId__relId__trdersId__companyName,value.productId__itemCode,value.productId__itemName,qtyinput,value.price+" "+value.priceUnit__type,status,comment,action]).draw();
+
+                                 });
+                                 $(".acceptOrReject").prop("disabled", true);
+                                 $(".qtytextbox").prop("disabled", true);
+                                 $('#viewPlacedOrderModal').modal('show');
+
+                              }
+                              else if(data.status == 'error'&& data.error_msg != 'sessionexpired'){
+
+                                 $('#viewPlacedOrderModal').modal('toggle');
+                                 location.reload();
+                                 alert(data.error_msg);
+                              }
+                              else if (data.status == 'error' && data.error_msg == 'sessionexpired') {
+                                    alert('Session has expired.');
+                                    setTimeout(function() {
+                                        window.location.href = data.redirect_url;
+                                    }, 2000);
+                                }
+                              }
+                            });
+
+                    }
+                  }
+                });
+      });
+  });
+</script>
+{% endblock %}

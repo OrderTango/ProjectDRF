@@ -1,0 +1,47 @@
+requestAccId,requestMap,module_Id_id,group,type
+1,administrationpanel,1,Administration Panel,view
+2,dashboard,1,Dashboard,view
+3,customerSave,1,Supplier/Customer Access,create
+4,supplierSave,1,Supplier/Customer Access,create
+5,removeCustomer,1,Supplier/Customer Access,delete
+6,removeSupplier,1,Supplier/Customer Access,delete
+7,saveMasterProduct,1,Product Access,create
+8,removeProduct,1,Product Access,delete
+9,viewUser,1,Sub User Access,view
+10,createSubUser,1,Sub User Access,create
+11,updateSubUser,1,Sub User Access,update
+12,deleteSubUserData,1,Sub User Access,delete
+13,createOrViewSLA,1,Service Level Agreement Access,view
+14,createOrViewSLA,1,Service Level Agreement Access,create
+15,createSla,1,Service Level Agreement Access,create
+16,updateSlaForCustomer,1,Service Level Agreement Access,update
+17,deleteSla,1,Service Level Agreement Access,delete
+18,viewArea,1,Area Access,view
+19,createAreaDetails,1,Area Access,create
+20,updateAreaDetails,1,Area Access,update
+21,removeAreaDataViaId,1,Area Access,delete
+22,viewSite,1,Site Access,view
+23,createSite,1,Site Access,create
+24,updateSite,1,Site Access,update
+25,deleteSite,1,Site Access,delete
+26,fetchAllSupplierForSlaAssign,1,Assign SLA to Supplier,view
+27,assignSLAForSites,1,Assign SLA to Supplier,create
+28,operationalpanel,2,Operational Panel,view
+29,placeOrder,2,Order Management,view
+30,orderPlacement,2,Order Management,create
+31,customerProductPanel,2,Customer Catalog,view
+32,assignProductForCustomer,2,Customer Catalog,create
+33,supplierProductPanel,2,Supplier Catalog,view
+34,assignProductToSupplier,2,Supplier Catalog,create
+35,productsalescatalog,2,Sales Catalog,view
+36,saveProductCatalogSales,2,Sales Catalog,create
+37,productpurchasecatalog,2,Purchase Catalog,view
+38,saveProductCatalogPurchase,2,Purchase Catalog,create
+39,vieworders,2,View Order,view
+40,saveTradersById,1,Save Traders By ID,create
+41,placedorderdetails,1,Order Management,view
+42,viewAddress,1,Address Management,view
+43,fetchSiteDataForSlaAssign,1,SLA Assign,view
+44,fetchSupplierProductMerging,1,Supplier Product Merging,view
+45,acceptCustomer,1,Accept Customer,create
+46,acceptSupplier,1,Accept Supplier,create

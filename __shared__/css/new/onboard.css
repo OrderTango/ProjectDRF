@@ -1,0 +1,502 @@
+@font-face {
+	font-family: Futura;
+	src: url('../fonts/Futura-Medium.otf') format("otf");
+	font-weight: normal;
+}
+body {
+	background-color: #fdfdff !important;
+}
+#toggleMenuId {
+    width: 35px
+}
+.nav-item {
+     padding-left: 15px;
+     padding-right: 15px
+}
+.navBgPinkColor{
+    background-color: #871a99;
+}
+.navLinkOnboardColor{
+    color: white !important;
+}
+#iconMF {
+	height: 50px;
+	margin-top: 10px;
+}
+#iconsec{
+    margin-top : 20px
+}
+#companyInfoContent{
+    margin-top : 15px
+}
+#showUser{
+    margin-top : 35px;
+    font-size: 13;
+    font-weight: bold;
+}
+#iconCompanyLogo{
+    height: 50px;
+}
+#companyNameInfo{
+    font-family: Futura, Futura-Bold, "Futura Bold", "Century Gothic", CenturyGothic, "Apple Gothic", AppleGothic, "URW Gothic L", "Avant Garde", sans-serif;
+    color:#474747;
+    margin-top: 10px;
+    margin-left: 0px;
+    font-size: 20px !important;
+    font-weight: bold;
+    padding-left: 0px !important
+}
+#section3span{
+    font-family: Futura, Futura-Bold, "Futura Bold", "Century Gothic", CenturyGothic, "Apple Gothic", AppleGothic, "URW Gothic L", "Avant Garde", sans-serif;
+    font-size: 20px;
+}
+#section3col{
+    font-size: 14;
+    margin-top: 25;
+    color:#bc93c3;
+    font-weight: bold;
+}
+#adminPanelSec1{
+    color:#474747;
+    background-color: #f7f3fa;
+    border:1px solid #eeeced;
+    height:100%;
+    width:100%;
+    margin-right: 1%
+}
+#sideBar {
+    font-size: 14px;
+    background-color: #f7f3fa;
+    border-right: 3px solid #f4ecf3;
+    z-index: 1
+}
+.sideMenu{
+    list-style: none;
+}
+.sideBarIcons {
+    width: 25px
+}
+.sideBarIcons2X {
+    width: 30px
+}
+.items{
+    font-family: Futura, Futura-Medium, "Futura Medium", "Century Gothic", CenturyGothic, "Apple Gothic", AppleGothic, "URW Gothic L", "Avant Garde", sans-serif;
+    font-weight: bold;
+    font-size: 15px !important;
+    padding-top: 10px;
+    padding-bottom: 10px
+}
+.fontsize1{
+    font-family: Futura, Futura-Medium, "Futura Medium", "Century Gothic", CenturyGothic, "Apple Gothic", AppleGothic, "URW Gothic L", "Avant Garde", sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    background-color: #f7f3fa;
+}
+.fontsize2{
+    font-size: 12px;
+    line-height:30px;
+    font-weight: 510;
+}
+.navbar-nav{
+    font-family: Futura, Futura-Bold, "Futura Bold", "Century Gothic", CenturyGothic, "Apple Gothic", AppleGothic, "URW Gothic L", "Avant Garde", sans-serif;
+}
+#searchIcon {
+    background-color: #ffee98;
+}
+#adminPanelSec2{
+    padding-top:10px;
+    font-family: Futura, Futura-Bold, "Futura Bold", "Century Gothic", CenturyGothic, "Apple Gothic", AppleGothic, "URW Gothic L", "Avant Garde", sans-serif;
+    font-size: 18px;
+    color:#474747;
+}
+#adminPanelSec2OpPanel{
+    margin-bottom: 0;
+    font-size: 15px;
+}
+#adminPanelSec2OB{
+    color:#871a99;
+}
+#adminPanelSec2Head{
+    margin-bottom: 0;
+    font-weight: bold
+}
+#buyModuleDiv{
+    border-top:2px solid #ebe0f3;
+    border-bottom:2px solid #ebe0f3;
+}
+#buyModuleMenu{
+    margin-bottom: 4px;
+    margin-top:4px;
+    font-family: Futura, Futura-Medium, "Futura Medium", "Century Gothic", CenturyGothic, "Apple Gothic", AppleGothic, "URW Gothic L", "Avant Garde", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #ebe0f3;
+    height: 26px;
+}
+.buyModuleMenuListAnchor:hover{
+    color:#474747 !important;
+    text-decoration: none !important;
+}
+.buyModuleMenuListAnchor{
+    text-decoration: none !important;
+    color: #9f9f9f !important;
+}
+.defaultMarginTopTen {
+    margin-top: 10px
+}
+#viewAllCategory {
+    color: #871a99;
+    font-size: 15px
+}
+#cardSec{
+    padding-top: 15px;
+    padding-right: 30px;
+}
+.card{
+    border-radius: 10px !important;
+    width: 40%;
+    border: 0;
+}
+.card-header{
+    color: #fff;
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+    font-family: Futura, Futura-Medium, "Futura Medium", "Century Gothic", CenturyGothic, "Apple Gothic", AppleGothic, "URW Gothic L", "Avant Garde", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #9e4faa;
+    border: 0;
+}
+.card-footer{
+    border-bottom-left-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+    border: 0;
+    background-color: #fff;
+    padding-top: 0px;
+}
+#card-footer-reports{
+    background-color:#f7f6fa !important;
+    border-bottom-left-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+    border:1px solid #f9d4ff;
+}
+#card-body-reports{
+    background-color:#f7f6fa !important;
+    border:1px solid #f9d4ff;
+}
+.activeClass {
+    border-bottom: 3px solid black;
+    color: #453c3c !important;
+    font-weight: bold;
+    padding-bottom: 2px
+}
+<!-- Sidebar CSS Start -->
+#sideBar {
+    background: #f7f3fa
+}
+.list-group-item {
+    background: #f7f3fa;
+    border: 0px;
+    color: #000;
+    font-weight: bold;
+    padding: 0.75rem 0.35rem !important
+}
+.list-group-item:hover {
+    color: #871a99
+}
+.mini-submenu{
+  display:none;
+  background-color: rgba(0, 0, 0, 0);
+  border: 1px solid rgba(0, 0, 0, 0.9);
+  border-radius: 4px;
+  padding: 9px;
+  /*position: relative;*/
+  width: 42px;
+}
+.mini-submenu:hover{
+  cursor: pointer;
+}
+.mini-submenu .icon-bar {
+  border-radius: 1px;
+  display: block;
+  height: 2px;
+  width: 22px;
+  margin-top: 3px;
+}
+.mini-submenu .icon-bar {
+  background-color: #000;
+}
+#slide-submenu{
+  background: rgba(0, 0, 0, 0.45);
+  display: inline-block;
+  padding: 0 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+<!-- Sidebar CSS End -->
+#dropDownMenu a {
+    color: #000 !important;
+}
+#dropDownMenu:after {
+    border-top: 0px !important
+}
+#dropDownMenu:hover {
+    color: #871a99
+}
+.dropDownListClass {
+    padding: 10px 0px 10px 30px;
+    color: #000
+}
+#userAccessMenu {
+    position: relative !important
+}
+#onboardDropDown {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    padding-top: 0px !important
+}
+#SubMenu1 {
+  padding-left:20px !important;
+}
+.paddingLeftZero {
+    padding-left: 15px !important;
+    background-color: #f7f3fa;
+}
+.paddingTen {
+    padding: 10px;
+    background-color: #fdfdff;
+}
+.activeNav {
+	border-bottom: 3px solid black;
+	color: #464646 !important
+}
+#onBoardTab, #viewTab {
+    font-weight: bold;
+    padding: 10px 10px 10px 10px;
+    text-align: center !important
+}
+#onBoardAnchor, #viewAnchor {
+    color: #7f7f7f
+}
+#onBoardAnchor:hover, #viewAnchor:hover {
+    text-decoration: none !important
+}
+.navHeading {
+    background-color: #f9f3fa;
+    box-shadow: outset -7px 0 9px -7px rgba(0,0,0,0.7)
+}
+.bgColor {
+    background-color: #f9f3fa
+}
+.paddingTopTen {
+    padding-top: 10px
+}
+.paddingLeftRightTen {
+    padding-left: 10px;
+    padding-right: 10px
+}
+.subscribeModuleTab {
+    font-size: 14px;
+    font-weight: bold;
+}
+.subModule {
+    color: #a0a0a0
+}
+.activeClass {
+   font-weight: bold;
+   border-bottom: 3px solid black;
+   color: black
+}
+.bgColorModule {
+    background-color: #eddcf0;
+    padding-top: 5px;
+    padding-bottom: 5px
+}
+.textAlignCenter {
+    text-align: center !important
+}
+#customer, #supplier, #product {
+    text-align: center
+}
+#buyUploadOption, #sellUploadOption, #bothUploadOption {
+    text-align: right
+}
+.buyUploadOptionSpan a, .sellUploadOptionSpan a, .bothUploadOptionSpan a  {
+    color: #464646;
+    font-weight: bold;
+}
+.buyUploadOptionSpan > a:hover, .sellUploadOptionSpan > a:hover, .bothUploadOptionSpan > a:hover  {
+    text-decoration: none
+}
+.buyUploadOptionSpan, .sellUploadOptionSpan, .bothUploadOptionSpan {
+    background-color: #fcfaff;
+    color: #464646;
+    padding: 5px 10px 5px 10px;
+}
+#buyUploadAuto, #sellUploadAuto, #bothUploadAuto {
+    border: 2px solid #dac7ff;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+#buyUploadManual, #sellUploadManual, #bothUploadManual  {
+    border: 2px solid #dac7ff;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.activeOption {
+    border: 2px solid #998cb2 !important;
+    background-color: #d9c1e8;
+}
+.activeOption a {
+    color: #871a99 !important
+}
+.buyModuleTab a, .sellModuleTab a, .bothModuleTab a {
+    color: #606060;
+    font-weight: bold
+}
+.buyModuleTab > a:hover, .sellModuleTab > a:hover, .bothModuleTab > a:hover {
+    text-decoration: none
+}
+.buyModuleTabActive, .sellModuleTabActive, .bothModuleTabActive {
+    background-color: #f7f3fa
+}
+.buyModuleTabActive > a, .sellModuleTabActive > a, .bothModuleTabActive > a {
+    color: #474747 !important;
+    padding-bottom: 5px;
+    border-bottom: 3px solid black
+}
+.subModule > li > a {
+    color: #a0a0a0;
+    font-weight: bold
+}
+.subModule > li > a:hover {
+    text-decoration: none
+}
+.active {
+    color: #464646 !important
+}
+#buy, #sell, #both {
+    width: 100% !important;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-bottom: none
+}
+#buyNavUL, #sellNavUL, #bothNavUL {
+    padding-right: 0px
+}
+#buyNavUL > li > a, #sellNavUL > li > a, #bothNavUL > li > a {
+    color: #606060
+}
+.activeLi {
+    color: #474747;
+    background-color: #
+}
+#buycustomer, #buyproduct, #sellsupplier, #sellproduct, #bothcustomer, #bothsupplier, #bothproduct {
+    width: 100% !important;
+    padding: 5px
+}
+.watchVideo {
+    width: 100px
+}
+a.customerUpload, a.customerManual {
+    font-weight: bold;
+    font-size: 13px;
+    color: #a0a0a0;
+    padding: 5px
+}
+a.customerUpload:hover, a.customerManual:hover {
+    text-decoration: none
+}
+.uploadActive {
+    color: #464646 !important;
+    border-bottom: 3px solid black
+}
+.tree-container {
+padding: 0px !important;
+margin:0;
+cursor: pointer;
+}
+
+.tree-container .tree-li {
+list-style:none;
+}
+
+.tree-container .tree-li .tree-ul {
+padding-left: 20px !important;
+background-color: #f7f3fa;
+}
+
+.tree-container .tree-li .tree-ul.diactive {
+display: none;
+}
+
+.tree-container .tree-li [type="checkbox"] + label {
+padding-left: 25px !important;
+}
+.fa-caret-down{
+padding-left: 5px
+}
+
+.todotag{
+    padding-top:50px;
+    font-weight: bold;
+    font-size: 13px;
+    border-bottom: 3px solid black;
+}
+.todocontent{
+    padding-top:10px;
+    font-size: 11px;
+}
+.notificationtag{
+    padding-top:50px;
+    font-weight: bold;
+    font-size: 13px;
+    border-bottom: 3px solid black;
+}
+.notificationcontent{
+    padding-top:10px;
+    font-size: 11px;
+}
+.todoDiv{
+    margin-left:10px;
+}
+.notificationDiv{
+    margin-left:10px;
+}
+.count{
+    color: white;
+    background-color: #f55f58;
+    padding: 1px 6px 1px 6px;
+    border-radius: 6px;
+}
+#dragDropPanelDiv{
+    background-color: #f7f3fa;
+}
+#panelCard{
+    padding-top: 4%;
+    padding-bottom: 4%;
+}
+#dragDropDiv{
+    padding: 10 10 0 10;
+    color: #464646;
+    font-family: Futura, Futura-Bold, "Futura Bold", "Century Gothic", CenturyGothic, "Apple Gothic", AppleGothic, "URW Gothic L", "Avant Garde", sans-serif;
+    margin: 10 50 0 50;
+    height: 120px;
+    border: 2px dashed #9e4faa;
+}
+#upto10mp{
+    margin: 0 50 0 50;
+    font-size: 9px;
+    font-weight: bold;
+}
+#dragDropUploadBtn{
+    margin-right: 20px;
+    font-family: Futura, Futura-Bold, "Futura Bold", "Century Gothic", CenturyGothic, "Apple Gothic", AppleGothic, "URW Gothic L", "Avant Garde", sans-serif;
+    border-radius: 12px;
+    color: #f9f3fa;
+    background-color: #9e4faa;
+    width: 120px;
+}
+#bothcustomer{
+    border-bottom: 3px solid #f4ecf3;
+}

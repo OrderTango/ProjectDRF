@@ -1,0 +1,113 @@
+#languageIconRow {
+    background-color: #E0D6B7;
+    height: 40px;
+    margin-right: 0px !important
+}
+.languageIconClass {
+    height: 20px;
+    margin-top: 10px;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+.active {
+    border-bottom: 3px solid black;
+    padding-bottom: 3px
+}
+#guideRowLogin {
+    margin-top: 40px;
+    padding-bottom: 40px;
+    margin-right: 0px;
+}
+#otloginlogo{
+    width:200px;
+}
+.error >ul, .errorlist {
+    font-size: 14px !important;
+    font-weight: bold;
+    color: red !important;
+    list-style: none !important;
+}
+.form-group {
+    margin-bottom: 0rem !important;
+}
+.firstnamelabel {
+    font-weight: bold;
+}
+.panel {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-top: 20px;
+  background-color: #fbf2c4;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+.panel-heading{
+    border-radius: 10%;
+}
+.defaultMarginTopTen {
+    margin-top: 10px !important
+}
+.loginfield > #id_email,.loginfield > #id_password {
+    height: 30px;
+    width: 200px !important;
+    border: 1px solid #ffd500;
+    border-radius: 8px;
+	padding: 10px !important;
+}
+.labelClass {
+	font-weight: bold
+}
+#loginbutton{
+  background: url("/static/images/register/loginBtn.png");
+  background-size: cover;
+  border: none;
+  width: 100px;
+  height: 32px;
+  cursor: pointer;
+  color: transparent;
+  float: right;
+  margin-right: 20px
+}
+#forgotPasswordIcon {
+    margin-top: 10px
+}
+#forgetpassword, #loginpanelsignup {
+    text-decoration: none;
+    color: #881999;
+    font-size: 14px;
+}
+.footer_login {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40px; /* Set the fixed height of the footer here */
+  line-height: 60px; /* Vertically center the text there */
+  background-color: #92928c;
+}
+@media (min-width:320px) and (max-width: 480px)  {
+    #guideRowLogin {
+        margin-right: 9px
+    }
+    .footer_login {
+        position: relative
+    }
+    .loginfield > #id_email, .loginfield > #id_password {
+        width: 190px !important
+    }
+    .footer_fgpassword {
+        position: absolute !important
+    }
+	.navbar-brand {
+    margin-left: 5px;
+}
+}
+@media (min-width:600px) and (max-width:801px) {
+    .footer_login {
+        position: absolute !important
+    }
+    .loginfield > #id_email, .loginfield > #id_password {
+        width: 200px !important
+    }
+}

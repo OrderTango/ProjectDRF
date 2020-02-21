@@ -1,0 +1,126 @@
+{% load static %}
+<div id="customerManual">
+    <div id="customerManualTabDiv">
+        <div class="row bgColor paddingLeftRightTen" id="customerManualTabId">
+            <div class="col-md-5 tabOptionDiv">
+                <span class="col-md-4 nonActive tabOption tabOptionActive borderLeftRadiusTab" id="tabOption0_C">
+                    <a href="#" class="customerManual uploadActive" id="basicData_Detail_Btn_C">Basic Data</a>
+                </span>
+                <span class="col-md-4 nonActive tabOption" id="tabOption1_C">
+                    <a href="#" class="customerManual" id="companyAddress_basicData_Detail_Btn_C">Company Address</a>
+                </span>
+                <span class="col-md-4 nonActive tabOption borderRightRadiusTab" id="tabOption2_C">
+                    <a href="#" class="customerManual" id="shippingAddress_companyAddress_Detail_Btn_C">Shipping Address</a>
+                </span>
+            </div>
+            <div class="col-md-7">
+                <img src="{% static 'images/register/watchvideo.png' %}" class="img-responsive pull-right watchVideo">
+            </div>
+        </div>
+    </div>
+    <div id="customerManualFormContent">
+        <div class="col-md-12" id="customerManualFormDiv">
+            <form class="post-form" id="customerDataDetailsForm" role="form">
+                {% csrf_token %}
+                <div class="customerManualForm" id="basicDataDetail">
+
+                    <div class="form-group row customerDetailsForm ">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{customerForm.cusCompanyName.label_tag }}<span class="mandatory">*</span></label>
+                                {{ customerForm.cusCompanyName }}
+                    </div>
+
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{customerForm.cusContactNo.label_tag }}<span class="mandatory">*</span></label>
+                                {{ customerForm.cusCountryCode }}
+                                {{ customerForm.cusContactNo }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{customerForm.cusEmail.label_tag }}<span class="mandatory">*</span></label>
+                                {{ customerForm.cusEmail }}
+                    </div>
+                    <div class="offset-2 offset-sm-3 offset-md-3" id="emailError"></div>
+                     <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{customerForm.contactPerson.label_tag }}<span class="mandatory">*</span></label>
+                                {{ customerForm.contactPerson }}
+                    </div>
+                     <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{customerForm.cusSameEmail.label_tag }}</label>
+                                {{ customerForm.cusSameEmail }}
+                    </div>
+                     <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{customerForm.cusAlterNateEmail.label_tag }}<span class="mandatory">*</span></label>
+                                {{ customerForm.cusAlterNateEmail }}
+                    </div>
+                    <div class="offset-2 offset-sm-3 offset-md-3" id="cusAlterNateEmailError"></div>
+                    <button type="button" class="cfNextBtn btn btn-primary" id="companyAddress_basicData_Detail_N_Btn_C">Next</button>
+                </div>
+                <div class="customerManualForm" id="companyAddressDetail">
+
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{customerForm.cusAddress_Line1.label_tag }}<span class="mandatory">*</span></label>
+                                {{ customerForm.cusAddress_Line1 }}
+                     <label class="col-5 col-md-1 col-form-label unitlabel" id="unitlabel1">Unit<span class="mandatory">*</span></label>
+                         {{ customerForm.cusUnit1 }}
+                        <p id="hyphen1">-</p>
+                        {{ customerForm.cusUnit2 }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{customerForm.cusAddress_Line2.label_tag }}<span class="mandatory">*</span></label>
+                                {{ customerForm.cusAddress_Line2 }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{customerForm.cusCountry.label_tag }}<span class="mandatory">*</span></label>
+                                {{ customerForm.cusCountry }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{customerForm.cusState.label_tag }}<span class="mandatory">*</span></label>
+                                {{ customerForm.cusState }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{customerForm.cusPostalCode.label_tag }}<span class="mandatory">*</span></label>
+                                {{ customerForm.cusPostalCode }}
+                    </div>
+                    <button type="button" class="cfBackBtn btn btn-primary" id="basicData_Detail_B_Btn_C"> Back </button>
+                    <button type="button" class="cfNextBtn btn btn-primary" id="shippingAddress_companyAddress_Detail_N_Btn_C">Next</button>
+                </div>
+                <div class="customerManualForm" id="shippingAddressDetail">
+
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{customerShippingForm.sameAddress.label_tag }}</label>
+                                {{ customerShippingForm.sameAddress }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{customerShippingForm.cusShipCountry.label_tag }}<span class="mandatory">*</span></label>
+                                {{ customerShippingForm.cusShipCountry }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{customerShippingForm.cusShipAddress_Line1.label_tag }}<span class="mandatory">*</span></label>
+                                {{ customerShippingForm.cusShipAddress_Line1 }}
+                    <label class="col-5 col-md-1 col-form-label unitlabel" id="unitlabel">Unit<span class="mandatory">*</span></label>
+                     {{ customerShippingForm.cusShipUnit1 }}
+                    <p id="hyphen">-</p>
+                    {{ customerShippingForm.cusShipUnit2 }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{customerShippingForm.cusShipAddress_Line2.label_tag }}<span class="mandatory">*</span></label>
+                                {{ customerShippingForm.cusShipAddress_Line2 }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{customerShippingForm.cusShipState.label_tag }}<span class="mandatory">*</span></label>
+                                {{ customerShippingForm.cusShipState }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{customerShippingForm.cusShipPostalCode.label_tag }}<span class="mandatory">*</span></label>
+                                {{ customerShippingForm.cusShipPostalCode }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{customerShippingForm.emailSent.label_tag }}</label>
+                                {{ customerShippingForm.emailSent }}
+                    </div>
+                    <button type="button" class="cfBackBtn btn btn-primary" id="companyAddress_Detail_B_Btn_C">Back</button>
+                    <button type="button" class="btn btn-primary submitBtn" id="customerDataSaveButton">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

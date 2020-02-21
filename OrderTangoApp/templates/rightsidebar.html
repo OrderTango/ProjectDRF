@@ -1,0 +1,176 @@
+{% load static %}
+<style>
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+a.notificationStatus {
+    color: #7f7f7f;
+    font-size: 12px
+}
+#companyNameFont {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+</style>
+<!-- Right Sidebar  -->
+        <nav id="sidebar">
+              <ul class="navbar-primary-menu">
+                <li class="overflowAuto">
+                    <a href="#" class="pull-left"><span id="dismiss"><img class="img-responsive imageUpload" height="25" src="{% static 'images/close.png' %}" alt=""/></span></a>
+                </li>
+                <li>
+                  <div class="row justify-content-center">
+                      {% if company.companyImage %}
+                        <img class="img-responsive imageUpload" id="iconCompanyLogo" src="{{ company.companyImage.url }}" alt=""/>
+                       {% else %}
+                       <img class="img-responsive imageUpload" id="iconCompanyLogo" src="{% static 'images/companyLogo.png' %}" alt=""/>
+                       {% endif %}
+                  </div>
+                  <div class="row justify-content-center">
+                      <span class="commonFontSize" id="companyNameFont"><center>{{ company.companyName }} <br/> {{ company.companyCode }}</center> </span>
+                  </div>
+                </li>
+                <li>
+                    <div class="row">
+                        <div class="sideBarAlignClass">
+                           <div class="notify">
+                           <div class="notificationtag" id="notificationtag"><img class="sideBarIcons" src="{% static 'images/NotificationsIcon.png' %}" href="{% url 'operationalpanel' %}" alt=""/> <span class="nav-label"> Notification <span class="count">{{ leng }}</span></span></div>
+                            <span>
+                                {% if noti %}
+                                {% for noti in noti %}
+                                <div class="notificationcontent"><a class="notificationStatus" id="{{noti.type}}_{{noti.sendFromId}}_{{noti.notificationId}}" href="#"> {{noti.desc}}</a></div>
+                                {% endfor %}
+                                {% else %}
+                                <div class="notificationcontent">No notifications to show<br /></div>
+                                {% endif %}
+                            </span>
+                        </div>
+                            </div>
+                    </div>
+                </li>
+              </ul>
+        </nav>
+
+    <!-- Right Sidebar  -->
+
+
+<div class="modal" id="loader"><!-- Place at bottom of page --></div>
+
+<div id="notificationConfirmModel" class="modal" data-backdrop="static" data-keyboard="false" role="dialog" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+          <h4>Notification confirmation</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+      </div>
+      <div class="modal-body">
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" id="notificationConfirmSubmit" data-dismiss="modal">Accept</button>
+        <button type="button" class="btn btn-default" id="" data-dismiss="modal">Reject</button>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+    $body = $("body");
+    $(document).on('click', '.notificationStatus', function() {
+     var id = $(this).attr('id');
+    var res = id.split("_");
+    var sendFromId = res[1];
+    var notificationId = res[2];
+    console.log(notificationId);
+    console.log(id);
+    var type = res[0];
+
+    $body.addClass("loading");
+    if(type == "SiteAssign")
+    {
+
+    $('#notificationConfirmModel').modal();
+    $('#notificationConfirmSubmit').on('click',function() {
+        var data ="sendFromId="+sendFromId+'&id='+notificationId;
+        $.ajax({
+        url: "/sitesAddingForSla",
+        type: "POST",
+        dataType: "json",
+        data: data,
+        success: function (result)
+        {
+
+            $body.removeClass("loading");
+            if (result.status == 'success') {
+                setTimeout(function() {
+                $(".notify").load(location.href + " .notify");
+                },2000);
+                alert("success");
+            }
+
+        }
+
+        });
+        });
+    }
+    else if(type == "customer")
+    {
+        $body.removeClass("loading");
+        window.location.href = "/fetchSiteDataForSlaAssign?id="+sendFromId+'&notificationId='+notificationId;
+    }
+    else if(type == "assignProductForCustomer")
+    {
+        $body.removeClass("loading");
+        window.location.href = "/fetchSupplierProductMerging?id="+sendFromId+'&notificationId='+notificationId;
+    }
+    else if(type == "href")
+    {
+        $body.removeClass("loading");
+        window.location.href = sendFromId;
+    }
+    else
+    {
+        var data ="id="+sendFromId+'&notificationId='+notificationId;
+        $.ajax({
+        url: "/notificationStatus",
+        type: "POST",
+        dataType: "json",
+        data: data,
+        success: function (result)
+        {
+
+            $body.removeClass("loading");
+            if (result.status == 'success') {
+            alert("success");
+                setTimeout(function() {
+                $(".notify").load(location.href + " .notify");
+                },2000);
+
+            }
+
+        }
+
+        });
+    }
+
+    });
+    });
+</script>
