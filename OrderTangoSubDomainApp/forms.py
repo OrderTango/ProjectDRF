@@ -13,53 +13,7 @@ class MainForm(forms.ModelForm):
         super(MainForm, self).__init__(*args, **kwargs)
 
 
-class ItemMasterAddForm(MainForm):
-    type = forms.CharField(initial='product', widget=forms.HiddenInput())
 
-    uOm = forms.ModelChoiceField(label='UOM',
-                                 queryset=QuantityType.objects.all(), empty_label="Select")
-    itemCategory = forms.CharField(label='Product Category', max_length=50)
-    priceUnit = forms.ModelChoiceField(label='Price Unit',
-                                       queryset=CurrencyType.objects.all(), empty_label="Select")
-
-    class Meta:
-        model = ItemMaster
-        fields = (
-            'itemCode', 'itemName', 'itemDesc', 'uOm',
-
-        )
-        labels = {
-            'itemCode': ('Product Code'), 'itemName': ('Product Name')
-            , 'itemDesc': ('Product Desc'),
-
-        }
-
-    def __init__(self, *args, **kwargs):
-        super(ItemMasterAddForm, self).__init__(*args, **kwargs)
-
-
-class StoreForm(MainForm):
-    storeName = forms.ChoiceField(label='Store Name')
-    stockUnit = forms.ModelChoiceField(label='Stock Unit',
-                                       queryset=QuantityType.objects.all(), empty_label="Select")
-    itemStatus = forms.ModelChoiceField(label='Product Status',
-                                        queryset=ItemStatus.objects.all(), empty_label="Select")
-    sellUnit = forms.ModelChoiceField(label='Sell Unit',
-                                      queryset=QuantityType.objects.all(), empty_label="Select")
-
-    class Meta:
-        model = Store
-        fields = (
-            'stockCount', 'stockUnit', 'itemStatus', 'sellCount',
-            'sellUnit', 'stockUnit', 'itemStatus', 'sellUnit',)
-        labels = {
-            'stockUnit': ('Stock Unit'), 'stockCount': ('Stock Count'), 'itemStatus': ('Item Status'),
-            'sellCount': ('Sell Count'), 'sellUnit': ('Sell Unit'),
-
-        }
-
-    def __init__(self, *args, **kwargs):
-        super(StoreForm, self).__init__(*args, **kwargs)
 
 
 class ResetpasswordForm(MainForm):
@@ -98,23 +52,18 @@ class ResetpasswordForm(MainForm):
         return self.cleaned_data
 
 
-rolelist = (
-    ('', 'Select'),
-    ('Admin', 'Admin'),
-    ('Manager', 'Manager'),
-    ('Area Manager', 'Area Manager'),
-    ('Store Keeper', 'Store Keeper'),
-)
 
 
 class SubUserFormDetails(MainForm):
     password = forms.CharField(widget=forms.PasswordInput(), max_length=15, label='Password')
     confirm_password = forms.CharField(widget=forms.PasswordInput(), max_length=15, label='Confirm Password')
-    role = forms.CharField(label='Role', widget=forms.Select(choices=rolelist))
+    role = forms.ModelChoiceField(label='Role', empty_label="Select", queryset=RolesAndAccess.objects.filter(status=constants.Active).all())
     area = forms.ModelChoiceField(label='Area',
                                      widget=forms.Select(attrs={'onchange': 'load_sites(this.value)'}),
                                      queryset=Area.objects.all(), empty_label="Select")
     site = forms.ModelChoiceField(label='Site', empty_label="Select", queryset=Sites.objects.filter(siteArea_id=1))
+    countryCode = forms.ModelChoiceField(label='Country Code', widget=forms.Select(),
+                                            queryset=CountryCode.objects.all().order_by('countryCodeName'))
     class Meta:
         model = Subuser
         fields = (
@@ -129,19 +78,20 @@ class SubUserFormDetails(MainForm):
 
     def __init__(self, *args, **kwargs):
         super(SubUserFormDetails, self).__init__(*args, **kwargs)
-        self.fields['designation'].empty_label = "Select"
-        self.fields['role'].empty_label = "Select"
         self.fields['email'].required = False
+        self.fields['countryCode'].empty_label = "Select"
 
 
 class EditSubUserFormDetails(MainForm):
     password = forms.CharField(widget=forms.PasswordInput(), max_length=15, label='Password')
     confirm_password = forms.CharField(widget=forms.PasswordInput(), max_length=15, label='Confirm Password')
-    role = forms.CharField(label='Role', widget=forms.Select(choices=rolelist))
+    role = forms.ModelChoiceField(label='Role', empty_label="Select", queryset=RolesAndAccess.objects.filter(status=constants.Active).all())
     area = forms.ModelChoiceField(label='Area',
                                   widget=forms.Select(attrs={'onchange': 'load_sitesedit(this.value)'}),
                                   queryset=Area.objects.all(), empty_label="Select")
-    site = forms.ModelChoiceField(label='Site', empty_label="Select", queryset=Sites.objects.filter(siteArea_id=1))
+    site = forms.ChoiceField(label='Site')
+    countryCode = forms.ModelChoiceField(label='Country Code', widget=forms.Select(),
+                                         queryset=CountryCode.objects.all().order_by('countryCodeName'))
 
     class Meta:
         model = Subuser
@@ -171,15 +121,14 @@ class EditSubUserFormDetails(MainForm):
         self.fields['DOJ'].widget.attrs['id'] = "uDOJ"
         self.fields['DOD'].widget.attrs['id'] = "uDOD"
         self.fields['profilepic'].widget.attrs['id'] = "uprofilepic"
-        self.fields['designation'].empty_label = "Select"
-        self.fields['role'].empty_label = "Select"
+        self.fields['countryCode'].widget.attrs['id'] = "ucountryCode"
         self.fields['email'].required = False
 
 
 class AreaAddForm(MainForm):
     areaDesc = forms.CharField(widget=forms.Textarea(attrs={'cols': 30, 'rows': 5}), label='Area Description')
     areaSla = forms.ModelChoiceField(label='Area SLA',
-                                     queryset=serviceLevelAgreement.objects.filter(slaStatus=constants.Active).all(),
+                                     queryset=serviceLevelAgreement.objects.filter(status=constants.Active).all(),
                                      empty_label="Select")
 
     class Meta:
@@ -198,7 +147,7 @@ class AreaEditForm(MainForm):
     areaId = forms.CharField(widget=forms.HiddenInput())
     areaDesc = forms.CharField(widget=forms.Textarea(attrs={'cols': 30, 'rows': 5}), label='Area Description')
     areaSla = forms.ModelChoiceField(label='Area SLA',
-                                     queryset=serviceLevelAgreement.objects.filter(slaStatus=constants.Active).all(),
+                                     queryset=serviceLevelAgreement.objects.filter(status=constants.Active).all(),
                                      empty_label="Select")
 
     class Meta:
@@ -218,22 +167,22 @@ class AreaEditForm(MainForm):
 
 
 class AddSiteForm(MainForm):
-    siteArea = forms.ModelChoiceField(label='Site Area', queryset=Area.objects.filter(areaStatus=constants.Active).all(),
+    siteArea = forms.ModelChoiceField(label='Site Area', queryset=Area.objects.filter(status=constants.Active).all(),
                                       empty_label="Select")
     siteType = forms.ModelChoiceField(label='Site Type',
                                       queryset=TypeOfSites.objects.all(),
                                       empty_label="Select")
-    siteName = forms.CharField(label='Site Name')
+    siteName = forms.CharField(label='Site Name',max_length=50)
     siteDesc = forms.CharField(label='Site Description', widget=forms.Textarea(attrs={'cols': 30, 'rows': 5}))
     country = forms.ModelChoiceField(label='Country',
                                      widget=forms.Select(attrs={'onchange': 'load_states(this.value)'}),
                                      queryset=Country.objects.all(), empty_label="Select")
     state = forms.ModelChoiceField(label='State', empty_label="Select", queryset=State.objects.filter(country_id=1))
-    address_Line1 = forms.CharField(label='Address 1')
-    address_Line2 = forms.CharField(label='Address 2')
-    unit1 = forms.CharField(label='Unit1')
-    unit2 = forms.CharField(label='Unit2')
-    postalCode = forms.CharField(label='Postal Code')
+    address_Line1 = forms.CharField(label='Address 1',max_length=100)
+    address_Line2 = forms.CharField(label='Address 2',max_length=100)
+    unit1 = forms.CharField(label='Unit1',max_length=2)
+    unit2 = forms.CharField(label='Unit2',max_length=2)
+    postalCode = forms.CharField(label='Postal Code',max_length=7)
 
     class Meta:
         model = Sites
@@ -244,22 +193,22 @@ class AddSiteForm(MainForm):
 
 
 class EditSiteForm(MainForm):
-    siteArea = forms.ModelChoiceField(label='Site Area', queryset=Area.objects.filter(areaStatus=constants.Active).all(),
+    siteArea = forms.ModelChoiceField(label='Site Area', queryset=Area.objects.filter(status=constants.Active).all(),
                                       empty_label="Select")
     siteType = forms.ModelChoiceField(label='Site Type',
                                       queryset=TypeOfSites.objects.all(),
                                       empty_label="Select")
-    siteName = forms.CharField(label='Site Name')
+    siteName = forms.CharField(label='Site Name',max_length=50)
     siteDesc = forms.CharField(label='Site Description', widget=forms.Textarea(attrs={'cols': 30, 'rows': 5}))
     country = forms.ModelChoiceField(label='Country',
                                      widget=forms.Select(attrs={'onchange': 'load_edit_states(this.value)'}),
                                      queryset=Country.objects.all(), empty_label="Select")
     state = forms.ModelChoiceField(label='State', empty_label="Select", queryset=State.objects.filter(country_id=1))
-    address_Line1 = forms.CharField(label='Address 1')
-    address_Line2 = forms.CharField(label='Address 2')
-    unit1 = forms.CharField(label='Unit1')
-    unit2 = forms.CharField(label='Unit2')
-    postalCode = forms.CharField(label='Postal Code')
+    address_Line1 = forms.CharField(label='Address 1',max_length=100)
+    address_Line2 = forms.CharField(label='Address 2',max_length=100)
+    unit1 = forms.CharField(label='Unit1',max_length=2)
+    unit2 = forms.CharField(label='Unit2',max_length=2)
+    postalCode = forms.CharField(label='Postal Code',max_length=7)
 
     class Meta:
         model = Sites
@@ -291,13 +240,13 @@ class CustomerManualAddingForm(MainForm):
     class Meta:
         model = Customer
         fields = (
-            'cusCompanyName', 'cusEmail', 'cusContactNo', 'cusAddress_Line1',
+            'cusCompanyName', 'cusEmail', 'cusContactNo', 'cusAddress_Line1','cusCommunicationEmail',
             'cusAddress_Line2','cusUnit1','cusUnit2','cusPostalCode','contactPerson','cusAlterNateEmail',
         )
 
         labels = {
-            'cusCompanyName': ('Company Name'), 'cusEmail': ('Email')
-            , 'cusContactNo': ('Contact No.'), 'cusAddress_Line1': ('Address 1'),'cusAlterNateEmail':('Alternate Email'),
+            'cusCompanyName': ('Company Name'), 'cusEmail': ('Email'), 'cusCommunicationEmail': ('Communication Email'),
+             'cusContactNo': ('Contact No.'), 'cusAddress_Line1': ('Address 1'),'cusAlterNateEmail':('Alternate Email'),
             'cusAddress_Line2': ('Address 2'),'cusPostalCode':('Postal Code'),'contactPerson':('Contact Person')
         }
 
@@ -335,18 +284,18 @@ class SupplierManualAddingForm(MainForm):
                                      widget=forms.Select(attrs={'onchange': 'load_supplier_states(this.value)'}),
                                      queryset=Country.objects.all(), empty_label="Select")
     supState = forms.ModelChoiceField(label='State', empty_label="Select", queryset=State.objects.filter(country_id=1))
-    supContactPerson = forms.CharField(max_length=50,label='Contact Person')
+    supContactPerson = forms.CharField(max_length=30,label='Contact Person')
     supSameEmail = forms.BooleanField(label='Same Email', widget=forms.CheckboxInput, initial=False)
     class Meta:
         model = Supplier
         fields = (
-            'supCompanyName', 'supEmail', 'supContactNo', 'supAddress_Line1',
+            'supCompanyName', 'supEmail', 'supContactNo', 'supAddress_Line1','supCommunicationEmail',
             'supAddress_Line2','supUnit1','supUnit2','supPostalCode','supAlterNateEmail'
         )
 
         labels = {
-            'supCompanyName': ('Company Name'), 'supEmail': ('Email')
-            , 'supContactNo': ('Contact No.'), 'supAddress_Line1': ('Address 1'),
+            'supCompanyName': ('Company Name'), 'supEmail': ('Email'), 'supCommunicationEmail': ('Communication Email'),
+            'supContactNo': ('Contact No.'), 'supAddress_Line1': ('Address 1'),
             'supAddress_Line2': ('Address 2'),'supPostalCode':('Postal Code'),'supAlterNateEmail':('Alternate Email')
         }
 
@@ -440,7 +389,7 @@ class purchasingItemsForm(MainForm):
     purchasingUom = forms.ModelChoiceField(label='Order Unit', queryset=QuantityType.objects.all())
     purchasingTax = forms.ModelChoiceField(label='Tax Code', queryset=taxCode.objects.all())
     purchasingCurrency = forms.ModelChoiceField(label='Currency Key', queryset=CurrencyType.objects.all())
-    purchasingUomForKg = forms.ModelChoiceField(label='Purchase Order Price Unit "kg"', queryset=CurrencyType.objects.all())
+    purchasingUomForKg = forms.ModelChoiceField(label='Purchase Order Price Unit', queryset=CurrencyType.objects.all())
 
     class Meta:
         model = purchasingItems
@@ -651,7 +600,7 @@ class EditpurchasingItemsForm(MainForm):
     purchasingUom = forms.ModelChoiceField(label='Order Unit', queryset=QuantityType.objects.all())
     purchasingTax = forms.ModelChoiceField(label='Tax Code', queryset=taxCode.objects.all())
     purchasingCurrency = forms.ModelChoiceField(label='Currency Key', queryset=CurrencyType.objects.all())
-    purchasingUomForKg = forms.ModelChoiceField(label='Purchase Order Price Unit "kg"', queryset=CurrencyType.objects.all())
+    purchasingUomForKg = forms.ModelChoiceField(label='Purchase Order Price Unit', queryset=CurrencyType.objects.all())
 
     class Meta:
         model = purchasingItems

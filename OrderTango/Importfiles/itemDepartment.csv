@@ -1,5 +1,5 @@
-itemDeptId,itemDeptCode,itemDeptName,itemDeptDesc
-1,,FROZEN,
-2,,CHILLED,
-3,,AMBIENT,
-4,,DRY,
+itemDeptCode,itemDeptName,itemDeptDesc
+,FROZEN,
+,CHILLED,
+,AMBIENT,
+,DRY,

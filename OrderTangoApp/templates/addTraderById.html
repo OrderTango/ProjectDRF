@@ -12,40 +12,13 @@
 <script type="text/javascript" src="{% static 'datatables/js/dataTables.responsive.min.js' %}"></script>
 <script src ="{% static 'js/jquery-ui.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
-<style>
-    .sampleModalPopup {
-        max-width: 35%
-    }
-    #customerFileUpload {
-        display: none;
-    }
-    #add {
-                background: #ffd500;
-                color: #881999;
-                font-weight: bold;
-                border: 2px solid #881999;
-                width:100px;
-            }
-    #addWithRequest {
-                background: #ffd500;
-                color: #881999;
-                font-weight: bold;
-                border: 2px solid #881999;
-            }
-    #back {
-                background: #d981da;
-                color: #fff;
-                font-weight: bold;
-                border: 2px solid #212529;
-                width:100px;
-            }
-</style>
+
 <div class="row headColor">
   <div class="col-md-2 col-sm-4 col-24" id="sideBarLeft">
         {% include "administrationpanelsidebar.html" %}
   </div>
     <div class="col-md-10 col-sm-4 col-24" id="formTrader" style="padding-top:30px">
-    <form class="registrationform" role="form" action='/registration/' method='POST'>
+    <form class="registrationform" role="form" method='POST' autocomplete="off">
                 <p id="valuedcustomer"><u><b>User Information</b></u></p>
                 {% csrf_token %}
                 <div id="formsec1">
@@ -123,7 +96,7 @@
            <div class="modal-body">
               <div id="success_msg" class="success_msg"> </div>
               <div id="error_msg" class="error_msg"> </div>
-                <form role="form">
+                <form role="form" autocomplete="off">
                     {% csrf_token %}
                     <div id="modalBody">
 
@@ -170,7 +143,7 @@
       </div>
       <div class="modal-body">
 
-         <form id="updateLogo"  method="post" enctype="multipart/form-data">
+         <form id="updateLogo"  method="post" enctype="multipart/form-data" autocomplete="off">
              {% csrf_token %}
 
          <input type="file" name="fileuploaddata" value="fileupload" id="fileuploaddata">
@@ -203,22 +176,38 @@
         <div class="row" >
             <div class="col-md-12 col-sm-3 col-6 " >
                 <div class="col-md-12" id="viewProfileModalFormDiv">
-                    <form class="registrationform" id="updateProfileForm" role="form" method='POST'>
+                    <form class="registrationform" id="updateProfileForm" role="form" method='POST' autocomplete="off">
 
                         {% csrf_token %}
                         <div id="formsec1">
                           <div class="form-group row registrationformdiv">
-                              <label class="col-5 col-md-3 col-form-label registrationformlabel">{{profileForm.firstName.label_tag }}<span class="mandatory">*</span></label>
-                            {{ profileForm.firstName }}
+                              <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.firstName.label_tag }}<span class="mandatory">*</span></label>
+                            {{ ProfileForm.firstName }}
                           </div>
-                          <div class="offset-3 offset-sm-4 offset-md-3" id="firstNameError">{{ profileForm.firstName.errors }}</div>
+                          <div class="offset-3 offset-sm-4 offset-md-3" id="firstNameError">{{ ProfileForm.firstName.errors }}</div>
                           <div class="form-group row registrationformdiv">
-                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{profileForm.lastName.label_tag }}<span class="mandatory">*</span></label>
-                             {{ profileForm.lastName }}
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.lastName.label_tag }}<span class="mandatory">*</span></label>
+                             {{ ProfileForm.lastName }}
                           </div>
-                          <div class="offset-3 offset-sm-4 offset-md-3" id="lastNameError">{{ profileForm.lastName.errors }} </div>
+                          <div class="offset-3 offset-sm-4 offset-md-3" id="lastNameError">{{ ProfileForm.lastName.errors }} </div>
+                        <div class="form-group row registrationformdiv hide">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.contactNo.label_tag }}<span class="mandatory">*</span></label>
+                             {{ProfileForm.countryCode}}{{ ProfileForm.contactNo }}
+                          </div>
+                          <div class="offset-3 offset-sm-4 offset-md-3 hide" id="contactNoError">{{ ProfileForm.contactNo.errors }} </div>
+                        <div class="form-group row registrationformdiv hide">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.email.label_tag }}<span class="mandatory">*</span></label>
+                             {{ ProfileForm.email }}
+                          </div>
+                          <div class="offset-3 offset-sm-4 offset-md-3 hide" id="emailError">{{ ProfileForm.email.errors }} </div>
+
                         </div>
                         <div id="formsec2">
+                            <div class="form-group row registrationformdiv hide">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.companyName.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.companyName }}
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="companyNameError"> {{ companyProfileForm.companyName.errors }} </div>
 
                           <div class="form-group row registrationformdiv">
                             <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.country.label_tag }}<span class="mandatory">*</span></label>
@@ -251,17 +240,17 @@
                           </div>
                             <div class="offset-3 offset-sm-4 offset-md-3" id="postalCodeError"> {{ companyProfileForm.postalCode.errors }} </div>
                             <div class="form-group row registrationformdiv">
-                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{profileForm.sec_question.label_tag }}<span class="mandatory">*</span></label>
-                            {{ profileForm.sec_question }}
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.sec_question.label_tag }}<span class="mandatory">*</span></label>
+                            {{ ProfileForm.sec_question }}
 
                           </div>
-                            <div class="offset-3 offset-sm-4 offset-md-3" id="secQuestionError"> {{ profileForm.sec_question.errors }} </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="secQuestionError"> {{ ProfileForm.sec_question.errors }} </div>
                             <div class="form-group row registrationformdiv">
-                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{profileForm.sec_answer.label_tag }}<span class="mandatory">*</span></label>
-                            {{ profileForm.sec_answer }}
-                            <div class="col-12 offset-sm-4 col-md-6" id="submitBtnDiv">  <input type="submit" id="profileUpdateButton" value="Update"> </div>
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.sec_answer.label_tag }}<span class="mandatory">*</span></label>
+                            {{ ProfileForm.sec_answer }}
+                            <div class="col-12 offset-sm-4 col-md-6" id="submitBtnDiv">  <input type="button" class="profileUpdateButtonClass" id="profileUpdateButton" value="Update"> </div>
                           </div>
-                            <div class="offset-3 offset-sm-4 offset-md-3" id="secAnswerError"> {{ profileForm.sec_answer.errors }} </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="secAnswerError"> {{ ProfileForm.sec_answer.errors }} </div>
                         </div>
 
                     </form>
@@ -345,6 +334,7 @@
 
             var date = new Date();
             $("#id_DOJ").datepicker({
+                changeYear: true,
                 dateFormat: "dd/mm/yy",
                 defaultDate: 'Select',
                 onSelect: function () {
@@ -372,7 +362,7 @@
 
         $(document).ready(function() {
 
-        $("#id_postalCode,#editpostalCode").attr('maxlength','6');
+        $("#id_postalCode,#editpostalCode").attr('maxlength','7');
 
         $("#id_unit1,#id_unit2,#editunit1,#editunit2").attr('maxlength','2');
 
@@ -385,6 +375,7 @@
 
          var date = new Date();
                 $("#uDOJ , #uDOD").datepicker({
+                    changeYear: true,
                     dateFormat: "dd/mm/yy",
                     defaultDate: 'Select',
                     onSelect: function () {
@@ -513,9 +504,6 @@
                                 window.location.href = data.redirect_url;
                             }, 3000);
                         }
-                        else if (data.status == 'error' && data.error_msg != 'sessionexpired') {
-                            $('#error_msg').append(data.error_msg);
-                        }
                         else if (data.status == 'error' && data.error_msg == 'sessionexpired') {
                             $('#domainName').val('');
                             $('#error_msg').append('Session expired.');
@@ -524,6 +512,9 @@
                             setTimeout(function() {
                                 window.location.href = data.redirect_url;
                             }, 3000);
+                        }
+                        else {
+                            $('#error_msg').append(data.error_msg);
                         }
                       }
                      });

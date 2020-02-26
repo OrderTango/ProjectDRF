@@ -167,7 +167,7 @@
 .sideBarIcons1X {
     width: 25px
 }
-#timeSlot {
+#timeSlot,#deliverySlot {
     width: 110px !important;
     font-size: 11px;
     margin-left: 5px;
@@ -485,7 +485,7 @@ table.viewOrderTable {
     border-top-right-radius: 5px;
 }
 #addresspanel {
-    height: 200px !important
+    height: 200px !important;
 }
 #sideTabMenu {
     padding-left: 1%;

@@ -1,4 +1,15 @@
 {% load static %}
+<style>
+    @media (min-width:320px) and (max-width: 480px)  {
+        #supplierDataDetailsForm {
+            padding: 5px !important;
+            margin-left: -12% !important;
+        }
+        .paddLabel{
+            padding-left: 5% !important;
+        }
+    }
+</style>
 <div id="supplierManual">
     <div id="supplierManualTabDiv">
         <div class="row bgColor paddingLeftRightTen" id="supplierManualTabId">
@@ -20,7 +31,7 @@
     </div>
     <div id="supplierManualFormContent">
         <div class="col-md-12" id="supplierManualFormDiv">
-            <form class="post-form" id="supplierDataDetailsForm" role="form">
+            <form class="post-form" id="supplierDataDetailsForm" role="form" autocomplete="off">
                 {% csrf_token %}
                 <div class="customerManualForm" id="basicDataDetail">
                     <div class="form-group row customerDetailsForm ">
@@ -50,7 +61,12 @@
                      <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{supplierForm.supAlterNateEmail.label_tag }}<span class="mandatory">*</span></label>
                                 {{ supplierForm.supAlterNateEmail }}
                     </div>
-                    <div class="offset-2 offset-sm-3 offset-md-3" id="supAlterNateEmailError"></div>
+                    <div class="offset-2 offset-sm-3 offset-md-3 paddLabel" id="supAlterNateEmailError"></div>
+                    <div class="form-group row customerDetailsForm paddLabel">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel paddLabel">{{supplierForm.supCommunicationEmail.label_tag }}<span class="mandatory">*</span></label>
+                                {{ supplierForm.supCommunicationEmail }}
+                    </div>
+                    <div class="offset-2 offset-sm-3 offset-md-3" id="supCommunicationEmailError"></div>
                     <button type="button" class="cfNextBtn btn btn-primary" id="companyAddress_basicData_Detail_N_Btn_S">Next</button>
                 </div>
                 <div class="customerManualForm" id="companyAddressDetail">
@@ -84,7 +100,7 @@
                 </div>
                 <div class="customerManualForm" id="shippingAddressDetail">
 
-                    <div class="form-group row customerDetailsForm">
+                    <div class="form-group row customerDetailsForm paddLabel">
                      <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{supplierShippingForm.supSameAddress.label_tag }}</label>
                                 {{ supplierShippingForm.supSameAddress }}
                     </div>

@@ -8,10 +8,31 @@
 <script src ="{% static 'js/jquery-ui.js' %}"></script>
 <script src ="{% static 'js/script.js' %}"></script>
 <style>
+
+    #onBoardTab {
+        font-weight: bold;
+        padding: 5px 10px 5px 5px !important;
+        border: 1px solid #f9f3fa;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+    #onBoardAnchor {
+        color: #474747;
+        padding-bottom: 5px;
+        border-bottom: 2px solid black;
+    }
+
+    .modal-content {
+        width: 87%;
+     }
     .sampleModalPopup {
         max-width: 35%
     }
     #customerFileUpload {
+        display: none;
+    }
+    #productFileUpload {
         display: none;
     }
     #profileModalBody{
@@ -38,6 +59,7 @@
     }
     .ui-dialog-buttonpane{
         padding: 0em !important;
+
     }
     .ui-dialog-titlebar{
         background-color: #cbc1e8;
@@ -73,6 +95,31 @@
     #id_unit1,#id_unit2,#id_usradd_unit1,#id_usradd_unit2{
        width:78px !important;
     }
+    .addStyl{
+     font-size: 14px !important;
+     font-weight: normal !important
+     }
+     .addSty{
+     font-size: 14px !important;
+     font-weight: normal !important
+     }
+     .addsSty{
+     font-size: 14px !important;
+     font-weight: normal !important
+     }
+     #tradeByValue {
+        height: 30px;
+        width: 213px !important;
+        border: 1px solid #bb99c0;
+        border-radius: 8px;
+        padding: 4px !important;
+     }
+     #traderByIdModalTitle{
+        font-size: medium !important;
+     }
+     .modalWidth{
+        width: 88% !important;
+     }
 }
 </style>
  <div class="row headColor">
@@ -80,6 +127,12 @@
         {% include "administrationpanelsidebar.html" %}
   </div>
   <div class="col-md-10 paddingLeftZero" id="bodyContent">
+      <div class="row">
+          <div class="col-md-2 col-sm-3 col-6 navTabClass navHeading" id="onBoardTab">
+            <a href="{% url 'administrationpanel' %}" class="anchorlink " id="onBoardAnchor"><img
+                src="{% static 'images/OnBoard.png' %}" class="sideBarIcons">Onboarding</a>
+          </div>
+        </div>
         <div class="row bgColor paddingLeftRightTen tab-content" id="tabContentRow">
             <div id="both" class="tab-pane active">
                 <div class="row bgColor paddingLeftRightTen">
@@ -97,18 +150,18 @@
                   <div class="col-md-8 col-sm-12 bgColorModule" id="bothUploadOption">
                       <span class="bothUploadOptionSpan activeOption" style="display: none" id="bothUploadAuto"><a href="#"><img src="{% static 'images/uploadauto.png' %}" class="sideBarIcons">Upload</a></span><span class="bothUploadOptionSpan" style="display: none" id="bothUploadManual"><a href="#">Manual <img src="{% static 'images/uploadmanual.png' %}" class="sideBarIcons"></a></span>
                       <span class="moduleData" id="customerData" style="display: none">
-                          <a class="addData" href="{% url 'administrationpanel' %}?module=customer&type=Manual" id="addCustomer"> <img class="roundImage" src="{% static 'images/Round.png' %}" /> Add New Customer </a>&nbsp;
-                          <a class="addData" href="{% url 'administrationpanel' %}?module=customer&type=Upload" id="uploadCustomers"> <img class="roundImage" src="{% static 'images/Round.png' %}" /> Upload Customers </a>&nbsp;
-                          <a class="addDataViaId" href="#" id="addCustomerById"> <img class="roundImage" src="{% static 'images/Round.png' %}" /> Add Customer By Id </a>
+                          <a class="addData addSty" href="{% url 'administrationpanel' %}?module=customer&type=Manual" id="addCustomer"> <img class="roundImage" src="{% static 'images/Round.png' %}" /> Add New Customer </a>&nbsp;
+                          <a class="addData addSty" href="{% url 'administrationpanel' %}?module=customer&type=Upload" id="uploadCustomers"> <img class="roundImage" src="{% static 'images/Round.png' %}" /> Upload Customers </a>&nbsp;
+                          <a class="addDataViaId addSty" href="#" id="addCustomerById"> <img class="roundImage" src="{% static 'images/Round.png' %}" /> Add Customer By Id </a>
                       </span>
                       <span class="moduleData" id="supplierData" style="display: none">
-                          <a class="addData" href="{% url 'administrationpanel' %}?module=vendor&type=Manual" id="addSupplier"> <img class="roundImage" src="{% static 'images/Round.png' %}" /> Add New Vendor </a>&nbsp;
-                          <a class="addData" href="{% url 'administrationpanel' %}?module=vendor&type=Upload" id="uploadSuppliers"> <img class="roundImage" src="{% static 'images/Round.png' %}" /> Upload Vendors </a>&nbsp;
-                          <a class="addDataViaId" href="#" id="addSupplierById"> <img class="roundImage" src="{% static 'images/Round.png' %}" /> Add Vendor By Id </a>
+                          <a class="addData addStyl" href="{% url 'administrationpanel' %}?module=vendor&type=Manual" id="addSupplier"> <img class="roundImage" src="{% static 'images/Round.png' %}" /> Add New Vendor </a>&nbsp;
+                          <a class="addData addStyl" href="{% url 'administrationpanel' %}?module=vendor&type=Upload" id="uploadSuppliers"> <img class="roundImage" src="{% static 'images/Round.png' %}" /> Upload Vendors </a>&nbsp;
+                          <a class="addDataViaId addStyl" href="#" id="addSupplierById"> <img class="roundImage" src="{% static 'images/Round.png' %}" /> Add Vendor By Id </a>
                       </span>
                       <span class="moduleData" id="productData" style="display: none">
-                          <a class="addData" href="{% url 'administrationpanel' %}?module=product&type=Manual" id="addProduct"> <img class="roundImage" src="{% static 'images/Round.png' %}" /> Add New Product </a>&nbsp;
-                          <a class="addData" href="{% url 'administrationpanel' %}?module=product&type=Upload" id="uploadProducts"> <img class="roundImage" src="{% static 'images/Round.png' %}" /> Upload Products </a>
+                          <a class="addData addsSty" href="{% url 'administrationpanel' %}?module=product&type=Manual" id="addProduct"> <img class="roundImage" src="{% static 'images/Round.png' %}" /> Add New Product </a>&nbsp;
+                          <a class="addData addsSty" href="{% url 'administrationpanel' %}?module=product&type=Upload" id="uploadProducts"> <img class="roundImage" src="{% static 'images/Round.png' %}" /> Upload Products </a>
                       </span>
                   </div>
                 </div>
@@ -143,7 +196,7 @@
           <div class="modal-body">
               <div id="success_msg" class="success_msg"> </div>
               <div id="error_msg" class="error_msg"> </div>
-                <form role="form">
+                <form role="form" autocomplete="off">
                     {% csrf_token %}
                     <div id="modalBody">
 
@@ -191,7 +244,7 @@
         <div class="row" >
             <div class="col-md-12 col-sm-3 col-6 " >
                 <div class="col-md-12" id="viewProfileModalFormDiv">
-                    <form class="registrationform" id="updateProfileForm" role="form" method='POST'>
+                    <form class="registrationform" id="updateProfileForm" role="form" method='POST' autocomplete="off">
 
                         {% csrf_token %}
                         <div id="formsec1">
@@ -205,8 +258,26 @@
                              {{ ProfileForm.lastName }}
                           </div>
                           <div class="offset-3 offset-sm-4 offset-md-3" id="lastNameError">{{ ProfileForm.lastName.errors }} </div>
+                         <div class="form-group row registrationformdiv hide">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.contactNo.label_tag }}<span class="mandatory">*</span></label>
+                             {{ProfileForm.countryCode}}{{ ProfileForm.contactNo }}
+                          </div>
+                          <div class="offset-3 offset-sm-4 offset-md-3 hide" id="contactNoError">{{ ProfileForm.contactNo.errors }} </div>
+                        <div class="form-group row registrationformdiv hide">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.email.label_tag }}<span class="mandatory">*</span></label>
+                             {{ ProfileForm.email }}
+                          </div>
+                          <div class="offset-3 offset-sm-4 offset-md-3 hide" id="emailError">{{ ProfileForm.email.errors }} </div>
+
                         </div>
                         <div id="formsec2">
+                            <div class="form-group row registrationformdiv hide">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.companyName.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.companyName }}
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="companyNameError"> {{ companyProfileForm.companyName.errors }} </div>
+
+
 
                           <div class="form-group row registrationformdiv">
                             <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.country.label_tag }}<span class="mandatory">*</span></label>
@@ -247,7 +318,7 @@
                             <div class="form-group row registrationformdiv">
                             <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.sec_answer.label_tag }}<span class="mandatory">*</span></label>
                             {{ ProfileForm.sec_answer }}
-                            <div class="col-12 offset-sm-4 col-md-6" id="submitBtnDiv">  <input type="submit" id="profileUpdateButton" value="Update"> </div>
+                            <div class="col-12 offset-sm-4 col-md-6" id="submitBtnDiv">  <input type="button" class="profileUpdateButtonClass" id="profileUpdateButton" value="Update"> </div>
                           </div>
                             <div class="offset-3 offset-sm-4 offset-md-3" id="secAnswerError"> {{ ProfileForm.sec_answer.errors }} </div>
                         </div>
@@ -267,31 +338,33 @@
   </div>
 </div>
 
-<div class="modal" id="traderById" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog traderByIdModaldia" style="width:50%">
+<div class="modal modalWidth" id="traderById" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog traderByIdModaldia">
     <div class="modal-content ">
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h3 class="modal-title" id="traderByIdModalTitle"> </h3>
-        <button type="button" class="close traderByIdModalClose" data-dismiss="modal" aria-hidden="true">x</button>
+        <h4 class="modal-title modalTitleHead" id="traderByIdModalTitle"></h4>
+        <button type="button" class="close traderByIdModalClose" data-dismiss="modal"  onclick="traderById" id="traderByIdModalclose" aria-hidden="true">x</button>
       </div>
 
       <!-- Modal body -->
-      <div class="modal-body">
-        <div class="row" >
-            <div class="col-md-12 col-sm-3 col-6 " >
-                <label>Enter Code: </label> <input type="text" id="tradeByValue"/>
+      <div class="modal-body" >
+        <div class="row"  >
+            <div class="col-md-12 col-sm-3 col-6 formGroup" >
+                <label class="fontWeightBold">Enter Code: </label> <input type="text" id="tradeByValue"/>
                 <input type="hidden" id="typeTrader" />
             </div>
         </div>
       </div>
 
       <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn traderByIdModalsubmit" id="traderByIdModalsubmit" data-dismiss="modal">Submit</button>
+      <div class="modal-footer row "  style="text-align:center">
+           <div class="col-md-12">
+              <input type="button" class="btn modalBtnClass  traderByIdModalsubmit"  id="traderByIdModalsubmit" value="Submit"></input>
+              <input type="button" class="btn modalBtnClass  traderByIdModalclose"   onclick="traderById" data-dismiss="modal" value="Cancel" ></input>
+          </div>
       </div>
-
     </div>
   </div>
 </div>
@@ -301,8 +374,10 @@
 
 <script>
 
-
-     /* window.alert = function(message){
+function myFunction() {
+document.getElementById("tradeByValue").reset();
+}
+     /* window.Alert = function(message){
             $(document.createElement('div'))
                 .attr({title: 'Alert'})
                 .html(message)
@@ -329,7 +404,7 @@
                     },
                     success: function (data) {
                         var states = JSON.parse(data.states);
-                        var stateAppendValues = "";
+                        var stateAppendValues = "<option value=''>Select</option>";
                         $.each(states, function (key, val) {
                         stateAppendValues = stateAppendValues + "<option value="+val.pk+">"+val.fields.stateName+"</option>";
                         });
@@ -347,7 +422,7 @@
                     },
                     success: function (data) {
                       var states = JSON.parse(data.states);
-                      var stateAppendValues = "";
+                      var stateAppendValues = "<option value=''>Select</option>";
                          $.each(states, function (key, val) {
                         stateAppendValues = stateAppendValues + "<option value="+val.pk+">"+val.fields.stateName+"</option>";
                         });
@@ -368,7 +443,7 @@
                     },
                     success: function (data) {
                         var states = JSON.parse(data.states);
-                        var stateAppendValues = "";
+                        var stateAppendValues = "<option value=''>Select</option>";
                         $.each(states, function (key, val) {
                         stateAppendValues = stateAppendValues + "<option value="+val.pk+">"+val.fields.stateName+"</option>";
                         });
@@ -386,7 +461,7 @@
                     },
                     success: function (data) {
                       var states = JSON.parse(data.states);
-                      var stateAppendValues = "";
+                      var stateAppendValues = "<option value=''>Select</option>";
                          $.each(states, function (key, val) {
                         stateAppendValues = stateAppendValues + "<option value="+val.pk+">"+val.fields.stateName+"</option>";
                         });
@@ -475,18 +550,42 @@
 
         $(document).ready(function() {
 
+        $(function(){
+            $('#id_itemCode').keypress(function( e ) {
+                    if(e.which === 32)
+                        return false;
+                });
+
+            $('#id_itemCode').on("cut copy paste",function(e) {
+                  e.preventDefault();
+            });
+        });
+
+         $(function(){
+         $('#id_measurementDimension').keypress(function( e ) {
+                    if(e.which === 32)
+                        return false;
+                });
+
+            $('#id_measurementDimension').on("cut copy paste",function(e) {
+                  e.preventDefault();
+            });
+        });
+
         $(document).on('click', '.addDataViaId', function() {
                       var id = $(this).attr('id');
                       if (id=='addCustomerById'){
                         $('#typeTrader').val("customer") ;
                         $('#traderByIdModalTitle').empty();
                         $('#traderByIdModalTitle').append("Add Customer By Id") ;
+                         $('#tradeByValue').val('');
                         $('#traderById').modal();
 
                       }else{
                        $('#typeTrader').val("supplier") ;
                         $('#traderByIdModalTitle').empty();
                        $('#traderByIdModalTitle').append("Add Vendor By Id") ;
+                       $('#tradeByValue').val('');
                         $('#traderById').modal();
                       }
 
@@ -500,6 +599,11 @@
                       }else{
                       window.location.href = "/saveTradersById?type="+type+"&code="+code;
                       }
+
+                  });
+
+                    $(document).on('click', '#traderByIdModalclose', function() {
+                      $('#tradeByValue').val('');
 
                   });
 
@@ -578,6 +682,9 @@
                             else if (data.status == 'showerror') {
                                 showMessage('success', 'Alert!', data.error_msg);
                             }
+                            else{
+                                alert(data.error_msg);
+                            }
                           }
                        });
                    }
@@ -647,6 +754,9 @@
                                 else if (data.status == 'showerror') {
                                     showMessage('success', 'Alert!', data.error_msg);
                                 }
+                                else{
+                                    alert(data.error_msg);
+                                }
                               }
                             });
                         }
@@ -671,7 +781,7 @@
                         if (data.status == 'success') {
                             showMessage(data.status, 'Alert!', data.success_msg);
                             setTimeout(function() {
-                                location.reload();
+                                window.location.href = "/dashboard/?module=product";
                             }, 2500);
                         }
                         else if (data.status == 'error' && data.error_msg == 'matchedData') {
@@ -687,6 +797,9 @@
                         else if (data.status == 'showerror') {
                             showMessage('success', 'Alert!', data.error_msg);
                         }
+                        else{
+                            alert(data.error_msg);
+                        }
                       }
                     });
 
@@ -694,6 +807,7 @@
 
             $(document).on('click', '#customerDataSaveButton', function() {
                  var country = $('#id_cusShipCountry').val();
+                 var state = $('#id_cusShipState').val();
                  var addLine1 = $('#id_cusShipAddress_Line1').val();
                  var addLine2 = $('#id_cusShipAddress_Line2').val();
                  var unit1 = $('#id_cusShipUnit1').val();
@@ -719,6 +833,10 @@
                    $('#id_cusShipAddress_Line2').focus();
                    return false;
                  }
+                 else if(state == ''){
+                   $('#id_cusShipState').focus();
+                   return false;
+                 }
                  else if(postalCode == ''){
                    $('#id_cusShipPostalCode').focus();
                    return false;
@@ -740,7 +858,7 @@
                         if (data.status == 'success') {
                             showMessage(data.status, 'Alert!', data.success_msg);
                             setTimeout(function() {
-                                location.reload();
+                            window.location.href = "/dashboard/?module=customer";
                             }, 2500);
                         }
                         else if (data.status == 'error' && data.error_msg == 'matchedData') {
@@ -755,6 +873,8 @@
                         }
                         else if (data.status == 'showerror') {
                             showMessage('success', 'Alert!', data.error_msg);
+                        }else{
+                        alert(data.error_msg);
                         }
                       }
                     });
@@ -763,6 +883,7 @@
             });
             $(document).on('click', '#supplierDataSaveButton', function() {
                  var country = $('#id_supShipCountry').val();
+                 var state = $('#id_supShipState').val();
                  var addLine1 = $('#id_supShipAddress_Line1').val();
                  var addLine2 = $('#id_supShipAddress_Line2').val();
                  var unit1 = $('#id_supShipUnit1').val();
@@ -788,6 +909,10 @@
                    $('#id_supShipAddress_Line2').focus();
                    return false;
                  }
+                 else if(state == ''){
+                   $('#id_supShipState').focus();
+                    return false;
+                 }
                  else if(postalCode == ''){
                    $('#id_supShipPostalCode').focus();
                    return false;
@@ -809,7 +934,7 @@
                         if (data.status == 'success') {
                             showMessage(data.status, 'Alert!', data.success_msg);
                             setTimeout(function() {
-                                location.reload();
+                                window.location.href = "/dashboard/?module=supplier";
                             }, 2500);
                         }
                         else if (data.status == 'error' && data.error_msg == 'matchedData') {
@@ -824,6 +949,8 @@
                         }
                         else if (data.status == 'showerror') {
                             showMessage('success', 'Alert!', data.error_msg);
+                        }else{
+                        alert(data.error_msg);
                         }
                       }
                     });
@@ -897,7 +1024,7 @@
                     form_data.append('type', $('#type').val());
                     var url = "/customerOrSupplierCsvSave";
                     if ($('#type').val() == 'product') {
-                        url = "/itemMasterCsvSave";
+                        url = "/saveMasterProductUsingCsv";
                     }
                     $body.addClass("loading");
                     setTimeout(function() {
@@ -933,6 +1060,73 @@
                                     window.location.href = data.redirect_url;
                                 }, 2000);
 
+                            }else{
+                            alert(data.error_msg);
+                            }
+                        }
+                        });
+                    }, 1000);
+                }
+            });
+
+            //$('#dragDropUploadBtn').on('click',function() {
+			$(document).on('click', '#productDragDropUploadBtn', function() {
+			    var fileFormat = $('#productFileUpload').val().split('.').pop();
+                if (fileFormat != 'xlsx' || $('#productFileUpload').val() == '') {
+                    $('#upload_success_msg').empty();
+                    $('#upload_error_msg').empty();
+                    $('#upload_error_msg').append('Please upload xlsx file');
+                }
+                else if (fileFormat == 'xlsx') {
+
+                    $('#upload_success_msg').empty();
+                    $('#upload_error_msg').empty();
+                    var form_data = new FormData();
+                    var file_data = $('#productFileUpload')[0].files[0];
+                    form_data.append('csrfmiddlewaretoken', $('input[name=csrfmiddlewaretoken]').val());
+                    form_data.append('myfile', file_data);
+                    form_data.append('type', $('#type').val());
+                    var url = "/saveMasterProductUsingCsv";
+                    $body.addClass("loading");
+                    setTimeout(function() {
+                        $.ajax({
+                        url: url,
+                        type: "POST",
+                        data: form_data,
+                        dataType: 'json',
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        async:false,
+                        success: function (data)
+                        {
+
+                            $body.removeClass("loading");
+                            $("#productFileUpload").val('');
+                            if (data.status == 'success') {
+                                showMessage(data.status, 'Alert!', data.success_msg);
+                               setTimeout(function() {
+                                    window.location.href = "/dashboard/?module=product";
+                                }, 2500);
+                            }
+                            else if (data.status == 'error' && data.error_msg == 'matchedData') {
+                                showMessage(data.status, 'Alert!', data.matchedDataContent);
+                                setTimeout(function() {
+                                    window.location.href = "/dashboard/?module=product";
+                                }, 2500);
+                            }
+                            else if (data.status == 'showerror') {
+                                showMessage('success', 'Alert!', data.error_msg);
+                            }
+                            else if (data.status == 'error' && data.error_msg == 'sessionexpired') {
+                                alert('Session has expired.');
+                                setTimeout(function() {
+                                    window.location.href = data.redirect_url;
+                                }, 2000);
+
+                            }
+                            else{
+                                alert(data.error_msg);
                             }
                         }
                         });
@@ -963,15 +1157,15 @@
                         //location.reload();
                         alert(result.success_msg);
                     }
-                    else if (result.status == 'error') {
-                        alert(result.error_msg);
-                    }
-                    else if (data.status == 'error' && data.error_msg == 'sessionexpired') {
+                    else if (result.status == 'error' && result.error_msg == 'sessionexpired') {
                         alert('Session has expired.');
                         setTimeout(function() {
                             window.location.href = data.redirect_url;
                         }, 2000);
 
+                    }
+                    else{
+                        alert(result.error_msg);
                     }
                   }
                 });
@@ -1237,7 +1431,7 @@
                                     success: function (data) {
                                         var states = JSON.parse(data.states);
 
-                                        var stateAppendValues = "";
+                                        var stateAppendValues = "<option value=''>Select</option>";
                                         $.each(states, function (key, val) {
                                         stateAppendValues = stateAppendValues + "<option value="+val.pk+">"+val.fields.stateName+"</option>";
                                         });
@@ -1279,7 +1473,7 @@
                                         },
                                         success: function (data) {
                                             var states = JSON.parse(data.states);
-                                            var stateAppendValues = "";
+                                            var stateAppendValues = "<option value=''>Select</option>";
                                             $.each(states, function (key, val) {
                                             stateAppendValues = stateAppendValues +"<option value="+val.pk+">"+val.fields.stateName+"</option>";
                                             });
@@ -1331,7 +1525,7 @@
                                     success: function (data) {
                                         var states = JSON.parse(data.states);
 
-                                        var stateAppendValues = "";
+                                        var stateAppendValues = "<option value=''>Select</option>";
                                         $.each(states, function (key, val) {
                                         stateAppendValues = stateAppendValues + "<option value="+val.pk+">"+val.fields.stateName+"</option>";
                                         });
@@ -1373,7 +1567,7 @@
                                         },
                                         success: function (data) {
                                             var states = JSON.parse(data.states);
-                                            var stateAppendValues = "";
+                                            var stateAppendValues = "<option value=''>Select</option>";
                                             $.each(states, function (key, val) {
                                             stateAppendValues = stateAppendValues +"<option value="+val.pk+">"+val.fields.stateName+"</option>";
                                             });
@@ -1410,10 +1604,12 @@
             }else{
              $('#cusAlterNateEmailError').empty();
             $('#id_cusAlterNateEmail').val(email);
+            $('#id_cusAlterNateEmail').prop('disabled', true);
             }
         }
         else{
         $('#id_cusAlterNateEmail').val('');
+        $('#id_cusAlterNateEmail').prop('disabled', false);
         }
 });
 $(document).on('click', '#id_supSameEmail', function() {
@@ -1430,10 +1626,12 @@ $(document).on('click', '#id_supSameEmail', function() {
             }else{
              $('#supAlterNateEmailError').empty();
             $('#id_supAlterNateEmail').val(email);
+            $('#id_supAlterNateEmail').prop('disabled', true);
             }
         }
         else{
         $('#id_supAlterNateEmail').val('');
+        $('#id_supAlterNateEmail').prop('disabled', false);
         }
 });
   $(function() {
@@ -1444,7 +1642,7 @@ $(document).on('click', '#id_supSameEmail', function() {
         });
   });
 
-  $(document).on('keypress', '#id_cusContactNo,#id_supContactNo', function(event) {
+  $(document).on('keypress', '#id_cusContactNo,#id_supContactNo,#id_measurementDimension', function(event) {
 
              //if the letter is not digit then display error and don't type anything
              if (event.which != 8 && event.which != 0 && (event.which < 48 || event.which > 57)) {
@@ -1477,6 +1675,62 @@ $(document).on('click', '#id_supSameEmail', function() {
         {
           $(errorId).css("color","red");
           $(errorId).append('Please enter valid email id');
+          return false;
+        }
+   });
+
+   $(document).on('change', '#id_purchasingPrice', function() {
+        if($('#id_purchasingPrice').val() == 0){
+         $("#id_purchasingPrice").val('');
+        alert('Purchase Price should not be Zero');
+         $('#'+this.id+'').focus();
+        }
+    });
+    $(document).on('change', '#id_salesPriceUnit', function() {
+        if($('#id_salesPriceUnit').val() == 0){
+        $("#id_salesPriceUnit").val('');
+        alert('price unit should not be Zero');
+        $('#'+this.id+'').focus();
+        }
+    });
+    $(document).on('change', '#id_salesPrice', function() {
+        if($('#id_salesPrice').val() == 0){
+        $("#id_salesPrice").val('');
+        alert('selling price should not be Zero');
+        $('#'+this.id+'').focus();
+        }
+    });
+    $(document).on('change', '#id_purchasingPriceUnit', function() {
+            if($('#id_purchasingPriceUnit').val() == 0){
+            $("#id_purchasingPriceUnit").val('');
+            alert('price unit should not be Zero');
+            $('#'+this.id+'').focus();
+            }
+        });
+
+
+   $(document).on('change', '#id_supCommunicationEmail', function() {
+        var mail=document.getElementById("id_supCommunicationEmail").value;
+        var atposition=mail.indexOf("@");
+        var dotposition=mail.lastIndexOf(".");
+        $('#supCommunicationEmailError').empty();
+        if(atposition<1||dotposition<atposition+2||dotposition+2>mail.length)
+        {
+          $('#supCommunicationEmailError').css("color","red");
+          $('#supCommunicationEmailError').append('Please enter valid email id');
+          return false;
+        }
+   });
+
+$(document).on('change', '#id_cusCommunicationEmail', function() {
+        var mail=document.getElementById("id_cusCommunicationEmail").value;
+        var atposition=mail.indexOf("@");
+        var dotposition=mail.lastIndexOf(".");
+        $('#cusCommunicationEmailError').empty();
+        if(atposition<1||dotposition<atposition+2||dotposition+2>mail.length)
+        {
+          $('#cusCommunicationEmailError').css("color","red");
+          $('#cusCommunicationEmailError').append('Please enter valid email id');
           return false;
         }
    });
@@ -1601,7 +1855,7 @@ $(document).on('click', '#id_supSameEmail', function() {
         for (i = 0; i < currentIndex; i++) {
             $("#"+customerFormArray[i]+" input, #"+customerFormArray[i]+" select").each(function() {
 
-                        if (this.value != '') {
+                        if (this.value) {
                             formResponse = 'true';
                         }
                         else {
@@ -1623,6 +1877,13 @@ $(document).on('click', '#id_supSameEmail', function() {
     return formResponse;
   }
 
+ $(document).on('keypress', '#id_supPostalCode,#id_cusPostalCode', function(event) {
+    if ((event.which < 48 || event.which > 57)&&(event.which < 65 || event.which > 90)&&(event.which < 97 || event.which > 122)&&(event.which != 32)) {
+                    event.preventDefault();
+    }
+            });
+
+
 
   $(document).on('click', '.cfNextBtn', function() {
 
@@ -1639,8 +1900,27 @@ $(document).on('click', '#id_supSameEmail', function() {
                  var formStatus;
                  if(idCheck=='companyAddress_basicData_Detail_N_Btn_C'){
                         var emailError = $('#emailError').html();
-                        var email = $("#id_cusEmail").val();
-                        var errorFocus = '#id_cusEmail';
+                        var alterNateEmailError = $('#cusAlterNateEmailError').html();
+                        var communicationEmailError = $('#cusCommunicationEmailError').html();
+                        if(emailError !== ''){
+                            var email = $("#id_cusEmail").val();
+                            var errorFocus = '#id_cusEmail';
+                            $(errorFocus).focus();
+                            return false;
+                        }
+                        else if(alterNateEmailError !== ''){
+                            var email = $("#id_cusAlterNateEmail").val();
+                            var errorFocus = '#id_cusAlterNateEmail';
+                            $(errorFocus).focus();
+                            return false;
+                        }
+                        else if(communicationEmailError !== ''){
+                            var email = $("#id_cusCommunicationEmail").val();
+                            var errorFocus = '#id_cusCommunicationEmail';
+                            $(errorFocus).focus();
+                            return false;
+                        }
+
                     }
                     else if(idCheck=='shippingAddress_companyAddress_Detail_N_Btn_C'){
                         var emailError = $('#emailError').html();
@@ -1649,8 +1929,26 @@ $(document).on('click', '#id_supSameEmail', function() {
                     }
                     else{
                         var emailError = $('#supEmailError').html();
-                        var email = $("#id_supEmail").val();
-                        var errorFocus = '#id_supEmail';
+                        var alterNateEmailError = $('#supAlterNateEmailError').html();
+                        var communicationEmailError = $('#supCommunicationEmailError').html();
+                        if(emailError !== ''){
+                            var email = $("#id_supEmail").val();
+                            var errorFocus = '#id_supEmail';
+                            $(errorFocus).focus();
+                            return false;
+                        }
+                        else if(alterNateEmailError !== ''){
+                            var email = $("#id_supAlterNateEmail").val();
+                            var errorFocus = '#id_supAlterNateEmail';
+                            $(errorFocus).focus();
+                            return false;
+                        }
+                        else if(communicationEmailError !== ''){
+                            var email = $("#id_supCommunicationEmail").val();
+                            var errorFocus = '#id_supCommunicationEmail';
+                            $(errorFocus).focus();
+                            return false;
+                        }
                     }
 
                 if(emailError !== ''){
@@ -2059,8 +2357,28 @@ $(document).on('click', '#id_supSameEmail', function() {
       }
     });
 
+$(document).on('change', '#productFileUpload', function() {
+      var fileFormat = $('#productFileUpload').val().split('.').pop();
+      if (fileFormat == 'xlsx') {
+        $('#upload_success_msg').empty();
+        $('#upload_error_msg').empty();
+        $("#googleLink").prop("disabled",true);
+        $('#upload_success_msg').append($('input[name=productFileUpload]').val().replace(/.*(\/|\\)/, ''));
+      }
+      else {
+        $('#upload_success_msg').empty();
+        $('#upload_error_msg').empty();
+        $("#googleLink").prop("disabled",false);
+        $('#upload_error_msg').append('Please upload only xlsx format');
+      }
+    });
+
     $(document).on('click', '#dragDropDiv', function() {
         $("#customerFileUpload").click();
+
+    });
+    $(document).on('click', '#productDragDropDiv', function() {
+        $("#productFileUpload").click();
 
     });
     $(document).on('keyup', '#googleLink', function() {
@@ -2074,11 +2392,50 @@ $(document).on('click', '#id_supSameEmail', function() {
         }
     });
 
+    $(document).on('keypress', 'input[type=email]', function(event) {
+           if ((event.which < 33 || event.which > 43)&&(event.which < 45 || event.which > 126)) {
+                event.preventDefault();
+            }
+    });
+
     function drop(event) {
       event.stopPropagation();
       event.preventDefault();
       var input = document.getElementById("customerFileUpload");
       input.files = event.dataTransfer.files; //It returns a FileList object
+      var fileFormat = $('#customerFileUpload').val().split('.').pop();
+      if (fileFormat == 'csv') {
+        $('#upload_success_msg').empty();
+        $('#upload_error_msg').empty();
+        $("#googleLink").prop("disabled",true);
+        $('#upload_success_msg').append($('input[name=customerFileUpload]').val().replace(/.*(\/|\\)/, ''));
+      }
+      else {
+        $('#upload_success_msg').empty();
+        $('#upload_error_msg').empty();
+        $("#googleLink").prop("disabled",false);
+        $('#upload_error_msg').append('Please upload only csv format');
+      }
+    }
+
+function dropProduct(event) {
+      event.stopPropagation();
+      event.preventDefault();
+      var input = document.getElementById("productFileUpload");
+      input.files = event.dataTransfer.files; //It returns a FileList object
+      var fileFormat = $('#productFileUpload').val().split('.').pop();
+      if (fileFormat == 'xlsx') {
+        $('#upload_success_msg').empty();
+        $('#upload_error_msg').empty();
+        $("#googleLink").prop("disabled",true);
+        $('#upload_success_msg').append($('input[name=productFileUpload]').val().replace(/.*(\/|\\)/, ''));
+      }
+      else {
+        $('#upload_success_msg').empty();
+        $('#upload_error_msg').empty();
+        $("#googleLink").prop("disabled",false);
+        $('#upload_error_msg').append('Please upload only xlsx format');
+      }
     }
 
     $('.tabOption').on('click', function() {

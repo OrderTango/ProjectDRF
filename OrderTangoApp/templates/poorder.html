@@ -111,11 +111,7 @@
     </head>
     <body>
         <div id="header_content">
-            {% if orderDetail.companyImage != '' %}
-                <p> <img src="{{ orderDetail.companyImage }}" alt="{{ userObject.companyName }}" style="height: 50px"/> </p>
-            {% else %}
-                <p><h2> {{ userObject.companyName }} </h2></p>
-            {% endif %}
+            <p> <img src="{{ orderDetail.companyImage }}" alt="{{ userObject.companyName }}" style="height: 50px"/> </p>
         </div>
         <div id="footer_content">
             <div id="productFooterDiv">
@@ -141,21 +137,20 @@
             </p>
         </div>
         <div id="contentBody1">
-            <p class="alignParaClass"><span class="headClass">SUPPLIER : </span> <br/>
-                {{ supplierObject.supplierCode }} <br/>
-                {{ supplierObject.supCompanyName }} <br/>
-                #{{ supplierObject.supUnit1 }}-{{ supplierObject.supUnit2 }},{{ supplierObject.supAddress_Line1 }} <br/>
-                {{ supplierObject.supAddress_Line2 }} <br/>
-                {{ supplierObject.supState }} <br/>
-                {{ supplierObject.supCountry }} {{ supplierObject.supPostalCode }} <br/>
-                Sales Email: {{ supplierObject.supEmail }}
+            <p class="alignParaClass"><span class="headClass">VENDOR :  </span> {{ slaObject.supCompanyName }}<br/>
+                {{ slaObject.supCompanyCode }} <br/>
+                #{{ slaObject.supplier_unit1 }}-{{ slaObject.supplier_unit2 }},{{ slaObject.supplier_address_Line1 }} <br/>
+                {{ slaObject.supplier_address_Line2 }} <br/>
+                {{ slaObject.supplier_state }} <br/>
+                {{ slaObject.supplier_country }} {{ slaObject.supplier_postalCode }} <br/>
+                Sales Email: {{ slaObject.supEmail }}
             </p>
             <p class="alignParaClass"><span class="headClass"> SHIP TO : </span> <br/>
-                {{ userObject.address_Line1 }} <br/>
-                #{{ userObject.unit1 }}-{{   userObject.unit2 }} <br/>
-                {{ userObject.address_Line2 }} <br/>
-                {{ userObject.state }} <br/>
-                {{ userObject.country }} {{ userObject.postalCode }} <br/>
+                {{ deliveryLocation.siteAddress.usradd_address_Line1 }} <br/>
+                #{{ deliveryLocation.siteAddress.usradd_unit1 }}-{{   deliveryLocation.siteAddress.usradd_unit2 }} <br/>
+                {{ deliveryLocation.siteAddress.usradd_address_Line2 }} <br/>
+                {{ deliveryLocation.siteAddress.usradd_state }} <br/>
+                {{ deliveryLocation.siteAddress.usradd_country }} {{ deliveryLocation.siteAddress.usradd_postalCode }} <br/>
                 </p>
         </div>
         <div id="contentBody2">
@@ -228,7 +223,11 @@
                             <td class="alignClass rightTD"> {{ orderObject.quantity }} </td>
                             <td class="alignClass leftTD breakWordClass"> {{ orderObject.uOm__type }} </td>
                             <td class="alignClass rightTD"> {{ orderObject.price }} </td>
+                            {% if orderObject.tot %}
+                            <td class="alignClass rightTD"> {{ orderObject.tot }}</td>
+                            {% else %}
                             <td class="alignClass rightTD"> {{ orderObject.totalPrice }}</td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
             </table>

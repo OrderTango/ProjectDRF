@@ -1,4 +1,21 @@
 {% load static %}
+<style>
+     @media (min-width:600px) and (max-width: 801px)  {
+        .card{
+            width: 80% !important;
+        }
+
+     }
+     @media (min-width:320px) and (max-width: 480px)  {
+          .paddingLeftRightTen{
+               margin-left: 11px !important;
+          }
+          .addStyl {
+                font-size: 12px !important;
+                font-weight: normal !important;
+          }
+     }
+</style>
 <div id="supplierAuto">
     <div id="supplierUploadTabDiv">
         <div class="row bgColor paddingLeftRightTen" id="supplierUploadTabId">
@@ -38,8 +55,10 @@
                             <input class="form-control modify" type="hidden" value="supplier" id="type">
                             <input class="form-control modify" type="text" value="" id="googleLink"  placeholder="Paste Your Google Drive CSV Link" >
                         </div>
-                      <div class="card-footer">
-                          <input class="btn pull-right" id="dragDropUploadBtn" type="button" value="Upload">
+                      <div class="card-footer" class="row" style="text-align:center">
+                          <div class="col-md-12">
+                              <input  id="dragDropUploadBtn" type="button" value="Upload">
+                          </div>
                       </div>
                     </div>
                 </div>

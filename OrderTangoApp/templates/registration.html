@@ -57,7 +57,7 @@
           <div id="bodyleft" class="col-md-6">
           <hr size="20" class="registerhorizontalline">
 
-            <form class="registrationform" role="form" action='/registration/' method='POST'>
+            <form class="registrationform" role="form" action='/registration/' method='POST' autocomplete="off">
                 <p id="valuedcustomer">Valued Customer</p>
                 {% csrf_token %}
                 <div id="formsec1">
@@ -163,7 +163,7 @@
           </div>
 
            <div id="bodyright" class="col-md-6 col-lg-6 col-xl-6">
-                <div class="row " style="height: 60% !important;">
+                <div class="row ">
                     <img class="col-12 col-md-12 col-lg-12 col-xl-12 godigital img-responsive" id="goDigitalImage" style="height:100%" src="{% static 'images/register/newgodigi.png' %}">
 
                 </div>
@@ -212,7 +212,7 @@ data: {
 },
 success: function (data) {
 var states = JSON.parse(data.states);
-var stateAppendValues = "";
+var stateAppendValues = "<option value=''>Select</option>";
 $.each(states, function (key, val) {
 stateAppendValues = stateAppendValues + "<option value="+val.pk+">"+val.fields.stateName+"</option>";
 });

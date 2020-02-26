@@ -1,2 +1,0 @@
-# ProjectDRF
-DRF Project

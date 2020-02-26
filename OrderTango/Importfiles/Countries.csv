@@ -1,257 +1,257 @@
-countryId,countryName,countryDesc,countryCode
-1001,Afghanistan,,AFG
-1002,Albania,,ALB
-1003,Algeria,,DZA
-1004,American Samoa,,ASM
-1005,Andorra,,AND
-1006,Angola,,AGO
-1007,Anguilla,,AIA
-1008,Antarctica,,ATA
-1009,Antigua and Barbuda,,ATG
-1010,Argentina,,ARG
-1011,Armenia,,ARM
-1012,Aruba,,ABW
-1013,Australia,,AUS
-1014,Austria,,AUT
-1015,Azerbaijan,,AZE
-1016,Bahrain,,BHR
-1017,Bangladesh,,BGD
-1018,Barbados,,BRB
-1019,Belarus,,BLR
-1020,Belgium,,BEL
-1021,Belize,,BLZ
-1022,Benin,,BEN
-1023,Bermuda,,BMU
-1024,Bhutan,,BTN
-1025,Bolivia,,BOL
-1026,Bosnia and Herzegovina,,BIH
-1027,Botswana,,BWA
-1028,Bouvet Island,,BVT
-1029,Brazil,,BRA
-1030,British Indian Ocean Territory,,IOT
-1031,"Virgin Islands, British",,VGB
-1032,Brunei Darussalam,,BRN
-1033,Bulgaria,,BGR
-1034,Burkina Faso,,BFA
-1035,Myanmar,,MMR
-1036,Burundi,,BDI
-1037,Cambodia,,KHM
-1038,Cameroon,,CMR
-1039,Canada,,CAN
-1040,Cape Verde,,CPV
-1041,Cayman Islands,,CYM
-1042,Central African Republic,,CAF
-1043,Chad,,TCD
-1044,Chile,,CHL
-1045,China,,CHN
-1046,Christmas Island,,CXR
-1047,Cocos (Keeling) Islands,,CCK
-1048,Colombia,,COL
-1049,Comoros,,COM
-1051,Congo,,COG
-1052,Cook Islands,,COK
-1053,Costa Rica,,CRI
-1055,Croatia,,HRV
-1056,Cuba,,CUB
-1057,Cyprus,,CYP
-1058,Czech Republic,,CZE
-1059,Denmark,,DNK
-1060,Djibouti,,DJI
-1061,Dominica,,DMA
-1062,Dominican Republic,,DOM
-1063,Timor-Leste,,TLS
-1064,Ecuador,,ECU
-1065,Egypt,,EGY
-1066,El Salvador,,SLV
-1067,Equatorial Guinea,,GNQ
-1068,Eritrea,,ERI
-1069,Estonia,,EST
-1070,Ethiopia,,ETH
-1072,Falkland Islands (Malvinas),,FLK
-1073,Faroe Islands,,FRO
-1074,Fiji,,FJI
-1075,Finland,,FIN
-1076,France,,FRA
-1077,French Guiana,,GUF
-1078,French Polynesia,,PYF
-1079,French Southern Territories,,ATF
-1080,Gabon,,GAB
-1081,Georgia,,GEO
-1082,Germany,,DEU
-1083,Ghana,,GHA
-1084,Gibraltar,,GIB
-1085,Greece,,GRC
-1086,Greenland,,GRL
-1087,Grenada,,GRD
-1088,Guadeloupe,,GLP
-1089,Guam,,GUM
-1090,Guatemala,,GTM
-1091,Guinea,,GIN
-1092,Bissau,,GNB
-1093,Guyana,,GUY
-1094,Haiti,,HTI
-1095,Heard Island and McDonald Islands,,HMD
-1096,Holy See (Vatican City State),,VAT
-1097,Honduras,,HND
-1098,Hong Kong,,HKG
-1099,Hungary,,HUN
-1100,Iceland,,ISL
-1101,India,,IND
-1102,Indonesia,,IDN
-1103,"Iran, Islamic Republic of",,IRN
-1104,Iraq,,IRQ
-1105,Ireland,,IRL
-1106,Israel,,ISR
-1107,Italy,,ITA
-1108,Jamaica,,JAM
-1109,Japan,,JPN
-1110,Jordan,,JOR
-1111,Kazakhstan,,KAZ
-1112,Kenya,,KEN
-1113,Kiribati,,KIR
-1114,"Korea, Democratic People's Republic of",,PRK
-1115,"Korea, Republic of",,KOR
-1116,Kuwait,,KWT
-1117,Kyrgyzstan,,KGZ
-1118,Lao People's Democratic Republic,,LAO
-1119,Latvia,,LVA
-1120,Lebanon,,LBN
-1121,Lesotho,,LSO
-1122,Liberia,,LBR
-1123,Libyan Arab Jamahiriya,,LBY
-1124,Liechtenstein,,LIE
-1125,Lithuania,,LTU
-1126,Luxembourg,,LUX
-1127,Macao,,MAC
-1128,"Macedonia, Republic of",,MKD
-1129,Madagascar,,MDG
-1130,Malawi,,MWI
-1131,Malaysia,,MYS
-1132,Maldives,,MDV
-1133,Mali,,MLI
-1134,Malta,,MLT
-1135,Marshall Islands,,MHL
-1136,Martinique,,MTQ
-1137,Mauritania,,MRT
-1138,Mauritius,,MUS
-1139,Mayotte,,MYT
-1140,Mexico,,MEX
-1141,"Micronesia, Federated States of",,FSM
-1142,Moldova,,MDA
-1143,Monaco,,MCO
-1144,Mongolia,,MNG
-1145,Montserrat,,MSR
-1146,Morocco,,MAR
-1147,Mozambique,,MOZ
-1148,Namibia,,NAM
-1149,Nauru,,NRU
-1150,Nepal,,NPL
-1151,Netherlands Antilles,,ANT
-1152,Netherlands,,NLD
-1153,New Caledonia,,NCL
-1154,New Zealand,,NZL
-1155,Nicaragua,,NIC
-1156,Niger,,NER
-1157,Nigeria,,NGA
-1158,Niue,,NIU
-1159,Norfolk Island,,NFK
-1160,Northern Mariana Islands,,MNP
-1161,Norway,,NOR
-1162,Oman,,OMN
-1163,Pakistan,,PAK
-1164,Palau,,PLW
-1165,"Palestinian Territory, Occupied",,PSE
-1166,Panama,,PAN
-1167,Papua New Guinea,,PNG
-1168,Paraguay,,PRY
-1169,Peru,,PER
-1170,Philippines,,PHL
-1171,Pitcairn,,PCN
-1172,Poland,,POL
-1173,Portugal,,PRT
-1174,Puerto Rico,,PRI
-1175,Qatar,,QAT
-1176,Romania,,ROU
-1177,Russian Federation,,RUS
-1178,Rwanda,,RWA
-1179,Reunion,,REU
-1180,Saint Helena,,SHN
-1181,Saint Kitts and Nevis,,KNA
-1182,Saint Lucia,,LCA
-1183,Saint Pierre and Miquelon,,SPM
-1184,Saint Vincent and the Grenadines,,VCT
-1185,Samoa,,WSM
-1186,San Marino,,SMR
-1187,Saudi Arabia,,SAU
-1188,Senegal,,SEN
-1189,Seychelles,,SYC
-1190,Sierra Leone,,SLE
-1191,Singapore,,SGP
-1192,Slovakia,,SVK
-1193,Slovenia,,SVN
-1194,Solomon Islands,,SLB
-1195,Somalia,,SOM
-1196,South Africa,,ZAF
-1197,South Georgia and the South Sandwich Islands,,SGS
-1198,Spain,,ESP
-1199,Sri Lanka,,LKA
-1200,Sudan,,SDN
-1201,Suriname,,SUR
-1202,Svalbard and Jan Mayen,,SJM
-1203,Swaziland,,SWZ
-1204,Sweden,,SWE
-1205,Switzerland,,CHE
-1206,Syrian Arab Republic,,SYR
-1207,Sao Tome and Principe,,STP
-1208,Taiwan,,TWN
-1209,Tajikistan,,TJK
-1210,"Tanzania, United Republic of",,TZA
-1211,Thailand,,THA
-1212,Bahamas,,BHS
-1213,Gambia,,GMB
-1214,Togo,,TGO
-1215,Tokelau,,TKL
-1216,Tonga,,TON
-1217,Trinidad and Tobago,,TTO
-1218,Tunisia,,TUN
-1219,Turkey,,TUR
-1220,Turkmenistan,,TKM
-1221,Turks and Caicos Islands,,TCA
-1222,Tuvalu,,TUV
-1223,Uganda,,UGA
-1224,Ukraine,,UKR
-1225,United Arab Emirates,,ARE
-1226,United Kingdom,,GBR
-1227,United States Minor Outlying Islands,,UMI
-1228,United States,,USA
-1229,Uruguay,,URY
-1230,Uzbekistan,,UZB
-1231,Vanuatu,,VUT
-1232,Venezuela,,VEN
-1233,Viet Nam,,VNM
-1234,"Virgin Islands, U.S.",,VIR
-1235,Wallis and Futuna,,WLF
-1236,Western Sahara,,ESH
-1237,Yemen,,YEM
-1238,Serbia and Montenegro,,SAM
-1239,Zambia,,ZMB
-1240,Zimbabwe,,ZWE
-1242,Serbia,,SRB
-1243,Montenegro,,MNE
-1244,Jersey,,JEY
-1245,Guernsey,,GGY
-1246,Isle of Man,,IMN
-1050,Democratic Republic of the Congo,,COD
-1054,Ivory Coast,,CIV
-1247,Aland Islands,,ALA
-1248,"Bonaire, Sint Eustatius and Saba",,BES
-1249,"Congo, The Democratic Republic of ",,COD
-1250,Cote d'Ivoire,,CIV
-1251,Curaçao,,CUW
-1252,Czechia,,CZE
-1253,Kosovo (temporary code),,XKX
-1254,Saint Barthélemy,,BLM
-1255,Saint Martin,,MAF
-1256,Sint Maarten,,SXM
-1257,South Sudan,,SSD
-1258,Turkish Rep N Cyprus (temporary code),,XTX
+countryName,countryDesc,countryCode
+Afghanistan,,AFG
+Albania,,ALB
+Algeria,,DZA
+American Samoa,,ASM
+Andorra,,AND
+Angola,,AGO
+Anguilla,,AIA
+Antarctica,,ATA
+Antigua and Barbuda,,ATG
+Argentina,,ARG
+Armenia,,ARM
+Aruba,,ABW
+Australia,,AUS
+Austria,,AUT
+Azerbaijan,,AZE
+Bahrain,,BHR
+Bangladesh,,BGD
+Barbados,,BRB
+Belarus,,BLR
+Belgium,,BEL
+Belize,,BLZ
+Benin,,BEN
+Bermuda,,BMU
+Bhutan,,BTN
+Bolivia,,BOL
+Bosnia and Herzegovina,,BIH
+Botswana,,BWA
+Bouvet Island,,BVT
+Brazil,,BRA
+British Indian Ocean Territory,,IOT
+"Virgin Islands, British",,VGB
+Brunei Darussalam,,BRN
+Bulgaria,,BGR
+Burkina Faso,,BFA
+Myanmar,,MMR
+Burundi,,BDI
+Cambodia,,KHM
+Cameroon,,CMR
+Canada,,CAN
+Cape Verde,,CPV
+Cayman Islands,,CYM
+Central African Republic,,CAF
+Chad,,TCD
+Chile,,CHL
+China,,CHN
+Christmas Island,,CXR
+Cocos (Keeling) Islands,,CCK
+Colombia,,COL
+Comoros,,COM
+Democratic Republic of the Congo,,COD
+Congo,,COG
+Cook Islands,,COK
+Costa Rica,,CRI
+Ivory Coast,,CIV
+Croatia,,HRV
+Cuba,,CUB
+Cyprus,,CYP
+Czech Republic,,CZE
+Denmark,,DNK
+Djibouti,,DJI
+Dominica,,DMA
+Dominican Republic,,DOM
+Timor-Leste,,TLS
+Ecuador,,ECU
+Egypt,,EGY
+El Salvador,,SLV
+Equatorial Guinea,,GNQ
+Eritrea,,ERI
+Estonia,,EST
+Ethiopia,,ETH
+Falkland Islands (Malvinas),,FLK
+Faroe Islands,,FRO
+Fiji,,FJI
+Finland,,FIN
+France,,FRA
+French Guiana,,GUF
+French Polynesia,,PYF
+French Southern Territories,,ATF
+Gabon,,GAB
+Georgia,,GEO
+Germany,,DEU
+Ghana,,GHA
+Gibraltar,,GIB
+Greece,,GRC
+Greenland,,GRL
+Grenada,,GRD
+Guadeloupe,,GLP
+Guam,,GUM
+Guatemala,,GTM
+Guinea,,GIN
+Bissau,,GNB
+Guyana,,GUY
+Haiti,,HTI
+Heard Island and McDonald Islands,,HMD
+Holy See (Vatican City State),,VAT
+Honduras,,HND
+Hong Kong,,HKG
+Hungary,,HUN
+Iceland,,ISL
+India,,IND
+Indonesia,,IDN
+"Iran, Islamic Republic of",,IRN
+Iraq,,IRQ
+Ireland,,IRL
+Israel,,ISR
+Italy,,ITA
+Jamaica,,JAM
+Japan,,JPN
+Jordan,,JOR
+Kazakhstan,,KAZ
+Kenya,,KEN
+Kiribati,,KIR
+"Korea, Democratic People's Republic of",,PRK
+"Korea, Republic of",,KOR
+Kuwait,,KWT
+Kyrgyzstan,,KGZ
+Lao People's Democratic Republic,,LAO
+Latvia,,LVA
+Lebanon,,LBN
+Lesotho,,LSO
+Liberia,,LBR
+Libyan Arab Jamahiriya,,LBY
+Liechtenstein,,LIE
+Lithuania,,LTU
+Luxembourg,,LUX
+Macao,,MAC
+"Macedonia, Republic of",,MKD
+Madagascar,,MDG
+Malawi,,MWI
+Malaysia,,MYS
+Maldives,,MDV
+Mali,,MLI
+Malta,,MLT
+Marshall Islands,,MHL
+Martinique,,MTQ
+Mauritania,,MRT
+Mauritius,,MUS
+Mayotte,,MYT
+Mexico,,MEX
+"Micronesia, Federated States of",,FSM
+Moldova,,MDA
+Monaco,,MCO
+Mongolia,,MNG
+Montserrat,,MSR
+Morocco,,MAR
+Mozambique,,MOZ
+Namibia,,NAM
+Nauru,,NRU
+Nepal,,NPL
+Netherlands Antilles,,ANT
+Netherlands,,NLD
+New Caledonia,,NCL
+New Zealand,,NZL
+Nicaragua,,NIC
+Niger,,NER
+Nigeria,,NGA
+Niue,,NIU
+Norfolk Island,,NFK
+Northern Mariana Islands,,MNP
+Norway,,NOR
+Oman,,OMN
+Pakistan,,PAK
+Palau,,PLW
+"Palestinian Territory, Occupied",,PSE
+Panama,,PAN
+Papua New Guinea,,PNG
+Paraguay,,PRY
+Peru,,PER
+Philippines,,PHL
+Pitcairn,,PCN
+Poland,,POL
+Portugal,,PRT
+Puerto Rico,,PRI
+Qatar,,QAT
+Romania,,ROU
+Russian Federation,,RUS
+Rwanda,,RWA
+Reunion,,REU
+Saint Helena,,SHN
+Saint Kitts and Nevis,,KNA
+Saint Lucia,,LCA
+Saint Pierre and Miquelon,,SPM
+Saint Vincent and the Grenadines,,VCT
+Samoa,,WSM
+San Marino,,SMR
+Saudi Arabia,,SAU
+Senegal,,SEN
+Seychelles,,SYC
+Sierra Leone,,SLE
+Singapore,,SGP
+Slovakia,,SVK
+Slovenia,,SVN
+Solomon Islands,,SLB
+Somalia,,SOM
+South Africa,,ZAF
+South Georgia and the South Sandwich Islands,,SGS
+Spain,,ESP
+Sri Lanka,,LKA
+Sudan,,SDN
+Suriname,,SUR
+Svalbard and Jan Mayen,,SJM
+Swaziland,,SWZ
+Sweden,,SWE
+Switzerland,,CHE
+Syrian Arab Republic,,SYR
+Sao Tome and Principe,,STP
+Taiwan,,TWN
+Tajikistan,,TJK
+"Tanzania, United Republic of",,TZA
+Thailand,,THA
+Bahamas,,BHS
+Gambia,,GMB
+Togo,,TGO
+Tokelau,,TKL
+Tonga,,TON
+Trinidad and Tobago,,TTO
+Tunisia,,TUN
+Turkey,,TUR
+Turkmenistan,,TKM
+Turks and Caicos Islands,,TCA
+Tuvalu,,TUV
+Uganda,,UGA
+Ukraine,,UKR
+United Arab Emirates,,ARE
+United Kingdom,,GBR
+United States Minor Outlying Islands,,UMI
+United States,,USA
+Uruguay,,URY
+Uzbekistan,,UZB
+Vanuatu,,VUT
+Venezuela,,VEN
+Viet Nam,,VNM
+"Virgin Islands, U.S.",,VIR
+Wallis and Futuna,,WLF
+Western Sahara,,ESH
+Yemen,,YEM
+Serbia and Montenegro,,SAM
+Zambia,,ZMB
+Zimbabwe,,ZWE
+Serbia,,SRB
+Montenegro,,MNE
+Jersey,,JEY
+Guernsey,,GGY
+Isle of Man,,IMN
+Aland Islands,,ALA
+"Bonaire, Sint Eustatius and Saba",,BES
+"Congo, The Democratic Republic of ",,COD
+Cote d'Ivoire,,CIV
+Curaçao,,CUW
+Czechia,,CZE
+Kosovo (temporary code),,XKX
+Saint Barthélemy,,BLM
+Saint Martin,,MAF
+Sint Maarten,,SXM
+South Sudan,,SSD
+Turkish Rep N Cyprus (temporary code),,XTX

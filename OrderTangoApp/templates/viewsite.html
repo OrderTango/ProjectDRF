@@ -19,7 +19,7 @@
     #customerFileUpload {
         display: none;
     }
-    .editSite, .deleteSite  {
+    .editSite, .deleteSite, .pushSite  {
         border: 0px;
         font-size:14px;
         border-radius: 5px;
@@ -120,7 +120,7 @@
         padding: 4px !important;
         margin-bottom: 15px;
     }
-    #createSiteFormSubmit, #createSiteFormSubmit:hover, #editSiteFormSubmit, #editSiteFormSubmit:hover {
+    #editSiteFormSubmit, #editSiteFormSubmit:hover {
         border: 0px;
         font-size: 13px;
         border-radius: 5px;
@@ -129,6 +129,15 @@
         padding: 5px;
         cursor: pointer;
         text-decoration: none;
+    }
+    #createSiteFormSubmit, #createSiteFormSubmit:hover{
+      border: 0px;
+      background: #ffd500;
+      color: #881999;
+      font-weight: bold;
+      border: 2px solid #881999;
+      border-radius: .25rem;
+      cursor: pointer;
     }
     .modal-body{
         max-height:500px !important;
@@ -149,6 +158,112 @@
     #bodyContent {
         padding-right: 0%
     }
+    #selectSupplier{
+        overflow-y: scroll;
+        height: 100px;
+        border: 1px solid #881999;
+        border-radius: 5px;
+    }
+@media (min-width:600px) and (max-width: 801px)  {
+
+    #viewSiteDataTable{
+        width: 176% !important;
+    }
+    .siteWidth{
+        margin-left: 50% !important;
+    }
+    .viewSiteWid{
+         margin-left: -283% !important;
+    }
+    #createSite{
+        margin-left: 4% !important;
+    }
+    #id_siteName, #id_siteType, #id_siteArea{
+        width: 193px !important;
+    }
+    .siteBtn{
+        margin-left: 50% !important;
+    }
+    #id_unit1{
+        margin-left: 0% !important;
+    }
+    #id_unit1, #id_unit2{
+        width: 90px !important;
+    }
+    #id_siteDesc{
+        width: 193px !important;
+    }
+    #createSiteFormSubmit{
+        margin-left: 158% !important;
+    }
+    #unitlabel {
+        margin-left: 16px !important;
+    }
+}
+@media (min-width:320px) and (max-width: 480px)  {
+    .buttarea {
+        margin: 2px !important;
+    }
+    .tableWid{
+        width: 135% !important;
+    }
+    .headColr{
+        margin-left: 19px !important;
+    }
+    #viewDataTable_paginate {
+        margin-left: 48% !important;
+    }
+    div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+       justify-content: center !important;
+       padding-left: 100px !important;
+    }
+    #viewSiteDataTable_paginate:before {
+        font-size: 13px !important;
+        margin-left: 43% !important;
+    }
+    #id_siteName, #id_siteType, #id_siteArea, #id_siteAddress, #siteArea, #siteType, #siteName, #siteAddress, #editcountry, #editstate, #editaddress_Line1, #editaddress_Line2, #editpostalCode {
+        height: 29px;
+        width: 133px !important;
+        border: 1px solid #bb99c0;
+        border-radius: 8px;
+        padding: 4px !important;
+        margin-left: -1%;
+    }
+    .paddingLeftZero {
+        padding-left: 4px !important;
+    }
+    id_type, #id_storeName, #id_site, #id_firstName, #id_lastName, #id_contactNo, #id_email, #id_sec_question, #id_sec_answer, #id_companyName, #id_address_Line1, #id_address_Line2, #id_country, #id_state, #id_postalCode, #id_usradd_country, #id_usradd_address_Line1{
+        height: 30px !important;
+        width: 133px !important;
+        border: 1px solid #bb99c0 !important;
+        border-radius: 8px !important;
+        padding: 4px !important;
+        margin-left: -1%;
+    }
+    #unitlabel {
+        margin-left: 56px !important;
+    }
+    #id_unit1, #id_unit2, #id_usradd_unit1, #id_usradd_unit2, #id_cusCountryCode, #id_cusUnit1, #id_cusUnit2, #id_cusShipUnit1, #id_cusShipUnit2, #id_supCountryCode, #id_supUnit1, #id_supUnit2, #id_supShipUnit1, #id_supShipUnit2 {
+        height: 30px;
+        width: 65px !important;
+        border: 1px solid #bb99c0;
+        border-radius: 8px;
+        padding: 4px !important;
+        margin-right: 7px;
+    }
+    #id_siteDesc, #siteDesc {
+        width: 131px !important;
+        border: 1px solid #bb99c0;
+        border-radius: 8px;
+        padding: 4px !important;
+    }
+    #createSiteFormSubmit, #createSiteFormSubmit:hover {
+        margin-left: 52% !important;
+    }
+    .marginLeftFifteen {
+        margin-left: 56px !important;
+    }
+}
 </style>
 <div class="row headColor">
   <div class="col-md-2 col-sm-4 col-24" id="sideBarLeft">
@@ -156,16 +271,16 @@
   </div>
   <div class="col-md-10 paddingLeftZero" id="bodyContent">
         <div class="row" id="viewSiteDiv">
-            <div class="col-md-6 col-sm-3 col-6">
-                <h4 class="headingColor"> View Site </h4>
+            <div class="col-md-6 col-sm-3 col-6 siteWidth">
+                <h4 class="headColr headingColor viewSiteWid"> View Site </h4>
             </div>
              <div class="col-md-6 col-sm-3 col-6">
                 <div class="pull-right">
-                     <button class="userButtonClass" id="createSite">
+                     <button class="buttarea userButtonClass" id="createSite">
                         <img class="roundImage" src="/static/images/Round.png" /> Create Site
                      </button>
                      <span class="input-group" id="searchOptionInputGroup">
-                                    <input type="text" id="searchOption">
+                                    <input type="text" id="searchOption"  maxlength="60">
                                     <div class="input-group-append">
                                       <span id="spanSearchIcon">
                                         <i class="fa fa-search"></i>
@@ -174,8 +289,8 @@
                      </span>
                 </div>
             </div>
-            <div class="col-md-12 col-sm-3 col-6 marginLeftFifteen">
-                <table class="table hover dt-responsive viewSiteDataTable" id="viewSiteDataTable" width="100%">
+            <div class="col-md-12 col-sm-8 col-10">
+                <table class="tableWid table hover dt-responsive viewDataTable" id="viewSiteDataTable" width="100%" style="font-size:85%">
                      <thead>
 
                      </thead>
@@ -186,13 +301,13 @@
             <div class="col-md-6 col-sm-3 col-6">
                 <h4 class="headingColor"> Create Site </h4>
             </div>
-             <div class="col-md-6 col-sm-3 col-6">
+             <div class="col-md-6 col-sm-3 col-6 siteBtn">
                 <button class="userButtonClass pull-right" id="viewSite">
                      View Site
                 </button>
             </div>
                  <div class="col-md-12" id="createSiteFormDiv">
-                   <form class="post-form" id="createSiteForm" role="form">
+                   <form class="post-form" id="createSiteForm" role="form" autocomplete="off">
                     {% csrf_token %}
                     <div class="customerManualForm" id="userAddDetail">
                         <div class="form-group row customerDetailsForm">
@@ -266,7 +381,7 @@
            <div class="modal-body">
               <div id="success_msg" class="success_msg"> </div>
               <div id="error_msg" class="error_msg"> </div>
-                <form role="form">
+                <form role="form" autocomplete="off">
                     {% csrf_token %}
                     <div id="modalBody">
 
@@ -313,7 +428,7 @@
       </div>
       <div class="modal-body">
 
-         <form id="updateLogo"  method="post" enctype="multipart/form-data">
+         <form id="updateLogo"  method="post" enctype="multipart/form-data" autocomplete="off">
              {% csrf_token %}
 
          <input type="file" name="fileuploaddata" value="fileupload" id="fileuploaddata">
@@ -346,7 +461,7 @@
         <div class="row" >
             <div class="col-md-12 col-sm-3 col-6 " >
                 <div class="col-md-12" id="viewProfileModalFormDiv">
-                    <form class="registrationform" id="updateProfileForm" role="form" method='POST'>
+                    <form class="registrationform" id="updateProfileForm" role="form" method='POST' autocomplete="off">
 
                         {% csrf_token %}
                         <div id="formsec1">
@@ -360,8 +475,24 @@
                              {{ profileForm.lastName }}
                           </div>
                           <div class="offset-3 offset-sm-4 offset-md-3" id="lastNameError">{{ profileForm.lastName.errors }} </div>
+                       <div class="form-group row registrationformdiv hide">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{profileForm.contactNo.label_tag }}<span class="mandatory">*</span></label>
+                             {{profileForm.countryCode}}{{ profileForm.contactNo }}
+                          </div>
+                          <div class="offset-3 offset-sm-4 offset-md-3 hide" id="contactNoError">{{ profileForm.contactNo.errors }} </div>
+                        <div class="form-group row registrationformdiv hide">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{profileForm.email.label_tag }}<span class="mandatory">*</span></label>
+                             {{ profileForm.email }}
+                          </div>
+                          <div class="offset-3 offset-sm-4 offset-md-3 hide" id="emailError">{{ profileForm.email.errors }} </div>
+
                         </div>
                         <div id="formsec2">
+                            <div class="form-group row registrationformdiv hide">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.companyName.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.companyName }}
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="companyNameError"> {{ companyProfileForm.companyName.errors }} </div>
 
                           <div class="form-group row registrationformdiv">
                             <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.country.label_tag }}<span class="mandatory">*</span></label>
@@ -402,7 +533,7 @@
                             <div class="form-group row registrationformdiv">
                             <label class="col-5 col-md-3 col-form-label registrationformlabel">{{profileForm.sec_answer.label_tag }}<span class="mandatory">*</span></label>
                             {{ profileForm.sec_answer }}
-                            <div class="col-12 offset-sm-4 col-md-6" id="submitBtnDiv">  <input type="submit" id="profileUpdateButton" value="Update"> </div>
+                            <div class="col-12 offset-sm-4 col-md-6" id="submitBtnDiv">  <input type="button" class="profileUpdateButtonClass" id="profileUpdateButton" value="Update"> </div>
                           </div>
                             <div class="offset-3 offset-sm-4 offset-md-3" id="secAnswerError"> {{ profileForm.sec_answer.errors }} </div>
                         </div>
@@ -440,7 +571,7 @@
     <div class="row" >
     <div class="col-md-12 col-sm-3 col-6 " >
     <div class="col-md-12" id="editSiteFormDiv">
-    <form class="post-form" id="editSiteForm" role="form">
+    <form class="post-form" id="editSiteForm" role="form" autocomplete="off">
     {% csrf_token %}
     <div class="customerManualForm">
     <div class="form-group row customerDetailsForm">
@@ -495,7 +626,7 @@
     </div>
     </form>
     <div class="offset-md-5 col-md-4 col-sm-4 col-12">
-    <a href="#" id="hitBtn"><input type="button" id="editSiteFormSubmit" class="btn btn-primary" value="Submit"> </a>
+    <input type="button" id="editSiteFormSubmit" class="btn btn-primary" value="Submit">
     </div>
 
     </div>
@@ -526,13 +657,41 @@
 
 
           </div>
-          <div class="modal-footer">
-                <input type="button" id="confirmModalPopupSubmit" class="btn btn-primary modalBtnClass" data-dismiss="modal" aria-label="Close" value="Confirm">
-                <input type="button" id="confirmModalPopupClose" class="btn btn-primary modalBtnClass" data-dismiss="modal" aria-label="Close" value="Close">
+          <div class="modal-footer" style="text-align:center">
+              <div class="col-md-12">
+                   <input type="button" id="confirmModalPopupSubmit" class="btn btn-primary modalBtnClass" data-dismiss="modal" aria-label="Close" value="Confirm">
+                <input type="button" id="confirmModalPopupClose" class="btn btn-primary modalBtnClass" data-dismiss="modal" aria-label="Close" value="Cancel">
+              </div>
           </div>
         </div>
       </div>
     </div>
+
+<div class="modal fade" id="pushSiteModalPopup" tabindex="-1" role="dialog" aria-labelledby="sampleModalPopupTitle" data-toggle="modal" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered pushSiteModalPopup" role="document">
+        <div class="modal-content modalBorderClass ">
+            <div class="modal-header">
+                <h5 class="modal-title modalTitleHead" id="pushSiteModalPopupTitle"> Push Site To Vendors </h5>
+                <button type="button" class="close pushSiteModalPopupCloseBtn" id="supplierProductModalPopupCloseBtn" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">x</span>
+                </button>
+            </div>
+            <div class="modal-body" id="pushSiteModalPopupBodyContent">
+                <div class="row">
+                    <input type="text" id="dynamicSiteId" value="">
+                     <div class="col-md-4"><label>Select Vendor:</label></div>
+                   <div class="col-md-6" id="selectSupplier" style="">
+                   </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="button" id="pushSiteSubmit" class="btn btn-primary modalBtnClass pushSiteModalPopupCloseBtn"  value="Submit">
+            </div>
+        </div>
+    </div>
+
+
+</div>
 
 <script>
 
@@ -548,7 +707,7 @@
     },
     success: function (data) {
     var states = JSON.parse(data.states);
-    var stateAppendValues = "";
+    var stateAppendValues = "<option value=''>Select</option>";
     $.each(states, function (key, val) {
     stateAppendValues = stateAppendValues + "<option value="+val.pk+">"+val.fields.stateName+"</option>";
     });
@@ -570,7 +729,7 @@
     },
     success: function (data) {
     var states = JSON.parse(data.states);
-    var stateAppendValues = "";
+    var stateAppendValues = "<option value=''>Select</option>";
     $.each(states, function (key, val) {
     stateAppendValues = stateAppendValues + "<option value="+val.pk+">"+val.fields.stateName+"</option>";
     });
@@ -590,6 +749,10 @@
                  $('#imageModel').modal('toggle');
             });
 
+            $('.editSiteModalClose').on('click',function() {
+                $('#editSiteForm')[0].reset();
+            });
+
             /* Hide the Onboard DropdownMenu in Sidebar Start */
             $('#onboardDropDown').hide();
             /* Hide the Onboard DropdownMenu in Sidebar End */
@@ -598,6 +761,7 @@
 
             var date = new Date();
             $("#id_DOJ").datepicker({
+                changeYear: true,
                 dateFormat: "dd/mm/yy",
                 defaultDate: 'Select',
                 onSelect: function () {
@@ -620,11 +784,14 @@
 
                     pullSiteTable(siteData);
                 }
-                else if(result.status == 'error' && result.error_msg == 'sessionexpired'){
+                else if(data.status == 'error' && data.error_msg == 'sessionexpired'){
                     alert('Session has expired.');
                     setTimeout(function() {
                         window.location.href = data.redirect_url;
                     }, 2000);
+                }
+                else{
+                    alert(data.error_msg);
                 }
               }
             });
@@ -660,8 +827,8 @@
                          { "width": "15%", "targets": 2 },
                          { "width": "20%", "targets": 3 },
                          { "width": "15%", "targets": 4 },
-                         { "width": "15%", "targets": 5 },
-                         { "width": "15%", "targets": 6 },
+                         { "width": "14%", "targets": 5 },
+                         { "width": "16%", "targets": 6 },
                 ]});
 
             function pullSiteTable(siteData) {
@@ -699,12 +866,12 @@
                          { "width": "15%", "targets": 2 },
                          { "width": "20%", "targets": 3 },
                          { "width": "15%", "targets": 4 },
-                         { "width": "15%", "targets": 5 },
-                         { "width": "15%", "targets": 6 },
+                         { "width": "14%", "targets": 5 },
+                         { "width": "16%", "targets": 6 },
                 ]});
                 $.each(siteData, function( index, value ) {
                    var sno = index+1;
-                   var action = "<input class='editSite' id='edit_"+value.siteId+"' type='button' value='Edit'><input class='deleteSite' id='delete_"+value.siteId+"' type='button' value='Delete'>";
+                   var action = "<input class='editSite' id='edit_"+value.siteId+"' type='button' value='Edit'><input class='deleteSite' id='delete_"+value.siteId+"' type='button' value='Delete'><input class='pushSite' id='push_"+value.siteId+"' type='button' value='Push'>";
                    if(value.siteName == 'HeadQuarter'){
                         var action = "<input class='editSite' id='edit_"+value.siteId+"' type='button' value='Edit'>";
                    }
@@ -808,18 +975,18 @@
                         var data = result;
                         if (data.status == 'success') {
                             alert(data.success_msg);
-                            location.reload();
+                            setTimeout(function() {
+                                location.reload();
+                            }, 2500);
                         }
                         else if(data.status == 'error' && data.error_msg == 'sessionexpired'){
                             alert('Session has expired.');
                             setTimeout(function() {
                                 window.location.href = data.redirect_url;
                             }, 2000);
-
                          }
-                        else if(data.status == 'error'){
+                        else {
                             alert(data.error_msg);
-                            location.reload();
                         }
                       }
 
@@ -828,6 +995,7 @@
             });
 
             $('#siteId').css('display','none');
+            $('#dynamicSiteId').css('display','none');
 
             $(document).on('click', '.editSite', function() {
                   var idNum = $(this).attr('id').match(/\d+/);
@@ -844,7 +1012,6 @@
                     var data = result;
                     if (data.status == 'success') {
                      site = data.site;
-                     console.log(site);
                      $.each(site, function( index, value ) {
 
                         $.ajax({
@@ -854,7 +1021,8 @@
                                 },
                                 success: function (data) {
                                   var states = JSON.parse(data.states);
-                                  var stateAppendValues = "";
+                                  $("#editstate").empty();
+                                  var stateAppendValues = "<option value=''>Select</option>";
                                      $.each(states, function (key, val) {
                                     stateAppendValues = stateAppendValues + "<option value="+val.pk+">"+val.fields.stateName+"</option>";
                                     });
@@ -869,6 +1037,9 @@
                          $('#siteName').val(value.siteName);
                          if(value.siteName == 'HeadQuarter'){
                          $("#siteName").prop("disabled",true);
+                         }
+                         else{
+                            $("#siteName").prop("disabled",false);
                          }
                          $('#editcountry').find('option[value="'+value.siteAddress__usradd_country+'"]').attr("selected",true);
                          $('#editaddress_Line1').val(value.siteAddress__usradd_address_Line1);
@@ -891,7 +1062,9 @@
                         setTimeout(function() {
                             window.location.href = data.redirect_url;
                         }, 2000);
-
+                    }
+                   else{
+                        alert(data.error_msg);
                     }
                    }
                 });
@@ -951,7 +1124,11 @@
                     $("#editaddress_Line2").focus()
                     return false;
                 }
-
+                else if(editstate == ''){
+                    alert('Please select state');
+                    $("#editstate").focus()
+                    return false;
+                }
                 else if(editpostalCode == ''){
                     alert('Please enter Postal Code');
                     $("#editpostalCode").focus()
@@ -970,18 +1147,21 @@
                         var data = result;
                         if (data.status == 'success') {
                             alert(data.success_msg);
-                            location.reload();
+                          setTimeout(function() {
+                                window.location.reload();
+                            }, 3000);
                         }
                         else if(data.status == 'error' && data.error_msg == 'sessionexpired'){
                                 alert('Session has expired.');
                                 setTimeout(function() {
                                     window.location.href = data.redirect_url;
                                 }, 2000);
-
                          }
-                        else if(data.status == 'error'){
+                        else{
                             alert(data.error_msg);
-                            location.reload();
+                            setTimeout(function() {
+                                location.reload();
+                            }, 2500);
                         }
                         }
                         });
@@ -994,8 +1174,7 @@
                     $('#createSiteDiv').show();
                 }
                 else if ($(this).attr('id') == 'viewSite') {
-                    $('#createSiteDiv').hide();
-                    $('#viewSiteDiv').show();
+                    location.reload();
                 }
             });
 
@@ -1013,6 +1192,90 @@
 
             });
 
+$(document).on('click', '.pushSite', function() {
+var idNum = $(this).attr('id').match(/\d+/);
+var siteId = idNum[0];
+$('#dynamicSiteId').empty();
+$('#dynamicSiteId').val(siteId);
+ var data = {'siteId':siteId};
+        $.ajax({
+              url: "/fetchSupplierForSitePushing",
+              type: "POST",
+              dataType : "json",
+              contentType : "application/json",
+              data: JSON.stringify(data),
+              success: function (data)
+              {
+              if (data.status == 'success') {
+              var supplier = data.supplierList;
+              if(supplier.length > 0){
+              $('#selectSupplier').empty();
+                $('#selectSupplier').append("<input type='checkbox' id='selectAllSupplier' > <label> All </label><br>");
+                $.each(supplier, function( index, value ) {
+                   $('#selectSupplier').append("<input type='checkbox' class='supplier' value='"+value.supplierId+"' > <label> "+value.supCompanyName+" </label><br>");
+
+                });
+                $('#pushSiteModalPopup').modal('show');
+                }
+                     else{
+                alert("No new vendors found");
+                }
+                }
+              }
+            });
+
+});
+
+$(document).on('click', '#selectAllSupplier', function() {
+     if ($('#selectAllSupplier').prop('checked') == true) {
+        $(".supplier").prop('checked', true);
+     }
+     else if ($('#selectAllSupplier').prop('checked') == false) {
+        $(".supplier").prop('checked', false);
+     }
+  });
+
+$(document).on('click', '#pushSiteSubmit', function() {
+var suppliersArray = [];
+var siteId = $('#dynamicSiteId').val();
+$(".supplier:checked").each(function() {
+     suppliersArray.push($(this).val());
+  });
+  if(suppliersArray == ''){
+    alert('Please Select Vendor');
+    return false;
+  }
+  else{
+  $('#pushSiteModalPopup').modal("toggle");
+    var data = {'siteId':siteId,'suppliers':suppliersArray};
+        $.ajax({
+              url: "/pushingSitestoSupplier",
+              type: "POST",
+              dataType : "json",
+              contentType : "application/json",
+              data: JSON.stringify(data),
+              success: function (data)
+              {
+              if (data.status == 'success') {
+                alert(data.success_msg);
+                setTimeout(function() {
+                    location.reload();
+                }, 2500);
+                }
+              else if(data.status == 'error' && data.error_msg == 'sessionexpired'){
+                    alert('Session has expired.');
+                    setTimeout(function() {
+                        window.location.href = data.redirect_url;
+                    }, 2000);
+             }
+            else{
+                alert(data.error_msg);
+            }
+              }
+            });
+        }
+});
+
 $('#confirmModalPopupSubmit').on('click', function() {
             var id = $('#deleteSiteId').val();
                 var data = {"siteId":id};
@@ -1027,7 +1290,9 @@ $('#confirmModalPopupSubmit').on('click', function() {
                     var data = result;
                     if (data.status == 'success') {
                         alert(data.success_msg);
-                        location.reload();
+                         setTimeout(function() {
+                                window.location.reload();
+                            }, 3000);
                     }
                     else if (data.status == 'error' && data.error_msg == 'sessionexpired'){
                          alert('Session has expired.');
@@ -1035,9 +1300,8 @@ $('#confirmModalPopupSubmit').on('click', function() {
                                     window.location.href = data.redirect_url;
                                 }, 2000);
                      }
-                     else if (data.status == 'error'){
+                     else{
                         alert(data.error_msg);
-                        location.reload();
                      }
                    }
                 });
@@ -1058,7 +1322,7 @@ $('#confirmModalPopupSubmit').on('click', function() {
 
         $(document).ready(function() {
 
-        $("#id_postalCode,#editpostalCode").attr('maxlength','6');
+        $("#id_postalCode,#editpostalCode").attr('maxlength','7');
 
         $("#id_unit1,#id_unit2,#editunit1,#editunit2").attr('maxlength','2');
 
@@ -1071,6 +1335,7 @@ $('#confirmModalPopupSubmit').on('click', function() {
 
          var date = new Date();
                 $("#uDOJ , #uDOD").datepicker({
+                    changeYear: true,
                     dateFormat: "dd/mm/yy",
                     defaultDate: 'Select',
                     onSelect: function () {
@@ -1158,9 +1423,6 @@ $('#confirmModalPopupSubmit').on('click', function() {
                                 window.location.href = data.redirect_url;
                             }, 3000);
                         }
-                        else if (data.status == 'error' && data.error_msg != 'sessionexpired') {
-                            $('#error_msg').append(data.error_msg);
-                        }
                         else if (data.status == 'error' && data.error_msg == 'sessionexpired') {
                             $('#domainName').val('');
                             $('#error_msg').append('Session expired.');
@@ -1169,6 +1431,9 @@ $('#confirmModalPopupSubmit').on('click', function() {
                             setTimeout(function() {
                                 window.location.href = data.redirect_url;
                             }, 3000);
+                        }
+                        else{
+                            $('#error_msg').append(data.error_msg);
                         }
                       }
                      });

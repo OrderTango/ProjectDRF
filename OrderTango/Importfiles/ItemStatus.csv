@@ -1,3 +1,3 @@
-itemStatusId,itemStatusType,itemStatusDesc,itemStatusName
-1,Available,Stock Available,
-2,Not Available,Stock Not Available,
+itemStatusType,itemStatusDesc,itemStatusName
+Available,Stock Available,
+Not Available,Stock Not Available,

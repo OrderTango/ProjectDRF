@@ -20,7 +20,7 @@ class OrderPlacementfromCustomer(models.Model):
     customer_unit1 = models.CharField(max_length=2)
     customer_unit2 = models.CharField(max_length=2)
     customer_state = models.ForeignKey(State, on_delete=models.SET_NULL, null=True)
-    customer_postalCode = models.CharField(max_length=6)
+    customer_postalCode = models.CharField(max_length=7)
     expectedDate = models.CharField(max_length=50)
     expectedTime = models.CharField(max_length=50)
     orderDate = models.DateField()
@@ -31,7 +31,7 @@ class OrderPlacementfromCustomer(models.Model):
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
+    def __int__(self):
         return self.ordFrmCusId
 
     class Meta:
@@ -57,7 +57,7 @@ class OrderDetails(models.Model):
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
+    def __int__(self):
         return self.ordDetailId
 
     class Meta:

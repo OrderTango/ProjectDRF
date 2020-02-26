@@ -48,7 +48,7 @@ $(document).ready(function() {
         theme: "minimal"
     });
 
-    $('#dismiss, .overlay').on('click', function () {
+    $('#dismiss, .overlay, .dropdown-toggle').on('click', function () {
         $('#sidebar').removeClass('active');
         $('.overlay').removeClass('active');
         $('#sidebarCollapse').show();
@@ -66,8 +66,24 @@ $(document).ready(function() {
             $('.overlay').addClass('active');
             $('.collapse.in').toggleClass('in');
             $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-            $('#navbarTogglerDemo02').css('margin-right','35px');
+            //$('#navbarTogglerDemo02').css('margin-right','35px');
         //}
+    });
+
+    $('#notificationIcon').on('click', function () {
+        if ($('#sidebar').hasClass('active')) {
+            $('#sidebar').removeClass('active');
+            $('.overlay').removeClass('active');
+            $('#sidebarCollapse').show();
+        }
+        else {
+            $('#sidebarCollapse').hide();
+            $('#sidebar').addClass('active');
+            $('.overlay').addClass('active');
+            $('.collapse.in').toggleClass('in');
+            $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+            //$('#navbarTogglerDemo02').css('margin-right','35px');
+        }
     });
     /* Right Sidebar Script End */
 });

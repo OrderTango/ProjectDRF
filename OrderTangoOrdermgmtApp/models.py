@@ -1,13 +1,14 @@
 from django.db import models
 from OrderTangoApp import constants
-from OrderTangoSubDomainApp.models import SupplierProductCatalog,Sites
+from OrderTangoSubDomainApp.models import SupplierProductCatalog,Sites,Supplier
 from OrderTangoApp.models import CurrencyType,QuantityType
 # Create your models here.
 
 
 class ShoppingCart(models.Model):
     shoppingCartId = models.AutoField(primary_key=True)
-    status = models.CharField(max_length=50, default=constants.Pending)
+    status = models.CharField(max_length=50, default=constants.Active)
+    cartStatus = models.CharField(max_length=50, default=constants.Pending)
     totalPrice = models.CharField(max_length=50, default='0')
     totalPriceUnit = models.CharField(max_length=50, default="USD")
     expectedDate = models.CharField(max_length=50)
@@ -16,7 +17,7 @@ class ShoppingCart(models.Model):
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
+    def __int__(self):
         return self.shoppingCartId
 
     class Meta:
@@ -38,12 +39,13 @@ class OrderPlacementtoSupplier(models.Model):
     goodsIssue = models.CharField(max_length=50)
     goodsReceive = models.CharField(max_length=50)
     pickUpList = models.CharField(max_length=50)
+    orderType = models.CharField(max_length=50, default=constants.Orginal)
     status = models.CharField(max_length=50, default=constants.Active)
     connectedStatus = models.BooleanField(default=False)
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
+    def __int__(self):
         return self.ordToSupId
 
     class Meta:
@@ -54,6 +56,7 @@ class pdfDetailsForPlacedOrder(models.Model):
     pdfId = models.AutoField(primary_key=True)
     ordNumber = models.CharField(max_length=255)
     pdfField = models.BinaryField(blank=True)
+    supplierId = models.ForeignKey(Supplier, on_delete=models.CASCADE)
     status = models.CharField(max_length=50, default=constants.Active)
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)

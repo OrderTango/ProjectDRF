@@ -1,15 +1,16 @@
 from django.db import models
+
 from OrderTangoApp.models import CountryCode,Country,State,CurrencyType,RequestAccess,ItemStatus,QuantityType
-from django.contrib.postgres.fields import JSONField
+from django.contrib.postgres.fields import JSONField,ArrayField
 from OrderTangoApp import constants
 # Create your models here.
 
 
 class serviceLevelAgreement(models.Model):
     slaId= models.AutoField(primary_key=True)
-    slaType = models.CharField(max_length=50, null=True)
+    slaType = models.CharField(max_length=30,null=True)
     slaDetails = JSONField()
-    slaStatus = models.CharField(max_length=50, default=constants.Active)
+    status = models.CharField(max_length=50, default=constants.Active)
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
 
@@ -22,9 +23,9 @@ class serviceLevelAgreement(models.Model):
 
 class Area(models.Model):
     areaId = models.AutoField(primary_key=True)
-    areaName = models.CharField(max_length=100)
-    areaDesc = models.CharField(max_length=100)
-    areaStatus = models.CharField(max_length=50,default=constants.Active)
+    areaName = models.CharField(max_length=30,null=True)
+    areaDesc = models.TextField()
+    status = models.CharField(max_length=50,default=constants.Active)
     areaSlaId = models.ForeignKey(serviceLevelAgreement, on_delete=models.CASCADE, related_name="sla")
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
@@ -43,7 +44,7 @@ class UserAddress(models.Model):
     usradd_unit1 = models.CharField(max_length=2)
     usradd_unit2 = models.CharField(max_length=2)
     usradd_state = models.ForeignKey(State, on_delete=models.SET_NULL, null=True)
-    usradd_postalCode = models.CharField(max_length=6)
+    usradd_postalCode = models.CharField(max_length=7)
     usradd_addressType = models.CharField(max_length=50)
     status = models.CharField(max_length=100, default=constants.Active)
     createdDateTime = models.DateTimeField(auto_now_add=True)
@@ -72,9 +73,9 @@ class TypeOfSites(models.Model):
 
 class Sites(models.Model):
     siteId = models.AutoField(primary_key=True)
-    siteName = models.CharField(max_length=50)
-    siteDesc = models.CharField(max_length=100)
-    siteStatus = models.CharField(max_length=50,default=constants.Active)
+    siteName = models.CharField(max_length=30,null=True)
+    siteDesc = models.TextField()
+    status = models.CharField(max_length=50,default=constants.Active)
     siteType = models.ForeignKey(TypeOfSites, on_delete=models.CASCADE, related_name='type_sites')
     siteArea = models.ForeignKey(Area, on_delete=models.CASCADE, related_name='area_sites')
     siteAddress = models.ForeignKey(UserAddress, on_delete=models.CASCADE, related_name='site_address')
@@ -90,9 +91,9 @@ class Sites(models.Model):
 
 class Customer(models.Model):
     customerId = models.AutoField(primary_key=True)
-    cusCompanyName = models.CharField(max_length=100)
+    cusCompanyName = models.CharField(max_length=60)
     cusCompanyCode = models.CharField(max_length=100, null=True)
-    cusEmail = models.EmailField(max_length=100)
+    cusEmail = models.EmailField(max_length=60,null=True)
     cusCountryCode = models.ForeignKey(CountryCode, on_delete=models.SET_NULL, null=True)
     cusContactNo = models.CharField(max_length=12)
     cusCountry = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True)
@@ -101,18 +102,19 @@ class Customer(models.Model):
     cusUnit1 = models.CharField(max_length=2)
     cusUnit2 = models.CharField(max_length=2)
     cusState = models.ForeignKey(State, on_delete=models.SET_NULL, null=True)
-    cusPostalCode = models.CharField(max_length=6)
+    cusPostalCode = models.CharField(max_length=7)
     customerCode = models.CharField(max_length=100,null=True)
-    contactPerson = models.CharField(max_length=100,null=True)
+    contactPerson = models.CharField(max_length=60,null=True)
     connectionCode =  models.CharField(max_length=100,null=True)
-    cusAlterNateEmail = models.EmailField(max_length=100,null=True)
+    cusAlterNateEmail = models.EmailField(max_length=60,null=True)
+    cusCommunicationEmail = models.EmailField(max_length=60,null=True)
     invitationStatus = models.IntegerField(default=0)
     relationshipStatus = models.BooleanField(default=False)
     status = models.CharField(max_length=50, default=constants.Active)
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
+    def __int__(self):
         return self.customerId
 
     class Meta:
@@ -126,7 +128,7 @@ class CustomerShippingAddress(models.Model):
     cusShipUnit2 = models.CharField(max_length=2)
     cusShipCountry = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True)
     cusShipState = models.ForeignKey(State, on_delete=models.SET_NULL, null=True)
-    cusShipPostalCode = models.CharField(max_length=6)
+    cusShipPostalCode = models.CharField(max_length=7)
     status = models.CharField(max_length=50, default=constants.Active)
     shippingCustomer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
     createdDateTime = models.DateTimeField(auto_now_add=True)
@@ -141,9 +143,9 @@ class CustomerShippingAddress(models.Model):
 
 class Supplier(models.Model):
     supplierId =  models.AutoField(primary_key=True)
-    supCompanyName = models.CharField(max_length=100)
+    supCompanyName = models.CharField(max_length=60)
     supCompanyCode = models.CharField(max_length=100, null=True)
-    supEmail = models.EmailField(max_length=100)
+    supEmail = models.EmailField(max_length=60,null=True)
     supCountryCode = models.ForeignKey(CountryCode, on_delete=models.SET_NULL, null=True)
     supContactNo = models.CharField(max_length=12)
     supCountry = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True)
@@ -152,18 +154,19 @@ class Supplier(models.Model):
     supUnit1 = models.CharField(max_length=2)
     supUnit2 = models.CharField(max_length=2)
     supState = models.ForeignKey(State, on_delete=models.SET_NULL, null=True)
-    supPostalCode = models.CharField(max_length=6)
+    supPostalCode = models.CharField(max_length=7)
     supplierCode = models.CharField(max_length=100, null=True)
     connectionCode = models.CharField(max_length=100, null=True)
-    supAlterNateEmail = models.EmailField(max_length=100,null=True)
+    supAlterNateEmail = models.EmailField(max_length=60,null=True)
+    supCommunicationEmail = models.EmailField(max_length=60, null=True)
     invitationStatus = models.IntegerField(default=0)
     relationshipStatus = models.BooleanField(default=False)
-    contactPerson = models.CharField(max_length=100, null=True)
+    contactPerson = models.CharField(max_length=60, null=True)
     status = models.CharField(max_length=50, default=constants.Active)
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
+    def __int__(self):
         return self.supplierId
 
     class Meta:
@@ -178,7 +181,7 @@ class SupplierShippingAddress(models.Model):
     supShipUnit2 = models.CharField(max_length=2)
     supShipCountry = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True)
     supShipState = models.ForeignKey(State, on_delete=models.SET_NULL, null=True)
-    supShipPostalCode = models.CharField(max_length=6)
+    supShipPostalCode = models.CharField(max_length=7)
     status = models.CharField(max_length=50, default=constants.Active)
     shippingSupplier = models.ForeignKey(Supplier, on_delete=models.SET_NULL, null=True)
     createdDateTime = models.DateTimeField(auto_now_add=True)
@@ -194,7 +197,7 @@ class SupplierShippingAddress(models.Model):
 class typeOfArticle(models.Model):
     articleId = models.AutoField(primary_key=True)
     articleCode = models.CharField(max_length=50, null=True)
-    articleName = models.CharField(max_length=50, null=True)
+    articleName = models.CharField(max_length=50 ,null=True)
     articleDesc = models.CharField(max_length=50,null=True)
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
@@ -208,7 +211,7 @@ class typeOfArticle(models.Model):
 class productCategory(models.Model):
     prtCatId = models.AutoField(primary_key=True)
     prtCatCode = models.CharField(max_length=50, null=True)
-    prtCatName = models.CharField(max_length=50, null=True)
+    prtCatName = models.CharField(max_length=50,null=True)
     prtCatDesc = models.CharField(max_length=50, null=True)
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
@@ -222,7 +225,7 @@ class productCategory(models.Model):
 class merchantCategory(models.Model):
     mrctCatId = models.AutoField(primary_key=True)
     mrctCatCode = models.CharField(max_length=50, null=True)
-    mrctCatName = models.CharField(max_length=50, null=True)
+    mrctCatName = models.CharField(max_length=50,null=True)
     mrctCatDesc = models.CharField(max_length=50, null=True)
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
@@ -236,7 +239,7 @@ class merchantCategory(models.Model):
 class merchantSubCategoryOne(models.Model):
     mrctSubCatOneId = models.AutoField(primary_key=True)
     mrctSubCatOneCode = models.CharField(max_length=50, null=True)
-    mrctSubCatOneName = models.CharField(max_length=50, null=True)
+    mrctSubCatOneName = models.CharField(max_length=50,null=True)
     mrctSubCatOneDesc = models.CharField(max_length=50, null=True)
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
@@ -251,7 +254,7 @@ class merchantSubCategoryOne(models.Model):
 class merchantSubCategoryTwo(models.Model):
     mrctSubCatTwoId = models.AutoField(primary_key=True)
     mrctSubCatTwoCode = models.CharField(max_length=50, null=True)
-    mrctSubCatTwoName = models.CharField(max_length=50, null=True)
+    mrctSubCatTwoName = models.CharField(max_length=50,null=True)
     mrctSubCatTwoDesc = models.CharField(max_length=50, null=True)
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
@@ -337,12 +340,12 @@ class itemDepartment(models.Model):
 
 class ItemMaster(models.Model):
     itemMasterId = models.AutoField(primary_key=True)
-    itemCode=models.CharField(max_length=50)
-    itemName=models.CharField(max_length=50)
-    alterItemCode = models.CharField(max_length=50)
-    alterItemName = models.CharField(max_length=50)
-    brandName = models.CharField(max_length=50)
-    itemDesc = models.CharField(max_length=50)
+    itemCode=models.CharField(max_length=60,null=True)
+    itemName=models.CharField(max_length=60,null=True)
+    alterItemCode = models.CharField(max_length=60)
+    alterItemName = models.CharField(max_length=60)
+    brandName = models.CharField(max_length=60)
+    itemDesc = models.CharField(max_length=60)
     articleType = models.ForeignKey(typeOfArticle,related_name='articleType',null=True,on_delete=models.CASCADE)
     itemCategory = models.ForeignKey(productCategory,related_name='itemCategory',null=True, on_delete=models.CASCADE)
     itemMerchantCategory = models.ForeignKey(merchantCategory,related_name='itemMerchantCategory',null=True, on_delete=models.CASCADE)
@@ -350,10 +353,10 @@ class ItemMaster(models.Model):
     itemMerchantCategoryTwo = models.ForeignKey(merchantSubCategoryTwo,related_name='itemMerchantCategoryTwo',null=True,on_delete=models.CASCADE)
     itemStorageCondition = models.ForeignKey(storageConditions,related_name='itemStorageCondition',null=True,on_delete=models.CASCADE)
     baseUom=models.ForeignKey(QuantityType,related_name='baseUom',null=True,on_delete=models.CASCADE)
-    packingUnit = models.CharField(max_length=50)
+    packingUnit = models.CharField(max_length=60)
     selfManufacturing = models.BooleanField(default=False)
-    manufacturingLeadTime = models.CharField(max_length=50)
-    productDetail = models.CharField(default=constants.Both, max_length=50)
+    manufacturingLeadTime = models.CharField(max_length=60)
+    productDetail = models.CharField(default=constants.Both, max_length=60)
     status = models.CharField(max_length=50,default=constants.Active)
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
@@ -367,12 +370,12 @@ class ItemMaster(models.Model):
 class productAttribute(models.Model):
     attributeId = models.AutoField(primary_key=True)
     attributeItem = models.ForeignKey(ItemMaster,related_name='attributeItem',on_delete=models.CASCADE)
-    attributeColor = models.CharField(max_length=50,null=True)
-    attributeSize = models.CharField(max_length=50,null=True)
-    attributeDesign = models.CharField(max_length=50,null=True)
-    attributeStyle = models.CharField(max_length=50,null=True)
-    attributeOther = models.CharField(max_length=50,null=True)
-    status = models.CharField(max_length=50, default=constants.Active)
+    attributeColor = models.CharField(max_length=60,null=True)
+    attributeSize = models.CharField(max_length=60,null=True)
+    attributeDesign = models.CharField(max_length=60,null=True)
+    attributeStyle = models.CharField(max_length=60,null=True)
+    attributeOther = models.CharField(max_length=60,null=True)
+    status = models.CharField(max_length=60, default=constants.Active)
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
 
@@ -391,7 +394,7 @@ class purchasingItems(models.Model):
     purchasingCurrency = models.ForeignKey(CurrencyType,related_name='purchasingCurrency',null=True,on_delete=models.CASCADE)
     purchasingPriceUnit = models.FloatField(null=True)
     purchasingUomForKg = models.ForeignKey(QuantityType,related_name='purchasingUomForKg',null=True,on_delete=models.CASCADE)
-    purchasingOrderText = models.CharField(max_length=50,null=True)
+    purchasingOrderText = models.CharField(max_length=60,null=True)
     status = models.CharField(max_length=50, default=constants.Active)
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
@@ -407,12 +410,12 @@ class salesItems(models.Model):
     salesItem = models.ForeignKey(ItemMaster,related_name='salesItem', on_delete=models.CASCADE)
     salesUom = models.ForeignKey(QuantityType,related_name='salesUom',null=True, on_delete=models.CASCADE)
     salesTax = models.ForeignKey(taxCode,related_name='salesTax',null=True, on_delete=models.CASCADE)
-    salesCategoryGrp = models.CharField(max_length=50, null=True)
+    salesCategoryGrp = models.CharField(max_length=60, null=True)
     salesPrice = models.FloatField(null=True)
     salesCurrency = models.ForeignKey(CurrencyType,related_name='salesCurrency',null=True, on_delete=models.CASCADE)
     salesPriceUnit = models.FloatField(null=True)
     salesUomForKg = models.ForeignKey(QuantityType,related_name='salesUomForKg',null=True, on_delete=models.CASCADE)
-    salesOrderText = models.CharField(max_length=50, null=True)
+    salesOrderText = models.CharField(max_length=60, null=True)
     status = models.CharField(max_length=50, default=constants.Active)
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
@@ -427,7 +430,7 @@ class salesItems(models.Model):
 class itemMeasurement(models.Model):
     measurementId = models.AutoField(primary_key=True)
     measurementItem = models.ForeignKey(ItemMaster,related_name='measurementItem', on_delete=models.CASCADE)
-    measurementDimension=models.CharField(max_length=50,null=True)
+    measurementDimension=models.CharField(max_length=60,null=True)
     measurementDimensionUnit = models.ForeignKey(itemDimension,related_name='measurementDimensionUnit',null=True,on_delete=models.CASCADE)
     measurementLength = models.FloatField(null=True)
     measurementWidth = models.FloatField(null=True)
@@ -448,12 +451,12 @@ class itemMeasurement(models.Model):
 class itemStorage(models.Model):
     storageId = models.AutoField(primary_key=True)
     storageItem = models.ForeignKey(ItemMaster,related_name='storageItem', on_delete=models.CASCADE)
-    storageShelfLife = models.CharField(max_length=50,null=True)
-    storageCase = models.CharField(max_length=50,null=True)
-    storageTier = models.CharField(max_length=50,null=True)
-    storagePallet = models.CharField(max_length=50,null=True)
+    storageShelfLife = models.CharField(max_length=60,null=True)
+    storageCase = models.CharField(max_length=60,null=True)
+    storageTier = models.CharField(max_length=60,null=True)
+    storagePallet = models.CharField(max_length=60,null=True)
     storageDept = models.ForeignKey(itemDepartment,related_name='storageDept',null=True,on_delete=models.CASCADE)
-    storageRack = models.CharField(max_length=50,null=True)
+    storageRack = models.CharField(max_length=60,null=True)
     status = models.CharField(max_length=50, default=constants.Active)
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
@@ -467,10 +470,10 @@ class itemStorage(models.Model):
 class itemParameter(models.Model):
     parameterId = models.AutoField(primary_key=True)
     parameterItem = models.ForeignKey(ItemMaster,related_name='parameterItem', on_delete=models.CASCADE)
-    alterNateParamOne = models.CharField(max_length=50,null=True)
-    alterNateParamTwo = models.CharField(max_length=50,null=True)
-    alterNateParamThree = models.CharField(max_length=50,null=True)
-    alterNateParamFour = models.CharField(max_length=50,null=True)
+    alterNateParamOne = models.CharField(max_length=60,null=True)
+    alterNateParamTwo = models.CharField(max_length=60,null=True)
+    alterNateParamThree = models.CharField(max_length=60,null=True)
+    alterNateParamFour = models.CharField(max_length=60,null=True)
     status = models.CharField(max_length=50, default=constants.Active)
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
@@ -484,10 +487,14 @@ class itemParameter(models.Model):
 
 class Notification(models.Model):
     notificationId = models.AutoField(primary_key=True)
-    sendFromId = models.CharField(max_length=255)
-    desc = models.CharField(max_length=255)
-    type = models.CharField(max_length=255)
+    sendFromId = models.CharField(max_length=255,null=True)
+    sendingTrader = models.CharField(max_length=255,default=constants.Default)
+    notificationSite = models.ForeignKey(Sites,related_name='siteNotification', on_delete=models.CASCADE,null=True)
+    desc = models.CharField(max_length=255,null=True)
+    type = models.CharField(max_length=255,null=True)
+    href = models.CharField(max_length=255,null=True)
     viewed = models.CharField(max_length=255, default=constants.No, editable=False)
+    status = models.CharField(max_length=50,default=constants.Active)
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
 
@@ -516,22 +523,41 @@ class Store(models.Model):
     class Meta:
         db_table = 'store'
 
+
+class RolesAndAccess(models.Model):
+    roleId =  models.AutoField(primary_key=True)
+    roleName = models.CharField(max_length=50,null=True)
+    roleArray = ArrayField(models.IntegerField())
+    status = models.CharField(max_length=50,default=constants.Active)
+    createdDateTime = models.DateTimeField(auto_now_add=True)
+    updatedDateTime = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.roleName
+
+    class Meta:
+        db_table = 'RolesAndAccess'
+
 class Subuser(models.Model):
     subUserId = models.AutoField(primary_key=True)
-    firstName = models.CharField(max_length=50)
-    lastName = models.CharField(max_length=50)
-    email = models.EmailField(max_length=100,null=True)
-    userName = models.CharField(max_length=50)
+    firstName = models.CharField(max_length=30)
+    lastName = models.CharField(max_length=30)
+    email = models.EmailField(max_length=30,null=True)
+    userName = models.CharField(max_length=30,null=True)
     password = models.CharField(max_length=100)
     designation = models.CharField(max_length=50)
     contactNo = models.CharField(max_length=12)
-    role = models.CharField(max_length=50)
-    DOJ = models.CharField(max_length=50)
+    countryCode = models.ForeignKey(CountryCode, on_delete=models.SET_NULL, null=True)
+    area = models.ForeignKey(Area, on_delete=models.SET_NULL, null=True)
+    role = models.ForeignKey(RolesAndAccess,on_delete=models.SET_NULL,null=True)
+    DOJ = models.CharField(max_length=50, null=True)
     DOD = models.CharField(max_length=50, null=True)
-    profilepic = models.FileField(blank=True, null=True)
+    profilepic = models.FileField(blank=True, null=True,max_length=5000)
     status = models.CharField(max_length=50,default=constants.Active)
     lastLogin = models.DateTimeField(auto_now_add=True)
     activityLog = models.CharField(max_length=100, null=True)
+    superAdmin = models.BooleanField(default=False)
+    accessRights = models.CharField(max_length=50,default=constants.Admin)
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
 
@@ -545,7 +571,7 @@ class Subuser(models.Model):
 class SubuserSiteAssign(models.Model):
     subuserSiteAssignId = models.AutoField(primary_key=True)
     subuserSiteAssignSites = models.ForeignKey(Sites, on_delete=models.SET_NULL, null=True)
-    subuserSiteAssignSubUser = models.ForeignKey(Subuser, on_delete=models.SET_NULL, null=True)
+    subuserSiteAssignSubUser = models.ForeignKey(Subuser, on_delete=models.SET_NULL,related_name='Subuser', null=True)
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
 
@@ -555,19 +581,6 @@ class SubuserSiteAssign(models.Model):
     class Meta:
         db_table = 'subusersiteassign'
 
-
-class userSubReqAcc(models.Model):
-    userSubReqAccId = models.AutoField(primary_key=True)
-    subUserId = models.ForeignKey(Subuser, on_delete=models.SET_NULL, null=True)
-    subReqAccId = models.ForeignKey(RequestAccess, on_delete=models.SET_NULL, null=True)
-    createdDateTime = models.DateTimeField(auto_now_add=True)
-    updatedDateTime = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.userSubReqAccId
-
-    class Meta:
-        db_table = 'usersubReqAcc'
 
 
 class CustomerSiteDetails(models.Model):
@@ -582,7 +595,9 @@ class CustomerSiteDetails(models.Model):
     customer_unit1 = models.CharField(max_length=2)
     customer_unit2 = models.CharField(max_length=2)
     customer_state = models.ForeignKey(State, on_delete=models.SET_NULL, null=True)
-    customer_postalCode = models.CharField(max_length=6)
+    customer_postalCode = models.CharField(max_length=7)
+    status = models.CharField(max_length=50, default=constants.Active)
+    linkedStatus = models.BooleanField(default=False)
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
 
@@ -597,10 +612,20 @@ class SupplierSlaForSites(models.Model):
     userSupSitesCompany = models.ForeignKey(Supplier, on_delete=models.SET_NULL, null=True)
     mappedSites = models.ForeignKey(Sites, on_delete=models.SET_NULL, null=True)
     slaFromSupplier = JSONField()
+    supplier_country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True)
+    supplier_address_Line1 = models.CharField(max_length=100)
+    supplier_address_Line2 = models.CharField(max_length=100)
+    supplier_unit1 = models.CharField(max_length=2)
+    supplier_unit2 = models.CharField(max_length=2)
+    supplier_state = models.ForeignKey(State, on_delete=models.SET_NULL, null=True)
+    supplier_postalCode = models.CharField(max_length=7)
+    status = models.CharField(max_length=50, default=constants.Active)
+    selfCreation = models.BooleanField(default=False)
+    linkedStatus = models.BooleanField(default=False)
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
+    def __int__(self):
         return self.userSupSitesId
 
     class Meta:
@@ -609,7 +634,7 @@ class SupplierSlaForSites(models.Model):
 
 class ProductCatalogForSale(models.Model):
     salePrdtCatId = models.AutoField(primary_key=True)
-    catalogName = models.CharField(max_length=50)
+    catalogName = models.CharField(max_length=50,null=True)
     status = models.CharField(max_length=50, default=constants.Active)
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
@@ -635,7 +660,7 @@ class ProductCatalogForSaleDetails(models.Model):
     salesPrice = models.FloatField(null=True)
     salesCurrency = models.ForeignKey(CurrencyType, related_name='salesCurrencypCat', null=True, on_delete=models.CASCADE)
     salesUomForKg = models.ForeignKey(QuantityType, related_name='salesUomForKgpCat', null=True, on_delete=models.CASCADE)
-    discountPercentage = models.IntegerField(null=True)
+    discountPercentage = models.FloatField(null=True)
     discountAbsolute = models.FloatField(null=True)
     discountPrice = models.FloatField(null=True)
     stockStatus = models.CharField(max_length=50, default=constants.Available)
@@ -652,7 +677,7 @@ class ProductCatalogForSaleDetails(models.Model):
 
 class ProductCatalogForPurchase(models.Model):
     purPrdtCatId = models.AutoField(primary_key=True)
-    catalogName = models.CharField(max_length=50)
+    catalogName = models.CharField(max_length=50,unique=True)
     status = models.CharField(max_length=50, default=constants.Active)
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
@@ -707,8 +732,8 @@ class CustomerProductCatalog(models.Model):
                                       on_delete=models.CASCADE)
     salesUomForKg = models.ForeignKey(QuantityType, related_name='salesUomForKgCusCat', null=True,
                                       on_delete=models.CASCADE)
-    discountPercentage = models.IntegerField(default=0)
-    discountAbsolute = models.FloatField(default=0)
+    discountPercentage = models.FloatField(null=True)
+    discountAbsolute = models.FloatField(null=True)
     discountPrice = models.FloatField(null=True)
     stockStatus = models.CharField(max_length=50, default=constants.Available)
     status = models.CharField(max_length=50, default=constants.Active)
@@ -744,12 +769,13 @@ class SupplierProductCatalog(models.Model):
     discountPrice = models.FloatField(null=True)
     stockStatus = models.CharField(max_length=50, default=constants.Available)
     defaultSupplier = models.BooleanField(default=False)
+    setAsView = models.BooleanField(default=False)
     status = models.CharField(max_length=50, default=constants.Active)
     linked = models.BooleanField(default=False)
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
+    def __int__(self):
         return self.supplierCatId
 
     class Meta:
@@ -758,7 +784,7 @@ class SupplierProductCatalog(models.Model):
 class Holidays(models.Model):
     holidayId = models.AutoField(primary_key=True)
     holidayYear = models.IntegerField()
-    holidayName = models.CharField(max_length=50)
+    holidayName = models.CharField(max_length=50,null=True)
     status = models.CharField(max_length=50, default=constants.Active)
     createdDateTime = models.DateTimeField(auto_now_add=True)
     updatedDateTime = models.DateTimeField(auto_now=True)
@@ -783,3 +809,5 @@ class HolidaysDetails(models.Model):
 
     class Meta:
         db_table = 'HolidaysDetails'
+
+

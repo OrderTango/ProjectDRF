@@ -1,4 +1,9 @@
 <style>
+#signInUserName{
+  width: 80%;
+  text-align: center;
+  word-break: break-word;
+}
 .navbar-global {
   background-color: indigo;
 }
@@ -172,6 +177,20 @@ a[data-toggle="collapse"] {
     margin-bottom: 5%
 }
 /* Menu Alignment Style End */
+.align{
+    word-break: break-all;
+    padding-left: 12%;
+    padding-right: 6%;
+}
+}
+@media (min-width:320px) and (max-width: 480px)  {
+        .align {
+            word-break: break-all;
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+
+
 </style>
 {% load static %}
 <nav class="navbar-primary">
@@ -191,7 +210,7 @@ a[data-toggle="collapse"] {
         <span class="nav-label commonFontSize">Signed in As </span>
       </div>
       <div class="row justify-content-center">
-        <span class="nav-label commonFontSize">{{ user.firstName }} {{ user.lastName }}</span>
+        <span id="signInUserName" class="nav-label commonFontSize">{{ user.firstName }} {{ user.lastName }}</span>
       </div>
     </li>
   </ul>
@@ -205,8 +224,9 @@ a[data-toggle="collapse"] {
             <span class="nav-label commonFontSize adminHead">Admin</span>
         </div>
     </li>
-    <li><a href="{% url 'dashboard' %}"><i class="flaticon-four-squares-with-frame-shape"></i> <span class="nav-label">Dashboard</span></a></li>
-    <li>
+      {% if subUserProfile == "Yes" and 'dashboard' in urls or subUserProfile == "No"%}
+    <li class="sidebarSubMenu" id="dashboard"><a href="#"><i class="flaticon-four-squares-with-frame-shape"></i> <span class="nav-label">Dashboard</span></a></li>
+      <li>
             <a href="#dataadministrationmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                 <i class="flaticon-file"></i> <span class="nav-label">Data Administration</span>
             </a>
@@ -216,49 +236,72 @@ a[data-toggle="collapse"] {
                         <span class="nav-label">Onboarding</span></a>
                 </li>
                  <ul class="collapse list-unstyled menuGrandChildClass" id="onboardingmenu">
-                    <li>
-                        <a href="{% url 'administrationpanel' %}?module=customer"><i class="flaticon-customer"></i><span class="nav-label">Customer</span></a>
+                    <li class="sidebarSubMenu" id="administrationpanel?module=customer">
+                        <a href="#"><i class="flaticon-customer"></i><span class="nav-label">Customer</span></a>
                     </li>
-                    <li>
-                        <a href="{% url 'administrationpanel' %}?module=vendor"><i class="flaticon-shopping-groceries"></i><span class="nav-label">Vendor</span></a>
+                    <li class="sidebarSubMenu" id="administrationpanel?module=vendor">
+                        <a href="#"><i class="flaticon-shopping-groceries"></i><span class="nav-label">Vendor</span></a>
                     </li>
-                    <li>
-                        <a href="{% url 'administrationpanel' %}?module=product"><i class="flaticon-product"></i><span class="nav-label">Product</span></a>
+                    <li class="sidebarSubMenu" id="administrationpanel?module=product">
+                        <a href="#"><i class="flaticon-product"></i><span class="nav-label">Product</span></a>
                     </li>
                 </ul>
 
             </ul>
 
-    </li>
+    </li>{%endif%}
+      {% if subUserProfile == "Yes" and 'viewUser' in urls or subUserProfile == "No"%}
     <li>
         <a href="#useradministrationmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
             <i class="flaticon-user-key-on-screen"></i> <span class="nav-label">User Administration</span>
         </a>
         <ul class="collapse list-unstyled menuChildClass" id="useradministrationmenu">
-            <li><a href="{% url 'viewUser' %}"><i class="flaticon-zoom"></i> <span class="nav-label">View User</span></a></li>
+            <li class="sidebarSubMenu" id="viewUser"><a href="#"><i class="flaticon-zoom"></i> <span class="nav-label">View User</span></a></li>
         </ul>
-    </li>
-    <li><a href="{% url 'createOrViewSLA' %}"><i class="flaticon-signing-the-contract"></i> <span class="nav-label">Service Level Agreement</span></a></li>
-    <li><a href="{% url 'fetchAllSupplierForSlaAssign' %}"><i class="flaticon-signing-the-contract"></i> <span class="nav-label">SLA To Suppliers</span></a></li>
+    </li>{%endif%}
+
+{% if subUserProfile == "Yes" and 'createOrViewSLA' in urls or subUserProfile == "No" %}
+    <li class="sidebarSubMenu" id="createOrViewSLA"><a href="#"><i class="flaticon-signing-the-contract"></i> <span class="nav-label">Service Level Agreement</span></a></li>
+      {%endif%}
+   {% if subUserProfile == "Yes" and 'fetchAllCustomerForSlaAssign' in urls or subUserProfile == "Yes" and 'fetchAllSupplierForSlaAssign' in urls or subUserProfile == "Yes" and 'viewSupplierSLA' in urls or subUserProfile == "No" %}
+    <li>
+        <a href="#assignSla" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            <i class="flaticon-signing-the-contract"></i> <span class="nav-label">Assign SLA</span>
+        </a>
+        <ul class="collapse list-unstyled menuChildClass" id="assignSla">
+            {% if subUserProfile == "Yes" and 'fetchAllCustomerForSlaAssign' in urls or subUserProfile == "No"%}
+           <li class="sidebarSubMenu" id="fetchAllCustomerForSlaAssign">
+            <a href="#"><i class="flaticon-customer"></i><span class="nav-label">Customer</span></a>
+            </li>{%endif%}
+            {% if subUserProfile == "Yes" and 'fetchAllSupplierForSlaAssign' in urls or subUserProfile == "No" %}
+            <li class="sidebarSubMenu" id="fetchAllSupplierForSlaAssign">
+                <a href="#"><i class="flaticon-shopping-groceries"></i><span class="nav-label">Vendor</span></a>
+            </li>{%endif%}
+            {% if subUserProfile == "Yes" and 'viewSupplierSLA' in urls or subUserProfile == "No" %}
+            <li class="sidebarSubMenu" id="viewSupplierSLA">
+                <a href="#"><i class="flaticon-shopping-groceries"></i><span class="nav-label">View Vendor SLA</span></a>
+            </li>{%endif%}
+        </ul>
+    </li>{%endif%}
+      {% if subUserProfile == "Yes" and 'viewArea' in urls or subUserProfile == "Yes" and 'viewSite' in urls or subUserProfile == "No"%}
     <li>
         <a href="#companyhierarchymenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
             <i class="flaticon-hierarchical-structure"></i><span class="nav-label">Company Hierarchy</span>
         </a>
         <ul class="collapse list-unstyled menuChildClass" id="companyhierarchymenu">
-            <li><a href="{% url 'viewArea' %}"><i class="flaticon-map"></i> <span class="nav-label">Area</span></a></li>
-            <li>
-                <a href="{% url 'viewSite' %}"  >
+            {% if subUserProfile == "Yes" and 'viewArea' in urls or subUserProfile == "No" %}
+            <li class="sidebarSubMenu" id="viewArea"><a href="#"><i class="flaticon-map"></i> <span class="nav-label">Area</span></a></li>
+           {%endif%}
+            {% if subUserProfile == "Yes" and 'viewSite' in urls or subUserProfile == "No" %}
+            <li class="sidebarSubMenu" id="viewSite">
+                <a href="#">
                     <i class="flaticon-viral-marketing"></i> <span class="nav-label">Site</span>
                 </a>
             </li>
-            <li>
-                <a href="#"  >
-                    <i class="flaticon-market-store"></i> <span class="nav-label">Store</span>
-                </a>
-            </li>
+            {%endif%}
 
         </ul>
-    </li>
+    </li>{%endif%}
     <li>
         <a href="#securitymenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
             <i class="flaticon-protection"></i> <span class="nav-label">Security & Permission</span>
@@ -280,31 +323,95 @@ a[data-toggle="collapse"] {
             <span class="nav-label commonFontSize operationHead">Operations</span>
         </div>
     </li>
-    <li><a href="{% url 'operationalpanel' %}"><i class="flaticon-four-squares-with-frame-shapeO"></i> <span class="nav-label">Dashboard</span></a></li>
-    <li>
-       <a href="#ordermgmtmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="flaticon-boxO"></i>
+     {% if subUserProfile == "Yes" and 'operationalpanel' in urls or subUserProfile == "No"%}
+    <li class="sidebarSubMenu" id="operationalpanel"><a href="#"><i class="flaticon-four-squares-with-frame-shapeO"></i> <span class="nav-label">Dashboard</span></a></li>
+   {%endif%}
+        {% if subUserProfile == "Yes" and 'placeOrder' in urls or subUserProfile == "Yes" and 'customerProductPanel' in urls or subUserProfile == "Yes" and 'supplierProductPanel' in urls or subUserProfile == "Yes" and 'productsalescatalog' in urls or subUserProfile == "Yes" and 'productpurchasecatalog' in urls or subUserProfile == "Yes" and 'vieworders' in urls or subUserProfile == "No"%}
+    <li> <a href="#ordermgmtmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="flaticon-boxO"></i>
                 <span class="nav-label">Order Management</span></a>
         <ul class="collapse list-unstyled menuChildClass" id="ordermgmtmenu">
-            <li><a href="{% url 'placeOrder' %}"><i class="flaticon-planningO"></i><span class="nav-label">Order</span></a></li>
-            <li><a href="{% url 'customerProductPanel' %}"><i class="flaticon-meetingO"></i><span class="nav-label">Customer Catalog</span></a></li>
-            <li><a href="{% url 'supplierProductPanel' %}"><i class="flaticon-collaborationO"></i><span class="nav-label">Supplier Catalog</span></a></li>
-            <li><a href="{% url 'productsalescatalog' %}"><i class="flaticon-collaborationO"></i><span class="nav-label">Sales Catalog</span></a></li>
-            <li><a href="{% url 'productpurchasecatalog' %}"><i class="flaticon-collaborationO"></i><span class="nav-label">Purchase Catalog</span></a></li>
-            <li><a href="{% url 'vieworders' %}"><i class="flaticon-packing-listO"></i><span class="nav-label">View Orders</span></a></li>
-            <li><a href="#"><i class="flaticon-analyticsO"></i><span class="nav-label">Reports</span></a></li>
+            {% if subUserProfile == "Yes" and 'placeOrder' in urls or subUserProfile == "No" %}
+            <li class="sidebarSubMenu" id="placeOrder"><a href="#"><i class="flaticon-planningO"></i><span class="nav-label">Order</span></a></li>
+            {%endif%}{% if subUserProfile == "Yes" and 'customerProductPanel' in urls or subUserProfile == "No" %}
+            <li class="sidebarSubMenu" id="customerProductPanel"><a href="#"><i class="flaticon-meetingO"></i><span class="nav-label">Customer Catalog</span></a></li>
+            {%endif%}{% if subUserProfile == "Yes" and 'supplierProductPanel' in urls or subUserProfile == "No" %}
+            <li class="sidebarSubMenu" id="supplierProductPanel"><a href="#"><i class="flaticon-collaborationO"></i><span class="nav-label">Vendor Catalog</span></a></li>
+            {%endif%}<!--{% if subUserProfile == "Yes" and 'productsalescatalog' in urls or subUserProfile == "No" %}
+            <li class="sidebarSubMenu" id="productsalescatalog"><a href="#"><i class="flaticon-collaborationO"></i><span class="nav-label">Sales Catalog</span></a></li>
+            {%endif%}{% if subUserProfile == "Yes" and 'productpurchasecatalog' in urls or subUserProfile == "No" %}
+            <li class="sidebarSubMenu" id="productpurchasecatalog"><a href="#"><i class="flaticon-collaborationO"></i><span class="nav-label">Purchase Catalog</span></a></li>
+            {%endif%}-->
+            {% if subUserProfile == "Yes" and 'vieworders' in urls or subUserProfile == "No" %}
+            {% if 'Order Fulfilment' in subscribedModules %}
+            <li class="sidebarSubMenu" id="vieworders"><a href="#"><i class="flaticon-packing-listO"></i><span class="nav-label">View Orders</span></a></li>
+            {%endif%}
+            <li class="" id=""><a href="#"><i class="flaticon-analyticsO"></i><span class="nav-label">Reports</span></a></li>
+            {%endif%}
         </ul>
-    </li>
+    </li>{%endif%}
+      {% if 'Inventory' in subscribedModules %}
     <li>
         <a href="#inventorymgmtmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="flaticon-inventoryO"></i>
             <span class="nav-label">Inventory Management</span></a>
         <ul class="collapse list-unstyled menuChildClass" id="inventorymgmtmenu">
-            <li><a href="#"><i class="flaticon-magnifier-on-calendar-pageO"></i><span class="nav-label">View Stocks</span></a></li>
+            <li><a href="/inventory"><i class="flaticon-magnifier-on-calendar-pageO"></i><span class="nav-label">View Stocks</span></a></li>
             <li><a href="#"><i class="flaticon-updateO"></i><span class="nav-label">Update Stocks</span></a></li>
             <li><a href="#"><i class="flaticon-abacusO"></i><span class="nav-label">Stock Counts</span></a></li>
             <li><a href="#"><i class="flaticon-trackingO"></i><span class="nav-label">Transfer Stocks</span></a></li>
             <li><a href="#"><i class="flaticon-documentO"></i><span class="nav-label">Record Wastage</span></a></li>
         </ul>
-    </li>
+    </li>{%endif%}
     </li>
   </ul>
 </nav>
+
+<div class="modal" id="unauthorizedModalPopup" tabindex="-1" role="dialog" aria-labelledby="sampleModalPopupTitle" data-toggle="modal" data-backdrop="static" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered unauthorizedModalPopup" role="document">
+        <div class="modal-content modalBorderClass">
+          <div class="modal-header">
+            <h5 class="modal-title modalTitleHead" id="unauthorizeModalTitle">{{company.companyName}}</h5>
+            <button type="button" class="close" id="unauthorizeCloseBtn" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="unauthorize">
+             <p>You didn't have access this.</p>
+          </div>
+          <div class="modal-footer">
+                <input type="button" class="btn btn-primary modalBtnClass" data-dismiss="modal" aria-label="Close" value="Close">
+          </div>
+        </div>
+      </div>
+    </div>
+
+<script>
+
+    $(document).on('click', '.sidebarSubMenu', function(){
+     var id = $(this).attr('id');
+      var res = id.split("?");
+        $.ajax({
+              url: "/getAccessUrlPrevilage?url="+res[0],
+              type: "GET",
+              dataType : "json",
+              contentType : "application/json",
+              success: function (result)
+              {
+                var data = result;
+                if (data.status == 'success') {
+                    if(data.previlage == true){
+                        window.location.href = "/"+id;
+                    }
+                    else{
+                        $('#unauthorizedModalPopup').modal('show');
+                    }
+                }
+                else if(data.status == 'error' && data.error_msg == 'sessionexpired'){
+                     window.location.href = data.redirect_url;
+                }
+                else{
+                    alert(data.error_msg);
+                }
+              }
+          });
+    });
+</script>

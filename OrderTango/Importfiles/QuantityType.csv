@@ -1,5 +1,8 @@
-quantityTypeId,quantityTypeCode,quantityTypeName,quantityTypeDesc
-1,Kg,Kilogram,Weight in Kg
-2,Ltr,Liter,Weight in Ltr
-3,Nos,Number,Weight in Nos
-4,Mtr,Meter,Weight in Mtr
+quantityTypeCode,quantityTypeName,quantityTypeDesc
+Kg,Kilogram,Weight in Kg
+Ltr,Liter,Weight in Ltr
+Nos,Number,Weight in Nos
+Mtr,Meter,Weight in Mtr
+Pkt,Packet,Weight in Pkt
+GM,GM,Weight in GM
+Pcs,Pcs,Weight in Pcs

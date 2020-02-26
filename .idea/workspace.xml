@@ -1,0 +1,1326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/OrderTango" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="705525a2-3d1d-4d54-9e12-15fee5701c4f" name="Default Changelist" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="-830122910">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="131" />
+          <entry key="project.open.time.1" value="2" />
+          <entry key="project.open.time.10" value="1" />
+          <entry key="project.open.time.12" value="1" />
+          <entry key="project.open.time.13" value="1" />
+          <entry key="project.open.time.14" value="2" />
+          <entry key="project.open.time.15" value="1" />
+          <entry key="project.open.time.16" value="6" />
+          <entry key="project.open.time.17" value="14" />
+          <entry key="project.open.time.18" value="16" />
+          <entry key="project.open.time.19" value="24" />
+          <entry key="project.open.time.2" value="1" />
+          <entry key="project.open.time.20" value="22" />
+          <entry key="project.open.time.21" value="25" />
+          <entry key="project.open.time.22" value="11" />
+          <entry key="project.open.time.23" value="9" />
+          <entry key="project.open.time.24" value="1" />
+          <entry key="project.open.time.25" value="4" />
+          <entry key="project.open.time.26" value="3" />
+          <entry key="project.open.time.27" value="3" />
+          <entry key="project.open.time.28" value="1" />
+          <entry key="project.open.time.29" value="2" />
+          <entry key="project.open.time.3" value="1" />
+          <entry key="project.open.time.30" value="1" />
+          <entry key="project.open.time.31" value="1" />
+          <entry key="project.open.time.35" value="1" />
+          <entry key="project.open.time.39" value="1" />
+          <entry key="project.open.time.4" value="3" />
+          <entry key="project.open.time.40" value="1" />
+          <entry key="project.open.time.41" value="2" />
+          <entry key="project.open.time.5" value="1" />
+          <entry key="project.open.time.8" value="1" />
+          <entry key="project.opened" value="163" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="assignsla" value="1" />
+          <entry key="css" value="196" />
+          <entry key="csv" value="2" />
+          <entry key="html" value="1293" />
+          <entry key="js" value="26" />
+          <entry key="png" value="2" />
+          <entry key="py" value="623" />
+          <entry key="rnc" value="1" />
+          <entry key="txt" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="CSS" value="196" />
+          <entry key="HTML" value="1293" />
+          <entry key="Image" value="2" />
+          <entry key="JavaScript" value="26" />
+          <entry key="PLAIN_TEXT" value="3" />
+          <entry key="Python" value="623" />
+          <entry key="RNG Compact" value="1" />
+          <entry key="XHTML" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="Python Console" value="248" />
+          <entry key="css" value="863" />
+          <entry key="html" value="86159" />
+          <entry key="js" value="423" />
+          <entry key="py" value="9368" />
+          <entry key="txt" value="1103" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="CSS" value="863" />
+          <entry key="HTML" value="86159" />
+          <entry key="JavaScript" value="423" />
+          <entry key="PLAIN_TEXT" value="1103" />
+          <entry key="Python" value="9616" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.vcs.git.usages">
+        <counts>
+          <entry key="git.branch.merge" value="1" />
+          <entry key="git.branch.rebase" value="2" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="NewSeven" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/OrderTangoSubDomainApp/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="5637" column="38" selection-start-line="5637" selection-start-column="38" selection-end-line="5637" selection-end-column="38" />
+              <folding>
+                <element signature="e#0#45#0" expanded="true" />
+                <marker date="1572524731785" expanded="true" signature="162621:162626" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/paymentGateway.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="209">
+              <caret line="409" column="40" selection-start-line="409" selection-start-column="25" selection-end-line="409" selection-end-column="40" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/OrderTangoSubDomainApp/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="526" column="6" selection-start-line="526" selection-start-column="6" selection-end-line="526" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/OrderTangoSubDomainApp/utilitySD.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="137">
+              <caret line="396" column="4" selection-start-line="396" selection-start-column="4" selection-end-line="396" selection-end-column="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/OrderTangoOrdermgmtApp/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="145" column="48" selection-start-line="145" selection-start-column="37" selection-end-line="145" selection-end-column="48" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/viewuser.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="231">
+              <caret line="1138" column="43" selection-start-line="1138" selection-start-column="33" selection-end-line="1138" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/OrderTangoOrderFulfilmtApp/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="129">
+              <caret line="182" column="18" selection-start-line="182" selection-start-column="18" selection-end-line="182" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/OrderTangoApp/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="401">
+              <caret line="1503" column="43" lean-forward="true" selection-start-line="1503" selection-start-column="43" selection-end-line="1503" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/OrderTangoApp/utility.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="375">
+              <caret line="116" column="42" selection-start-line="116" selection-start-column="33" selection-end-line="116" selection-end-column="42" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/OrderTangoApp/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="402">
+              <caret line="226" column="6" selection-start-line="226" selection-start-column="6" selection-end-line="226" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>&quot;pageLength&quot;:</find>
+      <find>pullProductTable</find>
+      <find>otherSupplierList</find>
+      <find>pushSiteSubmit</find>
+      <find>for</find>
+      <find>pushingSitestoSupplier</find>
+      <find>update</find>
+      <find>updatesite</find>
+      <find>def list</find>
+      <find>addAuthStorageModalsubmit</find>
+      <find>paymentGateway</find>
+      <find>upgradeStorage</find>
+      <find>def paymentGateway</find>
+      <find>Checkout</find>
+      <find>def cre</find>
+      <find>SLASubmit</find>
+      <find>def res</find>
+      <find>def orderPlacement(</find>
+      <find>def sla</find>
+      <find>createSla</find>
+      <find>def saveSlaForCustomerFrom</find>
+      <find>assignSlaSubmit</find>
+      <find>def orderPlacement</find>
+      <find>submitOrder</find>
+      <find>subUserFormSubmit</find>
+      <find>createRoleSubmit</find>
+      <find>createRole</find>
+      <find>def createSLA</find>
+      <find>createSubUser</find>
+      <find>def fuzzy</find>
+    </findStrings>
+    <replaceStrings>
+      <replace />
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="origin/dev" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
+    <excluded-from-favorite>
+      <branch-storage>
+        <map>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="origin/master" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </excluded-from-favorite>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/OrderTangoApp/urls.py" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/productmanualform.html" />
+        <option value="$PROJECT_DIR$/__shared__/js/script.js" />
+        <option value="$PROJECT_DIR$/OrderTangoOrderFulfilmtApp/views.py" />
+        <option value="$PROJECT_DIR$/__shared__/css/styles.css" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/test.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/acceptTrader.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/viewArea.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/viewsite.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/loginbase.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/base.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/registration.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/onboard.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/administrationpanelsidebar.html" />
+        <option value="$PROJECT_DIR$/__shared__/css/manualUploadForm.css" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/operationalpanelsidebar.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/administrationpanel.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/addTraderById.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/models.py" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/modulePaymentGateway.html" />
+        <option value="$PROJECT_DIR$/OrderTangoSubDomainApp/models.py" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/administrationpanelbase.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/operationalpanelbase.html" />
+        <option value="$PROJECT_DIR$/OrderTangoSubDomainApp/urls.py" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/constants.py" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/viewSupplierSLA.html" />
+        <option value="$PROJECT_DIR$/__shared__/css/viewall.css" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/viewuser.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/viewall.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/accountinfo.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/productsalescatalogview.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/productsalescatalog.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/productsalescatalogupdate.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/productpurchasecatalog.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/productpurchasecatalogupdate.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/customerproductpanel.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/supplierproductmerging.html" />
+        <option value="$PROJECT_DIR$/OrderTangoOrdermgmtApp/views.py" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/viewallnotifications.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/rightsidebar.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/validation.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/views.py" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/supplierproductpanel.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/createOrViewSLA.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/assignSlaToSupplier.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/assignSlaToCustomer.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/assignedSlaToCustomer.html" />
+        <option value="$PROJECT_DIR$/OrderTangoApp/templates/placeOrder.html" />
+        <option value="$PROJECT_DIR$/OrderTangoSubDomainApp/utilitySD.py" />
+        <option value="$PROJECT_DIR$/OrderTangoSubDomainApp/views.py" />
+        <option value="$PROJECT_DIR$/OrderTango/settings.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="880" />
+    <option name="height" value="664" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="NewSeven" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NewSeven" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="NewSeven" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NewSeven" type="462c0819:PsiDirectoryNode" />
+              <item name="OrderTango" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="NewSeven" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NewSeven" type="462c0819:PsiDirectoryNode" />
+              <item name="OrderTangoApp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="NewSeven" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NewSeven" type="462c0819:PsiDirectoryNode" />
+              <item name="OrderTangoApp" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="NewSeven" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NewSeven" type="462c0819:PsiDirectoryNode" />
+              <item name="OrderTangoOrderFulfilmtApp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="NewSeven" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NewSeven" type="462c0819:PsiDirectoryNode" />
+              <item name="OrderTangoOrdermgmtApp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="NewSeven" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NewSeven" type="462c0819:PsiDirectoryNode" />
+              <item name="OrderTangoSubDomainApp" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="G:\NewSeven\OrderTangoApp\templates" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Python.runserver">
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python" editBeforeRun="true">
+      <module name="NewSeven" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\Admin\AppData\Local\Programs\Python\Python37\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/manage.py" />
+      <option name="PARAMETERS" value="runserver" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="true" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="runserver" type="PythonConfigurationType" factoryName="Python">
+      <module name="NewSeven" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\Admin\AppData\Local\Programs\Python\Python37\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/manage.py" />
+      <option name="PARAMETERS" value="runserver" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="sum" type="PythonConfigurationType" factoryName="Python" editBeforeRun="true" temporary="true">
+      <module name="NewSeven" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\Admin\AppData\Local\Programs\Python\Python37\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="F:/data_science/sum.py" />
+      <option name="PARAMETERS" value="runserver" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="true" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.runserver" />
+      <item itemvalue="Python.sum" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.sum" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="705525a2-3d1d-4d54-9e12-15fee5701c4f" name="Default Changelist" comment="" />
+      <created>1549372274132</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1549372274132</updated>
+    </task>
+    <task id="LOCAL-00265" summary="bug fixing...">
+      <created>1569309330032</created>
+      <option name="number" value="00265" />
+      <option name="presentableId" value="LOCAL-00265" />
+      <option name="project" value="LOCAL" />
+      <updated>1569309330032</updated>
+    </task>
+    <task id="LOCAL-00266" summary="bug fixing...">
+      <created>1569310110767</created>
+      <option name="number" value="00266" />
+      <option name="presentableId" value="LOCAL-00266" />
+      <option name="project" value="LOCAL" />
+      <updated>1569310110767</updated>
+    </task>
+    <task id="LOCAL-00267" summary="bug fixing...">
+      <created>1569326307762</created>
+      <option name="number" value="00267" />
+      <option name="presentableId" value="LOCAL-00267" />
+      <option name="project" value="LOCAL" />
+      <updated>1569326307762</updated>
+    </task>
+    <task id="LOCAL-00268" summary="bug fixing...">
+      <created>1569328528842</created>
+      <option name="number" value="00268" />
+      <option name="presentableId" value="LOCAL-00268" />
+      <option name="project" value="LOCAL" />
+      <updated>1569328528842</updated>
+    </task>
+    <task id="LOCAL-00269" summary="bug fixing...">
+      <created>1569827851384</created>
+      <option name="number" value="00269" />
+      <option name="presentableId" value="LOCAL-00269" />
+      <option name="project" value="LOCAL" />
+      <updated>1569827851384</updated>
+    </task>
+    <task id="LOCAL-00270" summary="bug fixing...">
+      <created>1569828488467</created>
+      <option name="number" value="00270" />
+      <option name="presentableId" value="LOCAL-00270" />
+      <option name="project" value="LOCAL" />
+      <updated>1569828488467</updated>
+    </task>
+    <task id="LOCAL-00271" summary="PRODUCTS ADDED FROM PAGE TWO NOT ADDED TO CART issue fixed...">
+      <created>1569850530800</created>
+      <option name="number" value="00271" />
+      <option name="presentableId" value="LOCAL-00271" />
+      <option name="project" value="LOCAL" />
+      <updated>1569850530800</updated>
+    </task>
+    <task id="LOCAL-00272" summary="PRODUCTS ADDED FROM PAGE TWO NOT ADDED TO CART issue fixed...">
+      <created>1569903902677</created>
+      <option name="number" value="00272" />
+      <option name="presentableId" value="LOCAL-00272" />
+      <option name="project" value="LOCAL" />
+      <updated>1569903902677</updated>
+    </task>
+    <task id="LOCAL-00273" summary="bug fixing...">
+      <created>1569904276829</created>
+      <option name="number" value="00273" />
+      <option name="presentableId" value="LOCAL-00273" />
+      <option name="project" value="LOCAL" />
+      <updated>1569904276829</updated>
+    </task>
+    <task id="LOCAL-00274" summary="bug fixing...">
+      <created>1569904411900</created>
+      <option name="number" value="00274" />
+      <option name="presentableId" value="LOCAL-00274" />
+      <option name="project" value="LOCAL" />
+      <updated>1569904411900</updated>
+    </task>
+    <task id="LOCAL-00275" summary="bug fixing...">
+      <created>1569928196921</created>
+      <option name="number" value="00275" />
+      <option name="presentableId" value="LOCAL-00275" />
+      <option name="project" value="LOCAL" />
+      <updated>1569928196921</updated>
+    </task>
+    <task id="LOCAL-00276" summary="Subuser disable option provided and bug fixing...">
+      <created>1570164966012</created>
+      <option name="number" value="00276" />
+      <option name="presentableId" value="LOCAL-00276" />
+      <option name="project" value="LOCAL" />
+      <updated>1570164966028</updated>
+    </task>
+    <task id="LOCAL-00277" summary="bug fixing...">
+      <created>1570182201125</created>
+      <option name="number" value="00277" />
+      <option name="presentableId" value="LOCAL-00277" />
+      <option name="project" value="LOCAL" />
+      <updated>1570182201157</updated>
+    </task>
+    <task id="LOCAL-00278" summary="bug fixing...">
+      <created>1570522035182</created>
+      <option name="number" value="00278" />
+      <option name="presentableId" value="LOCAL-00278" />
+      <option name="project" value="LOCAL" />
+      <updated>1570522035182</updated>
+    </task>
+    <task id="LOCAL-00279" summary="bug fixing...">
+      <created>1570599209351</created>
+      <option name="number" value="00279" />
+      <option name="presentableId" value="LOCAL-00279" />
+      <option name="project" value="LOCAL" />
+      <updated>1570599209351</updated>
+    </task>
+    <task id="LOCAL-00280" summary="change month option provided...">
+      <created>1570683231925</created>
+      <option name="number" value="00280" />
+      <option name="presentableId" value="LOCAL-00280" />
+      <option name="project" value="LOCAL" />
+      <updated>1570683231925</updated>
+    </task>
+    <task id="LOCAL-00281" summary="bug fixing...">
+      <created>1570685298830</created>
+      <option name="number" value="00281" />
+      <option name="presentableId" value="LOCAL-00281" />
+      <option name="project" value="LOCAL" />
+      <updated>1570685298830</updated>
+    </task>
+    <task id="LOCAL-00282" summary="bug fixing...">
+      <created>1570687552774</created>
+      <option name="number" value="00282" />
+      <option name="presentableId" value="LOCAL-00282" />
+      <option name="project" value="LOCAL" />
+      <updated>1570687552778</updated>
+    </task>
+    <task id="LOCAL-00283" summary="bug fixing...">
+      <created>1570689251571</created>
+      <option name="number" value="00283" />
+      <option name="presentableId" value="LOCAL-00283" />
+      <option name="project" value="LOCAL" />
+      <updated>1570689251571</updated>
+    </task>
+    <task id="LOCAL-00284" summary="bug fixing...">
+      <created>1570706949874</created>
+      <option name="number" value="00284" />
+      <option name="presentableId" value="LOCAL-00284" />
+      <option name="project" value="LOCAL" />
+      <updated>1570706949894</updated>
+    </task>
+    <task id="LOCAL-00285" summary="bug fixing...">
+      <created>1570767489135</created>
+      <option name="number" value="00285" />
+      <option name="presentableId" value="LOCAL-00285" />
+      <option name="project" value="LOCAL" />
+      <updated>1570767489135</updated>
+    </task>
+    <task id="LOCAL-00286" summary="bug fixing...">
+      <created>1570769169874</created>
+      <option name="number" value="00286" />
+      <option name="presentableId" value="LOCAL-00286" />
+      <option name="project" value="LOCAL" />
+      <updated>1570769169874</updated>
+    </task>
+    <task id="LOCAL-00287" summary="bug fixing...">
+      <created>1570769616103</created>
+      <option name="number" value="00287" />
+      <option name="presentableId" value="LOCAL-00287" />
+      <option name="project" value="LOCAL" />
+      <updated>1570769616103</updated>
+    </task>
+    <task id="LOCAL-00288" summary="bug fixing...">
+      <created>1570777855132</created>
+      <option name="number" value="00288" />
+      <option name="presentableId" value="LOCAL-00288" />
+      <option name="project" value="LOCAL" />
+      <updated>1570777855132</updated>
+    </task>
+    <task id="LOCAL-00289" summary="bug fixing...">
+      <created>1570778569122</created>
+      <option name="number" value="00289" />
+      <option name="presentableId" value="LOCAL-00289" />
+      <option name="project" value="LOCAL" />
+      <updated>1570778569122</updated>
+    </task>
+    <task id="LOCAL-00290" summary="bug fixing...">
+      <created>1570789099870</created>
+      <option name="number" value="00290" />
+      <option name="presentableId" value="LOCAL-00290" />
+      <option name="project" value="LOCAL" />
+      <updated>1570789099870</updated>
+    </task>
+    <task id="LOCAL-00291" summary="bug fixing...">
+      <created>1570790720963</created>
+      <option name="number" value="00291" />
+      <option name="presentableId" value="LOCAL-00291" />
+      <option name="project" value="LOCAL" />
+      <updated>1570790720963</updated>
+    </task>
+    <task id="LOCAL-00292" summary="bug fixing...">
+      <created>1571052548401</created>
+      <option name="number" value="00292" />
+      <option name="presentableId" value="LOCAL-00292" />
+      <option name="project" value="LOCAL" />
+      <updated>1571052548401</updated>
+    </task>
+    <task id="LOCAL-00293" summary="bug fixing...">
+      <created>1571114628389</created>
+      <option name="number" value="00293" />
+      <option name="presentableId" value="LOCAL-00293" />
+      <option name="project" value="LOCAL" />
+      <updated>1571114628389</updated>
+    </task>
+    <task id="LOCAL-00294" summary="bug fixing...">
+      <created>1571143520691</created>
+      <option name="number" value="00294" />
+      <option name="presentableId" value="LOCAL-00294" />
+      <option name="project" value="LOCAL" />
+      <updated>1571143520691</updated>
+    </task>
+    <task id="LOCAL-00295" summary="bug fixing...">
+      <created>1571206152069</created>
+      <option name="number" value="00295" />
+      <option name="presentableId" value="LOCAL-00295" />
+      <option name="project" value="LOCAL" />
+      <updated>1571206152100</updated>
+    </task>
+    <task id="LOCAL-00296" summary="bug fixing...">
+      <created>1571295574823</created>
+      <option name="number" value="00296" />
+      <option name="presentableId" value="LOCAL-00296" />
+      <option name="project" value="LOCAL" />
+      <updated>1571295574823</updated>
+    </task>
+    <task id="LOCAL-00297" summary="bug fixing...">
+      <created>1571295825177</created>
+      <option name="number" value="00297" />
+      <option name="presentableId" value="LOCAL-00297" />
+      <option name="project" value="LOCAL" />
+      <updated>1571295825177</updated>
+    </task>
+    <task id="LOCAL-00298" summary="bug fixing...">
+      <created>1571396240957</created>
+      <option name="number" value="00298" />
+      <option name="presentableId" value="LOCAL-00298" />
+      <option name="project" value="LOCAL" />
+      <updated>1571396240957</updated>
+    </task>
+    <task id="LOCAL-00299" summary="bug fixing...">
+      <created>1571400697140</created>
+      <option name="number" value="00299" />
+      <option name="presentableId" value="LOCAL-00299" />
+      <option name="project" value="LOCAL" />
+      <updated>1571400697140</updated>
+    </task>
+    <task id="LOCAL-00300" summary="bug fixing...">
+      <created>1571651451025</created>
+      <option name="number" value="00300" />
+      <option name="presentableId" value="LOCAL-00300" />
+      <option name="project" value="LOCAL" />
+      <updated>1571651451040</updated>
+    </task>
+    <task id="LOCAL-00301" summary="bug fixing...">
+      <created>1571894631017</created>
+      <option name="number" value="00301" />
+      <option name="presentableId" value="LOCAL-00301" />
+      <option name="project" value="LOCAL" />
+      <updated>1571894631032</updated>
+    </task>
+    <task id="LOCAL-00302" summary="bug fixing...">
+      <created>1571897288569</created>
+      <option name="number" value="00302" />
+      <option name="presentableId" value="LOCAL-00302" />
+      <option name="project" value="LOCAL" />
+      <updated>1571897288569</updated>
+    </task>
+    <task id="LOCAL-00303" summary="bug fixing...">
+      <created>1571914750110</created>
+      <option name="number" value="00303" />
+      <option name="presentableId" value="LOCAL-00303" />
+      <option name="project" value="LOCAL" />
+      <updated>1571914750178</updated>
+    </task>
+    <task id="LOCAL-00304" summary="bug fixing...">
+      <created>1571977851916</created>
+      <option name="number" value="00304" />
+      <option name="presentableId" value="LOCAL-00304" />
+      <option name="project" value="LOCAL" />
+      <updated>1571977851916</updated>
+    </task>
+    <task id="LOCAL-00305" summary="bug fixing...">
+      <created>1571979989793</created>
+      <option name="number" value="00305" />
+      <option name="presentableId" value="LOCAL-00305" />
+      <option name="project" value="LOCAL" />
+      <updated>1571979989793</updated>
+    </task>
+    <task id="LOCAL-00306" summary="bug fixing...">
+      <created>1572005692507</created>
+      <option name="number" value="00306" />
+      <option name="presentableId" value="LOCAL-00306" />
+      <option name="project" value="LOCAL" />
+      <updated>1572005692572</updated>
+    </task>
+    <task id="LOCAL-00307" summary="bug fixing...">
+      <created>1572325410770</created>
+      <option name="number" value="00307" />
+      <option name="presentableId" value="LOCAL-00307" />
+      <option name="project" value="LOCAL" />
+      <updated>1572325410774</updated>
+    </task>
+    <task id="LOCAL-00308" summary="bug fixing...">
+      <created>1572330015687</created>
+      <option name="number" value="00308" />
+      <option name="presentableId" value="LOCAL-00308" />
+      <option name="project" value="LOCAL" />
+      <updated>1572330015691</updated>
+    </task>
+    <task id="LOCAL-00309" summary="bug fixing...">
+      <created>1572346145018</created>
+      <option name="number" value="00309" />
+      <option name="presentableId" value="LOCAL-00309" />
+      <option name="project" value="LOCAL" />
+      <updated>1572346145022</updated>
+    </task>
+    <task id="LOCAL-00310" summary="bug fixing...">
+      <created>1572354435220</created>
+      <option name="number" value="00310" />
+      <option name="presentableId" value="LOCAL-00310" />
+      <option name="project" value="LOCAL" />
+      <updated>1572354435282</updated>
+    </task>
+    <task id="LOCAL-00311" summary="bug fixing...">
+      <created>1572434442881</created>
+      <option name="number" value="00311" />
+      <option name="presentableId" value="LOCAL-00311" />
+      <option name="project" value="LOCAL" />
+      <updated>1572434442881</updated>
+    </task>
+    <task id="LOCAL-00312" summary="bug fixing...">
+      <created>1572439759265</created>
+      <option name="number" value="00312" />
+      <option name="presentableId" value="LOCAL-00312" />
+      <option name="project" value="LOCAL" />
+      <updated>1572439759265</updated>
+    </task>
+    <task id="LOCAL-00313" summary="bug fixing...">
+      <created>1572581336800</created>
+      <option name="number" value="00313" />
+      <option name="presentableId" value="LOCAL-00313" />
+      <option name="project" value="LOCAL" />
+      <updated>1572581336831</updated>
+    </task>
+    <option name="localTasksCounter" value="314" />
+    <servers />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.46444446" visible="true" weight="0.16666667" />
+      <window_info id="Structure" order="1" sideWeight="0.53555554" side_tool="true" weight="0.20833333" />
+      <window_info id="Favorites" order="2" sideWeight="0.5251046" side_tool="true" weight="0.20833333" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3289689" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4985119" weight="0.5008183" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39934534" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3289689" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4985119" weight="0.400982" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.49627978" visible="true" weight="0.2405892" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5014881" side_tool="true" weight="0.40261865" />
+      <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.49925596" weight="0.3289689" />
+      <window_info anchor="bottom" id="Messages" order="11" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4748954" visible="true" weight="0.20833333" />
+      <window_info id="Structure" order="1" sideWeight="0.5407925" side_tool="true" weight="0.21279761" />
+      <window_info id="Favorites" order="2" sideWeight="0.5251046" side_tool="true" weight="0.20833333" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3289689" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4985119" visible="true" weight="0.26350245" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39934534" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3289689" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4985119" weight="0.400982" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49627978" weight="0.2405892" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5014881" side_tool="true" weight="0.40261865" />
+      <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.49925596" weight="0.3289689" />
+      <window_info anchor="bottom" id="Messages" order="11" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout-to-restore>
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.css" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Registration page image alignment issue fixing..." />
+    <MESSAGE value="Assign Sla page bug fixing..." />
+    <MESSAGE value="Product manual form added...." />
+    <MESSAGE value="Product panel updated...." />
+    <MESSAGE value="Vieworder panel updated...." />
+    <MESSAGE value="confirmation prompt provided in view all, view area,view site,vise user ...." />
+    <MESSAGE value="edit product modified.." />
+    <MESSAGE value="place order modified.." />
+    <MESSAGE value="catalog and sla assign" />
+    <MESSAGE value="catalog added" />
+    <MESSAGE value="product sale catalog view and update page added" />
+    <MESSAGE value="bugfixing" />
+    <MESSAGE value="subuser page updated..." />
+    <MESSAGE value="notification page and Subscription page new ui added" />
+    <MESSAGE value="Storage Chart Added." />
+    <MESSAGE value="bug fixing...." />
+    <MESSAGE value="Customer,Supplier details edit option added." />
+    <MESSAGE value="Account info page added.." />
+    <MESSAGE value="Account info page Updated..." />
+    <MESSAGE value="Bug fixing..." />
+    <MESSAGE value="In all date picker year selection option in dropdown should be done" />
+    <MESSAGE value="PRODUCTS ADDED FROM PAGE TWO NOT ADDED TO CART issue fixed..." />
+    <MESSAGE value="Subuser disable option provided and bug fixing..." />
+    <MESSAGE value="change month option provided..." />
+    <MESSAGE value="bug fixing..." />
+    <option name="LAST_COMMIT_MESSAGE" value="bug fixing..." />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/subscriptionnew.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="12" column="1" lean-forward="true" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/supplierautoform.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="13" column="43" lean-forward="true" selection-start-line="13" selection-start-column="43" selection-end-line="13" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/suppliermanualform.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="8" column="40" lean-forward="true" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/test.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="213">
+          <caret line="14" column="11" lean-forward="true" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/traders_adding_email.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="19" lean-forward="true" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/unauthorize.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/updateplan.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="15" column="7" lean-forward="true" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/viewArea.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="898" column="47" selection-start-line="898" selection-start-column="47" selection-end-line="898" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/__shared__/css/viewall.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="10863">
+          <caret line="639" column="15" selection-start-line="639" selection-start-column="15" selection-end-line="639" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/addTraderById.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7242">
+          <caret line="426" column="46" selection-start-line="426" selection-start-column="17" selection-end-line="426" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/productsalescatalogview.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="516" column="18" lean-forward="true" selection-start-line="516" selection-start-column="18" selection-end-line="516" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/productpurchasecatalog.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-17">
+          <caret line="573" column="13" lean-forward="true" selection-start-line="573" selection-start-column="13" selection-end-line="573" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/productsalescatalogupdate.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-629">
+          <caret line="517" column="21" selection-start-line="517" selection-start-column="21" selection-end-line="517" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/productpurchasecatalogupdate.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="560" lean-forward="true" selection-start-line="560" selection-end-line="560" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/__shared__/css/jquery-ui.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="258" column="29" selection-start-line="258" selection-start-column="16" selection-end-line="258" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/__shared__/js/jquery-ui.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-7306">
+          <caret line="3025" column="22" selection-start-line="3025" selection-start-column="9" selection-end-line="3025" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/__shared__/js/script.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="15" column="65" selection-start-line="15" selection-start-column="65" selection-end-line="15" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/administrationpanelbase.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="727" column="41" selection-start-line="727" selection-start-column="21" selection-end-line="727" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/supplierproductmerging.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="245" column="8" selection-start-line="245" selection-start-column="8" selection-end-line="245" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/productsalescatalog.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="595" column="27" lean-forward="true" selection-start-line="593" selection-end-line="595" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/vieworders.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="56">
+          <caret line="262" column="43" selection-start-line="262" selection-start-column="21" selection-end-line="262" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoOrdermgmtApp/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="36" column="34" lean-forward="true" selection-start-line="36" selection-start-column="34" selection-end-line="36" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/rightsidebar.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="403" column="53" lean-forward="true" selection-start-line="403" selection-start-column="53" selection-end-line="403" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/viewallnotifications.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="626" column="17" lean-forward="true" selection-start-line="624" selection-start-column="16" selection-end-line="626" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/validation.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="173" column="67" selection-start-line="173" selection-start-column="56" selection-end-line="173" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/supplierproductpanel.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="97" column="118" selection-start-line="97" selection-start-column="118" selection-end-line="97" selection-end-column="118" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/assignedSlaToCustomer.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="1953" column="86" selection-start-line="1953" selection-start-column="86" selection-end-line="1953" selection-end-column="86" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/viewSupplierSLA.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="687" column="51" selection-start-line="687" selection-start-column="51" selection-end-line="687" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/django/core/serializers/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="218">
+          <caret line="126" column="32" lean-forward="true" selection-start-line="126" selection-start-column="32" selection-end-line="126" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/viewall.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-11345">
+          <caret line="3443" column="36" selection-start-line="3443" selection-start-column="22" selection-end-line="3443" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/administrationpanel.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="963">
+          <caret line="2256" column="22" selection-start-line="2256" selection-start-column="16" selection-end-line="2256" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/customerproductpanel.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="365">
+          <caret line="899" column="52" selection-start-line="899" selection-start-column="33" selection-end-line="899" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/django/db/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="44" column="37" lean-forward="true" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/viewsite.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17068">
+          <caret line="1004" column="35" selection-start-line="1004" selection-start-column="25" selection-end-line="1004" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/accountinfo.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="333">
+          <caret line="1496" column="39" selection-start-line="1496" selection-start-column="25" selection-end-line="1496" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/createOrViewSLA.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="2486" column="42" selection-start-line="2486" selection-start-column="33" selection-end-line="2486" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTango/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="70" column="14" selection-start-line="70" selection-start-column="14" selection-end-line="70" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/assignSlaToCustomer.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-143">
+          <caret line="1726" column="46" selection-start-line="1726" selection-start-column="21" selection-end-line="1726" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/assignSlaToSupplier.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="2235" column="42" selection-start-line="2235" selection-start-column="17" selection-end-line="2235" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/placeOrder.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="2270" column="47" selection-start-line="2270" selection-start-column="33" selection-end-line="2270" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoOrderFulfilmtApp/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="129">
+          <caret line="182" column="18" selection-start-line="182" selection-start-column="18" selection-end-line="182" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="402">
+          <caret line="226" column="6" selection-start-line="226" selection-start-column="6" selection-end-line="226" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/viewuser.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="1138" column="43" selection-start-line="1138" selection-start-column="33" selection-end-line="1138" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoSubDomainApp/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="526" column="6" selection-start-line="526" selection-start-column="6" selection-end-line="526" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/utility.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="116" column="42" selection-start-line="116" selection-start-column="33" selection-end-line="116" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoOrdermgmtApp/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="145" column="48" selection-start-line="145" selection-start-column="37" selection-end-line="145" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoSubDomainApp/utilitySD.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="137">
+          <caret line="396" column="4" selection-start-line="396" selection-start-column="4" selection-end-line="396" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/django/core/files/storage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="171" column="8" selection-start-line="171" selection-start-column="8" selection-end-line="171" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/templates/paymentGateway.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="409" column="40" selection-start-line="409" selection-start-column="25" selection-end-line="409" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoApp/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="401">
+          <caret line="1503" column="43" lean-forward="true" selection-start-line="1503" selection-start-column="43" selection-end-line="1503" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OrderTangoSubDomainApp/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="5637" column="38" selection-start-line="5637" selection-start-column="38" selection-end-line="5637" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+            <marker date="1572524731785" expanded="true" signature="162621:162626" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

@@ -4,6 +4,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from . import views
 from OrderTangoApp.models import *
+from OrderTangoApp import utility
 from OrderTangoSubDomainApp.models import UserAddress
 from django.conf import settings
 
@@ -78,7 +79,7 @@ class UserForm(MainForm):
 
 class CompanyForm(MainForm):
     country = forms.ModelChoiceField(widget=forms.Select(attrs={'onchange': 'load_states(this.value)'}),
-                                     queryset=Country.objects.all().order_by('countryName'));
+                                     queryset=Country.objects.all().order_by('countryName'))
     companyWsid = forms.CharField(widget=forms.HiddenInput())
 
     class Meta:
@@ -96,12 +97,11 @@ class CompanyForm(MainForm):
 
     def __init__(self, *args, **kwargs):
         super(CompanyForm, self).__init__(*args, **kwargs)
-        self.fields['postalCode'].widget.attrs['class'] = "number"
+        #self.fields['postalCode'].widget.attrs['class'] = "number"
         self.fields['country'].queryset = Country.objects.all().order_by('countryName')
         self.fields['state'].queryset = State.objects.filter(country_id=self.data.get('country')).order_by('stateName')
         self.fields['country'].empty_label = "Select"
         self.fields['state'].empty_label = "Select"
-        self.fields['state'].required = False
         self.fields['companyWsid'].required = False
 
     def clean(self):
@@ -187,16 +187,11 @@ class ForgetpasswordForm(MainForm):
         except:
             uName = None
         if uName is not None:
-            try:
-                user = User.objects.get(email=uName)
-                if user is None:
-                    self.add_error('email', 'User not found')
-                elif user is not None and user.verificationStatus != constants.Active:
-                    self.add_error('email', 'Please activate your account')
-            except:
+            user = utility.getUserByEmail(uName)
+            if user is None:
                 self.add_error('email', 'User not found')
-        else:
-            self.cleaned_data
+            elif user is not None and user.userCompanyId.verificationStatus != constants.Active:
+                self.add_error('email', 'Please activate your account')
         return self.cleaned_data
 
 
@@ -236,9 +231,9 @@ class UserProfileForm(MainForm):
     class Meta:
         model = User
         fields = ('token',
-                  'firstName', 'lastName', 'sec_question', 'sec_answer')
+                  'firstName', 'lastName', 'sec_question', 'sec_answer','email','contactNo')
         labels = {
-            'firstName': ('First Name'), 'lastName': ('Last Name'),
+            'firstName': ('First Name'), 'lastName': ('Last Name'), 'contactNo': ('Contact No'),
             'sec_question': ('Question'), 'sec_answer': ('Answer')
         }
 
@@ -248,6 +243,9 @@ class UserProfileForm(MainForm):
         self.fields['lastName'].widget.attrs['id'] = "lastName"
         self.fields['sec_answer'].widget.attrs['id'] = "sec_answer"
         self.fields['sec_question'].widget.attrs['id'] = "question"
+        self.fields['email'].widget.attrs['id'] = "email"
+        self.fields['contactNo'].widget.attrs['id'] = "contactNo"
+        self.fields['countryCode'].widget.attrs['id'] = "countryCode"
         self.fields['sec_question'].widget.attrs['name'] = "question"
         self.fields['sec_question'].empty_label = "Select"
         self.fields['token'].required = False
@@ -255,17 +253,18 @@ class UserProfileForm(MainForm):
 
 class CompanyProfileForm(MainForm):
     country = forms.ModelChoiceField(widget=forms.Select(attrs={'onchange': 'load_states1(this.value)'}),
-                                     queryset=Country.objects.all().order_by('countryName'));
+                                     queryset=Country.objects.all().order_by('countryName'))
 
     class Meta:
         model = Company
         fields = (
             'country',
-            'address_Line1', 'unit1', 'unit2', 'address_Line2', 'state', 'postalCode')
+            'address_Line1', 'unit1', 'unit2', 'address_Line2', 'state', 'postalCode','companyName')
         labels = {
 
             'country': ('Country'), 'address_Line1': ('Address 1')
             , 'address_Line2': ('Address 2'), 'state': ('State'), 'postalCode': ('Postal Code'),
+            'companyName': ('Company Name'),
 
         }
 
@@ -278,6 +277,7 @@ class CompanyProfileForm(MainForm):
         self.fields['postalCode'].widget.attrs['id'] = "postalCode"
         self.fields['unit1'].widget.attrs['id'] = "unit1"
         self.fields['unit2'].widget.attrs['id'] = "unit2"
+        self.fields['companyName'].widget.attrs['id'] = "companyName"
         self.fields['postalCode'].widget.attrs['class'] = "number"
         self.fields['country'].queryset = Country.objects.all().order_by('countryName')
         self.fields['state'].queryset = State.objects.filter(country_id=self.data.get('country')).order_by('stateName')
@@ -372,3 +372,5 @@ class AcceptTraderCompanyForm(MainForm):
         self.fields['unit2'].widget.attrs['readonly'] = True
         self.fields['postalCode'].widget.attrs['readonly'] = True
         self.fields['state'].widget.attrs['readonly'] = True
+
+

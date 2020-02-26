@@ -56,6 +56,36 @@
     .page-link {
         background-color: #fffdf2 !important
     }
+@media (min-width:320px) and (max-width: 480px)  {
+        .paddRow{
+            padding-left: 13% !important;
+            font-size: 73% !important;
+        }
+        .paddparagraph{
+            padding-left: 1% !important;
+            font-size: 100% !important;
+        }
+        #select_suppliers {
+            margin-left: -2px !important;
+        }
+        button, input {
+            overflow: visible !important;
+            margin: 3px !important;
+        }
+        .addMarginFiveTB{
+            margin-left: 12px !important;
+        }
+        table.dataTable{
+            margin-left: 18.5% !important;
+        }
+        #addCustomerTable_paginate {
+            margin-left: 98% !important;
+        }
+        div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+            justify-content: inherit !important;
+        }
+}
+
 </style>
 <div class="row headColor">
   <div class="col-md-2 col-sm-4 col-24" id="sideBarLeft">
@@ -65,16 +95,16 @@
       <div id="bodyDiv">
         <div class="row addMarginFiveTB">
             <div class="col-md-4 col-sm-3 col-6">
-                <a href="{% url 'customerProductPanel' %}" class="subHeadClass" id="orderBtn">Supplier Product Panel</a>
+                <a href="{% url 'supplierProductPanel' %}" class="subHeadClass" id="orderBtn">Vendor Product Panel</a>
             </div>
         </div><br/>
-        <div class="row">
-            <p>Choose By: </p>
+        <div class="row paddRow">
+            <p class="paddparagraph">Choose By: </p>
             <div class="col-md-6 col-sm-6 col-12">
                 <select id="select_category" class="select_catsub">
                     <option value="">Select</option>
                     <option value="product">Product</option>
-                    <option value="supplier">Supplier</option>
+                    <option value="supplier">Vendor</option>
                     <option value="catalog">Catalog</option>
                 </select>
                 <select id="select_suppliers" class="select_catsub">
@@ -87,7 +117,7 @@
                 <div class="pull-right">
                     <a href="#" id="hitBtn"> <img class="img-responsive" id="hitBtnImg" style="height:30px" src="{% static 'images/register/submit.png' %}" alt=""/></a>
                     <span class="input-group" id="searchOptionInputGroup">
-                        <input type="text" name="searchOption" id="searchOption" maxlength="20">
+                        <input type="text" name="searchOption" id="searchOption" maxlength="60">
                         <div class="input-group-append">
                           <span id="spanSearchIcon">
                             <i class="fa fa-search"></i>
@@ -109,6 +139,8 @@
                                <th rowspan="1" class="header">Category</th>
                                <th rowspan="1" class="header">UOM</th>
                                <th rowspan="1" style="width:5%" class="header">Price</th>
+                               <th rowspan="1" class="header">Set As Default</th>
+                               <th rowspan="1" class="header">Set As View</th>
                                <th rowspan="1" style="width:20%" class="header"><input type="checkbox" class="selectAllList" id="selectAllProduct" name="selectAllProduct" /></th>
                             </tr>
                          </thead>
@@ -147,7 +179,7 @@
           <div class="modal-body">
               <div id="success_msg" class="success_msg"> </div>
               <div id="error_msg" class="error_msg"> </div>
-                <form role="form">
+                <form role="form" autocomplete="off">
                     {% csrf_token %}
                     <div id="modalBody">
 
@@ -271,10 +303,10 @@
                     if ($(this).attr('id') == 'selectAllProduct') {
                         if (addProductTableList.length > 0) {
                             if($(this).prop("checked") == true) {
-                                addProductTable.$("input[type='checkbox']").prop('checked', true);
+                                addProductTable.$("input[class='AddProductBtn']").prop('checked', true);
                             }
                             else if($(this).prop("checked") == false) {
-                                addProductTable.$("input[type='checkbox']").prop('checked', false);
+                                addProductTable.$("input[class='AddProductBtn']").prop('checked', false);
                             }
                         }
                     }
@@ -298,7 +330,9 @@
                         var sno = index+1;
                         var qtyinput = "<input class='qtytextbox' name='qtytextbox' id='pricebox"+value.itemCode+"' value="+value.purchasingItem__purchasingPrice+" type='text'>";
                         var action = "<input class='AddProductBtn' type='checkbox' id="+value.itemCode+" value= "+value.itemCode+">";
-                        addProductTable.row.add([sno,value.itemCode,value.itemName,value.itemCategory__prtCatName,value.baseUom__quantityTypeCode,qtyinput,action]).draw();
+                        var setAsDefault = "<input class='setAsDefault' type='checkbox' id='setAsDefault_"+value.itemCode+"' value= "+value.itemCode+">";
+                        var setAsView = "<input class='setAsView' type='checkbox' id='setAsView_"+value.itemCode+"' value= "+value.itemCode+"_"+value.itemName+">";
+                        addProductTable.row.add([sno,value.itemCode,value.itemName,value.itemCategory__prtCatName,value.baseUom__quantityTypeCode,qtyinput,setAsDefault,setAsView,action]).draw();
                     });
                     $('#submitAndSearchBtnDiv').show();
                     }
@@ -314,7 +348,7 @@
                     $.each(addProductTableListData, function( index, value ) {
                         var sno = index+1;
                         var action = "<input class='AddCustomerBtn' type='checkbox' id="+value.supplierId+" value= "+value.supplierId+">";
-                        addCustomerTable.row.add([sno,value.supCompanyName,value.supEmail,value.supContactNo,value.supCountry__countryName,value.supState__stateName,action]).draw();
+                        addCustomerTable.row.add([sno,value.supCompanyName,value.supEmail,"+"+value.supCountryCode+"-"+value.supContactNo,value.supCountry__countryName,value.supState__stateName,action]).draw();
                     });
                     $('#submitAndSearchBtnDiv').show();
                     }
@@ -337,7 +371,6 @@ $('#submitAndSearchBtnDiv').hide();
                     sup.push(supVal);
                     catsup.type = cat;
                     catsup.sup = supVal;
-                    //console.log(JSON.stringify(catsup));
                     $('#product').hide();
                     $('#customer').hide();
                      $('#priceId').hide();
@@ -378,7 +411,6 @@ $('#submitAndSearchBtnDiv').hide();
 
                     catsup.type = cat;
                     catsup.sup = sup;
-                    //console.log(JSON.stringify(catsup));
                     $('#product').hide();
                     $('#customer').hide();
                      $('#priceId').hide();
@@ -457,7 +489,7 @@ $('#submitAndSearchBtnDiv').hide();
                     var codeId=$(this).attr('id');
                  if($('#select_suppliers').val()==""){
                       $('#'+codeId).prop('checked',false);
-                      alert("Please Select Supplier");
+                      alert("Please Select Vendor");
                  }
 
                  else if($('#pricebox'+codeId).val()==""){
@@ -491,7 +523,7 @@ $('#submitAndSearchBtnDiv').hide();
                     }
                     else if($('input:checkbox.AddCustomerBtn:checked').length == 0){
                         returnStatus = 'false';
-                        alert("Please Select Supplier");
+                        alert("Please Select Vendor");
                     }
                     else if($('#priceId').val() ==""){
                         returnStatus = 'false';
@@ -522,7 +554,7 @@ $('#submitAndSearchBtnDiv').hide();
                 else if (cateGory == "supplier"){
                     if($('#select_suppliers').val()==""){
                         returnStatus = 'false';
-                        alert("Please Select Supplier");
+                        alert("Please Select Vendor");
                     }
                     else if($('input:checkbox.AddProductBtn:checked').length == 0){
                       returnStatus = 'false';
@@ -530,6 +562,7 @@ $('#submitAndSearchBtnDiv').hide();
                     }
                     else {
                         $("input:checkbox.AddProductBtn:checked").each(function() {
+                            var totalItem = new Object();
                             var id = 'pricebox'+$(this).attr('id');
                             if ($('#pricebox'+$(this).val()).val() == '') {
                                 $('#'+id+'').focus();
@@ -553,7 +586,18 @@ $('#submitAndSearchBtnDiv').hide();
 
                             else if ($('#pricebox'+$(this).val()).val() != '' && parseFloat($('#pricebox'+$(this).val()).val()) > 0) {
                                 returnStatus = 'true';
-                                var totalItem = new Object();
+                                if($('#setAsDefault_'+$(this).val()+':checked').val()){
+                                    totalItem.setAsDefault = 'True';
+                                }
+                                else{
+                                    totalItem.setAsDefault = 'False';
+                                }
+                                if($('#setAsView_'+$(this).val()+':checked').val()){
+                                    totalItem.setAsView = 'True';
+                                }
+                                else{
+                                    totalItem.setAsView = 'False';
+                                }
                                 totalItem.itemCode = $(this).val();
                                 totalItem.price   = $('#pricebox'+$(this).val()).val();
                                 myArray.push(totalItem);
@@ -569,7 +613,7 @@ $('#submitAndSearchBtnDiv').hide();
                     }
                     else if($('input:checkbox.AddCustomerBtn:checked').length == 0){
                       returnStatus = 'false';
-                      alert("Please Select Supplier");
+                      alert("Please Select Vendor");
                     }
                     else {
                        returnStatus = 'true';
@@ -594,8 +638,8 @@ $('#submitAndSearchBtnDiv').hide();
                         if (result.status == 'success') {
                         $("#hitBtn").prop("disabled", false);
                             setTimeout(function() {
-                                    location.reload();
-                                }, 3000);
+                                location.reload();
+                            }, 3000);
                              alert(result.success_msg);
                         }
                         else if(result.status == 'error' && result.error_msg == 'sessionexpired'){
@@ -603,6 +647,9 @@ $('#submitAndSearchBtnDiv').hide();
                                 window.location.href = data.redirect_url;
                             }, 2000);
                             alert('Session has expired.');
+                        }
+                        else{
+                            alert(result.error_msg);
                         }
 					  }
                     });
@@ -658,9 +705,6 @@ $('#submitAndSearchBtnDiv').hide();
                                 window.location.href = data.redirect_url;
                             }, 3000);
                         }
-                        else if (data.status == 'error' && data.error_msg != 'sessionexpired') {
-                            $('#error_msg').append(data.error_msg);
-                        }
                         else if (data.status == 'error' && data.error_msg == 'sessionexpired') {
                             $('#domainName').val('');
                             $('#error_msg').append('Session expired.');
@@ -669,6 +713,9 @@ $('#submitAndSearchBtnDiv').hide();
                             setTimeout(function() {
                                 window.location.href = data.redirect_url;
                             }, 3000);
+                        }
+                        else{
+                            $('#error_msg').append(data.error_msg);
                         }
                       }
                      });

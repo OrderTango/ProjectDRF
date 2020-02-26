@@ -24,4 +24,5 @@ urlpatterns = [
     path('', include('OrderTangoSubDomainApp.urls')),
     path('', include('OrderTangoOrdermgmtApp.urls')),
     path('', include('OrderTangoOrderFulfilmtApp.urls')),
+    path('', include('InventorymgmtApp.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

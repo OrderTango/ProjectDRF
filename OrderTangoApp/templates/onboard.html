@@ -89,7 +89,7 @@
                 <div class="col-md-1"></div>
             </div>
 
-                 <form class="onboardform" action="/onboard/" method="POST">
+                 <form class="onboardform" action="/onboard/" method="POST" autocomplete="off">
                      {% csrf_token %}
                     <div class="row" id="onBoardDiv">
                      <div class="col-md-10"> <input name="emailId" value="{{ email }}" id="emailId" type="hidden"/>  </div>
@@ -102,7 +102,7 @@
 
         </div>
         <div id="bodyright" class="col-md-6">
-            <div class="row" style="height: 80% !important;">
+            <div class="row">
                 <img class="col-12 offset-md-1 offset-lg-1 offset-xl-1 col-md-10 col-lg-10 col-xl-10 img-responsive" id="onBoardImage" style="height:100%" src="{% static 'images/register/allaboard.png' %}">
             </div>
 

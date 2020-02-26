@@ -472,7 +472,7 @@ a.customerUpload:hover, a.customerManual:hover {
     border-radius: 12px;
     color: #f9f3fa;
     background-color: #9e4faa;
-    width: 120px;
+    width: 100px;
 }
 .output{
 font-size: 14px;
@@ -518,7 +518,8 @@ color: #464646 !important;
     background: #ffd500;
     color: #881999;
     font-weight: bold;
-    border: 2px solid #881999
+    border: 2px solid #881999;
+        margin: auto;
 }
 .fontWeightBold {
     font-weight: bold
@@ -584,19 +585,13 @@ color: #464646 !important;
     border-radius: 8px !important;
     text-align: center;
 }
-.editProductSubmitBtn, .editProductSubmitBtn:hover, .profileUpdateButtonClass, .profileUpdateButtonClass:hover, .userButtonClass, .userButtonClass:hover {
+.editProductSubmitBtn, .editProductSubmitBtn:hover, .profileUpdateButtonClass, .profileUpdateButtonClass:hover{
     background: #ffd500;
     color: #881999;
     font-weight: bold;
     border: 2px solid #881999;
 }
-.userButtonClass, .userButtonClass:hover {
-    border-radius: 5px;
-    padding: 4px;
-    text-decoration: none;
-    margin-right: 15px;
-    cursor: pointer
-}
+
 .inviteBtn,.activeBtn,.requestBtn{
     width: 38.1% !important;
 }
@@ -640,4 +635,16 @@ color: #464646 !important;
 }
 .paddingBottom2Percent {
     padding-bottom: 2%
+}
+.ui-datepicker select.ui-datepicker-year {
+    width: 25%;
+    background: none;
+    border: 1px solid #9e4faa;
+    border-radius: 5px;
+}
+.ui-datepicker select.ui-datepicker-month {
+    width: 50%;
+    background: none;
+    border: 1px solid #9e4faa;
+    border-radius: 5px;
 }

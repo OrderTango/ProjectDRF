@@ -21,7 +21,41 @@
 <script type="text/javascript" src="{% static 'datatables/js/dataTables.responsive.min.js' %}"></script>
 <script src ="{% static 'js/jquery-ui.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+
+ <script type="text/javascript">
+
+ function myFunction() {
+document.getElementById("holidayupload").reset();
+}
+
+function isNumberKey(evt)
+{
+  var charCode = (evt.which) ? evt.which : event.keyCode;
+    if (charCode != 46 && charCode != 45 && charCode > 31
+    && (charCode < 48 || charCode > 57))
+     return false;
+
+  return true;
+}
+
+</script>
 <style>
+    #viewSLATable_wrapper{
+        padding-left: 0px !important;
+        margin-top: -8px;
+        margin-left: -5px;
+    }
+    .slaModuleTabActive {
+        background-color: #eddcf0;
+    }
+    .slaModuleTabActive > a{
+        color: #474747 !important;
+        border-bottom: 2px solid black;
+    }
+    .holiday a, .holiday a:hover {
+         background: none #FFEBAF;
+         color: #BF5A0C !important;
+       }
     .sampleModalPopup {
         max-width: 35%
     }
@@ -70,7 +104,7 @@
         margin-top: 10px;
         margin-bottom: -5px
     }
-    #SLASubmit, #SLASubmit:hover, #editSLASubmit, #editSLASubmit:hover, .userButtonClass, .userButtonClass:hover,#addBtn,#addCutOffBtn,#eaddBtn,#eaddCutOffBtn {
+    #uploadHolidaySubmit,#editSLASubmit, #editSLASubmit:hover, .userButtonClass, .userButtonClass:hover,#addBtn,#addCutOffBtn,#eaddBtn,#eaddCutOffBtn,#uploadHolidaySubmit {
         border: 0px;
         font-size:14px;
         border-radius: 5px;
@@ -79,6 +113,15 @@
         padding:5px;
         cursor: pointer;
         margin-right: 5px
+    }
+    #SLASubmit, #SLASubmit:hover{
+      border: 0px;
+      background: #ffd500;
+      color: #881999;
+      font-weight: bold;
+      border: 2px solid #881999;
+      border-radius: .25rem;
+      cursor: pointer;
     }
     .modal-body{
         max-height:500px !important;
@@ -167,35 +210,160 @@
         border: 0px;
         padding: 5px 10px 5px 10px;
     }
+    #holidayModelContent{
+        border-radius: 20px;
+    }
+    #holidayModelHeader{
+        background: #9f4faa;
+        color: white;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        height: 55px;
+    }
+    #holidayModelBody{
+        overflow-y: unset;
+    }
+@media (min-width:320px) and (max-width: 480px)  {
+        .viewSLATable{
+            width:130% !important;
+            margin-left: 8% !important;
+        }
+        .paddingLeftRightTen{
+           margin-left: 8px !important;
+        }
+        #viewSLATable_paginate {
+            margin-left: 48% !important;
+        }
+        div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+            justify-content: center !important;
+        }
+        .headingColor {
+            margin-left: 22px !important;
+        }
+        button, input, optgroup, select, textarea {
+            margin: 0px !important;
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+        }
+        .holidayEventBtn, .eHolidayEventBtn, .eclear {
+            margin-right: -19px !important;
+        }
+        #year, #name {
+            width: 265px !important;
+        }
+        #downloadHoliday {
+            font-size: 13px !important;
+        }
+        .modals-content {
+            width: 167% !important;
+        }
+        #SLAName, #eSLAName, #areaId, #eAreaId, #deliveryDays, #eDeliveryDays, #eholidaySelect {
+            height: 30px !important;
+            width: 138px !important;
+            border-radius: 8px !important;
+            padding: 4px !important;
+        }
+        .clearDateSelection {
+            width: 255% !important;
+        }
+        .ui-datepicker .ui-datepicker-header {
+            position: relative !important;
+            padding: 7px !important;
+            width: fit-content !important;
+        }
+        .ui-datepicker .ui-datepicker-header {
+            position: relative !important;
+            padding: 7px !important;
+            width: 270% !important;
+        }
+        #userAddressFormDiv{
+            padding-left: 32px !important;
+            text-align: -webkit-center !important;
+            width: -webkit-fill-available !important;
+        }
+        #SLASubmit{
+            text-align: center !important;
+            width: 35% !important;
+        }
+        .offsets-md-4{
+            width: 30% !important;
+            text-align: center !important;
+        }
+
+}
+ @media (min-width:600px) and (max-width: 801px) {
+
+    #viewSLADiv {
+        width: 672px !important;
+    }
+    #viewSLATable_paginate {
+        margin-left: -48% !important;
+    }
+    div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+         justify-content: center !important;
+         margin-left: -48% !important;
+    }
+    #holiday{
+        margin-top: 0.5% !important;
+        margin-left: 4% !important;
+    }
+    #createSLA{
+        margin-left: 4% !important;
+        margin-top: 0.5% !important;
+    }
+    #searchOption{
+        margin-top: 0.5% !important;
+    }
+
+  }
 </style>
 <div class="row headColor">
   <div class="col-md-2 col-sm-4 col-24" id="sideBarLeft">
         {% include "administrationpanelsidebar.html" %}
   </div>
   <div class="col-md-10 paddingLeftZero" id="bodyContent">
+      <div class="row">
+      <div class="col-md-3 col-sm-3 col-6 navTabClass navHeading" id="onBoardTab">
+        <a href="#" class="anchorlink " id="onBoardAnchor">Service Level Agreement</a>
+      </div>
+    </div>
         <div class="row" id="viewSLADiv">
-            <div class="col-md-6 col-sm-3 col-6">
-                <h4 class="headingColor"> View SLA </h4>
+            <div class="col-md-7 col-sm-3 col-6 paddingLeftRightTen">
+                <!--<h4 class="headingColor"> View SLA </h4>-->
+                <ul class="col-md-10 nav nav-pills textAlignCenter" id="bothNavUL">
+                    <li class="col-md-4 col-sm-4 bgColorModule bothModuleTab slaModuleTabActive" id="viewSlaMenu">
+                      <a data-toggle="pill" href="#">View SLA</a>
+                    </li>
+                    <li class="col-md-4 col-sm-4 bgColorModule bothModuleTab " id="customerSla">
+                      <a data-toggle="pill" href="{% url 'fetchAllCustomerForSlaAssign' %}">Customer</a>
+                    </li>
+                    <li class="col-md-4 col-sm-4 bgColorModule bothModuleTab" id="vendorSla">
+                      <a data-toggle="pill" href="/fetchAllSupplierForSlaAssign">Vendor</a>
+                    </li>
+
+                  </ul>
             </div>
-             <div class="col-md-6 col-sm-3 col-6">
+             <div class="col-md-5 col-sm-3 col-6">
                  <div class="pull-right">
                      <button class="userButtonClass" id="holiday">
-                        <img class="roundImage" src="/static/images/Round.png" /> Holiday
+                        <img class="roundImage" src="/static/images/Round.png" /> Upload Holiday
                     </button>
                     <button class="userButtonClass" id="createSLA">
                         <img class="roundImage" src="/static/images/Round.png" /> Create SLA
                     </button>
                     <span class="input-group" id="searchOptionInputGroup">
-                                    <input type="text" id="searchOption">
-                                    <div class="input-group-append">
-                                      <span id="spanSearchIcon">
-                                        <i class="fa fa-search"></i>
-                                      </span>
-                                    </div>
+                        <input type="text" id="searchOption"  maxlength="60">
+                        <div class="input-group-append">
+                          <span id="spanSearchIcon">
+                            <i class="fa fa-search"></i>
+                          </span>
+                        </div>
+                    </span>
                  </div>
             </div>
-            <div class="col-md-12 col-sm-3 col-6 marginLeftFifteen">
-                <table class="table hover dt-responsive viewSLATable" id="viewSLATable" width="100%">
+            <div class="col-md-12 col-sm-8 col-10">
+                <table class="table hover dt-responsive viewSLATable" id="viewSLATable" width="100%" style="font-size:85%">
                      <thead>
 
                      </thead>
@@ -212,14 +380,14 @@
                 </button>
             </div>
                  <div class="col-md-12" id="userAddressFormDiv">
-                   <form class="post-form" id="userAddressForm" role="form">
+                   <form class="post-form" id="userAddressForm" role="form" autocomplete="off">
                     {% csrf_token %}
                     <div class="row" style="margin-top: 10px">
                         <div class="col-md-3">
                             <label class="col-form-label marginLeftFifteen"> SLA Name </label><span class="mandatory">*</span>
                         </div>
                         <div class="col-md-6 addPaddingLeftRightTen">
-                            <input type="text" class="mandatoryFormFields" name="SLAName" id="SLAName">
+                            <input type="text" class="mandatoryFormFields" name="SLAName" id="SLAName" maxlength="30">
                         </div>
                      </div>
 
@@ -353,7 +521,7 @@
                                 <label class="col-form-label marginLeftFifteen"> Cutoff Time </label><span class="mandatory">*</span>
                             </div>
                             <div class="col-md-6 addPaddingLeftRightTen">
-                                <span id="datePairExample"> <input type="text" id="fromCutTime" class="time start " /> to <input id="toCutTime" type="text" class="time end " /> </span><button id="addCutOffBtn" type="button">Add</button>
+                                <span class="datePairExample"> <input type="text" id="fromCutTime"  class="time start" /> to <input id="toCutTime" type="text"  class="time end " /> </span><button id="addCutOffBtn" type="button">Add</button>
                             </div>
                            <div class="col-md-3">
                             </div>
@@ -366,7 +534,7 @@
                                 <label class="col-form-label marginLeftFifteen"> Delivery Slot </label><span class="mandatory">*</span>
                             </div>
                             <div class="col-md-6 addPaddingLeftRightTen">
-                                <span id="datePairExample"> <input type="text" id="fromTime" class="time start " /> to <input id="toTime" type="text" class="time end " /> - <input id="shift" type="text" class="shift" placeholder="Slot Name"/></span><button id="addBtn" type="button">Add</button>
+                                <span class="datePairExample"> <input type="text" id="fromTime" class="time start " /> to <input id="toTime" type="text" class="time end " /> -</span> <input id="shift" type="text" class="shift" placeholder="Slot Name"/><button id="addBtn" type="button">Add</button>
                             </div>
                             <div class="col-md-3">
                             </div>
@@ -376,7 +544,7 @@
                         </div>
                         <div class="row formFieldShowHide" style="margin-top: 10px">
                             <div class="col-md-3">
-                                <label class="col-form-label marginLeftFifteen"> Ordering Schedule </label><span class="mandatory">*</span>
+                                <label class="col-form-label marginLeftFifteen">Ordering Schedule</label><span class="mandatory">*</span>
                             </div>
                             <div class="col-md-6 addPaddingLeftRightTen">
                                 <input type="text" class="mandatoryFormFields" name="deliveryDays" id="deliveryDays">
@@ -384,8 +552,8 @@
                         </div>
                         </form>
                      </div>
-                     <div class="offset-md-4 col-md-3 col-sm-3 col-12">
-                       <input type="button" id="SLASubmit" class="btn btn-primary" value="Submit">
+                     <div class="offsets-md-4 offset-md-4 col-md-3 col-sm-3 col-12">
+                       <input type="button" id="SLASubmit" class="texCen btn btn-primary" value="Submit">
                     </div>
                 </div>
             </div>
@@ -404,7 +572,7 @@
            <div class="modal-body">
               <div id="success_msg" class="success_msg"> </div>
               <div id="error_msg" class="error_msg"> </div>
-                <form role="form">
+                <form role="form" autocomplete="off">
                     {% csrf_token %}
                     <div id="modalBody">
 
@@ -451,7 +619,7 @@
       </div>
       <div class="modal-body">
 
-         <form id="updateLogo"  method="post" enctype="multipart/form-data">
+         <form id="updateLogo"  method="post" enctype="multipart/form-data" autocomplete="off">
              {% csrf_token %}
 
          <input type="file" name="fileuploaddata" value="fileupload" id="fileuploaddata">
@@ -472,35 +640,41 @@
   <div class="modal-dialog">
 
     <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
+    <div class="modal-content" id="holidayModelContent">
+
+      <div class="modal-header" id="holidayModelHeader">
           <h4>Holidays upload</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+       <button type="button" class="close uploadHolidayclose" data-dismiss="modal"  onclick="modal-content" id="uploadHolidayclose" aria-hidden="true">x</button>
 
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="holidayModelBody">
 
-         <form id="holidayupload"  method="post" enctype="multipart/form-data">
+         <form id="holidayupload"  method="post" enctype="multipart/form-data" autocomplete="off">
              {% csrf_token %}
              <div class ="row">
-                 <div class="col-md-12"><label class ="col-md-5">Holiday Year : </label><input type="text" class ="col-md-6"  id="year">
+                     <div class="col-md-12"><label class ="col-md-5">Holiday Year<span class="mandatory">*</span> : </label><input type="text" onkeypress="return isNumberKey(event);" class ="col-md-6"  id="year">
                      </div>
-             <div class="col-md-12"><label class="col-md-5">Holiday Name : </label><input class="col-md-6" type="text"   id="name">
+             <div class="col-md-12"><label class="col-md-5">Holiday Name<span class="mandatory">*</span> : </label><input class="col-md-6" type="text"   id="name">
              </div><br/>
              <br/>
-                 <div class="col-md-12">
-                     <input class="offset-md-1" type="button" value="Choose File..." id="chooseHolidayBtn">
-                     <input class="col-md-10" type="file" name="fileuploaddata" value="fileupload" id="holidayuploaddata">
-                 </div>
+
+             <div class="col-md-12">
+                <input class="offset-md-1 col-md-3" type="button" value="Choose File..." id="chooseHolidayBtn"><span class="col-md-8" id="appendFileName"></span>
+                 <input type="file" name="fileuploaddata" value="fileupload" id="holidayuploaddata">
+             </div>
              <br/>
              <br/>
              <div  class="col-md-12"><a href="{% static 'download_import_csv_format/holiday.csv' %}" class="holidayUpload col-md-6" id="downloadHoliday" download="">Download Holiday Template</a></div>
              </div></form>
+          <div class="offset-md-12 col-12" align="center">
+        <button type="button" class="btn btn-primary" value="Submit"  id="uploadHolidaySubmit" >Submit</button>
+
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" id="uploadHolidaySubmit" data-dismiss="modal">Submit</button>
+
+
       </div>
-    </div>
+
+        </div>
 
   </div>
 </div>
@@ -519,7 +693,7 @@
         <div class="row" >
             <div class="col-md-12 col-sm-3 col-6 " >
                 <div class="col-md-12" id="viewProfileModalFormDiv">
-                    <form class="registrationform" id="updateProfileForm" role="form" method='POST'>
+                    <form class="registrationform" id="updateProfileForm" role="form" method='POST' autocomplete="off">
 
                         {% csrf_token %}
                         <div id="formsec1">
@@ -533,8 +707,25 @@
                              {{ ProfileForm.lastName }}
                           </div>
                           <div class="offset-3 offset-sm-4 offset-md-3" id="lastNameError">{{ ProfileForm.lastName.errors }} </div>
+                        <div class="form-group row registrationformdiv hide">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.contactNo.label_tag }}<span class="mandatory">*</span></label>
+                             {{ProfileForm.countryCode}}{{ ProfileForm.contactNo }}
+                          </div>
+                          <div class="offset-3 offset-sm-4 offset-md-3 hide" id="contactNoError">{{ ProfileForm.contactNo.errors }} </div>
+                        <div class="form-group row registrationformdiv hide">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.email.label_tag }}<span class="mandatory">*</span></label>
+                             {{ ProfileForm.email }}
+                          </div>
+                          <div class="offset-3 offset-sm-4 offset-md-3 hide" id="emailError">{{ ProfileForm.email.errors }} </div>
+
                         </div>
                         <div id="formsec2">
+                            <div class="form-group row registrationformdiv hide">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.companyName.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.companyName }}
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="companyNameError"> {{ companyProfileForm.companyName.errors }} </div>
+
 
                           <div class="form-group row registrationformdiv">
                             <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.country.label_tag }}<span class="mandatory">*</span></label>
@@ -575,7 +766,7 @@
                             <div class="form-group row registrationformdiv">
                             <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.sec_answer.label_tag }}<span class="mandatory">*</span></label>
                             {{ ProfileForm.sec_answer }}
-                            <div class="col-12 offset-sm-4 col-md-6" id="submitBtnDiv">  <input type="submit" id="profileUpdateButton" value="Update"> </div>
+                            <div class="col-12 offset-sm-4 col-md-6" id="submitBtnDiv">  <input type="button" class="profileUpdateButtonClass" id="profileUpdateButton" value="Update"> </div>
                           </div>
                             <div class="offset-3 offset-sm-4 offset-md-3" id="secAnswerError"> {{ ProfileForm.sec_answer.errors }} </div>
                         </div>
@@ -600,12 +791,12 @@
  <!-- The Modal -->
 <div class="modal" id="editSLAModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
 <div class="modal-dialog editSLAModal" style="max-width: 60%">
-<div class="modal-content" style="background-color: #f7f3fa;">
+<div class="modals-content modal-content" style="background-color: #f7f3fa;">
 
 <!-- Modal Header -->
 <div class="modal-header">
 <h4 class="modal-title" id="editUserModalTitle"> Edit SLA</h4>
-<button type="button" class="close editUserModalClose" data-dismiss="modal" aria-hidden="true">x</button>
+<button type="button" class="close editSLAModalClose" data-dismiss="modal" aria-hidden="true">x</button>
 </div>
 
 <!-- Modal body -->
@@ -613,7 +804,7 @@
     <div class="row" >
     <div class="col-md-12 col-sm-3 col-6" id="editSubUserFormDiv">
     <div class="col-md-12" >
-                   <form class="post-form" id="userAddressForm" role="form">
+                   <form class="post-form" id="editSLAForm" role="form" autocomplete="off">
                     {% csrf_token %}
                     <div class="row" style="margin-top: 10px">
                         <div class="col-md-4">
@@ -621,7 +812,7 @@
                         </div>
                         <div class="col-md-6 addPaddingLeftRightTen">
                             <input type="hidden" class="eMandatoryFormFields" name="eSLAId" id="eSLAId">
-                            <input type="text" class="eMandatoryFormFields" name="eSLAName" id="eSLAName">
+                            <input type="text" class="eMandatoryFormFields" name="eSLAName" id="eSLAName" maxlength="30">
                         </div>
                      </div>
 
@@ -718,7 +909,7 @@
                             </div>
                             <div class="col-md-6 addPaddingLeftRightTen">
                                 <div id="edatepicker"></div>
-                                <div class="clearDateSelection" id="clearDate">Clear Date Selection</div>
+                                <div class="clearDateSelection" id="eClearDate">Clear Date Selection</div>
                             </div>
                         </div>
                         <div class="row marginTen showHideEholidayHoliday" style="margin-top: 10px">
@@ -734,7 +925,7 @@
                                 <label class="col-form-label marginLeftFifteen"> CutOff Time </label><span class="mandatory">*</span>
                             </div>
                             <div class="col-md-6 addPaddingLeftRightTen">
-                                <span id="datePairExample"> <input type="text" id="efromCutTime" class="time start" /> to <input id="etoCutTime" type="text" class="time end" /> </span><button id="eaddCutOffBtn" type="button">Add</button>
+                                <span class="datePairExample"> <input type="text" id="efromCutTime" class="time start" /> to <input id="etoCutTime" type="text" class="time end" /> </span><button id="eaddCutOffBtn" type="button">Add</button>
                             </div>
                             <div class="col-md-4">
                             </div>
@@ -747,7 +938,7 @@
                                 <label class="col-form-label marginLeftFifteen"> Delivery Slot </label><span class="mandatory">*</span>
                             </div>
                             <div class="col-md-8 addPaddingLeftRightTen">
-                                <span id="datePairExample"> <input type="text" id="efromTime" class="time start " /> to <input id="etoTime" type="text" class="time end " /> - <input id="eshift" type="text" class="shift" placeholder="Slot Name"/></span><button id="eaddBtn" type="button">Add</button>
+                                <span class="datePairExample"> <input type="text" id="efromTime" class="time start " /> to <input id="etoTime" type="text" class="time end " /></span> - <input id="eshift" type="text" class="shift" placeholder="Slot Name"/><button id="eaddBtn" type="button">Add</button>
                             </div>
                             <div class="col-md-4">
                             </div>
@@ -768,7 +959,7 @@
                         </div>
                         </form>
                      </div>
-                     <div class="offset-md-4 col-md-4 col-sm-4 col-12">
+                     <div class="offset-md-4 col-md-4 col-sm-4 col-12" align="center" >
                        <input type="button" id="editSLASubmit" class="btn btn-primary" value="Submit">
                     </div>
     </div>
@@ -777,7 +968,7 @@
 
     <!-- Modal footer -->
     <div class="modal-footer">
-    <button type="button" class="btn editUserModalClose" id="editUserModalClose" data-dismiss="modal">Close</button>
+    <button type="button" class="btn editSLAModalClose" id="editSLAModalClose" onclick="modal-content" data-dismiss="modal">Close</button>
     </div>
 
     </div>
@@ -796,7 +987,7 @@
              <p>You didn't have access this.</p>
           </div>
           <div class="modal-footer">
-                <input type="button" class="btn btn-primary modalBtnClass" data-dismiss="modal" aria-label="Close" value="Close">
+                <input type="button" class="btn btn-primary modalBtnClass" onclick="modal-content" data-dismiss="modal" aria-label="Close" value="Close">
           </div>
         </div>
       </div>
@@ -815,9 +1006,11 @@
 
 
           </div>
-          <div class="modal-footer">
-                <input type="button" id="confirmModalPopupSubmit" class="btn btn-primary modalBtnClass" data-dismiss="modal" aria-label="Close" value="Confirm">
-                <input type="button" id="confirmModalPopupClose" class="btn btn-primary modalBtnClass" data-dismiss="modal" aria-label="Close" value="Close">
+          <div class="modal-footer" style="text-align:center">
+              <div class="col-md-12">
+                  <input type="button" id="confirmModalPopupSubmit" class="btn btn-primary modalBtnClass" data-dismiss="modal" aria-label="Close" value="Confirm">
+                <input type="button" id="confirmModalPopupClose" class="btn btn-primary modalBtnClass" data-dismiss="modal" aria-label="Close" value="Cancel">
+              </div>
           </div>
         </div>
       </div>
@@ -826,11 +1019,18 @@
 
 <script>
 
+$(document).on('click', '#customerSla', function() {
+        window.location.href = "/fetchAllCustomerForSlaAssign";
+});
+$(document).on('click', '#vendorSla', function() {
+        window.location.href = "/fetchAllSupplierForSlaAssign";
+});
+
             $('.formFieldShowHideDate').hide();
             $('.formFieldShowHideHoliday').hide();
             $('.formFieldShowHideHolidayName').hide();
             $('.showHideEholidayName').hide();
-
+            var checkDate = [];
         $('#fromTime, #toTime','#cutOff').keypress(function(e) {
             e.preventDefault();
            return false;
@@ -849,6 +1049,21 @@
             $('#holidayuploaddata').click();
         });
 
+        $(document).on('click', '.editSLAModalClose', function() {
+                $('.eHolidayCheckBox').prop('checked', false);
+                $('.deleHolidayCheckBox').prop('checked', false);
+                $('#ecutOffDiv').empty();
+                $('#edSlotDiv').empty();
+                $('#eHolidayDiv').empty();
+                $(function() {
+                    eDatePickerCall();
+                });
+            });
+
+         $(document).on('change', '#holidayuploaddata', function() {
+            var file = $('#holidayuploaddata')[0].files[0]
+             $('#appendFileName').html(file.name);
+         });
 
             $body = $("body");
             $('#iconsec').on('click',function() {
@@ -856,9 +1071,14 @@
                  $('#imageModel').show();
                  $('#imageModel').modal('toggle');
             });
+              $(document).on('click', '#eClearDate', function() {
+                    $( "#edatepicker" ).datepicker('setDate', null);
+                    $('#holidayDiv').empty();
+                });
 
             $('#holiday').on('click',function() {
-                 $('#holidayuploaddata').val(null);
+                 document.getElementById("holidayupload").reset();
+                 $('#appendFileName').empty();
                  $('#holidayModel').show();
                  $('#holidayModel').modal('toggle');
             });
@@ -869,11 +1089,22 @@
 
             var year = $('#year').val();
             var name = $('#name').val();
+            $('#modal-content').val('');
              var fileFormat = $('#holidayuploaddata').val().split('.').pop();
-              if (fileFormat != 'csv') {
+             if(year == ''){
+                alert('Please enter holiday year');
+                $('#year').focus()
+                return false;
+             }
+             else if(name == ''){
+                alert('Please enter holiday name');
+                $('#name').focus()
+                return false;
+             }
+              else if (fileFormat != 'csv') {
                 alert('Please upload only csv format');
+                return false;
               }
-
                else
                {
 
@@ -909,12 +1140,16 @@
                 });
                 }
             });
+
             $('#createSLADiv').hide();
             $('#existingSLADiv').hide();
             fetchSLAData('loadSLADataInTable');
 
             $('#SLAType').on('change', function() {
+                $('#SLAId').val('');
+                $('#holidaySelect').val('Select').change();
                 if ($('#SLAType').val() == 1) {
+                    $('.formFieldShowHideHoliday').hide();
                     $('.formFieldShowHide').show();
                     $('#existingSLADiv').hide();
                     $('.holidayCheckBox').prop('checked', false);
@@ -926,28 +1161,131 @@
                     $('#toTime').val('');
                     $('#deliveryDays').val('');
                     disableDatesArray = [];
+                    $("#datepicker-2").datepicker("destroy");
+                    $("#datepicker-2").datepicker('setDate', null);
                     datePickerCall();
+                    $('#holidaySelect').val('Select').change();
                 }
                 else {
                     $('#existingSLADiv').show();
                     $('.formFieldShowHide').hide();
+                    $('.formFieldShowHideDate').hide();
+                    $('.formFieldShowHideHoliday').hide();
+                    $('.formFieldShowHideHolidayName').hide();
                     fetchSLAData('loadSLADataInDropdown');
                 }
             });
 
             $('#SLAId').on('change', function() {
+                $('.holidayCheckBox').prop('checked', false);
+                $('.delScheduleCheckBox').prop('checked', false);
+                $('#holidaySelect').val('Select').change();
+                disableDatesArray = [];
                 if ($('#SLAId').val() != '') {
+                $('#holidayNameSelect').val('Select').change();
                     $('.formFieldShowHide').show();
                     loadDataInForm('createSLAForm', $('#SLAId').val());
                     $('.formFieldShowHide').show();
                 }
                 else {
                     $('.formFieldShowHide').hide();
+                    $('.formFieldShowHideHoliday').hide();
+                    $('.formFieldShowHideHolidayName').hide();
                 }
             });
 
             $('#holidaySelect').on('change', function() {
                 if ($('#holidaySelect').val() == 'Add New') {
+                    $("#datepicker-2").datepicker("destroy");
+                    $("#datepicker-2").datepicker('setDate', null);
+                    var SLAId = $('#SLAId').val();
+                    if ($('#SLAId').val()) {
+                    var data = {"slaId":SLAId};
+                    $.ajax({
+                      url: "/slaDetailsByslaId",
+                      type: "POST",
+                      dataType : "json",
+                      contentType : "application/json",
+                      data: JSON.stringify(data),
+                      success: function (result)
+                      {
+                        var data = result;
+                        if (data.status == 'success') {
+                            var resultSLAData = data.SLAData[0];
+                            var holidayDate = resultSLAData.slaDetails.holidayDate;
+
+                       $( "#datepicker-2" ).datepicker({
+                           monthNamesShort:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                           changeMonth: true,
+                           changeYear: true,
+                            dateFormat: 'dd/mm/yy',
+                            beforeShowDay: setHoliDays,
+                            minDate: 0,
+                            numberOfMonths: 1,
+                            showOtherMonths: true,
+                            dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                            onSelect: function(selectedDate) {
+                                if ($.inArray(selectedDate, disableDatesArray) == -1) {
+                                    $('#editSLAModal').modal('hide');
+                                    $('#exampleModalLongTitle').empty();
+                                    $('#modalBody').empty();
+                                    $('#modalFooter').empty();
+                                    var modalBody = "<div class='form-group formGroup'><label for='recipient-name' class='col-form-label fontWeightBold'>Holiday Name:</label><input type='hidden' class='form-control' name='holidayDate' id='holidayDate' value='"+selectedDate+"'><input type='text' class='form-control' name='holidayName' id='holidayName' maxlength='20' autofocus></div>";
+                                    var modalFooter = "<input type='button' id='saveHoliday' class='btn btn-primary modalBtnClass' value='Save'>";
+                                    appendHolidayDynamicContent('Add Holiday', modalBody, modalFooter);
+                                }
+                            }
+                        });
+
+                           function setHoliDays(date) {
+                               for (i = 0; i < holidayDate.length; i++) {
+                                var holidayDateData = holidayDate[i].holidayDate;
+                                var res = holidayDateData.split('/')
+                                var dateData = res[0];
+                                var monthData = res[1];
+                                var yearData = res[2];
+                                 if (date.getFullYear() == yearData && date.getMonth() == monthData-1 && date.getDate() == dateData){
+                                    return [true, 'holiday', dateData];
+                                 }
+                               }
+                              return [true, ''];
+                            }
+
+                            if (holidayDate.length > 0) {
+                                //$('#holidayDiv').empty();
+                                /*for(i = 0; i < holidayDate.length; i++) {
+                                    var counter = i;
+                                    var newTextBoxDiv = $(document.createElement('span')).attr("class", 'holidaySpan');
+                                    newTextBoxDiv.after().html('<div class="pull-left holidayEventBtn"><input type="button" class="holidayBtn" id="holidayBtn_'+holidayDate[i].holidayDate+'_'+counter +'" value="'+holidayDate[i].holidayDesc+'" ><div id="holidayBtnClose_'+ holidayDate[i].holidayDate +'_'+counter + '" class="eHolidayBtnClose">x</div></div>');
+                                    newTextBoxDiv.appendTo("#holidayDiv");
+                                    disableDatesArray.push(holidayDate[i].holidayDate);
+                                    disableDates();
+                                    function disableDates() {
+                                    var date = new Date();
+                                        dmy = ("0" + date.getDate()).slice(-2)+ "/"+("0" + (date.getMonth() + 1)).slice(-2) + "/" + date.getFullYear();
+                                        if ($.inArray(dmy, disableDatesArray) == -1) {
+                                            return [true, ""];
+                                        } else {
+                                            return [false, "", "Unavailable"];
+                                        }
+                                    }
+                                }*/
+                                $('.formFieldShowHideHoliday').show();
+                             }
+                        }
+                       else if(data.status == 'error' && data.error_msg == 'sessionexpired'){
+                            alert('Session has expired.');
+                            setTimeout(function() {
+                                window.location.href = data.redirect_url;
+                            }, 2000);
+                        }else{
+                            $('.formFieldShowHideHoliday').hide();
+                        }
+                       }
+                    });
+                    }
+                    datePickerCall();
+                    //$('#holidayDiv').empty();
                     $('.formFieldShowHideDate').show();
                     $('.formFieldShowHideHoliday').show();
                     $('.formFieldShowHideHolidayName').hide();
@@ -975,6 +1313,9 @@
                                 $('#holidayNameSelect').append(holidayNameSelect);
                             }
                             else{
+                            var holidayNameSelect="<option value=''>Select</option>" ;
+                                $('#holidayNameSelect').empty();
+                                $('#holidayNameSelect').append(holidayNameSelect);
                                 alert('No holidays found');
                             }
                           }
@@ -982,20 +1323,95 @@
                       }
 
                       });
-                    //$('.formFieldShowHideHoliday').show();
+                    $('.formFieldShowHideHoliday').show();
                     $('.formFieldShowHideHolidayName').show();
                 }
                 else{
-                     $('.formFieldShowHideDate').hide();
+                    $('.formFieldShowHideDate').hide();
                     $('.formFieldShowHideHoliday').hide();
                     $('.formFieldShowHideHolidayName').hide();
+                    $('#holidayDiv').empty();
+                    var SLAId = $('#SLAId').val();
+                    if ($('#SLAId').val()) {
+                    var data = {"slaId":SLAId};
+                    $.ajax({
+                      url: "/slaDetailsByslaId",
+                      type: "POST",
+                      dataType : "json",
+                      contentType : "application/json",
+                      data: JSON.stringify(data),
+                      success: function (result)
+                      {
+                        var data = result;
+                        if (data.status == 'success') {
+                            var resultSLAData = data.SLAData[0];
+                            var holidayDate = resultSLAData.slaDetails.holidayDate;
+                            if (holidayDate.length > 0) {
+                                $('#holidayDiv').empty();
+                                for(i = 0; i < holidayDate.length; i++) {
+                                    var counter = i;
+                                    var newTextBoxDiv = $(document.createElement('span')).attr("class", 'holidaySpan');
+                                    newTextBoxDiv.after().html('<div class="pull-left holidayEventBtn"><input type="button" class="holidayBtn" id="holidayBtn_'+holidayDate[i].holidayDate+'_'+counter +'" value="'+holidayDate[i].holidayDesc+'" ><div id="holidayBtnClose_'+ holidayDate[i].holidayDate +'_'+counter + '" class="eHolidayBtnClose">x</div></div>');
+                                    newTextBoxDiv.appendTo("#holidayDiv");
+                                }
+                                $('.formFieldShowHideHoliday').show();
+                             }
+                        }
+                       else if(data.status == 'error' && data.error_msg == 'sessionexpired'){
+                            alert('Session has expired.');
+                            setTimeout(function() {
+                                window.location.href = data.redirect_url;
+                            }, 2000);
+                        }else{
+                            $('.formFieldShowHideHoliday').hide();
+                        }
+                       }
+                    });
+                    }
                 }
             });
 
             $('#holidayNameSelect').on('change', function() {
                 if ($('#holidayNameSelect').val() == '') {
-                    $('.formFieldShowHideHoliday').hide();
-                    alert('Select Holiday Name');
+                    $("#datepicker-2").datepicker("destroy");
+                    $("#datepicker-2").datepicker('setDate', null);
+                    datePickerCall();
+                    disableDatesArray = [];
+                    $('#holidayDiv').empty();
+                    var SLAId = $('#SLAId').val();
+                    if ($('#SLAId').val()) {
+                    var data = {"slaId":SLAId};
+                    $.ajax({
+                      url: "/slaDetailsByslaId",
+                      type: "POST",
+                      dataType : "json",
+                      contentType : "application/json",
+                      data: JSON.stringify(data),
+                      success: function (result)
+                      {
+                        var data = result;
+                        if (data.status == 'success') {
+                            var resultSLAData = data.SLAData[0];
+                            var holidayDate = resultSLAData.slaDetails.holidayDate;
+                            if (holidayDate.length > 0) {
+                                $('#holidayDiv').empty();
+                                for(i = 0; i < holidayDate.length; i++) {
+                                        var counter = i;
+                                        var newTextBoxDiv = $(document.createElement('span')).attr("class", 'holidaySpan');
+                                        newTextBoxDiv.after().html('<div class="pull-left holidayEventBtn"><input type="button" class="holidayBtn" id="holidayBtn_'+holidayDate[i].holidayDate+'_'+counter +'" value="'+holidayDate[i].holidayDesc+'" ><div id="holidayBtnClose_'+ holidayDate[i].holidayDate +'_'+counter + '" class="holidayBtnClose">x</div></div>');
+                                        newTextBoxDiv.appendTo('#holidayDiv');
+
+                                }
+                                $('.formFieldShowHideHoliday').show();
+                             }
+                             else{
+                                $('.formFieldShowHideHoliday').hide();
+                             }
+                        }
+                        }
+                        });
+                        }
+                    //alert('Select Holiday Name');
                 }
                 else {
                     $('.formFieldShowHideHoliday').show();
@@ -1011,14 +1427,20 @@
                           if (result.status == 'success') {
                             var holidayDate = result.data;
                             if (holidayDate.length > 0) {
-                            $('#holidayDiv').empty();
+                            //$('#holidayDiv').empty();
+
                             for(i = 0; i < holidayDate.length; i++) {
+                            var holidayDateVal = disableDatesArray.indexOf(holidayDate[i].holidayDate);
+                            if(holidayDateVal == -1) {
                                 var counter = i;
-                                var newTextBoxDiv = $(document.createElement('span')).attr("class", 'eHolidaySpan');
-                                newTextBoxDiv.after().html('<div class="pull-left eHolidayEventBtn"><input type="button" class="holidayBtn" id="holidayBtn_'+holidayDate[i].holidayDate+'_'+counter +'" value="'+holidayDate[i].holidayDate+'" ><div id="holidayBtnClose_'+ holidayDate[i].holidayDate +'_'+counter + '" class="holidayBtnClose">x</div></div>');
+                                var newTextBoxDiv = $(document.createElement('span')).attr("class", 'holidaySpan');
+                                newTextBoxDiv.after().html('<div class="pull-left holidayEventBtn"><input type="button" class="holidayBtn" id="holidayBtn_'+holidayDate[i].holidayDate+'_'+counter +'" value="'+holidayDate[i].holidayDate+'-'+holidayDate[i].holidayReason+'" ><div id="holidayBtnClose_'+ holidayDate[i].holidayDate +'_'+counter + '" class="holidayBtnClose">x</div></div>');
                                 newTextBoxDiv.appendTo("#holidayDiv");
-                                unAvailableDatesArray.push(holidayDate[i].holidayDate);
+                                disableDatesArray.push(holidayDate[i].holidayDate);
+                                datePickerCall();
+                                }
                             }
+
                          }
 
 
@@ -1057,10 +1479,13 @@
                                 $.each(holidayData, function (key, val) {
                                    holidayNameSelect += "<option value="+val.holidayId+">"+val.holidayYear+"-"+val.holidayName+"</option>";
                                 });
-                                 $('#eholidayNameSelect').empty();
+                                $('#eholidayNameSelect').empty();
                                 $('#eholidayNameSelect').append(holidayNameSelect);
                             }
                             else{
+                            var holidayNameSelect="<option value=''>Select</option>" ;
+                                $('#eholidayNameSelect').empty();
+                                $('#eholidayNameSelect').append(holidayNameSelect);
                                 alert('No holidays found');
                             }
                           }
@@ -1072,7 +1497,7 @@
                     $('.showHideEholidayName').show();
                 }
                 else{
-                    $('.showHideEholidayDate').show();
+                    $('.showHideEholidayDate').hide();
                     $('.showHideEholidayHoliday').show();
                     $('.showHideEholidayName').hide();
                 }
@@ -1094,14 +1519,20 @@
                       {
                           if (result.status == 'success') {
                             var holidayDate = result.data;
-
+                            
                             if (holidayDate.length > 0) {
                             for(i = 0; i < holidayDate.length; i++) {
-                                var counter = i;
-                                var newTextBoxDiv = $(document.createElement('span')).attr("class", 'eHolidaySpan');
-                                newTextBoxDiv.after().html('<div class="pull-left eHolidayEventBtn"><input type="button" class="eholidayBtn" id="eholidayBtn_'+holidayDate[i].holidayDate+'_'+counter +'" value="'+holidayDate[i].holidayDate+'" ><div id="eholidayBtnClose_'+ holidayDate[i].holidayDate +'_'+counter + '" class="eholidayBtnClose">x</div></div>');
-                                newTextBoxDiv.appendTo("#eHolidayDiv");
-                                unAvailableDatesArray.push(holidayDate[i].holidayDate);
+                                var holidayDateVal = unAvailableDatesArray.indexOf(holidayDate[i].holidayDate);
+                                if(holidayDateVal == -1) {
+                                    var counter = i;
+                                    var newTextBoxDiv = $(document.createElement('span')).attr("class", 'eHolidaySpan');
+                                    newTextBoxDiv.after().html('<div class="pull-left eHolidayEventBtn"><input type="button" class="eholidayBtn" id="eholidayBtn_'+holidayDate[i].holidayDate+'_'+counter +'" value="'+holidayDate[i].holidayDate+'-'+holidayDate[i].holidayReason+'" ><div id="eHolidayBtnClose_'+ holidayDate[i].holidayDate +'_'+counter + '" class="eHolidayBtnClose">x</div></div>');
+                                    newTextBoxDiv.appendTo("#eHolidayDiv");
+                                    unAvailableDatesArray.push(holidayDate[i].holidayDate);
+                                    eDatePickerCall();
+                                } else {
+
+                                }
                             }
                          }
 
@@ -1132,11 +1563,14 @@
                             pullDataInDropDown(data.SLAData)
                         }
                     }
-                    else if(result.status == 'error' && result.error_msg == 'sessionexpired'){
-                        alert('Session has expired.');
+                    else if(data.status == 'error' && data.error_msg == 'sessionexpired'){
+                        alert('Session has expired');
                         setTimeout(function() {
                             window.location.href = data.redirect_url;
                         }, 2000);
+                    }
+                    else{
+                        alert(data.error_msg);
                     }
                   }
                 });
@@ -1153,31 +1587,7 @@
             }
 
             /* Fetch Plant Address Start */
-            $.ajax({
-              url: "/fetchAddressViaCompanyId",
-              type: "GET",
-              dataType : "json",
-              contentType : "application/json",
-              success: function (result)
-              {
-                var data = result;
-                if (data.status == 'success') {
-                    var addressArray = data.addressArray;
-                    var addressArrayValue = "";
-                    $.each(addressArray, function (key, val) {
-                        addressArrayValue = addressArrayValue + "<option value="+val.usradd_id+">"+val.usradd_addressType+"</option>";
-                    });
-                    $('#plant').empty().append("<option value='' selected=''>Select</option>");
-                    $('#plant').append(addressArrayValue);
-                }
-                else if(result.status == 'error' && result.error_msg == 'sessionexpired'){
-                    alert('Session has expired.');
-                    setTimeout(function() {
-                        window.location.href = data.redirect_url;
-                    }, 2000);
-                }
-              }
-            });
+
 
 
             /* Fetch Pending Area Data For SLA End */
@@ -1186,19 +1596,22 @@
             /* Hide the Onboard DropdownMenu in Sidebar End */
 
             /* Datepairpicker Start */
-                    $('#datePairExample .time').timepicker({
+                    $('.datePairExample .time').timepicker({
                         'showDuration': true,
-                        'timeFormat': 'g:ia'
+                        'timeFormat': 'g:ia',
                     });
                     $('#cutOffTime').timepicker({
                         'showDuration': true,
                         'timeFormat': 'g:ia'
                     });
-                    $('#datePairExample .date').datepicker({
+                    $('.datePairExample .date').datepicker({
+                        monthNamesShort:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                        changeMonth: true,
+                        changeYear: true,
                         'format': 'm/d/yyyy',
                         'autoclose': true
                     });
-                    $('#datePairExample').datepair();
+                    $('.datePairExample').datepair();
 		    /* Datepairpicker End */
 
             /* Datepicker Start */
@@ -1214,9 +1627,12 @@
                 }
                 /* Disable Dates in Datepicker End */
                 datePickerCall();
-                eDatePickerCall();
+                //eDatePickerCall();
                 function datePickerCall() {
                     $( "#datepicker-2" ).datepicker({
+                        monthNamesShort:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                        changeMonth: true,
+                        changeYear: true,
                         dateFormat: 'dd/mm/yy',
                         //beforeShowDay: disableDates,
                         minDate: 0,
@@ -1229,7 +1645,7 @@
                                 $('#modalBody').empty();
                                 $('#modalFooter').empty();
                                 var modalBody = "<div class='form-group formGroup'><label for='recipient-name' class='col-form-label fontWeightBold'>Holiday Name:</label><input type='hidden' class='form-control' name='holidayDate' id='holidayDate' value='"+selectedDate+"'><input type='text' class='form-control' name='holidayName' id='holidayName' maxlength='20' autofocus></div>";
-                                var modalFooter = "<input type='button' id='saveHoliday' class='btn btn-primary modalBtnClass' value='Save'>";
+                                var modalFooter = "<input type='button' id='saveHoliday' class=' btn btn-primary modalBtnClass'  value='Save'>";
                                 appendDynamicContent('Add Holiday', modalBody, modalFooter);
                             }
                         }
@@ -1237,8 +1653,10 @@
                 }
                 function eDatePickerCall() {
                     $( "#edatepicker" ).datepicker({
+                        monthNamesShort:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                        changeMonth: true,
+                        changeYear: true,
                         dateFormat: 'dd/mm/yy',
-                        beforeShowDay: unavailable,
                         minDate: 0,
                         numberOfMonths: 1,
                         showOtherMonths: true,
@@ -1276,10 +1694,75 @@
                         var counter = 1;
                         var newTextBoxDiv = $(document.createElement('span')).attr("class", 'eHolidaySpan');
                         //newTextBoxDiv.attr("id", 'eHolidayBtn_'+$('#eHolidayDate').val()+'');
-                        newTextBoxDiv.after().html('<div class="pull-left eHolidayEventBtn"><input type="button" class="eHolidayBtn" id="eHolidayBtn_'+$('#eHolidayDate').val()+'_'+counter +'" value="'+$('#eHolidayDate').val()+'" ><div id="eHolidayBtnClose_'+$('#eHolidayDate').val()+'_'+counter + '" class="eHolidayBtnClose">x</div></div>');
+                        newTextBoxDiv.after().html('<div class="pull-left eHolidayEventBtn"><input type="button" class="eHolidayBtn" id="eHolidayBtn_'+$('#eHolidayDate').val()+'_'+counter +'" value="'+$('#eHolidayDate').val()+'-'+$('#eHolidayName').val()+'" ><div id="eHolidayBtnClose_'+$('#eHolidayDate').val()+'_'+counter + '" class="eHolidayBtnClose">x</div></div>');
                         newTextBoxDiv.appendTo("#eHolidayDiv");
                         unAvailableDatesArray.push($('#eHolidayDate').val());
                         $('#exampleModalCenter').modal('hide');
+
+                        $("#edatepicker").datepicker("destroy");
+                        $("#edatepicker" ).datepicker('setDate', null);
+                       $( "#edatepicker" ).datepicker({
+                        monthNamesShort:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                        changeMonth: true,
+                        changeYear: true,
+                        dateFormat: 'dd/mm/yy',
+                        beforeShowDay: remaveAttrDays,
+                        minDate: 0,
+                        numberOfMonths: 1,
+                        showOtherMonths: true,
+                        dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                        onSelect: function(selectedDate) {
+                            if ($.inArray(selectedDate, unAvailableDatesArray) == -1) {
+                                $('#editSLAModal').modal('hide');
+                                $('#exampleModalLongTitle').empty();
+                                $('#modalBody').empty();
+                                $('#modalFooter').empty();
+                                var modalBody = "<div class='form-group formGroup'><label for='recipient-name' class='col-form-label fontWeightBold'>Holiday Name:</label><input type='hidden' class='form-control' name='eHolidayDate' id='eHolidayDate' value='"+selectedDate+"'><input type='text' class='form-control' name='eHolidayName' id='eHolidayName' maxlength='20' autofocus></div>";
+                                var modalFooter = "<input type='button' id='eSaveHoliday' class='btn btn-primary modalBtnClass' value='Save'>";
+                                appendHolidayDynamicContent('Add Holiday', modalBody, modalFooter);
+                            }
+                            }
+                        });
+
+                        function remaveAttrDays(date) {
+                                var holidayBtnLength = $('.eHolidayBtn').length;
+                                var holidayEventBtnLength = $('.eHolidayEventBtn').length;
+                                if (holidayBtnLength >= 1 && holidayEventBtnLength >= 1) {
+                                var hideShowBtnArray = new Array();
+                                $('.eHolidayEventBtn').each(function() {
+                                    if($(this).css('display') != 'none')
+                                    {
+                                        hideShowBtnArray.push('true');
+                                    }
+                                    else {
+                                        hideShowBtnArray.push('false');
+                                    }
+                                });
+                                var index = 0;
+                                holidayDate = [];
+                                $('.eHolidayBtn').each(function() {
+                                    if (hideShowBtnArray[index] == 'true') {
+                                        var id = $(this).attr('id').split('_');
+                                        var holidayObject = {'holidayDate':id[1]};
+                                        holidayDate.push(holidayObject);
+                                    }
+                                    index++;
+                                });
+                            }
+
+                            for(i = 0; i < holidayDate.length; i++) {
+                                var res = holidayDate[i].holidayDate.split('/');
+                                var dateData = res[0];
+                                var monthData = res[1];
+                                var yearData = res[2];
+                                 if (date.getFullYear() == yearData && date.getMonth() == monthData-1 && date.getDate() == dateData){
+                                    return [true, 'holiday', dateData];
+                                 }
+                            }
+                             return [true, ''];
+                        }
+
+
                         $('#editSLAModal').modal('show');
                         counter++;
                     }
@@ -1293,9 +1776,71 @@
                         var counter = 1;
                         var newTextBoxDiv = $(document.createElement('span')).attr("class", 'holidaySpan');
                         //newTextBoxDiv.attr("id", 'holidayBtn'+$('#holidayDate').val());
-                        newTextBoxDiv.after().html('<div class="pull-left holidayEventBtn"><input type="button" class="holidayBtn" id="holidayBtn_'+$("#holidayDate").val()+'_'+counter +'" value="'+$('#holidayDate').val()+'" ><div id="holidayBtnClose_'+ $('#holidayDate').val() +'_'+counter + '" class="holidayBtnClose">x</div></div>');
+                        newTextBoxDiv.after().html('<div class="pull-left holidayEventBtn"><input type="button" class="holidayBtn" id="holidayBtn_'+$("#holidayDate").val()+'_'+counter +'" value="'+$('#holidayDate').val()+'-'+$('#holidayName').val()+'" ><div id="holidayBtnClose_'+ $('#holidayDate').val() +'_'+counter + '" class="holidayBtnClose">x</div></div>');
                         newTextBoxDiv.appendTo("#holidayDiv");
                         disableDatesArray.push($('#holidayDate').val());
+                       $('#fromCutTime').focus();
+                        $("#datepicker-2").datepicker("destroy");
+                        $("#datepicker-2" ).datepicker('setDate', null);
+                        $("#datepicker-2" ).datepicker({
+                        monthNamesShort:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                        changeMonth: true,
+                        changeYear: true,
+                        dateFormat: 'dd/mm/yy',
+                        beforeShowDay: remaveAttrDays,
+                        minDate: 0,
+                        numberOfMonths: 1,
+                        showOtherMonths: true,
+                        dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                        onSelect: function(selectedDate) {
+                            if ($.inArray(selectedDate, disableDatesArray) == -1) {
+                                $('#exampleModalLongTitle').empty();
+                                $('#modalBody').empty();
+                                $('#modalFooter').empty();
+                                var modalBody = "<div class='form-group formGroup'><label for='recipient-name' class='col-form-label fontWeightBold'>Holiday Name:</label><input type='hidden' class='form-control' name='holidayDate' id='holidayDate' value='"+selectedDate+"'><input type='text' class='form-control' name='holidayName' id='holidayName' maxlength='20' autofocus></div>";
+                                var modalFooter = "<input type='button' id='saveHoliday' class='btn btn-primary modalBtnClass' value='Save'>";
+                                appendDynamicContent('Add Holiday', modalBody, modalFooter);
+                            }
+                            }
+                        });
+
+                        function remaveAttrDays(date) {
+                                var holidayBtnLength = $('.holidayBtn').length;
+                                var holidayEventBtnLength = $('.holidayEventBtn').length;
+                                if (holidayBtnLength >= 1 && holidayEventBtnLength >= 1) {
+                                var hideShowBtnArray = new Array();
+                                $('.holidayEventBtn').each(function() {
+                                    if($(this).css('display') != 'none')
+                                    {
+                                        hideShowBtnArray.push('true');
+                                    }
+                                    else {
+                                        hideShowBtnArray.push('false');
+                                    }
+                                });
+                                var index = 0;
+                                holidayDate = [];
+                                $('.holidayBtn').each(function() {
+                                    if (hideShowBtnArray[index] == 'true') {
+                                        var id = $(this).attr('id').split('_');
+                                        var holidayObject = {'holidayDate':id[1]};
+                                        holidayDate.push(holidayObject);
+                                    }
+                                    index++;
+                                });
+                            }
+
+                            for(i = 0; i < holidayDate.length; i++) {
+                                var res = holidayDate[i].holidayDate.split('/');
+                                var dateData = res[0];
+                                var monthData = res[1];
+                                var yearData = res[2];
+                                 if (date.getFullYear() == yearData && date.getMonth() == monthData-1 && date.getDate() == dateData){
+                                    return [true, 'holiday', dateData];
+                                 }
+                            }
+                             return [true, ''];
+                        }
                         //datePickerCall();
                         $('#exampleModalCenter').modal('hide');
                         counter++;
@@ -1307,70 +1852,417 @@
 
                 $(document).on('click', '#addBtn', function() {
                     if ($('#shift').val() != '' && $('#fromTime').val() != '' && $('#toTime').val() != '') {
+                    var shiftBtnLength = $('.shiftBtn').length;
+                     var alreadyExist = false;
+                    if (shiftBtnLength >= 1 ) {
+                    var hideShowBtnArray = new Array();
+
+                    $('.shiftEventBtn').each(function() {
+                        if($(this).css('display') != 'none')
+                        {
+                            hideShowBtnArray.push('true');
+                        }
+                        else {
+                            hideShowBtnArray.push('false');
+                        }
+                    });
+                    var index = 0;
+                            $('.shiftBtn').each(function() {
+                                if (hideShowBtnArray[index] == 'true') {
+                                    var id = $(this).attr('id').split('_');
+                                    var oldTime = id[1].split('-');
+                                    var time = oldTime[0];
+                                    var time1 = oldTime[1];
+                                    if(checkAlreadyExistsTime(time,time1,$('#fromTime').val())){
+                                        alert("From Time already exist!");
+                                        alreadyExist = true;
+                                        return false;
+                                    }
+                                    else if(checkAlreadyExistsTime(time,time1,$('#toTime').val())){
+                                        alert("To Time already exist!");
+                                        alreadyExist = true;
+                                        return false;
+                                    }
+                                    else if($('#shift').val().toLowerCase() == id[2].toLowerCase()){
+                                        alert("Slot Name already exist!");
+                                        alreadyExist = true;
+                                        return false;
+                                    }
+
+                                }
+                                index++;
+                            });
+                        }
+                        if( alreadyExist ==false){
                         var counter = 1;
                         var newTextBoxDiv = $(document.createElement('span')).attr("class", 'dSlotSpan');
                         newTextBoxDiv.after().html('<div class="pull-left shiftEventBtn"><input type="button" class="shiftBtn" id="shiftBtn_'+$('#fromTime').val()+'-'+$('#toTime').val()+'_'+$("#shift").val()+'_'+counter +'" value="'+$('#fromTime').val()+'-'+$('#toTime').val()+'_'+$("#shift").val()+'" ><div id="shiftBtnClose_'+$('#fromTime').val()+'-'+$('#toTime').val()+'_'+$("#shift").val()+'_'+counter + '" class="eclear">x</div></div>');
                         newTextBoxDiv.appendTo("#dSlotDiv");
                         counter++;
+                        $('#fromTime').val('');
+                        $('#toTime').val('');
+                        $('#shift').val('');
+                        }
                     }
                     else {
-                        alert('Please enter Mandatory fields');
+                        alert('Please Enter Delivery Slot');
                     }
                 });
 
+            function conversion(a){
+                var split = a.split(":");
+                var hours =split[0];
+                var minutes = split[1].match(/.{1,2}/g)[0];
+                var AMPM = split[1].match(/.{1,2}/g)[1];
+                if(AMPM == "pm" && parseInt(hours)<12) hours = parseInt(hours)+12;
+                if(AMPM == "am" && parseInt(hours)==12) hours = parseInt(hours)-12;
+                var sHours = hours.toString();
+                var sMinutes = minutes.toString();
+                return parseFloat(sHours+"."+sMinutes)
+                }
+
+                function checkAlreadyExistsTime(time,time1,newEntry){
+                    var fromTime = conversion(time);
+                    var toTime = conversion(time1);
+                    var newEntryTime = conversion(newEntry);
+                    if(fromTime <= newEntryTime && newEntryTime < toTime){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }
+
                 $(document).on('click', '#eaddBtn', function() {
                     if ($('#eshift').val() != '' && $('#efromTime').val() != '' && $('#etoTime').val() != '') {
+                    var shiftBtnLength = $('.eshiftBtn').length;
+                     var alreadyExist = false;
+                    if (shiftBtnLength >= 1 ) {
+                    var hideShowBtnArray = new Array();
+
+                    $('.eshiftEventBtn').each(function() {
+                        if($(this).css('display') != 'none')
+                        {
+                            hideShowBtnArray.push('true');
+                        }
+                        else {
+                            hideShowBtnArray.push('false');
+                        }
+                    });
+                    var index = 0;
+                    $('.eshiftBtn').each(function() {
+                        if (hideShowBtnArray[index] == 'true') {
+                            var id = $(this).attr('id').split('_');
+                            var oldTime = id[1].split('-');
+                            var time = oldTime[0];
+                            var time1 = oldTime[1];
+                            if(checkAlreadyExistsTime(time,time1,$('#efromTime').val())){
+                                alert("From Time already exist!");
+                                alreadyExist = true;
+                                return false;
+                            }
+                            else if(checkAlreadyExistsTime(time,time1,$('#etoTime').val())){
+                                alert("To Time already exist!");
+                                alreadyExist = true;
+                                return false;
+                            }
+                            else if($('#eshift').val().toLowerCase() == id[2].toLowerCase()){
+                                alert("Slot Name already exist!");
+                                alreadyExist = true;
+                                return false;
+                            }
+
+                        }
+                        index++;
+                    });
+                        }
+                        if( alreadyExist == false){
                         var counter = 1;
                         var newTextBoxDiv = $(document.createElement('span')).attr("class", 'edSlotSpan');
                         newTextBoxDiv.after().html('<div class="pull-left eshiftEventBtn"><input type="button" class="eshiftBtn" id="eshiftBtn_'+$('#efromTime').val()+'-'+$('#etoTime').val()+'_'+$("#eshift").val()+'_'+counter +'" value="'+$('#efromTime').val()+'-'+$('#etoTime').val()+'_'+$("#eshift").val()+'" ><div id="eshiftBtnClose_'+$('#efromTime').val()+'-'+$('#etoTime').val()+'_'+$("#eshift").val()+'_'+counter + '" class="eHolidayBtnClose">x</div></div>');
                         newTextBoxDiv.appendTo("#edSlotDiv");
                         counter++;
+                        $('#efromTime').val('');
+                        $('#etoTime').val('');
+                        $('#eshift').val('');
+                        }
+
                     }
                     else {
-                        alert('Please enter Mandatory fields');
+                        alert('Please Enter Delivery Slot');
                     }
                 });
 
                 $(document).on('click', '#addCutOffBtn', function() {
                     if ( $('#fromCutTime').val() != '' && $('#toCutTime').val() != '') {
-                        var counter = 1;
-                        var newTextBoxDiv = $(document.createElement('span')).attr("class", 'cutOffSpan');
-                        newTextBoxDiv.after().html('<div class="pull-left cutOffEventBtn"><input type="button" class="cutOffBtn" id="cutOffBtn_'+$('#fromCutTime').val()+'-'+$('#toCutTime').val()+'_'+counter +'" value="'+$('#fromCutTime').val()+'-'+$('#toCutTime').val()+'" ><div id="cutOffBtnClose_'+$('#fromCutTime').val()+'-'+$('#toCutTime').val()+'_'+counter + '" class="eclear">x</div></div>');
-                        newTextBoxDiv.appendTo("#cutOffDiv");
-                        counter++;
+                     var cutOffBtnLength = $('.cutOffBtn').length;
+                     var alreadyExist = false;
+                    if (cutOffBtnLength >= 1 ) {
+                    var hideShowBtnArray = new Array();
+
+                    $('.cutOffEventBtn').each(function() {
+                        if($(this).css('display') != 'none')
+                        {
+                            hideShowBtnArray.push('true');
+                        }
+                        else {
+                            hideShowBtnArray.push('false');
+                        }
+                    });
+                    var index = 0;
+                            $('.cutOffBtn').each(function() {
+                                if (hideShowBtnArray[index] == 'true') {
+                                    var id = $(this).attr('id').split('_');
+                                     var oldTime = id[1].split('-');
+                                    var time = oldTime[0];
+                                    var time1 = oldTime[1];
+                                    if(checkAlreadyExistsTime(time,time1,$('#fromCutTime').val())){
+                                        alert("From Time already exist!");
+                                        alreadyExist = true;
+                                        return false;
+                                    }
+                                    else if(checkAlreadyExistsTime(time,time1,$('#toCutTime').val())){
+                                        alert("To Time already exist!");
+                                        alreadyExist = true;
+                                        return false;
+                                    }
+                                }
+                                index++;
+                            });
+                        }
+
+                        if(alreadyExist == false){
+                            var counter = 1;
+                            var newTextBoxDiv = $(document.createElement('span')).attr("class", 'cutOffSpan');
+                            newTextBoxDiv.after().html('<div class="pull-left cutOffEventBtn"><input type="button" class="cutOffBtn" id="cutOffBtn_'+$('#fromCutTime').val()+'-'+$('#toCutTime').val()+'_'+counter +'" value="'+$('#fromCutTime').val()+'-'+$('#toCutTime').val()+'" ><div id="cutOffBtnClose_'+$('#fromCutTime').val()+'-'+$('#toCutTime').val()+'_'+counter + '" class="eclear">x</div></div>');
+                            newTextBoxDiv.appendTo("#cutOffDiv");
+                            counter++;
+                             $('#fromCutTime').val('');
+                             $('#toCutTime').val('');
+                        }
                     }
                     else {
-                        alert('Please entere CutOff Time');
+                        alert('Please enter CutOff Time');
                     }
                 });
 
+                function conversion(a){
+                var split = a.split(":");
+                var hours =split[0];
+                var minutes = split[1].match(/.{1,2}/g)[0];
+                var AMPM = split[1].match(/.{1,2}/g)[1];
+                if(AMPM == "pm" && parseInt(hours)<12) hours = parseInt(hours)+12;
+                if(AMPM == "am" && parseInt(hours)==12) hours = parseInt(hours)-12;
+                var sHours = hours.toString();
+                var sMinutes = minutes.toString();
+                return parseFloat(sHours+"."+sMinutes)
+                }
+
+                function checkAlreadyExistsTime(time,time1,newEntry){
+                    var fromTime = conversion(time);
+                    var toTime = conversion(time1);
+                    var newEntryTime = conversion(newEntry);
+                    if(fromTime <= newEntryTime && newEntryTime < toTime){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }
+
+
                 $(document).on('click', '#eaddCutOffBtn', function() {
                     if ( $('#efromCutTime').val() != '' && $('#etoCutTime').val() != '') {
+                      var cutOffBtnLength = $('.ecutOffBtn').length;
+                     var alreadyExist = false;
+                    if (cutOffBtnLength >= 1 ) {
+                    var hideShowBtnArray = new Array();
+
+                    $('.ecutOffEventBtn').each(function() {
+                        if($(this).css('display') != 'none')
+                        {
+                            hideShowBtnArray.push('true');
+                        }
+                        else {
+                            hideShowBtnArray.push('false');
+                        }
+                    });
+                    var index = 0;
+                            $('.ecutOffBtn').each(function() {
+                                if (hideShowBtnArray[index] == 'true') {
+                                    var id = $(this).attr('id').split('_');
+                                     var oldTime = id[1].split('-');
+                                    var time = oldTime[0];
+                                    var time1 = oldTime[1];
+                                    if(checkAlreadyExistsTime(time,time1,$('#efromCutTime').val())){
+                                        alert("From Time already exist!");
+                                        alreadyExist = true;
+                                        return false;
+                                    }
+                                    else if(checkAlreadyExistsTime(time,time1,$('#etoCutTime').val())){
+                                        alert("To Time already exist!");
+                                        alreadyExist = true;
+                                        return false;
+                                    }
+                                }
+                                index++;
+                            });
+                        }
+
+                        if(alreadyExist == false){
                         var counter = 1;
                         var newTextBoxDiv = $(document.createElement('span')).attr("class", 'ecutOffSpan');
                         newTextBoxDiv.after().html('<div class="pull-left ecutOffEventBtn"><input type="button" class="ecutOffBtn" id="ecutOffBtn_'+$('#efromCutTime').val()+'-'+$('#etoCutTime').val()+'_'+counter +'" value="'+$('#efromCutTime').val()+'-'+$('#etoCutTime').val()+'" ><div id="ecutOffBtnClose_'+$('#efromCutTime').val()+'-'+$('#etoCutTime').val()+'_'+counter + '" class="eclear">x</div></div>');
                         newTextBoxDiv.appendTo("#ecutOffDiv");
                         counter++;
+                      $('#efromCutTime').val('');
+                      $('#etoCutTime').val('');
+
+                    }
                     }
                     else {
-                        alert('Please entere CutOff Time');
+                        alert('Please enter CutOff Time');
                     }
+
                 });
 
                 $(document).on('click', '.holidayBtnClose', function() {
                     var arr = $(this).attr('id').split('_');
                     $(this).parent().fadeOut('slow', function(c){
                         disableDatesArray.splice( $.inArray(arr[1], disableDatesArray), 1 );
-                        datePickerCall();
+                        //datePickerCall();
+                         $("#datepicker-2").datepicker("destroy");
+                        $( "#datepicker-2" ).datepicker('setDate', null);
+                       $( "#datepicker-2" ).datepicker({
+                       monthNamesShort:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                       changeMonth: true,
+                       changeYear: true,
+                        dateFormat: 'dd/mm/yy',
+                        beforeShowDay: remaveAttrDays,
+                        minDate: 0,
+                        numberOfMonths: 1,
+                        showOtherMonths: true,
+                        dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                        onSelect: function(selectedDate) {
+                            if ($.inArray(selectedDate, unAvailableDatesArray) == -1) {
+                                $('#exampleModalLongTitle').empty();
+                                $('#modalBody').empty();
+                                $('#modalFooter').empty();
+                                var modalBody = "<div class='form-group formGroup'><label for='recipient-name' class='col-form-label fontWeightBold'>Holiday Name:</label><input type='hidden' class='form-control' name='holidayDate' id='holidayDate' value='"+selectedDate+"'><input type='text' class='form-control' name='holidayName' id='holidayName' maxlength='20' autofocus></div>";
+                                var modalFooter = "<input type='button' id='saveHoliday' class='btn btn-primary modalBtnClass' value='Save'>";
+                                appendDynamicContent('Add Holiday', modalBody, modalFooter);
+                            }
+                            }
+                        });
+
+                        function remaveAttrDays(date) {
+                                var holidayBtnLength = $('.holidayBtn').length;
+                                var holidayEventBtnLength = $('.holidayEventBtn').length;
+                                if (holidayBtnLength >= 1 && holidayEventBtnLength >= 1) {
+                                var hideShowBtnArray = new Array();
+                                $('.holidayEventBtn').each(function() {
+                                    if($(this).css('display') != 'none')
+                                    {
+                                        hideShowBtnArray.push('true');
+                                    }
+                                    else {
+                                        hideShowBtnArray.push('false');
+                                    }
+                                });
+                                var index = 0;
+                                holidayDate = [];
+                                $('.holidayBtn').each(function() {
+                                    if (hideShowBtnArray[index] == 'true') {
+                                        var id = $(this).attr('id').split('_');
+                                        var holidayObject = {'holidayDate':id[1]};
+                                        holidayDate.push(holidayObject);
+                                    }
+                                    index++;
+                                });
+                            }
+
+                            for(i = 0; i < holidayDate.length; i++) {
+                                var res = holidayDate[i].holidayDate.split('/');
+                                var dateData = res[0];
+                                var monthData = res[1];
+                                var yearData = res[2];
+                                 if (date.getFullYear() == yearData && date.getMonth() == monthData-1 && date.getDate() == dateData){
+                                    return [true, 'holiday', dateData];
+                                 }
+                            }
+                             return [true, ''];
+                        }
                         $('#'+$(this).attr('id')).remove();
                     });
                 });
 
                 $(document).on('click', '.eHolidayBtnClose,.eclear', function() {
                     var arr = $(this).attr('id').split('_');
+                    holidayDate = [];
                     $(this).parent().fadeOut('slow', function(c){
                         unAvailableDatesArray.splice( $.inArray(arr[1], unAvailableDatesArray), 1 );
-                        eDatePickerCall();
+                       // eDatePickerCall();
+                        $("#edatepicker").datepicker("destroy");
+                        $( "#edatepicker" ).datepicker('setDate', null);
+                       $( "#edatepicker" ).datepicker({
+                       monthNamesShort:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                       changeMonth: true,
+                       changeYear: true,
+                        dateFormat: 'dd/mm/yy',
+                        beforeShowDay: remaveAttrDays,
+                        minDate: 0,
+                        numberOfMonths: 1,
+                        showOtherMonths: true,
+                        dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                        onSelect: function(selectedDate) {
+                            if ($.inArray(selectedDate, unAvailableDatesArray) == -1) {
+                                $('#editSLAModal').modal('hide');
+                                $('#exampleModalLongTitle').empty();
+                                $('#modalBody').empty();
+                                $('#modalFooter').empty();
+                                var modalBody = "<div class='form-group formGroup'><label for='recipient-name' class='col-form-label fontWeightBold'>Holiday Name:</label><input type='hidden' class='form-control' name='eHolidayDate' id='eHolidayDate' value='"+selectedDate+"'><input type='text' class='form-control' name='eHolidayName' id='eHolidayName' maxlength='20' autofocus></div>";
+                                var modalFooter = "<input type='button' id='eSaveHoliday' class='btn btn-primary modalBtnClass' value='Save'>";
+                                appendHolidayDynamicContent('Add Holiday', modalBody, modalFooter);
+                            }
+                            }
+                        });
+
+                        function remaveAttrDays(date) {
+                                var holidayBtnLength = $('.eHolidayBtn').length;
+                                var holidayEventBtnLength = $('.eHolidayEventBtn').length;
+                                var res = arr[1].split('/')
+                                if (holidayBtnLength >= 1 && holidayEventBtnLength >= 1) {
+                                var hideShowBtnArray = new Array();
+                                $('.eHolidayEventBtn').each(function() {
+                                    if($(this).css('display') != 'none')
+                                    {
+                                        hideShowBtnArray.push('true');
+                                    }
+                                    else {
+                                        hideShowBtnArray.push('false');
+                                    }
+                                });
+                                var index = 0;
+
+                                $('.eHolidayBtn').each(function() {
+                                    if (hideShowBtnArray[index] == 'true') {
+                                        var id = $(this).attr('id').split('_');
+                                        var holidayObject = {'holidayDate':id[1]};
+                                        holidayDate.push(holidayObject);
+                                    }
+                                    index++;
+                                });
+                            }
+
+                            for(i = 0; i < holidayDate.length; i++) {
+                                var res = holidayDate[i].holidayDate.split('/');
+                                var dateData = res[0];
+                                var monthData = res[1];
+                                var yearData = res[2];
+                                 if (date.getFullYear() == yearData && date.getMonth() == monthData-1 && date.getDate() == dateData){
+                                    return [true, 'holiday', dateData];
+                                 }
+                            }
+                             return [true, ''];
+                        }
                         $('#'+$(this).attr('id')).remove();
                     });
                 });
@@ -1457,13 +2349,13 @@
                    if(value.slaType == 'Default'){
                     action = "<input class='editSLA' id='edit_"+value.slaId+"' type='button' value='Edit'>";
                    }
-                   viewSLATable.row.add([sno,value.slaType,value.slaStatus,action]).draw();
+                   viewSLATable.row.add([sno,value.slaType,value.status,action]).draw();
                 });
             }
             /* Load SLA Data in table End */
             /* Add SLA Service Start */
 
-
+$("#SLAName,#eSLAName").attr('maxlength','30');
 
             $('#SLASubmit').on('click', function() {
                 var workingDays = [];
@@ -1485,6 +2377,7 @@
                         formStatus = true;
                     }
                     else {
+                    alert('Please fill mandatory fields');
                         formStatus = false;
                         $('#'+$(this).attr('id')).focus();
                         return false;
@@ -1618,6 +2511,10 @@
                 }
             });
             /* Add SLA Service End */
+
+
+
+
             /* Update SLA Service Start */
             /* Add SLA Service Start */
             $('#editSLASubmit').on('click', function() {
@@ -1632,10 +2529,8 @@
                 var holidayBtnLength = $('.eHolidayBtn').length;
                 var holidayEventBtnLength = $('.eHolidayEventBtn').length;
                 var cutOffBtnLength = $('.ecutOffBtn').length;
-                console.log(cutOffBtnLength);
                 var cutOffEventBtnLength = $('.ecutOffEventBtn').length;
                 var shiftBtnLength = $('.eshiftBtn').length;
-                console.log(shiftBtnLength);
                 var shiftEventBtnLength = $('.eshiftEventBtn').length;
 
                 $('.eMandatoryFormFields').each(function() {
@@ -1757,7 +2652,8 @@
                           success: function (result)
                           {
                                 if (result.status == 'success') {
-                                    alert(result.success_msg);
+                            alert( result.success_msg);
+
                                     setTimeout(function() {
                                         location.reload();
                                     },2000);
@@ -1771,6 +2667,9 @@
                                             window.location.href = data.redirect_url;
                                         }, 2000);
                                 }
+                                else{
+                                    alert(result.error_msg);
+                                }
                           }
                     });
                 }
@@ -1782,9 +2681,9 @@
             });
 
             function loadDataInForm(type, SLAId) {
-                var data = {"type":'edit',"slaId":SLAId};
+                var data = {"type":type,"slaId":SLAId};
                 $.ajax({
-                  url: "/updateSlaForCustomer",
+                  url: "/slaDetailsByslaId",
                   type: "POST",
                   dataType : "json",
                   contentType : "application/json",
@@ -1795,45 +2694,94 @@
                     if (data.status == 'success') {
                         loadSLADataInForm(type,data.SLAData[0]);
                     }
-                   else if(result.status == 'error' && result.error_msg == 'sessionexpired'){
+                   else if(data.status == 'error' && data.error_msg == 'sessionexpired'){
                         alert('Session has expired.');
                         setTimeout(function() {
                             window.location.href = data.redirect_url;
                         }, 2000);
+                    }else{
+                    alert(data.error_msg);
                     }
                    }
                 });
             }
 
             function loadSLADataInForm(type, SLAData) {
+            $('.showHideEholidayDate').hide();
                  if (type == 'editSLAForm') {
                      $('#eSLAId').val(SLAData.slaId);
                      $('#eSLAName').val(SLAData.slaType);
                      if(SLAData.slaType == 'Default'){
-                     $("#eSLAName").prop("disabled",true);
+                        $("#eSLAName").prop("disabled",true);
+                     }
+                     else {
+                        $("#eSLAName").prop("disabled",false);
                      }
                      $('#eDeliveryDays').val(SLAData.slaDetails.orderingSchedule);
                      var workingDays = SLAData.slaDetails.workingDays;
                      var eWorkingDayIdArray = ['esunday','emonday','etuesday','ewednesday','ethursday','efriday','esaturday'];
                      for(i = 0; i < workingDays.length; i++) {
                         if (workingDays[i] == 1) {
-                            $('#'+eWorkingDayIdArray[i]+'').attr('checked',true);
+                            $('#'+eWorkingDayIdArray[i]+'').prop('checked',true);
                         }
                      }
                      var deliveryDays = SLAData.slaDetails.deliveryDays;
                      var eWorkingDayIdArray = ['esunday1','emonday1','etuesday1','ewednesday1','ethursday1','efriday1','esaturday1'];
                      for(i = 0; i < deliveryDays.length; i++) {
                         if (deliveryDays[i] == 1) {
-                            $('#'+eWorkingDayIdArray[i]+'').attr('checked',true);
+                            $('#'+eWorkingDayIdArray[i]+'').prop('checked',true);
                         }
                      }
                      var holidayDate = SLAData.slaDetails.holidayDate;
+                        checkDate.push(holidayDate);
+                        eDatePickerholidayDate();
+                     function eDatePickerholidayDate() {
+                    $( "#edatepicker" ).datepicker('setDate', null);
+                       $( "#edatepicker" ).datepicker({
+                       monthNamesShort:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                       changeMonth: true,
+                       changeYear: true,
+                        dateFormat: 'dd/mm/yy',
+                        beforeShowDay: setHoliDays,
+                        minDate: 0,
+                        numberOfMonths: 1,
+                        showOtherMonths: true,
+                        dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                        onSelect: function(selectedDate) {
+                            if ($.inArray(selectedDate, unAvailableDatesArray) == -1) {
+                                $('#editSLAModal').modal('hide');
+                                $('#exampleModalLongTitle').empty();
+                                $('#modalBody').empty();
+                                $('#modalFooter').empty();
+                                var modalBody = "<div class='form-group formGroup'><label for='recipient-name' class='col-form-label fontWeightBold'>Holiday Name:</label><input type='hidden' class='form-control' name='eHolidayDate' id='eHolidayDate' value='"+selectedDate+"'><input type='text' class='form-control' name='eHolidayName' id='eHolidayName' maxlength='20' autofocus></div>";
+                                var modalFooter = "<input type='button' id='eSaveHoliday' class='btn btn-primary modalBtnClass' value='Save'>";
+                                appendHolidayDynamicContent('Add Holiday', modalBody, modalFooter);
+                            }
+                            }
+                        });
+                            }
+
+                        function setHoliDays(date) {
+                               for (i = 0; i < holidayDate.length; i++) {
+                                var holidayDateData = holidayDate[i].holidayDate;
+                                var res = holidayDateData.split('/')
+                                var dateData = res[0];
+                                var monthData = res[1];
+                                var yearData = res[2];
+                                 if (date.getFullYear() == yearData && date.getMonth() == monthData-1 && date.getDate() == dateData){
+                                    return [true, 'holiday', dateData];
+                                 }
+                               }
+                              return [true, ''];
+                            }
+
+
                      if (holidayDate.length > 0) {
                         $('#eHolidayDiv').empty();
                         for(i = 0; i < holidayDate.length; i++) {
                             var counter = i;
                             var newTextBoxDiv = $(document.createElement('span')).attr("class", 'eHolidaySpan');
-                            newTextBoxDiv.after().html('<div class="pull-left eHolidayEventBtn"><input type="button" class="eHolidayBtn" id="eHolidayBtn_'+holidayDate[i].holidayDate+'_'+counter +'" value="'+holidayDate[i].holidayDate+'" ><div id="eHolidayBtnClose_'+ holidayDate[i].holidayDate +'_'+counter + '" class="eHolidayBtnClose">x</div></div>');
+                            newTextBoxDiv.after().html('<div class="pull-left eHolidayEventBtn"><input type="button" class="eHolidayBtn" id="eHolidayBtn_'+holidayDate[i].holidayDate+'_'+counter +'" value="'+holidayDate[i].holidayDesc+'" ><div id="eHolidayBtnClose_'+ holidayDate[i].holidayDate +'_'+counter + '" class="eHolidayBtnClose">x</div></div>');
                             newTextBoxDiv.appendTo("#eHolidayDiv");
                             unAvailableDatesArray.push(holidayDate[i].holidayDate);
                         }
@@ -1870,26 +2818,83 @@
                      var workingDayIdArray = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
                      for(i = 0; i < workingDays.length; i++) {
                         if (workingDays[i] == 1) {
-                            $('#'+workingDayIdArray[i]+'').attr('checked',true);
+                            $('#'+workingDayIdArray[i]+'').prop('checked',true);
                         }
                      }
                      var deliveryDays = SLAData.slaDetails.deliveryDays;
                      var deliveryDaysIdArray = ['sunday1','monday1','tuesday1','wednesday1','thursday1','friday1','saturday1'];
                      for(i = 0; i < deliveryDays.length; i++) {
                         if (deliveryDays[i] == 1) {
-                            $('#'+deliveryDaysIdArray[i]+'').attr('checked',true);
+                            $('#'+deliveryDaysIdArray[i]+'').prop('checked',true);
                         }
                      }
                      var holidayDate = SLAData.slaDetails.holidayDate;
+                     checkDate.push(holidayDate);
+                       $( "#edatepicker" ).datepicker({
+                       monthNamesShort:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                       changeMonth: true,
+                       changeYear: true,
+                        dateFormat: 'dd/mm/yy',
+                        beforeShowDay: setHoliDays,
+                        minDate: 0,
+                        numberOfMonths: 1,
+                        showOtherMonths: true,
+                        dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                        onSelect: function(selectedDate) {
+                            if ($.inArray(selectedDate, disableDatesArray) == -1) {
+                                $('#editSLAModal').modal('hide');
+                                $('#exampleModalLongTitle').empty();
+                                $('#modalBody').empty();
+                                $('#modalFooter').empty();
+                                var modalBody = "<div class='form-group formGroup'><label for='recipient-name' class='col-form-label fontWeightBold'>Holiday Name:</label><input type='hidden' class='form-control' name='holidayDate' id='holidayDate' value='"+selectedDate+"'><input type='text' class='form-control' name='holidayName' id='holidayName' maxlength='20' autofocus></div>";
+                                var modalFooter = "<input type='button' id='saveHoliday' class='btn btn-primary modalBtnClass' value='Save'>";
+                                appendHolidayDynamicContent('Add Holiday', modalBody, modalFooter);
+                            }
+                        }
+                    });
+
+                            /*function setHoliDays(date) {
+                                   for (i = 0; i < holidayDate.length; i++) {
+                                     if (date.getFullYear() == holidayDate[i][0] && date.getMonth() == holidayDate[i][1] - 1 && date.getDate() == holidayDate[i][2]) {
+                                        return [true, 'holiday', holidayDate[i][3]];
+                                     }
+                                   }
+                                  return [true, ''];
+                                }*/
+                           function setHoliDays(date) {
+                               for (i = 0; i < holidayDate.length; i++) {
+                                var holidayDateData = holidayDate[i].holidayDate;
+                                var res = holidayDateData.split('/')
+                                var dateData = res[0];
+                                var monthData = res[1];
+                                var yearData = res[2];
+                                 if (date.getFullYear() == yearData && date.getMonth() == monthData-1 && date.getDate() == dateData){
+                                    return [true, 'holiday', dateData];
+                                 }
+                               }
+                              return [true, ''];
+                            }
+
                      if (holidayDate.length > 0) {
                         $('#holidayDiv').empty();
                         for(i = 0; i < holidayDate.length; i++) {
                             var counter = i;
                             var newTextBoxDiv = $(document.createElement('span')).attr("class", 'holidaySpan');
-                            newTextBoxDiv.after().html('<div class="pull-left holidayEventBtn"><input type="button" class="holidayBtn" id="holidayBtn_'+holidayDate[i].holidayDate+'_'+counter +'" value="'+holidayDate[i].holidayDate+'" ><div id="holidayBtnClose_'+ holidayDate[i].holidayDate +'_'+counter + '" class="holidayBtnClose">x</div></div>');
+                            newTextBoxDiv.after().html('<div class="pull-left holidayEventBtn"><input type="button" class="holidayBtn" id="holidayBtn_'+holidayDate[i].holidayDate+'_'+counter +'" value="'+holidayDate[i].holidayDesc+'" ><div id="holidayBtnClose_'+ holidayDate[i].holidayDate +'_'+counter + '" class="eHolidayBtnClose">x</div></div>');
                             newTextBoxDiv.appendTo("#holidayDiv");
                             disableDatesArray.push(holidayDate[i].holidayDate);
+                            disableDates();
+                            function disableDates() {
+                            var date = new Date();
+                                dmy = ("0" + date.getDate()).slice(-2)+ "/"+("0" + (date.getMonth() + 1)).slice(-2) + "/" + date.getFullYear();
+                                if ($.inArray(dmy, disableDatesArray) == -1) {
+                                    return [true, ""];
+                                } else {
+                                    return [false, "", "Unavailable"];
+                                }
+                            }
                         }
+                        $('.formFieldShowHideHoliday').show();
                      }
                      var deliverySlot = SLAData.slaDetails.deliverySlot;
                      if (deliverySlot.length > 0) {
@@ -1944,7 +2949,9 @@ $('#confirmModalPopupSubmit').on('click', function() {
                     var data = result;
                     if (data.status == 'success') {
                         alert(data.success_msg);
-                        location.reload();
+                        setTimeout(function() {
+                                window.location.reload();
+                            }, 3000);
                     }
                     else if(data.status == 'error' && data.error_msg != 'sessionexpired'){
                         alert(data.error_msg);
@@ -1954,6 +2961,9 @@ $('#confirmModalPopupSubmit').on('click', function() {
                         setTimeout(function() {
                             window.location.href = data.redirect_url;
                         }, 2000);
+                    }
+                    else{
+                        alert(data.error_msg);
                     }
                    }
                 });
@@ -1997,6 +3007,9 @@ $('#confirmModalPopupSubmit').on('click', function() {
                                 setTimeout(function() {
                                     window.location.href = data.redirect_url;
                                 }, 2000);
+                            }
+                            else{
+                                alert(result.error_msg);
                             }
                           }
                      });
@@ -2091,8 +3104,7 @@ $('#confirmModalPopupSubmit').on('click', function() {
 
                 }
                 else if ($(this).attr('id') == 'viewSLA') {
-                    $('#createSLADiv').hide();
-                    $('#viewSLADiv').show();
+                   location.reload();
                 }
             });
 
@@ -2112,8 +3124,18 @@ $('#confirmModalPopupSubmit').on('click', function() {
 
         $(document).ready(function() {
 
-         var date = new Date();
+        $('.datePairExample > input').keydown(function(e){
+            if (e.keyCode != 9 && e.keyCode != 8 && e.keyCode != 46) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+                var date = new Date();
                 $("#uDOJ , #uDOD").datepicker({
+                monthNamesShort:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                changeMonth: true,
+                changeYear: true,
                     dateFormat: "dd/mm/yy",
                     defaultDate: 'Select',
                     onSelect: function () {
@@ -2176,8 +3198,6 @@ $('#confirmModalPopupSubmit').on('click', function() {
             });
 
 
-
-
               $('#submit').on('click', function() {
                 $('#success_msg').empty();
                 $('#error_msg').empty();
@@ -2201,9 +3221,6 @@ $('#confirmModalPopupSubmit').on('click', function() {
                                 window.location.href = data.redirect_url;
                             }, 3000);
                         }
-                        else if (data.status == 'error' && data.error_msg != 'sessionexpired') {
-                            $('#error_msg').append(data.error_msg);
-                        }
                         else if (data.status == 'error' && data.error_msg == 'sessionexpired') {
                             $('#domainName').val('');
                             $('#error_msg').append('Session expired.');
@@ -2212,6 +3229,9 @@ $('#confirmModalPopupSubmit').on('click', function() {
                             setTimeout(function() {
                                 window.location.href = data.redirect_url;
                             }, 3000);
+                        }
+                        else {
+                            $('#error_msg').append(data.error_msg);
                         }
                       }
                      });

@@ -4,7 +4,7 @@
         <div class="row bgColor paddingLeftRightTen" id="productUploadId">
             <div class="col-md-5 tabOptionDiv">
                 <span class="col-md-6 nonActive tabOption borderLeftRadiusTab" id="tabOption_1_P">
-                    <a href="{% static 'download_import_csv_format/product_import_format.csv' %}" class="customerUpload" id="downloadProduct" download>Download Product Template</a>
+                    <a href="{% static 'download_import_csv_format/product_import_format.xlsx' %}" class="customerUpload" id="downloadProduct" download>Download Product Template</a>
                 </span>
                 <span class="col-md-6 nonActive tabOption tabOptionActive borderRightRadiusTab" id="tabOption_0_P">
                     <a class="customerUpload uploadActive" href="#" id="uploadProduct">Upload Product Data</a>
@@ -22,8 +22,8 @@
                     <div class="card" align="left">
                       <div class="card-header" >Product Data</div>
                       <div class="card-body">
-                          <input type="file" name="customerFileUpload" id="customerFileUpload">
-                           <div class="demo-droppable" id="dragDropDiv" ondrop="drop(event)" ondragover="event.preventDefault()" align="center">
+                          <input type="file" name="productFileUpload" id="productFileUpload">
+                           <div class="demo-droppable" id="productDragDropDiv" ondrop="dropProduct(event)" ondragover="event.preventDefault()" align="center">
                                <h6>Drag your files here </h6>
                                <h6>or</h6>
                                <h6>Browse</h6>
@@ -38,8 +38,10 @@
                             <input class="form-control modify" type="hidden" value="product" id="type">
                             <input class="form-control modify" type="text" value="" id="googleLink"  placeholder="Paste Your Google Drive CSV Link" >
                         </div>
-                      <div class="card-footer">
-                          <input class="btn pull-right" id="dragDropUploadBtn" type="button" value="Upload">
+                      <div class="card-footer" class="row"  style="text-align:center">
+                          <div class="col-md-12">
+                              <input  id="productDragDropUploadBtn" type="button" value="Upload">
+                          </div>
                       </div>
                     </div>
                 </div>

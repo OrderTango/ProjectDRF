@@ -107,8 +107,24 @@
     cursor: pointer;
     color: transparent;
     float: right;
-    margin-right: 20px;
 
+}
+#resendOTP{
+    border: 0px;
+    font-size: 13px;
+    border-radius: 5px;
+    color: #ffffff;
+    background-color: #984fa5;
+    padding: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+.roundImage {
+    height: 15px;
+    margin-bottom: 3px;
+}
+.defaultMarginTopNew {
+    margin-top: 50px !important;
 }
 .error, .errorlist {
 

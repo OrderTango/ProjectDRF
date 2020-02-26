@@ -152,7 +152,8 @@
     .nonActive {
         padding-top: 10px;
         padding-left: 30px;
-        padding-bottom: 10px
+        padding-bottom: 10px;
+        border: 0 !important;
     }
     .card {
         margin-left: 35px !important;
@@ -170,7 +171,7 @@
     /* Landing Page Tablet CSS START */
     .card {
         border-radius: 10px !important;
-        width: 60% !important;
+        width: 85% !important;
         border: 0;
     }
     .col-sm-12 {
@@ -289,7 +290,7 @@
     .nonActive {
         padding-top: 10px;
         padding-left: 30px;
-        padding-bottom: 10px
+        padding-bottom: 10px;
     }
     /* Landing Dashboard Page Tablet CSS End */
 }

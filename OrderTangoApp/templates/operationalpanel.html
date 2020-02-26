@@ -8,6 +8,32 @@
 #stockCountDiv{
     margin-left: 6%;
     }
+
+    @media (min-width:320px) and (max-width: 480px)  {
+        .paddingLeftRightZero{
+            padding-left: 47px !important;
+            padding-right: 0px !important;
+        }
+         .addStyl{
+             font-size: 14px !important;
+             font-weight: normal !important
+        }
+         .addSty{
+             font-size: 13px !important;
+             font-weight: normal !important
+        }
+         .addsSty{
+             font-size: 14px !important;
+             font-weight: normal !important;
+        }
+    }
+@media (min-width:600px) and (max-width: 801px)  {
+
+    .paddingBottomTabs{
+        margin-left: 8% !important;
+    }
+
+}
 </style>
 <div class="row headColor">
   <div class="col-md-2 col-sm-4 col-24" id="sideBarLeft">
@@ -31,7 +57,7 @@
             <div class="offset-md-1 col-md-3 col-sm-11 col-24 paddingBottomTabs">
                 <div class="divcontent">
                     <div class="divcontenttitle"><a class="divcontenttitle" href="#"><img class="DollerIconBody" src="{% static 'images/DollerIcon.png' %}" alt=""/> View DashBoard</a></div>
-                    <div>A simple guided process to place order to suppliers.</div>
+                    <div>A simple guided process to place order to vendors.</div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-11 col-24 paddingBottomTabs">
@@ -62,7 +88,7 @@
             <div class="offset-md-1 col-md-3 col-sm-11 col-24 paddingBottomTabs">
                 <div class="divcontent">
                     <div class="divcontenttitle"><a class="divcontenttitle" href="#"><img class="DollerIconBody" src="{% static 'images/DollerIcon.png' %}" alt=""/> Order</a></div>
-                  <div>A simple guided process to place order to suppliers.</div>
+                  <div>A simple guided process to place order to vendors.</div>
                   <div></div>
                 </div>
           </div>
@@ -92,7 +118,7 @@
             <div class="offset-md-1 col-md-3 col-sm-11 col-24 paddingBottomTabs">
                 <div class="divcontent">
                     <div class="divcontenttitle"><a class="divcontenttitle" href="#"><img class="DollerIconBody" src="{% static 'images/DollerIcon.png' %}" alt=""/> View Inventory</a></div>
-                  <div>A simple guided process to place order to suppliers.</div>
+                  <div>A simple guided process to place order to vendors.</div>
                 </div>
           </div>
             <div class="col-md-3 col-sm-11 col-24 paddingBottomTabs">
@@ -137,7 +163,7 @@
           <div class="modal-body">
               <div id="success_msg" class="success_msg"> </div>
               <div id="error_msg" class="error_msg"> </div>
-                <form role="form">
+                <form role="form" autocomplete="off">
                     {% csrf_token %}
                     <div id="modalBody">
 
@@ -215,6 +241,9 @@
             });
 
   });
+  $(document).ready(function() {
+        if(('{{firstLogin}}') == "True"){alert("Your plan has suspended");}
+        });
 
 
 </script>

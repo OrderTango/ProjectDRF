@@ -1,5 +1,5 @@
-siteTypeId,siteTypeCode,siteTypeName,siteTypeDesc
-1,,Store,
-2,,Distribution Centre,
-3,,Fulfillment Centre,
-4,,Plant,
+siteTypeCode,siteTypeName,siteTypeDesc
+,Store,
+,Distribution Centre,
+,Fulfillment Centre,
+,Plant,

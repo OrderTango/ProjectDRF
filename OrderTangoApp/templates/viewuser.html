@@ -14,15 +14,28 @@
 <script src ="{% static 'js/jquery-ui.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
 <style>
+    .ui-datepicker select.ui-datepicker-year {
+        width: 45%;
+        background: none;
+        border: 1px solid #9e4faa;
+        border-radius: 5px;
+    }
+    .ui-datepicker select.ui-datepicker-month {
+        width: 50%;
+        background: none;
+        border: 1px solid #9e4faa;
+        border-radius: 5px;
+    }
     .sampleModalPopup {
         max-width: 35%
     }
     #customerFileUpload {
         display: none;
     }
-    .editSubUser, .deleteSubUser  {
+    .editSubUser, .deleteSubUser, .disableSubUser  {
         border: 0px;
         font-size:14px;
+        width: 30%;
         border-radius: 5px;
         color: #ffffff;
         background-color: #984fa5;
@@ -68,6 +81,14 @@
         margin-top: 10px;
         margin-bottom: -5px
     }
+    #ucountryCode{
+        height: 30px;
+        width: 100px !important;
+        border: 1px solid #bb99c0;
+        border-radius: 8px;
+        padding: 4px !important;
+    }
+
     #id_userName,#id_password,#id_confirm_password,#id_designation,#id_role,#id_DOJ{
         height: 30px;
         width: 250px !important;
@@ -75,14 +96,14 @@
         border-radius: 8px;
         padding: 4px !important;
     }
-    #ufirstName,#ulastName,#uuserName,#upassword,#uconfirm_password,#udesignation,#ucontactNo,#urole,#uDOJ,#uDOD,#uemail,#uarea,#usite{
+    #roleName,#ufirstName,#ulastName,#uuserName,#upassword,#uconfirm_password,#udesignation,#ucontactNo,#urole,#select_role,#uDOJ,#uDOD,#uemail,#uarea,#usite{
         height: 30px;
         width: 250px !important;
         border: 1px solid #bb99c0;
         border-radius: 8px;
         padding: 4px !important;
     }
-    #subUserFormSubmit, #subUserFormSubmit:hover, #editSubUserFormSubmit, #editSubUserFormSubmit:hover {
+    #deleteRoleSubmit, #deleteRoleSubmit:hover,#editRoleSubmit, #editRoleSubmit:hover,#createRoleSubmit, #createRoleSubmit:hover,#subUserFormSubmit, #subUserFormSubmit:hover, #editSubUserFormSubmit, #editSubUserFormSubmit:hover {
         border: 0px;
         font-size: 18px;
         border-radius: 5px;
@@ -122,6 +143,43 @@
         border: 0px;
         padding: 5px 10px 5px 10px;
     }
+    @media (min-width:320px) and (max-width: 480px)  {
+        .headingColor {
+            margin-left: 31px;
+        }
+        .viewDataTable{
+            width:130% !important;
+            margin-left: 7% !important;
+        }
+        .paddingLeftRightTen{
+           margin-left: 8px !important;
+        }
+        #viewUserDataTable_paginate {
+            margin-left: 48% !important;
+        }
+        div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+            justify-content: center !important;
+        }
+        button {
+             margin: 3px !important;
+        }
+        .userButtonClass, .userButtonClass:hover {
+            border: 9px;
+            font-size: 14px;
+        }
+        #id_userName, #id_area, #id_contactNo, #id_site, #id_firstName, #id_email, #id_lastName, #id_password, #id_confirm_password, #id_designation, #id_role, #id_DOJ {
+            height: 30px;
+            width: 129px !important;
+            text-align: -webkit-center;
+        }
+        .rowchanage {
+            margin-right: -15px;
+            margin-left: -3px;
+        }
+        .offset-md-5 {
+             margin-left: 39.666667%;
+        }
+    }
 </style>
 <div class="row headColor">
   <div class="col-md-2 col-sm-4 col-24" id="sideBarLeft">
@@ -132,13 +190,17 @@
             <div class="offset-md-0 col-md-6 col-sm-3 offset-1 col-5">
                 <h4 class="headingColor headingPage"> View User </h4>
             </div>
-             <div class="offset-md-2 col-md-4 col-sm-3 col-6">
+             <div class="offset-md-6 col-md-6 col-sm-3 col-6">
+
                  <div class="pull-right">
+                     <button class="userButtonClass viewRoleBtn" >
+                     View Role
+                </button>
                     <button class="userButtonClass" id="createUser">
                          <img class="roundImage" src="/static/images/Round.png" /> Create User
                     </button>
                     <span class="input-group" id="searchOptionInputGroup">
-                            <input type="text" id="searchOption">
+                            <input type="text" id="searchOption" maxlength="60">
                             <div class="input-group-append">
                               <span id="spanSearchIcon">
                                 <i class="fa fa-search"></i>
@@ -147,8 +209,8 @@
                     </span>
              </div>
             </div>
-            <div class="offset-md-0 col-md-12 col-sm-3 offset-1 col-6 marginLeftFifteen">
-                <table class="table hover dt-responsive viewUserDataTable" id="viewUserDataTable" width="100%">
+            <div class="col-md-12 col-sm-8 col-10">
+                <table class="table hover dt-responsive viewDataTable" id="viewUserDataTable" width="100%" style="font-size:85%">
                      <thead>
 
                      </thead>
@@ -159,24 +221,29 @@
             <div class="col-md-6 col-sm-3 col-6">
                 <h4 class="headingColor"> Create User </h4>
             </div>
-             <div class="col-md-6 col-sm-3 col-6">
-                <button class="userButtonClass pull-right" id="viewUser">
+            <div class="col-md-4 col-sm-3 col-3">
+                <button class="userButtonClass pull-right viewRoleBtn" >
+                     View Role
+                </button>
+            </div>
+             <div class="col-md-2 col-sm-3 col-3">
+                <button class="userButtonClass " id="viewUser">
                      View User
                 </button>
             </div>
                  <div class="col-md-12" id="subUserFormDiv">
-                   <form class="post-form" id="subUserForm" role="form">
+                   <form class="post-form" id="subUserForm" role="form" autocomplete="off">
                     {% csrf_token %}
 
                     <div class="customerManualForm" id="userAddDetail">
-                        <div class="row">
+                        <div class="rowchanage row">
                             <div class="col-md-6">
                                 <div class="form-group row customerDetailsForm">
-                                 <label class="col-5 col-md-4 col-form-label marginLeftFifteen customerDetailsFormLabel">{{subUserForm.area.label_tag }}<span class="mandatory">*</span></label>
+                                 <label class="col-5 col-md-4 col-form-label marginLeftFifteen customerDetailsFormLabel">{{subUserForm.area.label_tag }}</label>
                                             {{ subUserForm.area }}
                                 </div>
                                 <div class="form-group row customerDetailsForm">
-                                 <label class="col-5 col-md-4 col-form-label marginLeftFifteen customerDetailsFormLabel">{{subUserForm.site.label_tag }}<span class="mandatory">*</span></label>
+                                 <label class="col-5 col-md-4 col-form-label marginLeftFifteen customerDetailsFormLabel">{{subUserForm.site.label_tag }}</label>
                                             {{ subUserForm.site }}
                                 </div>
                                 <div class="form-group row customerDetailsForm">
@@ -193,7 +260,7 @@
                                 </div>
                                 <div class="row customerDetailsForm">
                                  <label class="col-5 col-md-4 col-form-label marginLeftFifteen customerDetailsFormLabel">{{subUserForm.contactNo.label_tag }}<span class="mandatory">*</span></label>
-                                            {{ subUserForm.contactNo }}
+                                             {{ subUserForm.countryCode }}{{ subUserForm.contactNo }}
                                 </div>
                                 <div class="row customerDetailsForm">
                                  <label class="col-5 col-md-4 col-form-label marginLeftFifteen customerDetailsFormLabel">{{subUserForm.userName.label_tag }}<span class="mandatory">*</span></label>
@@ -221,19 +288,19 @@
                                             {{ subUserForm.role }}
                                 </div>
                                 <div class="row customerDetailsForm">
-                                 <label class="col-5 col-md-4 col-form-label marginLeftFifteen customerDetailsFormLabel">{{subUserForm.DOJ.label_tag }}<span class="mandatory">*</span></label>
+                                 <label class="col-5 col-md-4 col-form-label marginLeftFifteen customerDetailsFormLabel">{{subUserForm.DOJ.label_tag }}</label>
                                             {{ subUserForm.DOJ }}
                                 </div>
 
                                 <div class="row customerDetailsForm">
                                  <label class="col-5 col-md-4 col-form-label marginLeftFifteen customerDetailsFormLabel">{{subUserForm.profilepic.label_tag }}</label>
-                                    <input type="button" name="" id="createUserUploadImage" value="Upload Image">
+                                    <input id="createUserUploadImage" type="button" value="Upload Image" id="chooseHolidayBtn"> <span id="appendFileName"></span>
                                     {{ subUserForm.profilepic }}
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row customerDetailsForm" style="margin-left: 10px">
+                        <!--<div class="row customerDetailsForm" style="margin-left: 10px">
                          <table class="table table-bordered">
                              <thead>
                                  <tr class="colorCode" style="color: #881999">
@@ -265,12 +332,14 @@
                                 {% endfor %}
                              </tbody>
                          </table>
-                        </div>
-                     </div>
-                    </form>
-                     <div class="offset-md-5 col-md-4 col-sm-4 col-12">
+                        </div>-->
+                    <div class="offset-md-5 col-md-4 col-sm-4 col-12">
                        <a href="#" id="hitBtn"><input type="button" id="subUserFormSubmit" class="btn btn-primary" value="Submit"> </a>
                     </div><br/>
+                    </div>
+
+                    </form>
+
                 </div>
             </div>
         </div>
@@ -288,7 +357,7 @@
            <div class="modal-body">
               <div id="success_msg" class="success_msg"> </div>
               <div id="error_msg" class="error_msg"> </div>
-                <form role="form">
+                <form role="form" autocomplete="off">
                     {% csrf_token %}
                     <div id="modalBody">
 
@@ -335,7 +404,7 @@
       </div>
       <div class="modal-body">
 
-         <form id="updateLogo"  method="post" enctype="multipart/form-data">
+         <form id="updateLogo"  method="post" enctype="multipart/form-data" autocomplete="off">
              {% csrf_token %}
 
          <input type="file" name="fileuploaddata" value="fileupload" id="fileuploaddata">
@@ -368,7 +437,7 @@
         <div class="row" >
             <div class="col-md-12 col-sm-3 col-6 " >
                 <div class="col-md-12" id="viewProfileModalFormDiv">
-                    <form class="registrationform" id="updateProfileForm" role="form" method='POST'>
+                    <form class="registrationform" id="updateProfileForm" role="form" method='POST' autocomplete="off">
 
                         {% csrf_token %}
                         <div id="formsec1">
@@ -382,9 +451,24 @@
                              {{ profileForm.lastName }}
                           </div>
                           <div class="offset-3 offset-sm-4 offset-md-3" id="lastNameError">{{ profileForm.lastName.errors }} </div>
+                        <div class="form-group row registrationformdiv hide">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{profileForm.contactNo.label_tag }}<span class="mandatory">*</span></label>
+                             {{profileForm.countryCode}}{{ profileForm.contactNo }}
+                          </div>
+                          <div class="offset-3 offset-sm-4 offset-md-3 hide" id="contactNoError">{{ profileForm.contactNo.errors }} </div>
+                        <div class="form-group row registrationformdiv hide">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{profileForm.email.label_tag }}<span class="mandatory">*</span></label>
+                             {{ profileForm.email }}
+                          </div>
+                          <div class="offset-3 offset-sm-4 offset-md-3 hide" id="emailError">{{ profileForm.email.errors }} </div>
+
                         </div>
                         <div id="formsec2">
-
+                            <div class="form-group row registrationformdiv hide">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.companyName.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.companyName }}
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="companyNameError"> {{ companyProfileForm.companyName.errors }} </div>
                           <div class="form-group row registrationformdiv">
                             <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.country.label_tag }}<span class="mandatory">*</span></label>
                             {{ companyProfileForm.country }}
@@ -424,7 +508,7 @@
                             <div class="form-group row registrationformdiv">
                             <label class="col-5 col-md-3 col-form-label registrationformlabel">{{profileForm.sec_answer.label_tag }}<span class="mandatory">*</span></label>
                             {{ profileForm.sec_answer }}
-                            <div class="col-12 offset-sm-4 col-md-6" id="submitBtnDiv">  <input type="submit" id="profileUpdateButton" value="Update"> </div>
+                            <div class="col-12 offset-sm-4 col-md-6" id="submitBtnDiv">  <input type="button" class="profileUpdateButtonClass" id="profileUpdateButton" value="Update"> </div>
                           </div>
                             <div class="offset-3 offset-sm-4 offset-md-3" id="secAnswerError"> {{ profileForm.sec_answer.errors }} </div>
                         </div>
@@ -462,18 +546,18 @@
     <div class="row" >
     <div class="col-md-12 col-sm-3 col-6 " >
     <div class="col-md-12" id="editSubUserFormDiv">
-    <form class="post-form" id="editSubUserForm" role="form">
+    <form class="post-form" id="editSubUserForm" role="form" autocomplete="off">
     {% csrf_token %}
     <div class="customerManualForm">
     <div class="form-group row customerDetailsForm">
     <input type="text" id="userId">
     </div>
     <div class="form-group row customerDetailsForm">
-    <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{editSubUserForm.area.label_tag }}<span class="mandatory">*</span></label>
+    <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{editSubUserForm.area.label_tag }}</label>
     {{ editSubUserForm.area }}
     </div>
         <div class="form-group row customerDetailsForm">
-    <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{editSubUserForm.site.label_tag }}<span class="mandatory">*</span></label>
+    <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{editSubUserForm.site.label_tag }}</label>
     {{ editSubUserForm.site }}
     </div>
     <div class="form-group row customerDetailsForm">
@@ -503,24 +587,20 @@
     </div>
     <div class="row customerDetailsForm">
     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{editSubUserForm.contactNo.label_tag }}<span class="mandatory">*</span></label>
-    {{ editSubUserForm.contactNo }}
+    {{ editSubUserForm.countryCode }}&nbsp;{{ editSubUserForm.contactNo }}
     </div>
     <div class="row customerDetailsForm">
-    <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{editSubUserForm.DOJ.label_tag }}<span class="mandatory">*</span></label>
+    <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{editSubUserForm.DOJ.label_tag }}</label>
     {{ editSubUserForm.DOJ }}
     </div>
 
-    <div class="row customerDetailsForm">
-    <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{editSubUserForm.DOD.label_tag }}</label>
-    {{ editSubUserForm.DOD }}
-    </div>
 
     <div class="row customerDetailsForm">
     <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{editSubUserForm.profilepic.label_tag }}</label>
-        <input type="button" name="" id="editUserUploadImage" value="Upload Image">
+        <input type="button" name="" id="editUserUploadImage" value="Upload Image"><span id="appendFilesName"></span>
     {{ editSubUserForm.profilepic }}
     </div>
-    <div class="row customerDetailsForm" style="margin-left: 0px">
+    <!--<div class="row customerDetailsForm" style="margin-left: 0px">
          <table class="table table-bordered">
              <thead>
                  <tr class="colorCode" style="color: #881999">
@@ -552,7 +632,7 @@
                 {% endfor %}
              </tbody>
          </table>
-    </div>
+    </div>-->
     </div>
     </form>
     <div class="offset-md-5 col-md-4 col-sm-4 col-12">
@@ -587,13 +667,156 @@
 
 
           </div>
-          <div class="modal-footer">
-                <input type="button" id="confirmModalPopupSubmit" class="btn btn-primary modalBtnClass" data-dismiss="modal" aria-label="Close" value="Confirm">
-                <input type="button" id="confirmModalPopupClose" class="btn btn-primary modalBtnClass" data-dismiss="modal" aria-label="Close" value="Close">
+          <div class="modal-footer" style="text-align:center">
+              <div class="col-md-12">
+                  <input type="button" id="confirmModalPopupSubmit" class="btn btn-primary modalBtnClass" data-dismiss="modal" aria-label="Close" value="Confirm">
+                <input type="button" id="confirmModalPopupClose" class="btn btn-primary modalBtnClass" data-dismiss="modal" aria-label="Close" value="Cancel">
+              </div>
           </div>
         </div>
       </div>
     </div>
+
+ <!-- The Modal -->
+<div class="modal" id="createRoleModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog createRoleModaldia" style="max-width: 700px;">
+<div class="modal-content" style="background-color: #f7f3fa;">
+
+<!-- Modal Header -->
+<div class="modal-header">
+<h4 class="modal-title" id="createRoleModalTitle"> Create / Edit Role</h4>
+<button type="button" class="close createRoleModalClose" data-dismiss="modal" aria-hidden="true">x</button>
+</div>
+
+<!-- Modal body -->
+<div class="modal-body">
+    <div id="createRoleDiv">
+    <div class="row customerDetailsForm">
+        <div class="col-md-8 ">
+            <label class="col-5 offset-md-1 col-md-2 col-form-label customerDetailsFormLabel">Role<span class="mandatory">*</span></label>
+            <input type="text" name="roleName" maxlength="50" required="" id="roleName">
+        </div>
+
+        <div class="col-md-4 col-sm-3 col-3">
+                <button class="userButtonClass pull-right" id="editRole">
+                     Edit Role
+                </button>
+            </div>
+    </div><br/>
+    <div class="row" >
+    <div class="row customerDetailsForm" style="margin-left: 12%">
+         <table class="table table-bordered">
+             <thead>
+                 <tr class="colorCode" style="color: #881999">
+                    <th> Access </th>
+                    <th> Create </th>
+                    <th> View </th>
+                    <th> Update </th>
+                    <th> Delete </th>
+                 </tr>
+             </thead>
+             <tbody>
+                {% for reqAccessObject in reqAccess %}
+                    <tr>
+                         <td> {{ reqAccessObject.key }} </td>
+                         {% for reqAccObject in reqAccessObject.value %}
+                             {% if reqAccObject.type == "create" and reqAccObject.requestAccId|length >= 1 %}
+                                    <td> <input type="checkbox" class="createAccessClass" value="{{ reqAccObject.requestAccId }}" /> </td>
+                             {% elif reqAccObject.type == "view" and reqAccObject.requestAccId|length >= 1 %}
+                                    <td> <input type="checkbox" class="createAccessClass" value="{{ reqAccObject.requestAccId }}" /> </td>
+                             {% elif reqAccObject.type == "update" and reqAccObject.requestAccId|length >= 1 %}
+                                    <td> <input type="checkbox" class="createAccessClass" value="{{ reqAccObject.requestAccId }}" /> </td>
+                             {% elif reqAccObject.type == "delete" and reqAccObject.requestAccId|length >= 1 %}
+                                    <td> <input type="checkbox" class="createAccessClass" value="{{ reqAccObject.requestAccId }}" /> </td>
+                             {% else %}
+                                    <td> </td>
+                             {% endif %}
+                         {% endfor %}
+                    </tr>
+                {% endfor %}
+             </tbody>
+         </table>
+    </div>
+    </div>
+        <div class="offset-md-5 col-md-4 col-sm-4 col-12">
+           <input type="button" id="createRoleSubmit" class="btn btn-primary" value="Submit">
+        </div>
+    </div>
+
+    <div id="editRoleDiv">
+    <div class="row customerDetailsForm">
+        <div class="col-md-8 ">
+            <label class="col-5 offset-md-1 col-md-3 col-form-label customerDetailsFormLabel">Role <span class="mandatory">*</span></label>
+                 <select id="select_role" >
+                     <option value="">Select</option>
+                  {% for role in roles %}
+                            <option value="{{role.roleId}}">{{role.roleName}}</option>
+                {% endfor %}
+                 </select>
+        </div>
+
+        <div class="col-md-4 col-sm-3 col-3">
+                <button class="userButtonClass pull-right" id="createRole">
+                     Create Role
+                </button>
+            </div>
+    </div><br/>
+    <div class="row" >
+    <div class="row customerDetailsForm" style="margin-left: 12%">
+         <table class="table table-bordered">
+             <thead>
+                 <tr class="colorCode" style="color: #881999">
+                    <th> Access </th>
+                    <th> Create </th>
+                    <th> View </th>
+                    <th> Update </th>
+                    <th> Delete </th>
+                 </tr>
+             </thead>
+             <tbody>
+                {% for reqAccessObject in reqAccess %}
+                    <tr>
+                         <td> {{ reqAccessObject.key }} </td>
+                         {% for reqAccObject in reqAccessObject.value %}
+                             {% if reqAccObject.type == "create" and reqAccObject.requestAccId|length >= 1 %}
+                                    <td> <input type="checkbox" class="editAccessClass" value="{{ reqAccObject.requestAccId }}" /> </td>
+                             {% elif reqAccObject.type == "view" and reqAccObject.requestAccId|length >= 1 %}
+                                    <td> <input type="checkbox" class="editAccessClass" value="{{ reqAccObject.requestAccId }}" /> </td>
+                             {% elif reqAccObject.type == "update" and reqAccObject.requestAccId|length >= 1 %}
+                                    <td> <input type="checkbox" class="editAccessClass" value="{{ reqAccObject.requestAccId }}" /> </td>
+                             {% elif reqAccObject.type == "delete" and reqAccObject.requestAccId|length >= 1 %}
+                                    <td> <input type="checkbox" class="editAccessClass" value="{{ reqAccObject.requestAccId }}" /> </td>
+                             {% else %}
+                                    <td> </td>
+                             {% endif %}
+                         {% endfor %}
+                    </tr>
+                {% endfor %}
+             </tbody>
+         </table>
+    </div>
+    </div>
+        <div class="row">
+            <div class="offset-md-5 col-md-2 col-sm-4 col-4">
+                <a href="#" id="hitBtn"><input type="button" id="editRoleSubmit" class="btn btn-primary" value="Submit"> </a>
+            </div>
+            <div class="col-md-2 col-sm-4 col-4">
+                <a href="#" id="hitBtn"><input type="button" id="deleteRoleSubmit" data-dismiss="modal" class="btn btn-primary" value="Delete"> </a>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+
+    <!-- Modal footer -->
+    <div class="modal-footer">
+    <button type="button" class="btn createRoleModalClose" id="createRoleModalClose" data-dismiss="modal">Close</button>
+    </div>
+
+    </div>
+    </div>
+</div>
 
 <script>
  function load_sites(siteArea_id) {
@@ -626,7 +849,7 @@
            }
            function load_sitesedit(siteArea_id) {
                 if(siteArea_id == ''){
-                $("#id_cusState").empty().append('<option value="">Select</option>');
+                $("#usite").empty().append('<option value="">Select</option>');
                 }
                 else{
                     $.ajax({
@@ -662,14 +885,50 @@
                  $('#imageModel').modal('toggle');
             });
 
+            $('.viewRoleBtn').on('click',function() {
+                 $('#editRoleDiv').hide();
+                 $('#roleName').val('');
+                  $(".createAccessClass").prop('checked', false);
+                  $(".editAccessClass").prop('checked', false);
+                  $('#select_role').val("");
+                 $('#createRoleDiv').show();
+                 $('#createRoleModal').show();
+                 $('#createRoleModal').modal('toggle');
+            });
+
+            $('#editRole').on('click',function() {
+                $('#createRoleDiv').hide();
+                $('#editRoleDiv').show();
+            });
+            $('#createRole').on('click',function() {
+                $('#editRoleDiv').hide();
+                $('#roleName').val('');
+                $(".createAccessClass").prop('checked', false);
+                  $(".editAccessClass").prop('checked', false);
+                  $('#select_role').val("");
+                $('#createRoleDiv').show();
+            });
+
             /* Hide the Onboard DropdownMenu in Sidebar Start */
             $('#onboardDropDown').hide();
             /* Hide the Onboard DropdownMenu in Sidebar End */
 
             $('#createUserDiv').hide();
 
+            $(document).on('change', '#id_DOJ', function() {
+                var doj = $('#id_DOJ').val();
+                if(doj){
+                    if (doj.length !== 10) {
+                        alert('Invalid date format');
+                        $('#id_DOJ').val('');
+                    }
+                }
+            });
+
             var date = new Date();
             $("#id_DOJ").datepicker({
+                changeMonth: true,
+                changeYear: true,
                 dateFormat: "dd/mm/yy",
                 defaultDate: 'Select',
                 onSelect: function () {
@@ -677,7 +936,7 @@
                 }
             });
 
-            $("#id_DOJ").datepicker("setDate", 'Select');
+            //$("#id_DOJ").datepicker("setDate", 'Select');
 
             $.ajax({
               url: "/fetchSubUserData",
@@ -763,18 +1022,23 @@
                     ],
                  columnDefs: [
                          { "width": "2%", "targets": 0 },
-                         { "width": "18%", "targets": 1 },
+                         { "width": "23%", "targets": 1 },
                          { "width": "15%", "targets": 2 },
-                         { "width": "15%", "targets": 3 },
+                         { "width": "12%", "targets": 3 },
                          { "width": "15%", "targets": 4 },
-                         { "width": "20%", "targets": 5 },
+                         { "width": "18%", "targets": 5 },
                 ]});
                 if (userData.length > 0) {
                     $('.dataTables_paginate').show();
                     $.each(userData, function( index, value ) {
                        var sno = index+1;
-                       var action = "<input class='editSubUser' id='edit_"+value.subUserId+"' type='button' value='Edit'><input class='deleteSubUser' id='delete_"+value.subUserId+"' type='button' value='Delete'>";
-                       viewUserDataTable.row.add([sno,value.userName,value.designation,value.role,value.contactNo,action]).draw();
+                       if(value.status == 'Active'){
+                            var action = "<input class='editSubUser' id='edit_"+value.subUserId+"' type='button' value='Edit'><input class='deleteSubUser' id='delete_"+value.subUserId+"' type='button' value='Delete'><input class='disableSubUser' id='disable_"+value.subUserId+"' type='button' value='Disable'>";
+                       }
+                       else{
+                            var action = "<input class='editSubUser' id='edit_"+value.subUserId+"' type='button' value='Edit'><input class='deleteSubUser' id='delete_"+value.subUserId+"' type='button' value='Delete'><input class='disableSubUser' id='disable_"+value.subUserId+"' type='button' value='Active'>";
+                       }
+                       viewUserDataTable.row.add([sno,value.userName,value.designation,value.role__roleName,"+"+value.countryCode__countryCodeType+" - "+value.contactNo,action]).draw();
                     });
                 }
                 else {
@@ -784,23 +1048,17 @@
 
             $('#subUserForm').keydown(function(e) {
                 var key = e.which;
-                if (key == 13) {
-
+                if (key == 14 || key == 31) {
                     $('#subUserFormSubmit').click();
                 }
             });
 
             $('#subUserFormSubmit').keydown(function(e) {
                 var key = e.which;
-                if (key == 13) {
-
+                if (key == 14 || key == 31) {
                     $('#subUserFormSubmit').click();
                 }
             });
-
-            /*var e = jQuery.Event("keydown");
-            e.which = 13; // # Some key code value
-            $('#subUserFormSubmit').trigger(e);*/
 
             $(document).on('change', '#id_email', function() {
                 if($("#id_email").val() != ''){
@@ -816,9 +1074,232 @@
                 }
            });
 
-            $(document).on('click', '#subUserFormSubmit', function() {
+            $(document).on('change', '#id_profilepic', function() {
+                var file = $('#id_profilepic')[0].files[0]
+
+                if ( /\.(jpe?g|png)$/i.test(file.name) === false ) {
+                  alert("Allowed only jpg,png format");
+
+               } else if(file.size >= 5000000){
+
+                  alert("File size exceeds 5 MB");
+                }else{
+                 $('#appendFileName').html(file.name);
+                 }
+             });
+
+                  $(document).on('change', '#uprofilepic', function() {
+
+                var file = $('#uprofilepic')[0].files[0]
+
+                if ( /\.(jpe?g|png)$/i.test(file.name) === false ) {
+                  alert("Allowed only jpg,png format");
+
+               } else if(file.size >= 5000000){
+
+                  alert("File size exceeds 5 MB");
+                }else{
+                 $('#appendFilesName').html(file.name);
+                 }
+             });
+
+            $(document).on('click', '#createRoleSubmit', function() {
+            if($('#roleName').val() == ''){
+                alert('Please enter Role');
+                return false;
+            }
+            else{
+                var roleArray = new Array();
+                $('.createAccessClass').each(function() {
+                    if (this.checked == true) {
+                        var values = this.value;
+                        var comma = ',';
+                        if(values.indexOf(comma) != -1){
+                            var datas = values.split(',');
+                            for (i = 0; i < datas.length; i++) {
+                                roleArray.push(parseInt(datas[i]));
+                            }
+                        }
+                        else {
+                            roleArray.push(parseInt(values));
+                        }
+                    }
+                });
+
+                if (roleArray.length == 0) {
+                    alert('User should have atleast one access');
+                }
+                else if (roleArray.length > 0) {
+                    if(roleArray.includes(28) == false && roleArray.includes(29) == false){
+                        alert('Rights should be given for either Admin Panel Dashboard or Operational Panel Dashboard');
+                    }
+                    else{
+                        var data = {'roleName':$('#roleName').val(),'roleArray':roleArray};
+                        $.ajax({
+                          url: "/createRole",
+                          type: "POST",
+                          dataType : "json",
+                          contentType : "application/json",
+                          data: JSON.stringify(data),
+                          success: function (result)
+                              {
+                                if (result.status == 'success') {
+                                    alert(result.success_msg);
+                                    setTimeout(function() {
+                                        location.reload();
+                                    },2000);
+                                }
+                                else if(result.status == 'error' && result.error_msg == 'sessionexpired'){
+                                    alert('Session has expired.');
+                                    setTimeout(function() {
+                                        window.location.href = data.redirect_url;
+                                    }, 2000);
+                                }
+                                else{
+                                    alert(result.error_msg);
+                                }
+                              }
+                         });
+                    }
+                }
+                }
+            });
+
+
+$(document).on('click', '#editRoleSubmit', function() {
+            if($('#select_role').val() == ''){
+                alert('Please select Role');
+                return false;
+            }
+            else{
+                var roleArray = new Array();
+                $('.editAccessClass').each(function() {
+                    if (this.checked == true) {
+                        var values = this.value;
+                        var comma = ',';
+                        if(values.indexOf(comma) != -1){
+                            var datas = values.split(',');
+                            for (i = 0; i < datas.length; i++) {
+                                roleArray.push(parseInt(datas[i]));
+                            }
+                        }
+                        else {
+                            roleArray.push(parseInt(values));
+                        }
+                    }
+                });
+
+                if (roleArray.length == 0) {
+                    alert('User should have atleast one access');
+                }
+                else if (roleArray.length > 0) {
+                    if(roleArray.includes(28) == false && roleArray.includes(29) == false){
+                        alert('Rights should be given for either Admin Panel Dashboard or Operational Panel Dashboard');
+                    }
+                    else{
+                        var data = {'roleId':$('#select_role').val(),'roleArray':roleArray};
+                        $.ajax({
+                          url: "/editRole",
+                          type: "POST",
+                          dataType : "json",
+                          contentType : "application/json",
+                          data: JSON.stringify(data),
+                          success: function (result)
+                              {
+                                if (result.status == 'success') {
+                                    alert(result.success_msg);
+                                    setTimeout(function() {
+                                        location.reload();
+                                    },2000);
+                                }
+                                else if(result.status == 'error' && result.error_msg == 'sessionexpired'){
+                                    alert('Session has expired.');
+                                    setTimeout(function() {
+                                        window.location.href = data.redirect_url;
+                                    }, 2000);
+                                }
+                                else{
+                                    alert(result.error_msg);
+                                }
+                              }
+                         });
+                     }
+                }
+                }
+            });
+
+            $(document).on('click', '#deleteRoleSubmit', function() {
+            if($('#select_role').val() == ''){
+                alert('Please select Role');
+                $('#createRoleModal').modal('show');
+                return false;
+            }
+            else{
+                var roleArray = new Array();
+                $('.editAccessClass').each(function() {
+                    if (this.checked == true) {
+                        var values = this.value;
+                        var comma = ',';
+                        if(values.indexOf(comma) != -1){
+                            var datas = values.split(',');
+                            for (i = 0; i < datas.length; i++) {
+                                roleArray.push(parseInt(datas[i]));
+                            }
+                        }
+                        else {
+                            roleArray.push(parseInt(values));
+                        }
+                    }
+                });
+
+                if (roleArray.length == 0) {
+                    alert('User should have atleast one access');
+                }
+                else if (roleArray.length > 0) {
+                $('#confirmModalPopupTitle').empty();
+                     $('#subUserId').val('');
+                     $('#confirmModalPopupBodyContent').empty();
+                     $('#confirmModalPopupTitle').append('Delete User');
+                     $('#confirmModalPopupBodyContent').append('Are you sure, you want to delete?');
+                     $('#confirmModalPopup').modal('show');
+                     $('#confirmModalPopupSubmit').on('click', function() {
+
+                    var data = {'roleId':$('#select_role').val(),'roleArray':roleArray,'delete':'delete'};
+                    $.ajax({
+                      url: "/deleteRole",
+                      type: "POST",
+                      dataType : "json",
+                      contentType : "application/json",
+                      data: JSON.stringify(data),
+                      success: function (result)
+                          {
+                            if (result.status == 'success') {
+                                alert(result.success_msg);
+                                setTimeout(function() {
+                                    location.reload();
+                                },2000);
+                            }
+                            else if(result.status == 'error' && result.error_msg == 'sessionexpired'){
+                                alert('Session has expired.');
+                                setTimeout(function() {
+                                    window.location.href = data.redirect_url;
+                                }, 2000);
+                            }
+                            else{
+                                alert(data.error_msg);
+                            }
+                          }
+                     });
+                     });
+                }
+                }
+            });
+
+$(document).on('click', '#subUserFormSubmit', function() {
                 var formStatus;
-                $("#subUserForm input, #subUserForm select").each(function() {
+                var file_data = $('#id_profilepic')[0].files[0];
+                 var file = document.querySelector("#id_profilepic");
+                $("#subUserForm input, #id_role,#id_countryCode").each(function() {
                     if (this.id != 'id_profilepic' && this.value != '') {
                         if($("#id_email").val() != '') {
                             var mail=document.getElementById("id_email").value;
@@ -835,13 +1316,16 @@
                         formStatus = true;
                         return true;
                     }
-                    else if (this.id != 'id_profilepic' && this.id != 'id_email') {
+                   else if (this.id != 'id_profilepic' && this.id != 'id_DOJ'  && this.id != 'id_email') {
                         formStatus = false;
                         $('#'+this.id+'').focus();
                         return false;
                     }
+
                 });
-                var subUserAccessJSON = new Array();
+
+
+                /*var subUserAccessJSON = new Array();
                 $('.accessClass').each(function() {
                     if (this.checked == true) {
                         var values = this.value;
@@ -859,14 +1343,16 @@
                 });
                 if (formStatus == true && subUserAccessJSON.length == 0) {
                     alert('User should have atleast one access');
-                }
-                else if (formStatus == true && subUserAccessJSON.length > 0) {
+                }*/
+                if (formStatus == true) {
                     var file_data = $('#id_profilepic')[0].files[0];
                     var formData = new FormData();
+                    if($('#id_site').val()){
+                       formData.append('siteId', $('#id_site').val());
+                    }
                     formData.append('type', 'create');
                     formData.append('myfile', file_data);
                     formData.append('areaId', $('#id_area').val());
-                    formData.append('siteId', $('#id_site').val());
                     formData.append('firstName', $('#id_firstName').val());
                     formData.append('email', $('#id_email').val());
                     formData.append('lastName', $('#id_lastName').val());
@@ -876,8 +1362,8 @@
                     formData.append('designation', $('#id_designation').val());
                     formData.append('role', $('#id_role').val());
                     formData.append('contactNo', $('#id_contactNo').val());
+                    formData.append('countryCode', $('#id_countryCode').val());
                     formData.append('DOJ', $('#id_DOJ').val());
-                    formData.append('subUserAccessJSON', subUserAccessJSON);
                      $.ajax({
                           url: "/createSubUser",
                           type: "POST",
@@ -894,14 +1380,14 @@
                                     location.reload();
                                 },2000);
                             }
-                            else if (result.status == 'error') {
-                                alert(result.error_msg);
-                            }
                             else if(result.status == 'error' && result.error_msg == 'sessionexpired'){
                                 alert('Session has expired.');
                                 setTimeout(function() {
                                     window.location.href = data.redirect_url;
                                 }, 2000);
+                            }
+                            else{
+                                alert(result.error_msg);
                             }
                           }
                      });
@@ -919,9 +1405,9 @@
                 $('#uprofilepic').click();
             });
 
-            $(document).on('change', '#id_role', function() {
-                $(".accessClass").prop('checked', false);
-                var role = $("#id_role").val();
+            $(document).on('change', '#select_role', function() {
+                $(".editAccessClass").prop('checked', false);
+                var role = $("#select_role").val();
                 var data = {"role":role};
                  $.ajax({
                   url: "/accessProvideByRole",
@@ -933,8 +1419,9 @@
                   {
                     var data = result;
                     if (data.status == 'success') {
-                        subReqAccData = data.roleAccess.subuseracc;
-                        $('.accessClass').each(function() {
+                        subReqAccData = data.roleAccess;
+
+                        $('.editAccessClass').each(function() {
                         if($.inArray(parseInt(this.value), subReqAccData) !== -1) {
                             $(this).prop('checked',true);
                         }
@@ -961,44 +1448,72 @@
                     if (data.status == 'success') {
 
                      userData = data.totalItems[0].totalItem;
-                     subReqAccData = data.totalItems[0].subuseracc;
-                     subusersiteassign = data.totalItems[0].subusersiteassign;
-                     console.log(userData);
-                     $.each(userData, function( index, value ) {
-                         $('#userId').val(id);
-                         $('#uarea').find('option[value="'+value.subuserSiteAssignSites__siteArea+'"]').attr("selected",true);
-                         $('#usite').find('option[value="'+value.subuserSiteAssignSites__siteId+'"]').attr("selected",true);
-                         $('#ufirstName').val(value.subuserSiteAssignSubUser__firstName);
-                         $('#ulastName').val(value.subuserSiteAssignSubUser__lastName);
-                         $('#uuserName').val(value.subuserSiteAssignSubUser__userName);
-                         $('#uemail').val(value.subuserSiteAssignSubUser__email);
-                         $('#udesignation').val(value.subuserSiteAssignSubUser__designation);
-                         $('#urole').find('option[value="'+value.subuserSiteAssignSubUser__role+'"]').attr("selected",true);
-                         $('#ucontactNo').val(value.subuserSiteAssignSubUser__contactNo);
-                         $('#uDOJ').val(value.subuserSiteAssignSubUser__DOJ);
-                         $('#uDOD').val(value.subuserSiteAssignSubUser__DOD);
-                     });
-                     $('.editAccessClass').each(function() {
-                        if($.inArray(parseInt(this.value), subReqAccData) !== -1) {
-                            $(this).prop('checked',true);
-                        }
-                     });
+                     assignesSites = data.totalItems[0].assignesSites;
+                     totalSites = data.totalItems[0].totalSites;
+                     area = data.totalItems[0].area;
+                    $('#editSubUserForm')[0].reset();
+                    $.each(userData, function( index, value ) {
+                             $('#userId').val(id);
+                             $('#ufirstName').val(value.firstName);
+                             $('#ulastName').val(value.lastName);
+                             $('#uuserName').val(value.userName);
+                             $('#uemail').val(value.email);
+                             $('#udesignation').val(value.designation);
+                             $('#ucontactNo').val(value.contactNo);
+                             $('#uDOJ').val(value.DOJ);
+                             $('#uDOD').val(value.DOD);
+                             $('#appendFilesName').html(value.profilepic);
+                         });
+                     if(assignesSites.length == 1){
+                     $('#uarea').find('option[value=""]').attr("selected",false);
+                        var siteAppendValues = '<option value="All">All</option>';
+                            $.each(totalSites, function (key, val) {
+                                siteAppendValues = siteAppendValues + "<option value="+val.siteId+">"+val.siteName+"</option>";
+                                });
+                             $("#usite").empty().append(siteAppendValues);
+                         $('#uarea').find('option[value="'+area+'"]').attr("selected",true);
+                         $('#usite').find('option[value="'+assignesSites[0].Subuser__subuserSiteAssignSites_id+'"]').attr("selected",true);
 
-                      $.each(subusersiteassign, function( index, value ) {
-                       $('#usite').find('option[value="'+value.site_id+'"]').attr("selected",true);
-                     });
+                     }
+                      else if(assignesSites.length > 1){
+                      $('#uarea').find('option[value=""]').attr("selected",false);
+                         var siteAppendValues = '<option value="All">All</option>';
+                            $.each(totalSites, function (key, val) {
+                                siteAppendValues = siteAppendValues + "<option value="+val.siteId+">"+val.siteName+"</option>";
+                                });
+                             $("#usite").empty().append(siteAppendValues);
+                         $('#uarea').find('option[value="'+area+'"]').attr("selected",true);
+                         $('#usite').find('option[value="All"]').attr("selected",true);
+
+                     }else if(area){
+                        $("#usite").empty();
+                        $("#usite").append('<option value="">Select</option>');
+                        $("#usite").val("");
+                        $('#uarea').find('option[value="'+area+'"]').attr("selected",true);
+                     }
+                     else{
+                        $("#usite").empty();
+                        $("#usite").append('<option value="">Select</option>');
+                        $("#usite").val("");
+                        $('#uarea').val("");
+                     }
+
+                     $('#urole').find('option[value="'+data.totalItems[0].role+'"]').attr("selected",true);
+                     $('#ucountryCode').find('option[value="'+data.totalItems[0].countryCode+'"]').attr("selected",true);
 
                         $('#editUserModal').show();
                         $('#editUserModal').modal('toggle');
                         //alert('User Data deleted successfully');
                         //location.reload();
                     }
-                   else if(result.status == 'error' && result.error_msg == 'sessionexpired'){
+                   else if(data.status == 'error' && data.error_msg == 'sessionexpired'){
                         alert('Session has expired.');
                         setTimeout(function() {
                             window.location.href = data.redirect_url;
                         }, 2000);
-
+                    }
+                    else{
+                        alert(data.error_msg);
                     }
                    }
                 });
@@ -1007,7 +1522,9 @@
 
             $(document).on('click', '#editSubUserFormSubmit', function() {
                 var formStatus;
-                $("#editSubUserForm input, #editSubUserForm select").each(function() {
+                var file_data = $('#uprofilepic')[0].files[0];
+                var file = document.querySelector("#uprofilepic");
+                $("#editSubUserForm input, #urole").each(function() {
                     if (this.id != 'uprofilepic' && this.id != 'uDOD' && this.value != '') {
                         if($("#uemail").val() != ''){
                             var mail=document.getElementById("uemail").value;
@@ -1025,7 +1542,7 @@
                         formStatus = true;
                         return true;
                     }
-                    else if (this.id != 'uprofilepic' && this.id != 'uDOD' && this.id != 'uemail') {
+                    else if (this.id != 'uprofilepic' && this.id != 'uDOD' && this.id != 'uDOJ' && this.id != 'uemail') {
                         formStatus = false;
                         $('#'+this.id+'').focus();
                         return false;
@@ -1033,16 +1550,20 @@
                 });
                 if (formStatus == true) {
                     var formData = new FormData();
+                    if($('#usite').val()){
+                        formData.append('siteId', $('#usite').val());
+                    }
                     formData.append('type', 'update');
                     formData.append('subUserId', $('#userId').val());
+                    formData.append('myfile', file_data);
                     formData.append('areaId', $('#uarea').val());
-                    formData.append('siteId', $('#usite').val());
                     formData.append('firstName', $('#ufirstName').val());
                     formData.append('lastName', $('#ulastName').val());
                     formData.append('userName', $('#uuserName').val());
                     formData.append('email', $('#uemail').val());
                     formData.append('designation', $('#udesignation').val());
                     formData.append('role', $('#urole').val());
+                    formData.append('countryCode', $('#ucountryCode').val());
                     formData.append('contactNo', $('#ucontactNo').val());
                     formData.append('DOJ', $('#uDOJ').val());
                     formData.append('DOD', $('#uDOD').val());
@@ -1050,7 +1571,7 @@
                     var createAccessArray = new Array();
                     var updateAccessArray = new Array();
                     var deleteAccessArray = new Array();
-                    $('.editAccessClass').each(function() {
+                    /*$('.editAccessClass').each(function() {
                         if (this.checked == true) {
                             var values = this.value;
                             var comma = ',';
@@ -1082,7 +1603,7 @@
                     });
                     formData.append('createAccessArray', createAccessArray);
                     formData.append('updateAccessArray', updateAccessArray);
-                    formData.append('deleteAccessArray', deleteAccessArray);
+                    formData.append('deleteAccessArray', deleteAccessArray);*/
                       $.ajax({
                           url: "/updateSubUser",
                           type: "POST",
@@ -1094,20 +1615,19 @@
                           success: function (result)
                           {
                             if (result.status == 'success') {
+                                alert(result.success_msg)
                                 setTimeout(function() {
-                                    location.reload();
+                                location.reload();
                                 },2000);
-                                alert(result.success_msg);
                             }
-                            else if (result.status == 'error' && result.error_msg != 'sessionexpired') {
-                                    alert(result.error_msg);
-                                }
                             else if(result.status == 'error' && result.error_msg == 'sessionexpired'){
                                 alert('Session has expired.');
                                 setTimeout(function() {
                                     window.location.href = data.redirect_url;
                                 }, 2000);
-
+                            }
+                            else{
+                                alert(result.error_msg);
                             }
                           }
                      });
@@ -1121,10 +1641,47 @@
                     $('#id_plant').focus();
                 }
                 else if ($(this).attr('id') == 'viewUser') {
-                    $('#createUserDiv').hide();
-                    $('#viewUserDiv').show();
+                    location.reload();
                 }
             });
+
+            $(document).on('click', '.disableSubUser', function() {
+                var value = $(this).val();
+                var id = $(this).attr('id');
+                var splitId = id.split("_");
+                var subUserId = splitId[1];
+                var data = {"subUserId":subUserId,"type":value};
+                    $.ajax({
+                      url: "/disableOrActiveSubUser",
+                      type: "POST",
+                      dataType : "json",
+                      contentType : "application/json",
+                      data: JSON.stringify(data),
+                      success: function (result)
+                      {
+                        var data = result;
+                        if (data.status == 'success') {
+                            if(value == 'Disable'){
+                                $('#'+id).empty();
+                                $('#'+id).val('Active');
+                                alert('Successfully Disabled');
+                                setTimeout(function() {
+                                    location.reload();
+                                },2000);
+                            }
+                            else{
+                                $('#'+id).empty();
+                                $('#'+id).val('Disable');
+                                alert('Successfully Activated');
+                                setTimeout(function() {
+                                    location.reload();
+                                },2000);
+                            }
+                        }
+                      }
+                    });
+            });
+
 
             $(document).on('click', '.deleteSubUser', function() {
                 var idNum = $(this).attr('id').match(/\d+/);
@@ -1154,14 +1711,19 @@
                   {
                     var data = result;
                     if (data.status == 'success') {
-                        alert('User Data deleted successfully');
-                        location.reload();
+                        alert('User Data deleted successfully')
+                        setTimeout(function() {
+                            location.reload();
+                        },2000);
                     }
                     else if (data.status == 'error' && data.error_msg == 'sessionexpired'){
                          alert('Session has expired.');
                             setTimeout(function() {
                                 window.location.href = data.redirect_url;
                             }, 2000);
+                     }
+                     else{
+                     alert(data.error_msg);
                      }
                    }
                 });
@@ -1181,6 +1743,25 @@
 
         $(document).ready(function() {
 
+        $('#id_password, #id_confirm_password').on("cut copy paste",function(e) {
+      e.preventDefault();
+    });
+
+    $("#uDOJ , #uDOD").keydown(function(){
+        return false;
+    });
+
+       var o = document.getElementById( 'id_DOJ' );
+        o.addEventListener( 'keydown', function( e ) {
+            if( e.keyCode >= 37 && e.keyCode <= 40 ) {
+                return; // arrow keys
+            }
+            if( e.keyCode === 8 || e.keyCode === 46 ) {
+                return; // backspace / delete
+            }
+            e.preventDefault( );
+        }, false );
+
         $("#id_contactNo").on("keypress keyup blur",function (event) {
            $(this).val($(this).val().replace(/[^\d].+/, ""));
             if ((event.which < 48 || event.which > 57)) {
@@ -1190,6 +1771,8 @@
 
          var date = new Date();
                 $("#uDOJ , #uDOD").datepicker({
+                    changeMonth: true,
+                    changeYear: true,
                     dateFormat: "dd/mm/yy",
                     defaultDate: 'Select',
                     onSelect: function () {
@@ -1277,9 +1860,6 @@
                                 window.location.href = data.redirect_url;
                             }, 3000);
                         }
-                        else if (data.status == 'error' && data.error_msg != 'sessionexpired') {
-                            $('#error_msg').append(data.error_msg);
-                        }
                         else if (data.status == 'error' && data.error_msg == 'sessionexpired') {
                             $('#domainName').val('');
                             $('#error_msg').append('Session expired.');
@@ -1288,6 +1868,9 @@
                             setTimeout(function() {
                                 window.location.href = data.redirect_url;
                             }, 3000);
+                        }
+                        else{
+                            $('#error_msg').append(data.error_msg);
                         }
                       }
                      });

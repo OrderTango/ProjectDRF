@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'OrderTangoApp',
     'OrderTangoSubDomainApp',
     'OrderTangoOrdermgmtApp',
+    'InventorymgmtApp',
     'OrderTangoOrderFulfilmtApp',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -87,6 +88,7 @@ TENANT_APPS = (
     'OrderTangoSubDomainApp',
     'OrderTangoOrdermgmtApp',
     'OrderTangoOrderFulfilmtApp',
+    'InventorymgmtApp',
     'django.contrib.sessions',
 )
 
@@ -115,7 +117,7 @@ WSGI_APPLICATION = 'OrderTango.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'tenant_schemas.postgresql_backend',
-        'NAME': 'syiok',
+        'NAME': 'projectDRF',
         'USER': 'postgres',
         'PASSWORD': 'TN41at5593@',
         'HOST': '52.221.61.17',
@@ -204,3 +206,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS=[
     os.path.join(BASE_DIR,"__shared__"),
 ]
+
+STRIPE_SECRET_KEY = 'sk_test_35oVtTbg0vLixDBY7dwhTdaU'
+STRIPE_PUBLISHABLE_KEY = 'pk_test_UDdBZ8oiG9H2VXNdfar54wdL'

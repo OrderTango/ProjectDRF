@@ -20,7 +20,7 @@
     </div>
     <div id="customerManualFormContent">
         <div class="col-md-12" id="customerManualFormDiv">
-            <form class="post-form" id="customerDataDetailsForm" role="form">
+            <form class="post-form" id="customerDataDetailsForm" role="form" autocomplete="off">
                 {% csrf_token %}
                 <div class="customerManualForm" id="basicDataDetail">
 
@@ -52,6 +52,11 @@
                                 {{ customerForm.cusAlterNateEmail }}
                     </div>
                     <div class="offset-2 offset-sm-3 offset-md-3" id="cusAlterNateEmailError"></div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{customerForm.cusCommunicationEmail.label_tag }}<span class="mandatory">*</span></label>
+                                {{ customerForm.cusCommunicationEmail }}
+                    </div>
+                    <div class="offset-2 offset-sm-3 offset-md-3" id="cusCommunicationEmailError"></div>
                     <button type="button" class="cfNextBtn btn btn-primary" id="companyAddress_basicData_Detail_N_Btn_C">Next</button>
                 </div>
                 <div class="customerManualForm" id="companyAddressDetail">

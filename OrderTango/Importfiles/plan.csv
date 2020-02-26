@@ -1,5 +1,5 @@
-planId,planCode,planName,planDesc,status,cost,currencyType_id
-1,plan1,Freemium,,active,,
-2,plan2,Advanced,,active,,
-3,plan3,Professional,,active,,
-4,plan4,Enterprise,,active,,
+planCode,planName,planDesc,cost,currencyType_id,User,Area,Site,Purchase Order,Sale Order,Basic Report,SLA,Vendor,Customer,Product
+plan1,Freemium,User our OrderTango App to Buy/Sell products with free access,0,1,10,1,2,50,0,3,5,50,50,100
+plan2,Advanced,Advanced,100,1,10,1,2,50,50,3,5,50,50,100
+plan3,Professional,Professional,500,1,10,1,2,50,50,3,5,50,50,100
+plan4,Enterprise,Enterprise,1000,1,10,1,2,50,50,3,5,50,50,100

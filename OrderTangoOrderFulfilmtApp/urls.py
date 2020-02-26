@@ -7,5 +7,4 @@ urlpatterns=[
     path('orderFulfillmentSupplier', views.orderFulfillmentSupplier, name='orderFulfillmentSupplier'),
     path('orderFulfillmentCustomer', views.orderFulfillmentCustomer, name='orderFulfillmentCustomer'),
     path('viewPlacedOrderDetails',views.viewPlacedOrderDetails,name='viewPlacedOrderDetails'),
-
     ]

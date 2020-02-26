@@ -1,3 +1,26 @@
+@media (min-width:320px) and (max-width: 480px)  {
+    a.customerUpload,a.customerManual {
+        font-weight: bold !important;
+        font-size: 16px !important;
+        color: #a0a0a0 !important;
+        padding: 5px !important;
+    }
+    #dragDropUploadBtn {
+        margin-right: 0px !important;
+    }
+    .customerDetailsForm {
+        margin-bottom: 0 !important;
+        width: 159% !important;
+        text-align: -webkit-right !important;
+    }
+
+}
+@media (max-width: 600px) and (min-width: 801px)
+.card {
+    border-radius: 10px !important;
+    width: 85% !important;
+    border: 0;
+}
 @font-face {
 	font-family: Futura;
 	src: url('../fonts/Futura-Medium.otf') format("otf");
@@ -484,7 +507,6 @@ a.customerUpload:hover, a.customerManual:hover {
     border-bottom: 3px solid black;
 }
 .notificationcontent{
-    padding-top:10px;
     font-size: 11px;
 }
 .sideBarAlignClass {
@@ -507,7 +529,7 @@ a.customerUpload:hover, a.customerManual:hover {
     padding-top: 4%;
     padding-bottom: 4%;
 }
-#dragDropDiv{
+#dragDropDiv, #productDragDropDiv{
     padding: 10 10 0 10;
     color: #464646;
     font-family: Futura, Futura-Medium, "Futura Medium", "Century Gothic", CenturyGothic, "Apple Gothic", AppleGothic, "URW Gothic L", "Avant Garde", sans-serif;
@@ -521,14 +543,14 @@ a.customerUpload:hover, a.customerManual:hover {
     font-size: 9px;
     font-weight: bold;
 }
-#dragDropUploadBtn{
+#dragDropUploadBtn, #productDragDropUploadBtn{
     margin-right: 20px;
     font-family: Futura, Futura-Medium, "Futura Medium", "Century Gothic", CenturyGothic, "Apple Gothic", AppleGothic, "URW Gothic L", "Avant Garde", sans-serif;
 
     border-radius: 6px;
     color: #f9f3fa;
     background-color: #9e4faa;
-    width: 120px;
+    width: 100px;
 }
 .output{
 font-size: 14px;

@@ -64,7 +64,7 @@ thead {
             <div class="row marginTen">
                 <div class="offset-md-6 col-md-6">
                     <span class="input-group pull-right" id="searchOptionInputGroup">
-                            <input type="text" id="searchOption" maxlength="20">
+                            <input type="text" id="searchOption" maxlength="60">
                             <div class="input-group-append">
                               <span id="spanSearchIcon">
                                 <i class="fa fa-search"></i>
@@ -75,7 +75,7 @@ thead {
             </div>
             <div class="row">
                 <div class="col-md-12 col-sm-3 col-6 " align="center" >
-                    <table class="table hover viewOrderTable" id="viewOrderTable">
+                    <table class="table hover dt-responsive viewOrderTable" id="viewOrderTable" width="100%" style="font-size:85%">
                          <thead>
 
                          </thead>
@@ -98,7 +98,7 @@ thead {
           <div class="modal-body">
               <div id="success_msg" class="success_msg"> </div>
               <div id="error_msg" class="error_msg"> </div>
-                <form role="form">
+                <form role="form" autocomplete="off">
                     {% csrf_token %}
                     <div id="modalBody">
 
@@ -127,7 +127,7 @@ thead {
       <div class="modal-body">
         <div class="row" >
             <div class="col-md-12 col-sm-3 col-6 " >
-                <table class="table hover viewProductDataTable" id="viewProductDataTable">
+                <table class="table hover dt-responsive viewProductDataTable" id="viewProductDataTable" width="100%" style="font-size:85%">
                      <thead>
 
                      </thead>
@@ -274,16 +274,16 @@ thead {
                 pullConfirmOrderTable(confirmProductTableList);
 
               }
-              else if(data.status == 'error' && data.error_msg != 'sessionexpired'){
-                 alert(data.error_msg);
-              }
               else if (data.status == 'error' && data.error_msg == 'sessionexpired') {
-                    alert('Session has expired.');
-                        setTimeout(function() {
-                            window.location.href = data.redirect_url;
-                        }, 2000);
+                alert('Session has expired.');
+                    setTimeout(function() {
+                        window.location.href = data.redirect_url;
+                    }, 2000);
 
-                    }
+                }
+              else{
+                    alert(data.error_msg);
+                }
               }
             });
 
@@ -342,8 +342,8 @@ thead {
                         viewProductDataTable.clear().draw();
                          $.each(confirmProductTableList, function( index, value ) {
                          var sno = index+1;
-                         var goodsIssue = "<input type='number'  class='goodsIssueTextBox' id='goodsIssue_"+value.itemCode+"' value = "+value.goodsIssue+">";
-                           var action = "<input class='viewCusProdConfirmBtn' id='"+value.ordNumber+"_"+value.itemCode+"_"+customerId+"' type='button' value='Submit'>";
+                         var goodsIssue = "<input type='number'  class='goodsIssueTextBox' id='goodsIssue_"+value.itemCode+"_"+value.quantity+"_"+value.uOm+"' value = "+value.goodsIssue+">";
+                           var action = "<input class='viewCusProdConfirmBtn' id='"+value.ordNumber+"_"+value.itemCode+"_"+customerId+"_"+value.quantity+"_"+value.uOm+"' type='button' value='Submit'>";
                            if(value.orderdetail__ordstatus == 'Accept'){
                            var status = "<select name='acceptOrReject' id='acceptOrRejectStatus_"+value.itemCode+"' class='acceptOrReject'><option value="+value.orderdetail__ordstatus+">"+value.orderdetail__ordstatus+"</option><option value='Pending'>Pending</option><option value='Reject'>Reject</option><option value='Closed'>Closed</option> </select>";
                                }else if(value.orderdetail__ordstatus == 'Pending'){
@@ -352,20 +352,17 @@ thead {
                            var status = "<select name='acceptOrReject' id='acceptOrRejectStatus_"+value.itemCode+"' class='acceptOrReject'><option value="+value.orderdetail__ordstatus+">"+value.orderdetail__ordstatus+"</option><option value='Pending'>Pending</option><option value='Accept'>Accept</option><option value='Closed'>Closed</option> </select>";
                                }else{
                              action = "";
-                            var status = "<select name='acceptOrReject' id='acceptOrRejectStatus_"+value.itemCode+"' class='acceptOrReject' disabled=true><option value="+value.orderdetail__ordstatus+">"+value.orderdetail__ordstatus+"</option><option value='Pending'>Pending</option><option value='Accept'>Accept</option><option value='Reject'>Reject</option> </select>";
-                             var goodsIssue = "<input type='number'  class='goodsIssueTextBox' id='goodsIssue_"+value.itemCode+"' value = "+value.goodsIssue+" disabled=true>";
+                             var status = "<select name='acceptOrReject' id='acceptOrRejectStatus_"+value.itemCode+"' class='acceptOrReject' disabled=true><option value="+value.orderdetail__ordstatus+">"+value.orderdetail__ordstatus+"</option><option value='Pending'>Pending</option><option value='Accept'>Accept</option><option value='Reject'>Reject</option> </select>";
+                             var goodsIssue = "<input type='number'  class='goodsIssueTextBox' id='goodsIssue_"+value.itemCode+"_"+value.quantity+"_"+value.uOm+"' value = "+value.goodsIssue+" disabled=true>";
                                }
 
                            var comment = "<textarea  class='commentTextBox' id='comment_"+value.ordNumber+"'>"+value.comment+"</textarea>";
 
-                           viewProductDataTable.row.add([sno,value.itemCode,value.itemName,value.actualQuantity+" "+value.uOm,value.quantity,value.price+" "+value.priceUnit,status,value.goodsReceive,goodsIssue,action]).draw();
+                           viewProductDataTable.row.add([sno,value.itemCode,value.itemName,value.actualQuantity+" "+value.uOm,value.quantity+" "+value.uOm,value.price+" "+value.priceUnit,status,value.goodsReceive,goodsIssue,action]).draw();
 
                          });
                          $('#viewProductModal').modal('show');
 
-                      }
-                      else if(data.status == 'error' && data.error_msg != 'sessionexpired'){
-                         alert(data.error_msg);
                       }
                       else if (data.status == 'error' && data.error_msg == 'sessionexpired') {
                                 alert('Session has expired.');
@@ -374,8 +371,32 @@ thead {
                                 }, 2000);
 
                             }
+                       else{
+                            alert(data.error_msg);
+                        }
                       }
                     });
+            });
+
+            $(document).on('change','.goodsIssueTextBox', function() {
+                var id = $(this).attr('id');
+                var result = id.split('_');
+                var itemCode = result[1];
+                var qty = result[2];
+                var uOm = result[3];
+                var goodsIssue =  $('#goodsIssue_'+itemCode+'_'+qty+'_'+uOm).val();
+                if((parseInt(goodsIssue) != goodsIssue) && (uOm == "Nos" || uOm == "Pkt" || uOm == "Pcs") && (goodsIssue != "") ){
+                    alert('Please enter the valid goods issue qty');
+                    $('#goodsIssue_'+itemCode+'_'+qty+'_'+uOm).val('');
+                    $('#goodsIssue_'+itemCode+'_'+qty+'_'+uOm).focus();
+                    return false;
+                }
+                else if(parseInt(goodsIssue) > parseInt(qty)){
+                    alert('Goods issue qty should not be greater than actual qty');
+                    $('#goodsIssue_'+itemCode+'_'+qty+'_'+uOm).val('');
+                    $('#goodsIssue_'+itemCode+'_'+qty+'_'+uOm).focus();
+                    return false;
+                }
             });
 
              $(document).on('click','.viewCusProdConfirmBtn', function() {
@@ -384,9 +405,18 @@ thead {
                 var orderNo = result[0];
                 var itemCode = result[1];
                 var customerId = result[2];
+                var qty = result[3];
+                var uOm = result[4];
                 var comment =  $('#comment_'+orderNo).val();
-                var goodsIssue =  $('#goodsIssue_'+itemCode).val();
+                var goodsIssue =  $('#goodsIssue_'+itemCode+'_'+qty+'_'+uOm).val();
                 var status =  $('#acceptOrRejectStatus_'+itemCode).val();
+                if(goodsIssue > qty){
+                    alert('Goods issue qty should not be greater than actual qty');
+                    $('#goodsIssue_'+itemCode+'_'+qty+'_'+uOm).val('');
+                    $('#goodsIssue_'+itemCode+'_'+qty+'_'+uOm).focus();
+                    return false;
+                }
+                else{
                  var data = {"ordNumber":orderNo,"status":status,"customerId":customerId,"itemCode":itemCode,'goodsIssue':goodsIssue};
                     $.ajax({
                       url: "/orderFulfillmentSupplier",
@@ -402,59 +432,60 @@ thead {
 
                             alert(data.success_msg);
                             var data = {"ordNumber":orderNo};
-                    $.ajax({
-                      url: "/viewPlacedOrderDetails",
-                      type: "POST",
-                      dataType : "json",
-                      contentType : "application/json",
-                      data: JSON.stringify(data),
-                      success: function (result)
-                      {
-                        var data = result;
+                                $.ajax({
+                                  url: "/viewPlacedOrderDetails",
+                                  type: "POST",
+                                  dataType : "json",
+                                  contentType : "application/json",
+                                  data: JSON.stringify(data),
+                                  success: function (result)
+                                  {
+                                    var data = result;
 
-                        if (data.status == 'success') {
-                        confirmProductTableList = data.totalItems[0].totalItem;
-                        viewProductDataTable.clear().draw();
-                         $.each(confirmProductTableList, function( index, value ) {
-                         var sno = index+1;
+                                    if (data.status == 'success') {
+                                    confirmProductTableList = data.totalItems[0].totalItem;
+                                    viewProductDataTable.clear().draw();
+                                     $.each(confirmProductTableList, function( index, value ) {
+                                     var sno = index+1;
 
-                           var action = "<input class='viewCusProdConfirmBtn' id='"+value.ordNumber+"_"+value.itemCode+"_"+customerId+"' type='button' value='Submit'>";
-                            var goodsIssue = "<input type='number'  class='goodsIssueTextBox' id='goodsIssue_"+value.itemCode+"' value = "+value.goodsIssue+">";
-                           if(value.orderdetail__ordstatus == 'Accept'){
-                           var status = "<select name='acceptOrReject' id='acceptOrRejectStatus_"+value.itemCode+"' class='acceptOrReject'><option value="+value.orderdetail__ordstatus+">"+value.orderdetail__ordstatus+"</option><option value='Pending'>Pending</option><option value='Reject'>Reject</option><option value='Closed'>Closed</option> </select>";
-                               }else if(value.orderdetail__ordstatus == 'Pending'){
-                           var status = "<select name='acceptOrReject' id='acceptOrRejectStatus_"+value.itemCode+"' class='acceptOrReject'><option value="+value.orderdetail__ordstatus+">"+value.orderdetail__ordstatus+"</option><option value='Accept'>Accept</option><option value='Reject'>Reject</option><option value='Closed'>Closed</option> </select>";
-                               }else if(value.orderdetail__ordstatus == 'Reject'){
-                           var status = "<select name='acceptOrReject' id='acceptOrRejectStatus_"+value.itemCode+"' class='acceptOrReject'><option value="+value.orderdetail__ordstatus+">"+value.orderdetail__ordstatus+"</option><option value='Pending'>Pending</option><option value='Accept'>Accept</option><option value='Closed'>Closed</option> </select>";
-                               }else{
-                             action = "";
-                             var status = "<select name='acceptOrReject' id='acceptOrRejectStatus_"+value.itemCode+"' class='acceptOrReject' disabled=true><option value="+value.orderdetail__ordstatus+">"+value.orderdetail__ordstatus+"</option><option value='Pending'>Pending</option><option value='Accept'>Accept</option><option value='Reject'>Reject</option> </select>";
-                             var goodsIssue = "<input type='number'  class='goodsIssueTextBox' id='goodsIssue_"+value.itemCode+"' value = "+value.goodsIssue+" disabled=true>";
-                               }
+                                       var action = "<input class='viewCusProdConfirmBtn' id='"+value.ordNumber+"_"+value.itemCode+"_"+customerId+"_"+value.quantity+"_"+value.uOm+"' type='button' value='Submit'>";
+                                        var goodsIssue = "<input type='number'  class='goodsIssueTextBox' id='goodsIssue_"+value.itemCode+"_"+value.quantity+"_"+value.uOm+"' value = "+value.goodsIssue+">";
+                                       if(value.orderdetail__ordstatus == 'Accept'){
+                                       var status = "<select name='acceptOrReject' id='acceptOrRejectStatus_"+value.itemCode+"' class='acceptOrReject'><option value="+value.orderdetail__ordstatus+">"+value.orderdetail__ordstatus+"</option><option value='Pending'>Pending</option><option value='Reject'>Reject</option><option value='Closed'>Closed</option> </select>";
+                                           }else if(value.orderdetail__ordstatus == 'Pending'){
+                                       var status = "<select name='acceptOrReject' id='acceptOrRejectStatus_"+value.itemCode+"' class='acceptOrReject'><option value="+value.orderdetail__ordstatus+">"+value.orderdetail__ordstatus+"</option><option value='Accept'>Accept</option><option value='Reject'>Reject</option><option value='Closed'>Closed</option> </select>";
+                                           }else if(value.orderdetail__ordstatus == 'Reject'){
+                                       var status = "<select name='acceptOrReject' id='acceptOrRejectStatus_"+value.itemCode+"' class='acceptOrReject'><option value="+value.orderdetail__ordstatus+">"+value.orderdetail__ordstatus+"</option><option value='Pending'>Pending</option><option value='Accept'>Accept</option><option value='Closed'>Closed</option> </select>";
+                                           }else{
+                                         action = "";
+                                         var status = "<select name='acceptOrReject' id='acceptOrRejectStatus_"+value.itemCode+"' class='acceptOrReject' disabled=true><option value="+value.orderdetail__ordstatus+">"+value.orderdetail__ordstatus+"</option><option value='Pending'>Pending</option><option value='Accept'>Accept</option><option value='Reject'>Reject</option> </select>";
+                                         var goodsIssue = "<input type='number'  class='goodsIssueTextBox' id='goodsIssue_"+value.itemCode+"_"+value.quantity+"_"+value.uOm+"' value = "+value.goodsIssue+" disabled=true>";
+                                           }
 
-                           var comment = "<textarea  class='commentTextBox' id='comment_"+value.ordNumber+"'>"+value.comment+"</textarea>";
+                                       var comment = "<textarea  class='commentTextBox' id='comment_"+value.ordNumber+"'>"+value.comment+"</textarea>";
 
-                           viewProductDataTable.row.add([sno,value.itemCode,value.itemName,value.actualQuantity+" "+value.uOm,value.quantity,value.price+" "+value.priceUnit,status,value.goodsReceive,goodsIssue,action]).draw();
+                                       viewProductDataTable.row.add([sno,value.itemCode,value.itemName,value.actualQuantity+" "+value.uOm,value.quantity+" "+value.uOm,value.price+" "+value.priceUnit,status,value.goodsReceive,goodsIssue,action]).draw();
 
-                         });
-                         $('#viewProductModal').modal('show');
+                                     });
+                                     $('#viewProductModal').modal('show');
 
-                      }
-                      else if(data.status == 'error' && data.error_msg != 'sessionexpired'){
-                         alert(data.error_msg);
-                      }
-                      else if (data.status == 'error' && data.error_msg == 'sessionexpired') {
-                                alert('Session has expired.');
-                                setTimeout(function() {
-                                    window.location.href = data.redirect_url;
-                                }, 2000);
+                                  }
+                                  else if (data.status == 'error' && data.error_msg == 'sessionexpired') {
+                                        alert('Session has expired.');
+                                        setTimeout(function() {
+                                            window.location.href = data.redirect_url;
+                                        }, 2000);
 
-                            }
-                      }
-                    });
+                                    }
+                                  else{
+                                        alert(data.error_msg);
+                                    }
+                                  }
+                                });
                         }
                         }
                         });
+                 }
 
            });
 
@@ -491,9 +522,6 @@ thead {
                                 window.location.href = data.redirect_url;
                             }, 3000);
                         }
-                        else if (data.status == 'error' && data.error_msg != 'sessionexpired') {
-                            $('#error_msg').append(data.error_msg);
-                        }
                         else if (data.status == 'error' && data.error_msg == 'sessionexpired') {
                             $('#domainName').val('');
                             $('#error_msg').append('Session expired.');
@@ -502,6 +530,9 @@ thead {
                             setTimeout(function() {
                                 window.location.href = data.redirect_url;
                             }, 3000);
+                        }
+                        else{
+                            $('#error_msg').append(result.error_msg);
                         }
                       }
                      });

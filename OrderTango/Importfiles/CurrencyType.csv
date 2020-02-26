@@ -1,4 +1,4 @@
-currencyTypeId,currencyTypeCode,currencyTypeName,currencyTypeDesc
-1,USD,American Dollar,
-2,SGD,Singapore Dollar,
-3,INR,Indian Rupees,
+currencyTypeCode,currencyTypeName,currencyTypeDesc
+USD,American Dollar,
+SGD,Singapore Dollar,
+INR,Indian Rupees,

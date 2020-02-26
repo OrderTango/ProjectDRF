@@ -61,7 +61,7 @@
         margin-top: 10px;
         margin-bottom: -5px
     }
-    #userAreaSubmit, #userAreaSubmit:hover, #editAreaSubmit, #editAreaSubmit:hover, .userButtonClass, .userButtonClass:hover {
+     #editAreaSubmit, #editAreaSubmit:hover, .userButtonClass, .userButtonClass:hover ,#userAreaSubmit, #userAreaSubmit:hover{
         border: 0px;
         font-size: 13px;
         border-radius: 5px;
@@ -71,6 +71,7 @@
         cursor: pointer;
         text-decoration: none;
     }
+
     .modal-body{
         max-height:500px !important;
         overflow-y: scroll
@@ -90,6 +91,53 @@
     #bodyContent {
         padding-right: 0%
     }
+@media (min-width:600px) and (max-width: 801px)  {
+
+    #viewAreaTable{
+        width: 176% !important;
+    }
+    .areaWid{
+        margin-left: 50% !important;
+    }
+    .viewAreaWid{
+         margin-left: -283% !important;
+    }
+    #createArea{
+         margin-left: 4% !important;
+    }
+    .areaBtn{
+        margin-left: 50% !important;
+    }
+    #id_areaName, #id_areaSla, #id_areaDesc{
+        width: 151px !important;
+    }
+    #userAreaSubmit{
+        margin-left: 60% !important;
+    }
+
+}
+@media (min-width:320px) and (max-width: 480px)  {
+    .butarea {
+        margin: 2px !important;
+    }
+    .tabWid{
+        width: 135% !important;
+    }
+    #viewDataTable_paginate {
+        margin-left: 48% !important;
+    }
+    div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+       justify-content: center !important;
+       padding-left: 100px !important;
+    }
+    #viewAreaTable_paginate:before {
+        font-size: 13px !important;
+        margin-left: 43% !important;
+    }
+    #userAreaSubmit, #userAreaSubmit:hover {
+        margin-left: 30% !important;
+    }
+}
 </style>
 <div class="row headColor">
   <div class="col-md-2 col-sm-4 col-24" id="sideBarLeft">
@@ -97,16 +145,16 @@
   </div>
   <div class="col-md-10 paddingLeftZero" id="bodyContent">
         <div class="row tableCSSForResponsive" id="viewAreaDiv">
-            <div class="col-md-6 col-sm-3 col-6">
-                <h4 class="headingColor"> View Area </h4>
+            <div class="col-md-6 col-sm-3 col-6 areaWid">
+                <h4 class="headingColor viewAreaWid"> View Area </h4>
             </div>
              <div class="col-md-6 col-sm-3 col-6">
                  <div class="pull-right">
-                    <button class="userButtonClass" id="createArea">
+                    <button class="butarea userButtonClass" id="createArea">
                          <img class="roundImage" src="/static/images/Round.png" /> Create Area
                     </button>
                     <span class="input-group" id="searchOptionInputGroup">
-                                <input type="text" id="searchOption">
+                                <input type="text" id="searchOption"  maxlength="60">
                                 <div class="input-group-append">
                                   <span id="spanSearchIcon">
                                     <i class="fa fa-search"></i>
@@ -115,8 +163,8 @@
                     </span>
                 </div>
             </div>
-            <div class="col-md-12 col-sm-3 col-6 marginLeftFifteen" id="viewAreaDiv">
-                <table class="table hover dt-responsive viewAreaTable" id="viewAreaTable">
+            <div class="col-md-12 col-sm-8 col-10" id="viewAreaDiv">
+                <table class="tabWid table hover dt-responsive viewAreaTable" id="viewAreaTable" width="100%" style="font-size:85%">
                      <thead>
 
                      </thead>
@@ -124,16 +172,16 @@
             </div>
         </div>
         <div class="row tableCSSForResponsive" id="createAreaDiv">
-            <div class="col-md-6 col-sm-3 col-6">
+            <div class="col-md-6 col-sm-3 col-6 areaWidth">
                 <h4 class="headingColor"> Create Area </h4>
             </div>
-             <div class="col-md-6 col-sm-3 col-6">
+             <div class="col-md-6 col-sm-3 col-6 areaBtn">
                 <button class="userButtonClass pull-right" id="viewArea">
                      View Area
                 </button>
             </div>
                  <div class="col-md-12" id="areaFormDiv">
-                   <form class="post-form" id="areaForm" role="form">
+                   <form class="post-form" id="areaForm" role="form" autocomplete="off">
                     {% csrf_token %}
                     <div class="customerManualForm" id="userAddDetail">
                         <div class="form-group row customerDetailsForm">
@@ -172,7 +220,7 @@
            <div class="modal-body">
               <div id="success_msg" class="success_msg"> </div>
               <div id="error_msg" class="error_msg"> </div>
-                <form role="form">
+                <form role="form" autocomplete="off">
                     {% csrf_token %}
                     <div id="modalBody">
 
@@ -219,7 +267,7 @@
       </div>
       <div class="modal-body">
 
-         <form id="updateLogo"  method="post" enctype="multipart/form-data">
+         <form id="updateLogo"  method="post" enctype="multipart/form-data" autocomplete="off">
              {% csrf_token %}
 
          <input type="file" name="fileuploaddata" value="fileupload" id="fileuploaddata">
@@ -252,7 +300,7 @@
         <div class="row" >
             <div class="col-md-12 col-sm-3 col-6 " >
                 <div class="col-md-12" id="viewProfileModalFormDiv">
-                    <form class="registrationform" id="updateProfileForm" role="form" method='POST'>
+                    <form class="registrationform" id="updateProfileForm" role="form" method='POST' autocomplete="off">
 
                         {% csrf_token %}
                         <div id="formsec1">
@@ -266,8 +314,25 @@
                              {{ ProfileForm.lastName }}
                           </div>
                           <div class="offset-3 offset-sm-4 offset-md-3" id="lastNameError">{{ ProfileForm.lastName.errors }} </div>
+                        <div class="form-group row registrationformdiv hide">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.contactNo.label_tag }}<span class="mandatory">*</span></label>
+                             {{ProfileForm.countryCode}}{{ ProfileForm.contactNo }}
+                          </div>
+                          <div class="offset-3 offset-sm-4 offset-md-3 hide" id="contactNoError">{{ ProfileForm.contactNo.errors }} </div>
+                        <div class="form-group row registrationformdiv hide">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.email.label_tag }}<span class="mandatory">*</span></label>
+                             {{ ProfileForm.email }}
+                          </div>
+                          <div class="offset-3 offset-sm-4 offset-md-3 hide" id="emailError">{{ ProfileForm.email.errors }} </div>
+
                         </div>
                         <div id="formsec2">
+                            <div class="form-group row registrationformdiv hide">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.companyName.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.companyName }}
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="companyNameError"> {{ companyProfileForm.companyName.errors }} </div>
+
 
                           <div class="form-group row registrationformdiv">
                             <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.country.label_tag }}<span class="mandatory">*</span></label>
@@ -308,7 +373,7 @@
                             <div class="form-group row registrationformdiv">
                             <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.sec_answer.label_tag }}<span class="mandatory">*</span></label>
                             {{ ProfileForm.sec_answer }}
-                            <div class="col-12 offset-sm-4 col-md-6" id="submitBtnDiv">  <input type="submit" id="profileUpdateButton" value="Update"> </div>
+                            <div class="col-12 offset-sm-4 col-md-6" id="submitBtnDiv">  <input type="button" class="profileUpdateButtonClass" id="profileUpdateButton" value="Update"> </div>
                           </div>
                             <div class="offset-3 offset-sm-4 offset-md-3" id="secAnswerError"> {{ ProfileForm.sec_answer.errors }} </div>
                         </div>
@@ -346,7 +411,7 @@
     <div class="row">
     <div class="col-md-12 col-sm-3 col-12">
     <div class="col-md-12" id="editAreaFormDiv">
-    <form class="post-form" id="editAreaForm" role="form">
+    <form class="post-form" id="editAreaForm" role="form" autocomplete="off">
                     {% csrf_token %}
                     <div class="customerManualForm" id="userAddDetail">
                          {{ areaEditForm.areaId }}
@@ -365,7 +430,7 @@
                      </div>
                     </form>
                     <div class="offset-md-5 col-md-4 col-sm-4 offset-4 col-8">
-                        <a href="#" id="hitBtn"><input type="button" id="editAreaSubmit" class="btn btn-primary" value="Submit"> </a>
+                        <input type="button" id="editAreaSubmit" class="btn btn-primary" value="Submit">
                     </div>
     </div>
     </div>
@@ -385,7 +450,7 @@
       <div class="modal-dialog modal-dialog-centered sampleModalPopup" role="document">
         <div class="modal-content modalBorderClass">
           <div class="modal-header">
-            <h5 class="modal-title modalTitleHead" id="unauthorizeModalTitle">Error</h5>
+            <h5 class="modal-title modalTitleHead" id="unauthorizeModalTitle">{{company.companyName}}</h5>
             <button type="button" class="close" id="unauthorizeCloseBtn" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -414,9 +479,11 @@
 
 
           </div>
-          <div class="modal-footer">
-                <input type="button" id="confirmModalPopupSubmit" class="btn btn-primary modalBtnClass" data-dismiss="modal" aria-label="Close" value="Confirm">
-                <input type="button" id="confirmModalPopupClose" class="btn btn-primary modalBtnClass" data-dismiss="modal" aria-label="Close" value="Close">
+          <div class="modal-footer" style="text-align:center">
+              <div class="col-md-12">
+                  <input type="button" id="confirmModalPopupSubmit" class="btn btn-primary modalBtnClass" data-dismiss="modal" aria-label="Close" value="Confirm">
+                <input type="button" id="confirmModalPopupClose" class="btn btn-primary modalBtnClass" data-dismiss="modal" aria-label="Close" value="Cancel">
+              </div>
           </div>
         </div>
       </div>
@@ -454,11 +521,14 @@
                 if (data.status == 'success') {
                     pullAreaTable(data.areaData);
                 }
-                else if(result.status == 'error' && result.error_msg == 'sessionexpired'){
+                else if(data.status == 'error' && data.error_msg == 'sessionexpired'){
                     alert('Session has expired.');
                     setTimeout(function() {
                         window.location.href = data.redirect_url;
                     }, 2000);
+                }
+               else{
+                    alert(data.error_msg);
                 }
               }
             });
@@ -651,14 +721,14 @@
                                     location.reload();
                                 },2000);
                             }
-                            else if (result.status == 'error') {
-                                alert(result.error_msg);
-                            }
                             else if(result.status == 'error' && result.error_msg == 'sessionexpired'){
                                     alert('Session has expired.');
                                     setTimeout(function() {
                                         window.location.href = data.redirect_url;
                                     }, 2000);
+                            }
+                           else{
+                                alert(result.error_msg);
                             }
                           }
                      });
@@ -686,6 +756,9 @@
                          if(data.areaData[0].areaName == 'Central'){
                          $("#eAreaName").prop("disabled",true);
                          }
+                         else{
+                            $("#eAreaName").prop("disabled",false);
+                         }
                          $('#eAreaDesc').val(data.areaData[0].areaDesc);
                          $('#editAreaModal').show();
                          $('#editAreaModal').modal('toggle');
@@ -695,6 +768,9 @@
                         setTimeout(function() {
                             window.location.href = data.redirect_url;
                         }, 2000);
+                    }
+                    else{
+                        alert(result.error_msg);
                     }
                    }
                 });
@@ -727,16 +803,18 @@
                     var data = result;
                     if (data.status == 'success') {
                         alert(data.success_msg);
-                        location.reload();
-                    }
-                    else if(data.status == 'error' && data.error_msg != 'sessionexpired'){
-                        alert(data.error_msg);
+                        setTimeout(function() {
+                                window.location.reload();
+                            }, 3000);
                     }
                     else if(data.status == 'error' && data.error_msg == 'sessionexpired'){
                         alert('Session has expired.');
                         setTimeout(function() {
                             window.location.href = data.redirect_url;
                         }, 2000);
+                    }
+                    else{
+                        alert(data.error_msg);
                     }
                    }
                 });
@@ -778,14 +856,14 @@
                                     location.reload();
                                 },2000);
                             }
-                            else if (result.status == 'error' && result.error_msg != 'sessionexpired') {
-                                    alert(result.error_msg);
-                            }
                             else if(result.status == 'error' && result.error_msg == 'sessionexpired'){
                                 alert('Session has expired.');
                                 setTimeout(function() {
                                     window.location.href = data.redirect_url;
                                 }, 2000);
+                            }
+                            else{
+                                alert(result.error_msg);
                             }
                           }
                      });
@@ -799,8 +877,7 @@
                     $('#areaName').focus();
                 }
                 else if ($(this).attr('id') == 'viewArea') {
-                    $('#createAreaDiv').hide();
-                    $('#viewAreaDiv').show();
+                    location.reload();
                 }
             });
 
@@ -820,6 +897,7 @@
 
          var date = new Date();
                 $("#uDOJ , #uDOD").datepicker({
+                    changeYear: true,
                     dateFormat: "dd/mm/yy",
                     defaultDate: 'Select',
                     onSelect: function () {
@@ -907,9 +985,6 @@
                                 window.location.href = data.redirect_url;
                             }, 3000);
                         }
-                        else if (data.status == 'error' && data.error_msg != 'sessionexpired') {
-                            $('#error_msg').append(data.error_msg);
-                        }
                         else if (data.status == 'error' && data.error_msg == 'sessionexpired') {
                             $('#domainName').val('');
                             $('#error_msg').append('Session expired.');
@@ -918,6 +993,9 @@
                             setTimeout(function() {
                                 window.location.href = data.redirect_url;
                             }, 3000);
+                        }
+                        else{
+                            $('#error_msg').append(data.error_msg);
                         }
                       }
                      });

@@ -1,9 +1,9 @@
-prtCatId,prtCatCode,prtCatName,prtCatDesc
-1,,Take Home,
-2,,Stationaries,
-3,,Food,
-4,,Articles,
-5,,System Accessories,
-6,,Mobiles,
-7,,Mobile Accessories,
-8,,Electricals,
+prtCatCode,prtCatName,prtCatDesc
+,Take Home,
+,Stationaries,
+,Food,
+,Articles,
+,System Accessories,
+,Mobiles,
+,Mobile Accessories,
+,Electricals,

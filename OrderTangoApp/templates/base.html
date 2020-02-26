@@ -5,6 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}"/>
   		<link rel="stylesheet" href="{% static 'fontawesome/css/font-awesome.min.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/loader.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.css' %}"/>
 		<link rel="icon" href="{% static 'images/OT_Logo.png' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'css/new/header.css' %}"/>
         <link rel="stylesheet" type="text/css" href="{% static 'css/new/chromeIE.css' %}"/>
@@ -57,12 +59,20 @@
         </div>
     </nav>
 	</div>
+    <div class="modal" id="loader"><!-- Place at bottom of page --></div>
 	{% block content%}
 
 	{% endblock %}
 <script>
 
     $(document).ready(function() {
+
+    $(document).on('keypress', '#id_postalCode', function(event) {
+    if ((event.which < 48 || event.which > 57)&&(event.which < 65 || event.which > 90)&&(event.which < 97 || event.which > 122)&&(event.which !=32 )) {
+    event.preventDefault();
+    }
+    });
+
     /* Restrict Copy, paste action in Password fields Start */
     $('#id_password, #id_confirm_password').on("cut copy paste",function(e) {
       e.preventDefault();

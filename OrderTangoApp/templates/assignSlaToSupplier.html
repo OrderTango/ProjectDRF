@@ -5,13 +5,21 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}"/>
 <link rel="stylesheet" type="text/css" href="{% static 'css/manualUploadForm.css' %}"/>
 <link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/jquery.timepicker.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-datepicker.css' %}" />
+
+<script type="text/javascript" src="{% static 'js/jquery.timepicker.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/site.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/datepair.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.datepair.js' %}"></script>
 <script src ="{% static 'js/jquery-ui.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
 <style>
 
     .headingSla {
         color: #881999;
-        margin-left: 13px;
+        padding-top:10px;
     }
     .sampleModalPopup {
         max-width: 35%
@@ -25,6 +33,10 @@
     }
     .modal-dialog {
         max-width: 800px;
+    }
+    .modal-body {
+        max-height: 500px !important;
+        overflow-y: scroll;
     }
     .mandatory {
         color: red
@@ -40,6 +52,10 @@
         transform: translate(-50%, -50%) !important;
         background-color: white;
 
+    }
+    #createSiteFormSubmit{
+        background-color: #984fa5;
+        border-color: #984fa5;
     }
     .ui-dialog-buttonpane{
         padding: 0em !important;
@@ -75,10 +91,168 @@
         border: 1px solid #881999;
         border-radius: 5px;
     }
-    #bodyContent {
+    /*#bodyContent {
         margin-left: -15px;
         background-color: #f9f3fa;
+    }*/
+    .dropdownNew,
+.dropdownNew li,
+.dropdownNew ul {
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+.dropdownNew {
+    position:relative;
+    float:left;
+    width:100%;
+    font-size:13px;
+}
+.dropdownNew ul {
+    position:absolute;
+    top:100%;
+    visibility:hidden;
+    display:none;
+    z-index:900;
+    width:8em;
+    font-size:13px;
+
+}
+.dropdownNew ul ul {
+    top:0;
+    left:100%;
+}
+
+
+.dropdownNew li {
+    position:relative;
+    float:left;
+}
+.dropdownNew li:hover{
+    z-index:910;
+}
+
+.dropdownNew ul:hover,
+.dropdownNew li:hover > ul,
+.dropdownNew a:hover + ul,
+.dropdownNew a:focus + ul {
+    visibility:visible;
+    display:block;
+}
+.dropdownNew a {
+    display:block;
+    background:#9e4faa;
+    color:#fff;
+    padding:5px 5px 5px 5px ;
+}
+.dropdownNew ul li {
+    width:100%;
+}
+
+.dropdownNew li:hover a {
+    background:#9e4faa;
+}
+
+.dropdownNew li a:focus,
+.dropdownNew li a:hover {
+    background:#5b0f67;
+}
+
+
+.dropdownNew > li:last-child ul {
+    right:0;
+}
+#SLAName, #areaId,#deliveryDays {
+        height: 30px;
+        width: 250px !important;
+        border: 1px solid #bb99c0;
+        border-radius: 8px;
+        padding: 4px !important;
     }
+
+#holidaySelect, #year, #name, #holidayNameSelect {
+    height: 30px;
+    width: 250px;
+    border: 1px solid #bb99c0;
+    border-radius: 8px;
+    padding: 4px !important;
+}
+
+#fromTime, #toTime, #fromCutTime, #shift, #toCutTime {
+    height: 30px;
+    width: 100px !important;
+    border: 1px solid #bb99c0;
+    border-radius: 8px;
+    padding: 4px !important;
+    margin-right: 5px;
+}
+#siteArea,#siteType,#siteName,#siteAddress,#editcountry,#editstate,#editaddress_Line1,#editaddress_Line2
+,#editpostalCode,#createSiteSiteName,#createSiteAddress_Line1,#createSiteAddress_Line2,#createSiteCountry,
+#createSiteState,#createSitePostalCode{
+        height: 30px;
+        width: 250px !important;
+        border: 1px solid #bb99c0;
+        border-radius: 8px;
+        padding: 4px !important;
+    }
+#editunit1, #editunit2, #createSiteUnit1, #createSiteUnit2 {
+    height: 30px;
+    width: 70px !important;
+    border: 1px solid #bb99c0;
+    border-radius: 8px;
+    padding: 4px !important;
+    margin-right: 5px;
+}
+#siteDesc{
+    width: 250px !important;
+    border: 1px solid #bb99c0;
+    border-radius: 8px;
+    padding: 4px !important;
+}
+
+#SLASubmit, #SLASubmit:hover,.userButtonClass, .userButtonClass:hover, #addBtn, #addCutOffBtn, #createSiteForCustomerSubmitBtn{
+    border: 0px;
+    font-size: 14px;
+    border-radius: 5px;
+    color: #ffffff;
+    background-color: #984fa5;
+    padding: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+#userAreaSubmit, #userAreaSubmit:hover{
+        border: 0px;
+        font-size: 13px;
+        border-radius: 5px;
+        color: #ffffff;
+        background-color: #984fa5;
+        padding: 5px;
+        cursor: pointer;
+        text-decoration: none;
+
+}
+.holidayBtn, .holidayBtnClose, .cutOffBtn, .shiftBtn, .eclear {
+    background: #ffd500;
+    color: #881999;
+    font-weight: bold;
+    border: 2px solid #881999;
+}
+.holidayBtnClose, .eclear {
+    float: right;
+    font-weight: bold;
+    height: 30px;
+    padding: 2px 4px 2px 4px;
+    cursor: pointer;
+}
+.holidayBtnClose, .eclear {
+    border-left: none;
+    padding-top: 0px;
+}
+.holidayBtn, .cutOffBtn, .shiftBtn, {
+    border-right: none;
+}
 @media (min-width:320px) and (max-width: 480px)  {
     #basicDataDetailsForm{
         margin-left:20px !important;
@@ -95,6 +269,152 @@
     #id_unit1,#id_unit2,#id_usradd_unit1,#id_usradd_unit2{
        width:78px !important;
     }
+    #select_sla, #select_suppliers {
+        width: 100px;
+        height: 30px;
+        border: 1px solid #bb99c0;
+        border-radius: 8px;
+        padding: 4px !important;
+    }
+    .paddingLeftZero{
+        margin-left:30px !important;
+    }
+    .offsets-md-1 {
+          margin-left: -4.666667% !important;
+         width: 148px !important;
+    }
+    .offsets-md-11 {
+         text-align: center !important;
+    }
+}
+@media (min-width:600px) and (max-width: 801px)  {
+    .slaLabel{
+        width: 31% !important;
+    }
+    .suppLabel{
+        width: 31% !important;
+    }
+    #select_sla, #select_suppliers {
+        width: 164px !important;
+        margin-left: 7% !important;
+    }
+    .dropDownBtn{
+          margin-left: 87% !important;
+          margin-top: -14.5% !important;
+    }
+    .addNewWid{
+            width: 169% !important;
+    }
+    #assignSlaSubmit {
+            margin-left: 37% !important;
+            margin-top: -5% !important;
+    }
+    .slaModalwid{
+        width: 89% !important;
+    }
+    .slaNameWid{
+        margin-top: -89% !important;
+        margin-left: 201% !important;
+    }
+    .slaTypeWid{
+        margin-top: -89% !important;
+        margin-left: 201% !important;
+    }
+    .slaTableWid{
+         margin-top: -102% !important;
+         margin-left: 141% !important;
+    }
+    .slaDeliveryWid{
+         margin-top: -102% !important;
+         margin-left: 141% !important;
+    }
+    .slaHolidayWid{
+         margin-top: -60% !important;
+         margin-left: 197% !important;
+    }
+    .slaHolidayWid{
+         margin-top: -60% !important;
+         margin-left: 197% !important;
+    }
+    .slaCutoffWid{
+         margin-top: -112% !important;
+         margin-left: 197% !important;
+    }
+    .slaCutoffWidth{
+         margin-top: -48% !important;
+         margin-left: 197% !important;
+    }
+    .deliverySlotWid{
+         margin-top: -94% !important;
+         margin-left: 197% !important;
+    }
+    .deliverySlotWidth{
+         margin-top: -48% !important;
+         margin-left: 197% !important;
+    }
+    #deliveryDays {
+         width: 175px !important;
+         margin-top: -94% !important;
+         margin-left: 233% !important;
+    }
+    #SLASubmit{
+         margin-left: 233% !important;
+    }
+    .slaSubmitBtn{
+         margin-left: 158% !important;
+    }
+    #holidaySelect,#SLAType,#SLAName{
+         width: 175px !important;
+    }
+}
+
+#onBoardTab {
+    font-weight: bold;
+    padding: 5px 10px 5px 10px;
+    border: 1px solid #f9f3fa;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    text-align: left !important;
+}
+.navHeading {
+    background-color: #f9f3fa;
+    box-shadow: outset -7px 0 9px -7px rgba(0,0,0,0.7);
+}
+#onBoardAnchor {
+    color: #474747;
+    padding-bottom: 5px;
+    border-bottom: 2px solid black;
+}
+.slaModuleTabActive {
+    background-color: #eddcf0;
+}
+.bgColorModule {
+    padding-top: 10px;
+    padding-bottom: 1px;
+}
+.slaModuleTabActive > a {
+    color: #474747 !important;
+    border-bottom: 2px solid black;
+}
+#bothNavULMenu {
+    padding-right: 0px;
+    margin-top: 5px;
+    border: 1px solid #f2e4f5;
+    border-radius: 5px;
+}
+.ui-datepicker select.ui-datepicker-year {
+    width: 25%;
+    background: none;
+    border: 1px solid #9e4faa;
+    border-radius: 5px;
+    height:1.65em;
+}
+.ui-datepicker select.ui-datepicker-month {
+    width: 50%;
+    background: none;
+    border: 1px solid #9e4faa;
+    border-radius: 5px;
+    height:1.65em;
 }
 </style>
  <div class="row">
@@ -102,48 +422,83 @@
             {% include "administrationpanelsidebar.html" %}
       </div>
       <div class="col-md-10 paddingLeftZero" id="bodyContent">
-        <div id="supplierProductDiv">
-            <div class="row">
-                <div class="col-md-6 col-sm-3 col-6">
-                    <h4 class="headingSla"> Assign SLA </h4>
-                </div>
+          <div class="row">
+              <div class="col-md-3 col-sm-3 col-6 navTabClass navHeading" id="onBoardTab">
+                <a href="#" class="anchorlink " id="onBoardAnchor">Service Level Agreement</a>
+              </div>
             </div>
-                    <div class='row'>
-                       <div class='offset-md-1 col-md-12' >
-                       <label class="col-md-2">Select SLA:</label>
-                        <select id="select_sla" class="col-md-3">
-                            <option value="">Select</option>
-                            {% for sla in sla %}
-                            <option value="{{sla.slaId}}">{{sla.slaType}}</option>
-                            {% endfor %}
-                        </select>
-                       </div>
-                    </div>
+          <div class="row" style="background-color: #f9f3fa;">
+            <div class="col-md-7 col-sm-3 col-6 paddingLeftRightTen">
+                <!--<h4 class="headingColor"> View SLA </h4>-->
+                <ul class="col-md-10 nav nav-pills textAlignCenter" id="bothNavULMenu">
+                    <li class="col-md-4 col-sm-4 bgColorModule bothModuleTab" id="viewSlaMenu">
+                      <a data-toggle="pill" href="#">View SLA</a>
+                    </li>
+                    <li class="col-md-4 col-sm-4 bgColorModule bothModuleTab " id="customerSla">
+                      <a data-toggle="pill" href="{% url 'fetchAllCustomerForSlaAssign' %}">Customer</a>
+                    </li>
+                    <li class="col-md-4 col-sm-4 bgColorModule bothModuleTab slaModuleTabActive" id="vendorSla">
+                      <a data-toggle="pill" href="/fetchAllSupplierForSlaAssign">Vendor</a>
+                    </li>
 
-                   <div class='row'>
-                       <div class='offset-md-1 col-md-12' >
-                       <label class="col-md-2">Select Supplier:</label>
-                        <select id="select_suppliers" class="col-md-3">
-                            <option value="">Select</option>
-                            {% for sup in sup %}
-                            <option value="{{sup.supplierId}}">{{sup.supCompanyName}}</option>
-                            {% endfor %}
-                        </select>
-                       </div>
+                  </ul>
+            </div>
+          </div>
+          <div class="row" style="background-color: #f9f3fa;">
+            <div class="col-md-7 col-sm-3 col-6 paddingLeftRightTen">
+                <!--<h4 class="headingColor"> View SLA </h4>-->
+                <ul class="col-md-5 nav nav-pills textAlignCenter" id="bothNavULMenu">
+                    <li class="col-md-6 col-sm-5 bgColorModule bothModuleTab slaModuleTabActive" id="assignSLA">
+                      <a data-toggle="pill" href="#">Assign SLA</a>
+                    </li>
+                    <li class="col-md-6 col-sm-5 bgColorModule bothModuleTab " id="viewVendorSLA">
+                      <a data-toggle="pill" href="{% url 'fetchAllCustomerForSlaAssign' %}">View Vendor SLA</a>
+                    </li>
+                  </ul>
+            </div>
+          </div>
+        <div id="supplierProductDiv">
+
+                   <div class='row offset-md-1 col-md-12' style="padding-top:1%">
+                   <label class="offsets-md-1 col-md-2 slaLabel">Select SLA:</label>
+                    <select id="select_sla" class="col-md-3">
+                        <option value="">Select</option>
+                        {% for sla in sla %}
+                        <option value="{{sla.slaId}}">{{sla.slaType}}</option>
+                        {% endfor %}
+                    </select>
                    </div>
 
-                   <div class='offset-md-1 col-md-11 row' id="dynamicDataDiv" style="">
-                        <div class='row' >
-                           <div class="col-md-2"><label>Select Site:</label></div>
+                   <div class='row offset-md-1 col-md-12' >
+                   <label class="offsets-md-1 col-md-2 suppLabel">Select Vendor:</label>
+                    <select id="select_suppliers" class="col-md-3">
+                        <option value="">Select</option>
+                        {% for sup in sup %}
+                        <option value="{{sup.supplierId}}">{{sup.supCompanyName}}</option>
+                        {% endfor %}
+                    </select>&nbsp;&nbsp;
+                <ul class='dropdownNew  col-md-3 dropDownBtn'>
+                    <li><a  href="#" data-toggle='collapse' aria-expanded='false' class='dropdown-toggle collapsed addNewWid' style='border-radius: 6px'>Add New</a>
+                    <ul class='list-unstyled menuChildClass collapse' align='center' ><li>
+                <a href='#' class='addSlaBtn' style='border-radius: 6px 6px 0px 0px;'>SLA</a></li>
+                <li><a href='#' class='addAreaBtn'  >Area</a></li><li><a href='#' class=' addSiteBtn'  style='border-radius: 0px 0px 6px 6px;' >Site</a>
+                </li></ul></li></ul>
+                       </div>
+
+
+
+                   <div class='col-md-12' id="dynamicDataDiv" style="">
+                       <div class="row  offset-md-1">
+                           <label class="col-md-2">Select Site:</label>
                            <div class="col-md-3" id="selectsites" style="">
-                           </div>
                         </div>
+                           </div>
                    </div>
                 <br/>
 
 
             <div class="row" id="assignSlaSubmitBtn">
-                <div class='offset-md-3 col-md-2'>
+                <div class='offsets-md-11 offset-md-3 col-md-2'>
                     <input type="button" id="assignSlaSubmit" class="btn btn-primary" value="Submit">
                 </div>
             </div>
@@ -163,7 +518,7 @@
           <div class="modal-body">
               <div id="success_msg" class="success_msg"> </div>
               <div id="error_msg" class="error_msg"> </div>
-                <form role="form">
+                <form role="form" autocomplete="off">
                     {% csrf_token %}
                     <div id="modalBody">
 
@@ -211,7 +566,7 @@
         <div class="row" >
             <div class="col-md-12 col-sm-3 col-6 " >
                 <div class="col-md-12" id="viewProfileModalFormDiv">
-                    <form class="registrationform" id="updateProfileForm" role="form" method='POST'>
+                    <form class="registrationform" id="updateProfileForm" role="form" method='POST' autocomplete="off">
 
                         {% csrf_token %}
                         <div id="formsec1">
@@ -225,8 +580,25 @@
                              {{ ProfileForm.lastName }}
                           </div>
                           <div class="offset-3 offset-sm-4 offset-md-3" id="lastNameError">{{ ProfileForm.lastName.errors }} </div>
+                        <div class="form-group row registrationformdiv hide">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.contactNo.label_tag }}<span class="mandatory">*</span></label>
+                             {{ProfileForm.countryCode}}{{ ProfileForm.contactNo }}
+                          </div>
+                          <div class="offset-3 offset-sm-4 offset-md-3 hide" id="contactNoError">{{ ProfileForm.contactNo.errors }} </div>
+                        <div class="form-group row registrationformdiv hide">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.email.label_tag }}<span class="mandatory">*</span></label>
+                             {{ ProfileForm.email }}
+                          </div>
+                          <div class="offset-3 offset-sm-4 offset-md-3 hide" id="emailError">{{ ProfileForm.email.errors }} </div>
+
                         </div>
                         <div id="formsec2">
+                            <div class="form-group row registrationformdiv hide">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.companyName.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.companyName }}
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="companyNameError"> {{ companyProfileForm.companyName.errors }} </div>
+
 
                           <div class="form-group row registrationformdiv">
                             <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.country.label_tag }}<span class="mandatory">*</span></label>
@@ -267,7 +639,7 @@
                             <div class="form-group row registrationformdiv">
                             <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.sec_answer.label_tag }}<span class="mandatory">*</span></label>
                             {{ ProfileForm.sec_answer }}
-                            <div class="col-12 offset-sm-4 col-md-6" id="submitBtnDiv">  <input type="submit" id="profileUpdateButton" value="Update"> </div>
+                            <div class="col-12 offset-sm-4 col-md-6" id="submitBtnDiv">  <input type="button" class="profileUpdateButtonClass" id="profileUpdateButton" value="Update"> </div>
                           </div>
                             <div class="offset-3 offset-sm-4 offset-md-3" id="secAnswerError"> {{ ProfileForm.sec_answer.errors }} </div>
                         </div>
@@ -287,9 +659,366 @@
   </div>
 </div>
 
+
+<div class="modal" id="addSLAModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog addSLAModal slaModalwid" style="width: 60%">
+<div class="modal-content" style="background-color: #f7f3fa;">
+
+<!-- Modal Header -->
+<div class="modal-header">
+<h4 class="modal-title" id="editUserModalTitle"> Add SLA</h4>
+<button type="button" class="close editUserModalClose addSLAModalClose" id="addSLAModalClose" data-dismiss="modal" aria-hidden="true">x</button>
+</div>
+
+<!-- Modal body -->
+<div class="modal-body">
+    <div class="row" >
+    <div class="col-md-12 col-sm-3 col-6" id="editSubUserFormDiv">
+    <div class="col-md-12" >
+                  <form class="post-form" id="createSlaForm" role="form" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="row" style="margin-top: 10px">
+                        <div class="col-md-4">
+                            <label class="col-form-label marginLeftFifteen"> SLA Name </label><span class="mandatory">*</span>
+                        </div>
+                        <div class="col-md-8 addPaddingLeftRightTen slaNameWid">
+                            <input type="text" class="mandatoryFormFields" name="SLAName" id="SLAName" maxlength="30">
+                        </div>
+                     </div>
+
+                    <div class="row" style="margin-top: 10px">
+                        <div class="col-md-4">
+                            <label class="col-form-label marginLeftFifteen"> SLA Type </label><span class="mandatory">*</span>
+                        </div>
+                        <div class="col-md-8 addPaddingLeftRightTen slaTypeWid">
+                            <select class="eMandatoryFormFields" name="SLAType" id="SLAType">
+                              <option value="1">New SLA</option>
+                              <option value="2">Existing SLA</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row" id="existingSLADiv" style="margin-top: 10px">
+                        <div class="col-md-4">
+                            <label class="col-form-label marginLeftFifteen"> Existing SLA </label><span class="mandatory">*</span>
+                        </div>
+                        <div class="col-md-8 addPaddingLeftRightTen">
+                            <select class="eMandatoryFormFields" name="SLAId" id="SLAId">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row formFieldShowHide">
+                            <div class="col-md-4">
+                                <label class="col-form-label marginLeftFifteen"> Operations Schedule </label><span class="mandatory">*</span>
+                            </div>
+                            <div class="col-md-8 slaTableWid">
+                                <table class="table table-bordered">
+                                     <thead>
+                                         <tr class="colorCode" style="color: #881999">
+                                            <th> Sun </th>
+                                            <th> Mon </th>
+                                            <th> Tue </th>
+                                            <th> Wed </th>
+                                            <th> Thu </th>
+                                            <th> Fri </th>
+                                            <th> Sat </th>
+                                         </tr>
+                                     </thead>
+                                     <tbody>
+                                         <tr>
+                                             <td> <input type="checkbox" class="holidayCheckBox" value="1" id="sunday" /> </td>
+                                             <td> <input type="checkbox" class="holidayCheckBox" value="1" id="monday" /> </td>
+                                             <td> <input type="checkbox" class="holidayCheckBox" value="1" id="tuesday" /> </td>
+                                             <td> <input type="checkbox" class="holidayCheckBox" value="1" id="wednesday" /> </td>
+                                             <td> <input type="checkbox" class="holidayCheckBox" value="1" id="thursday" /> </td>
+                                             <td> <input type="checkbox" class="holidayCheckBox" value="1" id="friday" /> </td>
+                                             <td> <input type="checkbox" class="holidayCheckBox" value="1" id="saturday" /> </td>
+                                         </tr>
+                                     </tbody>
+                                </table>
+                            </div>
+                        </div>
+                       <div class="row formFieldShowHide">
+                            <div class="col-md-4">
+                                <label class="col-form-label marginLeftFifteen"> Delivery Schedule </label><span class="mandatory">*</span>
+                            </div>
+                            <div class="col-md-8 slaDeliveryWid">
+                                <table class="table table-bordered">
+                                     <thead>
+                                         <tr class="colorCode" style="color: #881999">
+                                            <th> Sun </th>
+                                            <th> Mon </th>
+                                            <th> Tue </th>
+                                            <th> Wed </th>
+                                            <th> Thu </th>
+                                            <th> Fri </th>
+                                            <th> Sat </th>
+                                         </tr>
+                                     </thead>
+                                     <tbody>
+                                         <tr>
+                                             <td> <input type="checkbox" class="delScheduleCheckBox" value="1" id="sunday1" /> </td>
+                                             <td> <input type="checkbox" class="delScheduleCheckBox" value="1" id="monday1" /> </td>
+                                             <td> <input type="checkbox" class="delScheduleCheckBox" value="1" id="tuesday1" /> </td>
+                                             <td> <input type="checkbox" class="delScheduleCheckBox" value="1" id="wednesday1" /> </td>
+                                             <td> <input type="checkbox" class="delScheduleCheckBox" value="1" id="thursday1" /> </td>
+                                             <td> <input type="checkbox" class="delScheduleCheckBox" value="1" id="friday1" /> </td>
+                                             <td> <input type="checkbox" class="delScheduleCheckBox" value="1" id="saturday1" /> </td>
+                                         </tr>
+                                     </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                       <div class="row formFieldShowHide">
+                            <div class="col-md-4">
+                                <label class="col-form-label marginLeftFifteen"> Select Holiday </label>
+                            </div>
+                            <div class="col-md-8 addPaddingLeftRightTen slaHolidayWid">
+                                <select class="" name="holidaySelect" id="holidaySelect">
+                                  <option value="Select">Select</option>
+                                  <option value="Add New">Add New</option>
+                                  <option value="Existing">Existing</option>
+                                </select>
+                            </div>
+                        </div>
+
+                       <div class="row formFieldShowHideHolidayName">
+                            <div class="col-md-4">
+                                <label class="col-form-label marginLeftFifteen"> Select Holiday Name </label>
+                            </div>
+                            <div class="col-md-8 addPaddingLeftRightTen">
+                                <select class="" name="holidayNameSelect" id="holidayNameSelect">
+                                  <option value="">Select</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row formFieldShowHideDate">
+                            <div class="col-md-4">
+                                <label class="col-form-label marginLeftFifteen"> Date </label>
+                            </div>
+                            <div class="col-md-8 addPaddingLeftRightTen">
+                                <div id="datepicker-2"></div>
+                                <div class="clearDateSelection" id="clearDate">Clear Date Selection</div>
+                            </div>
+                        </div>
+
+                        <div class="row marginTen formFieldShowHideHoliday" style="margin-top: 10px">
+                            <div class="col-md-4">
+                                <label class="col-form-label marginLeftFifteen"> Holiday </label>
+                            </div>
+                            <div class="col-md-8 addPaddingLeftRightTen" id="holidayDiv">
+
+                            </div>
+                        </div>
+                       <div class="row formFieldShowHide" style="margin-top: 10px">
+                            <div class="col-md-4">
+                                <label class="col-form-label marginLeftFifteen"> Cutoff Time </label><span class="mandatory">*</span>
+                            </div>
+                            <div class="col-md-8 addPaddingLeftRightTen slaCutoffWid">
+                                <span class="datePairExample"> <input type="text" id="fromCutTime" class="time start" /> to <input id="toCutTime" type="text" class="time end" /> </span><button class="slaCutoffWidth" id="addCutOffBtn" type="button">Add</button>
+                            </div>
+
+                           <div class="offset-md-4 col-md-6 addPaddingLeftRightTen" id="cutOffDiv">
+
+                            </div>
+                       </div>
+                        <div class="row formFieldShowHide" style="margin-top: 10px">
+                            <div class="col-md-4">
+                                <label class="col-form-label marginLeftFifteen"> Delivery Slot </label><span class="mandatory">*</span>
+                            </div>
+                            <div class="col-md-8 addPaddingLeftRightTen deliverySlotWid">
+                                <span class="datePairExample"> <input type="text" id="fromTime" class="time start " /> to <input id="toTime" type="text" class="time end " /></span> - <input id="shift" type="text" class="shift" placeholder="Slot Name"/><button class="deliverySlotWidth" id="addBtn" type="button">Add</button>
+                            </div>
+
+                            <div class="offset-md-4 col-md-6 addPaddingLeftRightTen" id="dSlotDiv">
+
+                            </div>
+                        </div>
+                        <div class="row formFieldShowHide" style="margin-top: 10px">
+                            <div class="col-md-4">
+                                <label class="col-form-label marginLeftFifteen"> Ordering Schedule </label><span class="mandatory">*</span>
+                            </div>
+                            <div class="col-md-8 addPaddingLeftRightTen">
+                                <input type="text" class="mandatoryFormFields" name="deliveryDays" id="deliveryDays">
+                            </div>
+                        </div>
+                        </form>
+                     </div>
+                     <div class="offset-md-4 col-md-4 col-sm-4 col-12 slaSubmitBtn">
+                        <input type="button" id="SLASubmit" class="btn btn-primary" value="Submit">
+                    </div>
+    </div>
+    </div>
+    </div>
+
+    <!-- Modal footer -->
+    <div class="modal-footer">
+    <button type="button" class="btn addSLAModalClose" id="" data-dismiss="modal">Close</button>
+    </div>
+
+    </div>
+</div>
+</div>
+
+
+<div class="modal" id="addAreaModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog addAreaModal" style="max-width: 60%">
+<div class="modal-content" style="background-color: #f7f3fa;">
+
+<!-- Modal Header -->
+<div class="modal-header">
+<h4 class="modal-title" id="addAreaModalTitle"> Add Area</h4>
+<button type="button" class="close addAreaModalClose" id="addAreaModalClose" data-dismiss="modal" aria-hidden="true">x</button>
+</div>
+
+<!-- Modal body -->
+<div class="modal-body">
+    <div class="row">
+    <div class="col-md-12 col-sm-3 col-12">
+     <div class="col-md-12" id="areaFormDiv">
+                   <form class="post-form" id="areaForm" role="form" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="customerManualForm" id="userAddDetail">
+                        <div class="form-group row customerDetailsForm">
+                         <label class="col-6 col-md-3 col-form-label marginLeftFifteen customerDetailsFormLabel">{{areaAddForm.areaName.label_tag }}<span class="mandatory">*</span></label>
+                                    {{ areaAddForm.areaName }}
+                        </div>
+                        <div class="form-group row customerDetailsForm">
+                         <label class="col-6 col-md-3 col-form-label marginLeftFifteen customerDetailsFormLabel">{{areaAddForm.areaSla.label_tag }}</label>
+                                    {{ areaAddForm.areaSla }}
+                        </div>
+                        <div class="form-group row customerDetailsForm">
+                         <label class="col-6 col-md-3 col-form-label marginLeftFifteen customerDetailsFormLabel">{{areaAddForm.areaDesc.label_tag }}<span class="mandatory">*</span></label>
+                                    {{ areaAddForm.areaDesc }}
+                        </div>
+                     </div>
+                    </form>
+                     <div class="offset-md-3 col-md-4 col-sm-4 offset-5 col-7">
+                       <a href="#" id="hitBtn"><input type="button" id="userAreaSubmit" class=" btn btn-primary" value="Submit"> </a>
+                    </div>
+
+                </div>
+    </div>
+    </div>
+    </div>
+
+    <!-- Modal footer -->
+    <div class="modal-footer">
+    <button type="button" class="btn addAreaModalClose" data-dismiss="modal">Close</button>
+    </div>
+
+    </div>
+    </div>
+</div>
+
+
+<div class="modal" id="addSiteModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog addSiteModaldia" style="max-width: 800px;">
+<div class="modal-content" style="background-color: #f7f3fa;">
+
+<!-- Modal Header -->
+<div class="modal-header">
+<h4 class="modal-title" id="addSiteModalTitle"> Add Site Details</h4>
+<button type="button" class="close addSiteModalClose" id="addSiteModalClose" data-dismiss="modal" aria-hidden="true">x</button>
+</div>
+
+<!-- Modal body -->
+<div class="modal-body">
+    <div class="row" >
+    <div class="col-md-12 col-sm-3 col-6 " >
+ <div class="col-md-12" id="createSiteFormDiv">
+                   <form class="post-form" id="createSiteForm" role="form" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="customerManualForm" id="userAddDetail">
+                        <div class="form-group row customerDetailsForm">
+                         <label class="col-5 col-md-3 col-form-label marginLeftFifteen customerDetailsFormLabel">{{AddSiteForm.siteType.label_tag }}<span class="mandatory">*</span></label>
+                                    {{ AddSiteForm.siteType }}
+                        </div>
+                        <div class="form-group row customerDetailsForm">
+                         <label class="col-5 col-md-3 col-form-label marginLeftFifteen customerDetailsFormLabel">{{AddSiteForm.siteArea.label_tag }}<span class="mandatory">*</span></label>
+                                    {{ AddSiteForm.siteArea }}
+                        </div>
+                        <div class="form-group row customerDetailsForm">
+                         <label class="col-5 col-md-3 col-form-label marginLeftFifteen customerDetailsFormLabel">{{AddSiteForm.siteName.label_tag }}<span class="mandatory">*</span></label>
+                                    {{ AddSiteForm.siteName }}
+                        </div>
+                  <div class="form-group row customerDetailsForm">
+                    <label class="col-5 col-md-3 col-form-label marginLeftFifteen customerDetailsFormLabel">{{AddSiteForm.country.label_tag }}<span class="mandatory">*</span></label>
+                    {{ AddSiteForm.country }}
+                  </div>
+                  <div class="form-group row customerDetailsForm">
+                    <label class="col-5 col-md-3 col-form-label marginLeftFifteen customerDetailsFormLabel">{{AddSiteForm.address_Line1.label_tag }}<span class="mandatory">*</span></label>
+                    {{ AddSiteForm.address_Line1 }}
+                    <label class="col-5 col-md-1 col-form-label unitlabel" id="unitlabel">Unit<span class="mandatory">*</span></label>
+                     {{ AddSiteForm.unit1 }}
+                    <p id="hyphen">-</p>
+                    {{ AddSiteForm.unit2 }}
+                  </div>
+                  <div class="form-group row customerDetailsForm" id="addressTwoDiv">
+                    <label class="col-5 col-md-3 col-form-label marginLeftFifteen customerDetailsFormLabel">{{AddSiteForm.address_Line2.label_tag }}<span class="mandatory">*</span></label>
+                    {{ AddSiteForm.address_Line2 }}
+                  </div>
+                  <div class="form-group row customerDetailsForm">
+                    <label class="col-5 col-md-3 col-form-label marginLeftFifteen customerDetailsFormLabel">{{AddSiteForm.state.label_tag }}<span class="mandatory">*</span></label>
+                    {{ AddSiteForm.state }}
+                  </div>
+                  <div class="form-group row customerDetailsForm">
+                    <label class="col-5 col-md-3 col-form-label marginLeftFifteen customerDetailsFormLabel">{{AddSiteForm.postalCode.label_tag }}<span class="mandatory">*</span></label>
+                    {{ AddSiteForm.postalCode }}
+
+                  </div>
+
+
+
+                        <div class="row customerDetailsForm">
+                         <label class="col-5 col-md-3 col-form-label marginLeftFifteen customerDetailsFormLabel">{{AddSiteForm.siteDesc.label_tag }}</label>
+                                    {{ AddSiteForm.siteDesc }}
+                        </div>
+
+
+
+
+                     </div>
+                    </form>
+                     <div class="offset-md-3 col-md-4 col-sm-4 col-12 ">
+                       <input type="button" id="createSiteFormSubmit" class="btn btn-primary" value="Submit">
+                    </div>
+
+                </div>
+    </div>
+    </div>
+    </div>
+
+    <!-- Modal footer -->
+    <div class="modal-footer">
+    <button type="button" class="btn addSiteModalClose" id="editSiteModalClose" data-dismiss="modal">Close</button>
+    </div>
+
+    </div>
+    </div>
+</div>
+
     <div class="modal" id="loader"><!-- Place at bottom of page --></div>
 
 <script>
+
+        $(document).on('click', '#viewSlaMenu', function() {
+                window.location.href = "/createOrViewSLA";
+        });
+        $(document).on('click', '#customerSla', function() {
+                window.location.href = "/fetchAllCustomerForSlaAssign";
+        });
+        $(document).on('click', '#vendorSla', function() {
+                window.location.href = "/fetchAllSupplierForSlaAssign";
+        });
+        $(document).on('click', '#assignSLA', function() {
+                window.location.href = "/fetchAllSupplierForSlaAssign";
+        });
+        $(document).on('click', '#viewVendorSLA', function() {
+                window.location.href = "/viewSupplierSLA";
+        });
+
            $body = $("body");
            function load_states(country_id) {
                 if(country_id == ''){
@@ -303,7 +1032,7 @@
                     },
                     success: function (data) {
                         var states = JSON.parse(data.states);
-                        var stateAppendValues = "";
+                        var stateAppendValues = "<option value=''>Select</option>";
                         $.each(states, function (key, val) {
                         stateAppendValues = stateAppendValues + "<option value="+val.pk+">"+val.fields.stateName+"</option>";
                         });
@@ -321,7 +1050,7 @@
                     },
                     success: function (data) {
                       var states = JSON.parse(data.states);
-                      var stateAppendValues = "";
+                      var stateAppendValues = "<option value=''>Select</option>";
                          $.each(states, function (key, val) {
                         stateAppendValues = stateAppendValues + "<option value="+val.pk+">"+val.fields.stateName+"</option>";
                         });
@@ -330,6 +1059,27 @@
                 });
             }
 
+function load_edit_states(country_id){
+            if(country_id == ''){
+            $("#editstate").empty().append('<option value="">Select</option>');
+            }
+            else{
+            $.ajax({
+            url: "/load-states",
+            data: {
+            "country_id": country_id
+            },
+            success: function (data) {
+            var states = JSON.parse(data.states);
+            var stateAppendValues ="<option value=''>Select</option>";
+            $.each(states, function (key, val) {
+            stateAppendValues = stateAppendValues + "<option value="+val.pk+">"+val.fields.stateName+"</option>";
+            });
+            $("#editstate").empty().append(stateAppendValues);
+            }
+            });
+            }
+            }
 
             $('#slide-submenu').on('click',function() {
                 $(this).closest('.list-group').fadeOut('slide',function(){
@@ -340,7 +1090,1006 @@
 
         $(document).ready(function() {
 
+        $('.datePairExample > input').keydown(function(e){
+            if (e.keyCode != 9 && e.keyCode != 8 && e.keyCode != 46) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+    $(document).on('click', '.addSLAModalClose', function() {
+        $('#createSlaForm')[0].reset();
+        $('.holidayCheckBox').prop('checked', false);
+        $('.delScheduleCheckBox').prop('checked', false);
+        $('#cutOffDiv').empty();
+        $('#dSlotDiv').empty();
+        $('#holidayDiv').empty();
+        $("#datepicker-2").datepicker("destroy");
+        $("#datepicker-2").datepicker('setDate', null);
+        datePickerCall();
+        $('.formFieldShowHideDate').hide();
+        $('.formFieldShowHideHoliday').hide();
+
+    });
+
+    $(document).on('click', '.addAreaModalClose', function() {
+        $('#areaForm')[0].reset();
+    });
+
+    $(document).on('click', '.addSiteModalClose', function() {
+        $('#createSiteForm')[0].reset();
+        $('#editstate').empty();
+    });
+
 $('#dynamicDataDiv').css('display','none');
+
+            $('#createSLADiv').hide();
+            $('#existingSLADiv').hide();
+             $('.formFieldShowHideDate').hide();
+            $('.formFieldShowHideHoliday').hide();
+             $('.formFieldShowHideHolidayName').hide();
+            $('.showHideEholidayName').hide();
+            $('#SLAType').on('change', function() {
+                if ($('#SLAType').val() == 1) {
+                    $('.formFieldShowHide').show();
+                    $('#existingSLADiv').hide();
+                    $('.holidayCheckBox').prop('checked', false);
+                    $('.delScheduleCheckBox').prop('checked', false);
+                    $('#dSlotDiv').empty();
+                    $('#cutOffDiv').empty();
+                    $('#fromTime').val('');
+                    $('#toTime').val('');
+                    $('#deliveryDays').val('');
+                    disableDatesArray = [];
+                    $("#datepicker-2").datepicker("destroy");
+                    $("#datepicker-2").datepicker('setDate', null);
+                    datePickerCall();
+                    $('#holidaySelect').val('Select').change();
+                    $('#holidayDiv').empty();
+                }
+                else {
+                    $('#existingSLADiv').show();
+                    $('.formFieldShowHide').hide();
+                    $('.formFieldShowHideDate').hide();
+                    $('.formFieldShowHideHoliday').hide();
+                    $('.formFieldShowHideHolidayName').hide();
+                    fetchSLAData();
+                }
+            });
+            function fetchSLAData() {
+                $.ajax({
+                  url: "/fetchSLAData",
+                  type: "GET",
+                  dataType : "json",
+                  contentType : "application/json",
+                  success: function (result)
+                  {
+                    var data = result;
+                    if (data.status == 'success') {
+                        pullDataInDropDown(data.SLAData)
+                    }
+                    else if(data.status == 'error' && data.error_msg == 'sessionexpired'){
+                        alert('Session has expired.');
+                        setTimeout(function() {
+                            window.location.href = data.redirect_url;
+                        }, 2000);
+                    }else{
+                        alert(data.error_msg);
+                        }
+                  }
+                });
+            }
+            function pullDataInDropDown(SLAData) {
+                var SLADataValue = "";
+                $.each(SLAData, function (key, val) {
+                    SLADataValue = SLADataValue + "<option value="+val.slaId+">"+val.slaType+"</option>";
+                });
+                $('#SLAId').empty().append("<option value='' selected=''>Select</option>");
+                $('#SLAId').append(SLADataValue);
+            }
+            $('#SLAId').on('change', function() {
+                $('.holidayCheckBox').prop('checked', false);
+                $('.delScheduleCheckBox').prop('checked', false);
+                $('#holidaySelect').val('Select').change();
+                disableDatesArray = [];
+                if ($('#SLAId').val() != '') {
+                    $('.formFieldShowHide').show();
+                    loadDataInForm('createSLAForm', $('#SLAId').val());
+                    $('.formFieldShowHideHoliday').show();
+                    $('.formFieldShowHide').show();
+                }
+                else {
+                    $('.formFieldShowHide').hide();
+                    $('.formFieldShowHideHoliday').hide();
+                    $('.formFieldShowHideHolidayName').hide();
+                    $('.formFieldShowHideDate').hide();
+                }
+            });
+            function loadDataInForm(type, SLAId) {
+                var data = {"type":'edit',"slaId":SLAId};
+                $.ajax({
+                  url: "/slaDetailsByslaId",
+                  type: "POST",
+                  dataType : "json",
+                  contentType : "application/json",
+                  data: JSON.stringify(data),
+                  success: function (result)
+                  {
+                    var data = result;
+                    if (data.status == 'success') {
+                        loadSLADataInForm(type,data.SLAData[0]);
+                    }
+                   else if(data.status == 'error' && data.error_msg == 'sessionexpired'){
+                        alert('Session has expired.');
+                        setTimeout(function() {
+                            window.location.href = data.redirect_url;
+                        }, 2000);
+                    }else{
+                        alert(data.error_msg);
+                        }
+                   }
+                });
+            }
+$('#SLASubmit').on('click', function() {
+                var workingDays = [];
+                var deliveryScheduleDays = [];
+                var holidayDate = [];
+                var cutOffEvent = [];
+                var shiftSlot = [];
+                var formStatus;
+                var workingDayChecked = '';
+                var deliveryScheduleChecked = '';
+                var holidayBtnLength = $('.holidayBtn').length;
+                var holidayEventBtnLength = $('.holidayEventBtn').length;
+                var cutOffBtnLength = $('.cutOffBtn').length;
+                var cutOffEventBtnLength = $('.cutOffEventBtn').length;
+                var shiftBtnLength = $('.shiftBtn').length;
+                var shiftEventBtnLength = $('.shiftEventBtn').length;
+                $('.mandatoryFormFields').each(function() {
+                    if ($('#'+$(this).attr('id')).val() != '') {
+                        formStatus = true;
+                    }
+                    else {
+                        formStatus = false;
+                        $('#'+$(this).attr('id')).focus();
+                        return false;
+                    }
+                });
+                $('.holidayCheckBox').each(function() {
+                    if ($(this).prop('checked') == true) {
+                        workingDayChecked = 'true';
+                        workingDays.push(1);
+                    }
+                    else if ($(this).prop('checked') == false) {
+                        workingDays.push(0);
+                    }
+                });
+
+                $('.delScheduleCheckBox').each(function() {
+                    if ($(this).prop('checked') == true) {
+                        deliveryScheduleChecked = 'true';
+                        deliveryScheduleDays.push(1);
+                    }
+                    else if ($(this).prop('checked') == false) {
+                        deliveryScheduleDays.push(0);
+                    }
+                });
+
+                if (holidayBtnLength >= 1 && holidayEventBtnLength >= 1) {
+                    var hideShowBtnArray = new Array();
+                    $('.holidayEventBtn').each(function() {
+                        if($(this).css('display') != 'none')
+                        {
+                            hideShowBtnArray.push('true');
+                        }
+                        else {
+                            hideShowBtnArray.push('false');
+                        }
+                    });
+                    var index = 0;
+                    $('.holidayBtn').each(function() {
+                        if (hideShowBtnArray[index] == 'true') {
+                            var id = $(this).attr('id').split('_');
+                            var holidayObject = {'holidayDate':id[1],'holidayDesc':$(this).val()};
+                            holidayDate.push(holidayObject);
+                        }
+                        index++;
+                    });
+                }
+
+                if (cutOffBtnLength >= 1 && cutOffEventBtnLength >= 1) {
+                    var hideShowBtnArray = new Array();
+                    $('.cutOffEventBtn').each(function() {
+                        if($(this).css('display') != 'none')
+                        {
+                            hideShowBtnArray.push('true');
+                        }
+                        else {
+                            hideShowBtnArray.push('false');
+                        }
+                    });
+                    var index = 0;
+                    $('.cutOffBtn').each(function() {
+                        if (hideShowBtnArray[index] == 'true') {
+                            var id = $(this).attr('id').split('_');
+                            var cutOffEventObject = {'cutOffTime':id[1]};
+                            cutOffEvent.push(cutOffEventObject);
+                        }
+                        index++;
+                    });
+                }
+
+                if (shiftBtnLength >= 1 && shiftEventBtnLength >= 1) {
+                    var hideShowBtnArray = new Array();
+                    $('.shiftEventBtn').each(function() {
+                        if($(this).css('display') != 'none')
+                        {
+                            hideShowBtnArray.push('true');
+                        }
+                        else {
+                            hideShowBtnArray.push('false');
+                        }
+                    });
+                    var index = 0;
+                    $('.shiftBtn').each(function() {
+                        if (hideShowBtnArray[index] == 'true') {
+                            var id = $(this).attr('id').split('_');
+                            var shiftObject = {'deliverySlot':id[1], 'slotName':id[2]};
+                            shiftSlot.push(shiftObject);
+                        }
+                        index++;
+                    });
+                }
+                if (formStatus == true && workingDayChecked == '') {
+                    alert('Atleast 1 operation schedule day should be selected');
+
+                }else if(formStatus == true && deliveryScheduleChecked == ''){
+                    alert('Atleast 1 delivery schedule should be selected');
+                }
+
+                else if(formStatus == true && cutOffEvent.length ==0 ){
+                    alert('Please Select cutoff time');
+                }else if(formStatus == true && shiftSlot.length ==0 ){
+                        alert('Please Select delivery slot');
+                    }
+                else if (formStatus == true && workingDayChecked == 'true' && deliveryScheduleChecked == 'true') {
+                    var slaJson = {'orderingSchedule':$('#deliveryDays').val(),'workingDays':workingDays, 'holidayDate':holidayDate, 'cutOffTime':cutOffEvent, 'deliveryDays':deliveryScheduleDays, 'deliverySlot':shiftSlot};
+                    var data = {"slaType":$('#SLAName').val(),"slaJson":slaJson};
+                    $.ajax({
+                          url: "/createSla",
+                          type: "POST",
+                          dataType : "json",
+                          contentType : "application/json",
+                          data: JSON.stringify(data),
+                          success: function (result)
+                          {
+                                if (result.status == 'success') {
+                                    alert(result.success_msg);
+                                    $('#addSLAModal').modal('hide');
+                                    $.ajax({
+                                      url: "/fetchSLAData",
+                                      type: "GET",
+                                      dataType : "json",
+                                      contentType : "application/json",
+                                      success: function (result)
+                                      {
+                                        var data = result;
+                                        if (data.status == 'success') {
+                                           var SLADataValue = "";
+                                            $.each(data.SLAData, function (key, val) {
+                                                SLADataValue = SLADataValue + "<option value="+val.slaId+">"+val.slaType+"</option>";
+                                            });
+                                            $('#id_areaSla').empty().append("<option value='' selected=''>Select</option>");
+                                            $('#id_areaSla').append(SLADataValue);
+                                        }
+                                        else if(data.status == 'error' && data.error_msg == 'sessionexpired'){
+                                            alert('Session has expired.');
+                                            setTimeout(function() {
+                                                window.location.href = data.redirect_url;
+                                            }, 2000);
+                                        }
+                                      }
+                                      });
+                                      $('#createSlaForm')[0].reset();
+                                        $('.holidayCheckBox').prop('checked', false);
+                                        $('.delScheduleCheckBox').prop('checked', false);
+                                        $('#cutOffDiv').empty();
+                                        $('#dSlotDiv').empty();
+                                        $('#holidayDiv').empty();
+                                    $('#addAreaModal').modal('show');
+                                }
+                                else if (result.status == 'error' && result.error_msg != 'sessionexpired' ) {
+                                    alert(result.error_msg);
+                                }
+                                else if(result.status == 'error' && result.error_msg == 'sessionexpired'){
+                                        alert('Session has expired.');
+                                        setTimeout(function() {
+                                            window.location.href = data.redirect_url;
+                                        }, 2000);
+                                }
+                                else{
+                                    alert(result.error_msg);
+                                }
+                          }
+                    });
+                }
+            });
+            $(document).on('click', '#userAreaSubmit', function() {
+                var formStatus;
+                $("#areaForm input, #areaForm textarea").each(function() {
+                    if (this.value != '') {
+                        formStatus = true;
+                        return true;
+                    }
+                    else {
+                        formStatus = false;
+                        $('#'+this.id+'').focus();
+                        return false;
+                    }
+                });
+                if (formStatus == true) {
+                     $body.addClass("loading");
+                     if ($('#id_areaSla').val() == ''){
+
+                        var areaSlaId = 1;
+                     }
+                     else{
+                        var areaSlaId = $('#id_areaSla').val();
+                     }
+                     var data = {"type":"create","areaName":$('#id_areaName').val(),"areaSla":areaSlaId,"areaDesc":$('#id_areaDesc').val()};
+                     $.ajax({
+                      url: "/createAreaDetails",
+                      type: "POST",
+                      dataType : "json",
+                      contentType : "application/json",
+                      data: JSON.stringify(data),
+                      success: function (result)
+                      {
+                            $body.removeClass("loading");
+                            if (result.status == 'success') {
+                                alert(result.success_msg);
+                                $('#addAreaModal').modal('hide');
+                                $('#dynamicSiteIdSite').empty();
+                                $('#dynamicSiteIdSite').val($('#dynamicSiteIdArea').val());
+                                $.ajax({
+                                  url: "/fetchAreaData",
+                                  type: "GET",
+                                  dataType : "json",
+                                  contentType : "application/json",
+                                  success: function (result)
+                                  {
+                                    var data = result;
+                                    if (data.status == 'success') {
+                                        var SLADataValue = "";
+                                            $.each(data.areaData, function (key, val) {
+                                                SLADataValue = SLADataValue + "<option value="+val.areaId+">"+val.areaName+"</option>";
+                                            });
+                                            $('#siteArea').empty().append("<option value='' selected=''>Select</option>");
+                                            $('#siteArea').append(SLADataValue);
+                                    }
+                                    else if(data.status == 'error' && data.error_msg == 'sessionexpired'){
+                                        alert('Session has expired.');
+                                        setTimeout(function() {
+                                            window.location.href = data.redirect_url;
+                                        }, 2000);
+                                    }else{
+                                        alert(data.error_msg);
+                                        }
+                                  }
+                                });
+                                $('#areaForm')[0].reset();
+                                $('#addSiteModal').modal('show');
+                            }
+
+                            else if(result.status == 'error' && result.error_msg == 'sessionexpired'){
+                                    alert('Session has expired.');
+                                    setTimeout(function() {
+                                        window.location.href = data.redirect_url;
+                                    }, 2000);
+                            }
+                            else {
+                                alert(result.error_msg);
+                            }
+                          }
+                     });
+                }
+            });
+
+             $(document).on('click', '#createSiteFormSubmit', function() {
+                siteType = $('#siteType').val();
+                siteArea = $('#siteArea').val();
+                siteName = $('#siteName').val();
+                country = $('#editcountry').val();
+                address_Line1 = $('#editaddress_Line1').val();
+                unit1 = $('#editunit1').val();
+                unit2 = $('#editunit2').val();
+                address_Line2 = $('#editaddress_Line2').val();
+                state = $('#editstate').val();
+                postalCode = $('#editpostalCode').val();
+                siteDesc = $('#siteDesc').val();
+                if(siteType == ''){
+                    alert('Please Select Site Type');
+                    $("#siteType").focus()
+                    return false;
+                }
+                else if(siteArea == ''){
+                    alert('Please Select Site Area');
+                    $("#siteArea").focus()
+                    return false;
+                }
+                else if(siteName == ''){
+                    alert('Please Enter Site Name');
+                    $("#siteName").focus()
+                    return false;
+                }
+                else if(country == ''){
+                    alert('Please Select country');
+                    $("#editcountry").focus()
+                    return false;
+                }
+                else if(address_Line1 == ''){
+                    alert('Please enter Address1');
+                    $("#editaddress_Line1").focus()
+                    return false;
+                }
+                else if(unit1 == ''){
+                    alert('Please enter Unit');
+                    $("#editunit1").focus()
+                    return false;
+                }
+                else if(unit2 == ''){
+                    alert('Please enter Unit');
+                    $("#editunit2").focus()
+                    return false;
+                }
+                else if(address_Line2 == ''){
+                    alert('Please enter Address2');
+                    $("#editaddress_Line2").focus()
+                    return false;
+                }
+                else if(state == ''){
+                    alert('Please Select State');
+                    $("#editstate").focus()
+                    return false;
+                }
+                else if(postalCode == ''){
+                    alert('Please enter Postal Code');
+                    $("#editpostalCode").focus()
+                    return false;
+                }
+                else{
+                    var data = {"siteArea":siteArea,"siteType":siteType,"siteName":siteName,"country":country,"address_Line1":address_Line1,"unit1":unit1,"unit2":unit2,"address_Line2":address_Line2,"state":state,"postalCode":postalCode,"siteDesc":siteDesc};
+                    $.ajax({
+                      url: "/createSite",
+                      type: "POST",
+                      dataType : "json",
+                      contentType : "application/json",
+                      data: JSON.stringify(data),
+                      success: function (result)
+                      {
+                        var data = result;
+                        if (data.status == 'success') {
+                             alert(data.success_msg);
+                             $('#addSiteModal').modal('hide');
+                                $('#createSiteForm')[0].reset();
+                                $('#editstate').empty();
+                                $('#selectsites').append("<input type='checkbox' class='sites' value='"+data.id+"' > <label> "+siteName+" </label><br>");
+
+                                //refresh when site is created
+                                // window.location.fadeOut(1000).fadeIn(1000);
+                        }
+                        else if(data.status == 'error' && data.error_msg == 'sessionexpired'){
+                            alert('Session has expired.');
+                            setTimeout(function() {
+                                window.location.href = data.redirect_url;
+                            }, 2000);
+
+                         }
+                        else{
+                            alert(data.error_msg);
+                        }
+                      }
+
+                    });
+                }
+            });
+            function loadSLADataInForm(type, SLAData) {
+                 if (type == 'editSLAForm') {
+                     $('#eSLAId').val(SLAData.slaId);
+                     $('#eSLAName').val(SLAData.slaType);
+                     if(SLAData.slaType == 'Default'){
+                     $("#eSLAName").prop("disabled",true);
+                     }
+                     $('#eDeliveryDays').val(SLAData.slaDetails.orderingSchedule);
+                     var workingDays = SLAData.slaDetails.workingDays;
+                     var eWorkingDayIdArray = ['esunday','emonday','etuesday','ewednesday','ethursday','efriday','esaturday'];
+                     for(i = 0; i < workingDays.length; i++) {
+                        if (workingDays[i] == 1) {
+                            $('#'+eWorkingDayIdArray[i]+'').prop('checked',true);
+                        }
+                     }
+                     var deliveryDays = SLAData.slaDetails.deliveryDays;
+                     var eWorkingDayIdArray = ['esunday1','emonday1','etuesday1','ewednesday1','ethursday1','efriday1','esaturday1'];
+                     for(i = 0; i < deliveryDays.length; i++) {
+                        if (deliveryDays[i] == 1) {
+                            $('#'+eWorkingDayIdArray[i]+'').prop('checked',true);
+                        }
+                     }
+                     var holidayDate = SLAData.slaDetails.holidayDate;
+                     if (holidayDate.length > 0) {
+                        $('#eHolidayDiv').empty();
+                        for(i = 0; i < holidayDate.length; i++) {
+                            var counter = i;
+                            var newTextBoxDiv = $(document.createElement('span')).attr("class", 'eHolidaySpan');
+                            newTextBoxDiv.after().html('<div class="pull-left eHolidayEventBtn"><input type="button" class="eHolidayBtn" id="eHolidayBtn_'+holidayDate[i].holidayDate+'_'+counter +'" value="'+holidayDate[i].holidayDesc+'" ><div id="eHolidayBtnClose_'+ holidayDate[i].holidayDate +'_'+counter + '" class="eHolidayBtnClose">x</div></div>');
+                            newTextBoxDiv.appendTo("#eHolidayDiv");
+                            unAvailableDatesArray.push(holidayDate[i].holidayDate);
+                        }
+                     }
+                     var deliverySlot = SLAData.slaDetails.deliverySlot;
+                     if (deliverySlot.length > 0) {
+                        $('#edSlotDiv').empty();
+                        for(i = 0; i < deliverySlot.length; i++) {
+                            var counter = i;
+                            var newTextBoxDiv = $(document.createElement('span')).attr("class", 'edSlotSpan');
+                            newTextBoxDiv.after().html('<div class="pull-left eshiftEventBtn"><input type="button" class="eshiftBtn" id="eshiftBtn_'+deliverySlot[i].deliverySlot+'_'+deliverySlot[i].slotName+'_'+counter +'" value="'+deliverySlot[i].deliverySlot+'_'+deliverySlot[i].slotName+'" ><div id="eshiftBtnClose_'+deliverySlot[i].deliverySlot+'_'+deliverySlot[i].slotName+'_'+counter + '" class="eclear">x</div></div>');
+                            newTextBoxDiv.appendTo("#edSlotDiv");
+
+                        }
+                     }
+                     var cutOffTime = SLAData.slaDetails.cutOffTime;
+                     if (cutOffTime.length > 0) {
+                        $('#ecutOffDiv').empty();
+                        for(i = 0; i < cutOffTime.length; i++) {
+                            var counter = i;
+                            var newTextBoxDiv = $(document.createElement('span')).attr("class", 'ecutOffSpan');
+                            newTextBoxDiv.after().html('<div class="pull-left ecutOffEventBtn"><input type="button" class="ecutOffBtn" id="ecutOffBtn_'+cutOffTime[i].cutOffTime+'_'+counter +'" value="'+cutOffTime[i].cutOffTime+'" ><div id="ecutOffBtnClose_'+cutOffTime[i].cutOffTime+'_'+counter + '" class="eclear">x</div></div>');
+                            newTextBoxDiv.appendTo("#ecutOffDiv");
+
+                        }
+                     }
+                      $('#editSLAModal').show();
+                     $('#editSLAModal').modal('toggle');
+
+                 }
+                 else {
+                     $('#deliveryDays').val(SLAData.slaDetails.orderingSchedule);
+                     var workingDays = SLAData.slaDetails.workingDays;
+                     var workingDayIdArray = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+                     for(i = 0; i < workingDayIdArray.length; i++) {
+                        $('#'+workingDayIdArray[i]+'').prop('checked',false);
+                        }
+
+                     for(i = 0; i < workingDays.length; i++) {
+                        if (workingDays[i] == 1) {
+                            $('#'+workingDayIdArray[i]+'').prop('checked',true);
+                        }
+                     }
+                     var deliveryDays = SLAData.slaDetails.deliveryDays;
+                     var deliveryDaysIdArray = ['sunday1','monday1','tuesday1','wednesday1','thursday1','friday1','saturday1'];
+                     for(i = 0; i < deliveryDaysIdArray.length; i++) {
+                        $('#'+deliveryDaysIdArray[i]+'').prop('checked',false);
+                        }
+                     for(i = 0; i < deliveryDays.length; i++) {
+                        if (deliveryDays[i] == 1) {
+                            $('#'+deliveryDaysIdArray[i]+'').prop('checked',true);
+                        }
+                     }
+                     var holidayDate = SLAData.slaDetails.holidayDate;
+                     if (holidayDate.length > 0) {
+                        $('#holidayDiv').empty();
+                        for(i = 0; i < holidayDate.length; i++) {
+                            var counter = i;
+                            var newTextBoxDiv = $(document.createElement('span')).attr("class", 'holidaySpan');
+                            newTextBoxDiv.after().html('<div class="pull-left holidayEventBtn"><input type="button" class="holidayBtn" id="holidayBtn_'+holidayDate[i].holidayDate+'_'+counter +'" value="'+holidayDate[i].holidayDesc+'" ><div id="holidayBtnClose_'+ holidayDate[i].holidayDate +'_'+counter + '" class="holidayBtnClose">x</div></div>');
+                            newTextBoxDiv.appendTo("#holidayDiv");
+                            disableDatesArray.push(holidayDate[i].holidayDate);
+                            disableDates();
+                            function disableDates() {
+                            var date = new Date();
+                                dmy = ("0" + date.getDate()).slice(-2)+ "/"+("0" + (date.getMonth() + 1)).slice(-2) + "/" + date.getFullYear();
+                                if ($.inArray(dmy, disableDatesArray) == -1) {
+                                    return [true, ""];
+                                } else {
+                                    return [false, "", "Unavailable"];
+                                }
+                            }
+                        }
+                        $('.formFieldShowHideHoliday').show();
+                     }
+                     var deliverySlot = SLAData.slaDetails.deliverySlot;
+                     if (deliverySlot.length > 0) {
+                        $('#dSlotDiv').empty();
+                        for(i = 0; i < deliverySlot.length; i++) {
+                            var counter = i;
+                            var newTextBoxDiv = $(document.createElement('span')).attr("class", 'dSlotSpan');
+                            newTextBoxDiv.after().html('<div class="pull-left shiftEventBtn"><input type="button" class="shiftBtn" id="shiftBtn_'+deliverySlot[i].deliverySlot+'_'+deliverySlot[i].slotName+'_'+counter +'" value="'+deliverySlot[i].deliverySlot+'_'+deliverySlot[i].slotName+'" ><div id="shiftBtnClose_'+deliverySlot[i].deliverySlot+'_'+deliverySlot[i].slotName+'_'+counter + '" class="eclear">x</div></div>');
+                            newTextBoxDiv.appendTo("#dSlotDiv");
+
+                        }
+                     }
+                     var cutOffTime = SLAData.slaDetails.cutOffTime;
+                     if (cutOffTime.length > 0) {
+                        $('#cutOffDiv').empty();
+                        for(i = 0; i < cutOffTime.length; i++) {
+                            var counter = i;
+                            var newTextBoxDiv = $(document.createElement('span')).attr("class", 'cutOffSpan');
+                            newTextBoxDiv.after().html('<div class="pull-left cutOffEventBtn"><input type="button" class="cutOffBtn" id="cutOffBtn_'+cutOffTime[i].cutOffTime+'_'+counter +'" value="'+cutOffTime[i].cutOffTime+'" ><div id="cutOffBtnClose_'+cutOffTime[i].cutOffTime+'_'+counter + '" class="eclear">x</div></div>');
+                            newTextBoxDiv.appendTo("#cutOffDiv");
+
+                        }
+                     }
+                 }
+            }
+
+            $('#holidaySelect').on('change', function() {
+                if ($('#holidaySelect').val() == 'Add New') {
+                    $('.formFieldShowHideDate').show();
+                    $('.formFieldShowHideHoliday').show();
+                    $('.formFieldShowHideHolidayName').hide();
+                }
+                else if ($('#holidaySelect').val() == 'Existing') {
+                    $('.formFieldShowHideDate').hide();
+                    $('.formFieldShowHideHoliday').hide();
+                    data={'type':'Existing'};
+                     $.ajax({
+                      url: "/getHoliday",
+                      type: "POST",
+                      dataType : "json",
+                      contentType : "application/json",
+                      data: JSON.stringify(data),
+                      success: function (result)
+                      {
+                          if (result.status == 'success') {
+                            var holidayData = result.data;
+                            if(holidayData.length >=1){
+                            var holidayNameSelect="<option value=''>Select</option>" ;
+                                $.each(holidayData, function (key, val) {
+                                   holidayNameSelect += "<option value="+val.holidayId+">"+val.holidayYear+"-"+val.holidayName+"</option>";
+                                });
+                                 $('#holidayNameSelect').empty();
+                                $('#holidayNameSelect').append(holidayNameSelect);
+                            }
+                            else{
+                            var holidayNameSelect="<option value=''>Select</option>" ;
+                                $('#holidayNameSelect').empty();
+                                $('#holidayNameSelect').append(holidayNameSelect);
+                                alert('No holidays found');
+                            }
+                          }
+
+                      }
+
+                      });
+                    $('.formFieldShowHideHoliday').show();
+                    $('.formFieldShowHideHolidayName').show();
+                }
+                else{
+                     $('.formFieldShowHideDate').hide();
+                    $('.formFieldShowHideHoliday').hide();
+                    $('.formFieldShowHideHolidayName').hide();
+                    $('#holidayDiv').empty();
+                    var SLAId = $('#SLAId').val();
+                    if ($('#SLAId').val()) {
+                    var data = {"slaId":SLAId};
+                    /*$.ajax({
+                      url: "/slaDetailsByslaId",
+                      type: "POST",
+                      dataType : "json",
+                      contentType : "application/json",
+                      data: JSON.stringify(data),
+                      success: function (result)
+                      {
+                        var data = result;
+                        if (data.status == 'success') {
+                            var resultSLAData = data.SLAData[0];
+                            var holidayDate = resultSLAData.slaDetails.holidayDate;
+                            if (holidayDate.length > 0) {
+                                $('#holidayDiv').empty();
+                                for(i = 0; i < holidayDate.length; i++) {
+                                    var counter = i;
+                                    var newTextBoxDiv = $(document.createElement('span')).attr("class", 'holidaySpan');
+                                    newTextBoxDiv.after().html('<div class="pull-left holidayEventBtn"><input type="button" class="holidayBtn" id="holidayBtn_'+holidayDate[i].holidayDate+'_'+counter +'" value="'+holidayDate[i].holidayDesc+'" ><div id="holidayBtnClose_'+ holidayDate[i].holidayDate +'_'+counter + '" class="eHolidayBtnClose">x</div></div>');
+                                    newTextBoxDiv.appendTo("#holidayDiv");
+                                }
+                                $('.formFieldShowHideHoliday').show();
+                             }
+                        }
+                       else if(data.status == 'error' && data.error_msg == 'sessionexpired'){
+                            alert('Session has expired.');
+                            setTimeout(function() {
+                                window.location.href = data.redirect_url;
+                            }, 2000);
+                        }else{
+                            $('.formFieldShowHideHoliday').hide();
+                        }
+                       }
+                    });*/
+                    }
+                 }
+            });
+             $(document).on('click', '.eHolidayBtnClose,.eclear', function() {
+                    var arr = $(this).attr('id').split('_');
+                    $(this).parent().fadeOut('slow', function(c){
+                        unAvailableDatesArray.splice( $.inArray(arr[1], unAvailableDatesArray), 1 );
+                        eDatePickerCall();
+                        $('#'+$(this).attr('id')).remove();
+                    });
+                });
+                 $("#deliveryDays").on("keypress keyup blur",function (event) {
+           $(this).val($(this).val().replace(/[^\d].+/, ""));
+            if ((event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+             $(document).on('click', '#addBtn', function() {
+                    if ($('#shift').val() != '' && $('#fromTime').val() != '' && $('#toTime').val() != '') {
+                     var shiftBtnLength = $('.shiftBtn').length;
+                     var alreadyExist = false;
+                    if (shiftBtnLength >= 1 ) {
+                    var hideShowBtnArray = new Array();
+
+                    $('.shiftEventBtn').each(function() {
+                        if($(this).css('display') != 'none')
+                        {
+                            hideShowBtnArray.push('true');
+                        }
+                        else {
+                            hideShowBtnArray.push('false');
+                        }
+                    });
+                    var index = 0;
+                    $('.shiftBtn').each(function() {
+                        if (hideShowBtnArray[index] == 'true') {
+                            var id = $(this).attr('id').split('_');
+                              var oldTime = id[1].split('-');
+                                var time = oldTime[0];
+                                var time1 = oldTime[1];
+                                if(checkAlreadyExistsTime(time,time1,$('#fromTime').val())){
+                                    alert("From Time already exist!");
+                                    alreadyExist = true;
+                                    return false;
+                                }
+                                else if(checkAlreadyExistsTime(time,time1,$('#toTime').val())){
+                                    alert("To Time already exist!");
+                                    alreadyExist = true;
+                                    return false;
+                                }
+                                else if($('#shift').val().toLowerCase() == id[2].toLowerCase()){
+                                    alert("Slot Name already exist!");
+                                    alreadyExist = true;
+                                    return false;
+                                }
+                        }
+                        index++;
+                    });
+                        }
+                        if( alreadyExist ==false){
+                        var counter = 1;
+                        var newTextBoxDiv = $(document.createElement('span')).attr("class", 'dSlotSpan');
+                        newTextBoxDiv.after().html('<div class="pull-left shiftEventBtn"><input type="button" class="shiftBtn" id="shiftBtn_'+$('#fromTime').val()+'-'+$('#toTime').val()+'_'+$("#shift").val()+'_'+counter +'" value="'+$('#fromTime').val()+'-'+$('#toTime').val()+'_'+$("#shift").val()+'" ><div id="shiftBtnClose_'+$('#fromTime').val()+'-'+$('#toTime').val()+'_'+$("#shift").val()+'_'+counter + '" class="eclear">x</div></div>');
+                        newTextBoxDiv.appendTo("#dSlotDiv");
+                        counter++;
+                          $('#fromTime').val('');
+                        $('#toTime').val('');
+                        $('#shift').val('');
+                        }
+
+                    }
+                    else {
+                        alert('Please Enter Delivery Slot');
+                    }
+                });
+             function conversion(a){
+                var split = a.split(":");
+                var hours =split[0];
+                var minutes = split[1].match(/.{1,2}/g)[0];
+                var AMPM = split[1].match(/.{1,2}/g)[1];
+                if(AMPM == "pm" && parseInt(hours)<12) hours = parseInt(hours)+12;
+                if(AMPM == "am" && parseInt(hours)==12) hours = parseInt(hours)-12;
+                var sHours = hours.toString();
+                var sMinutes = minutes.toString();
+                return parseFloat(sHours+"."+sMinutes)
+                }
+            function checkAlreadyExistsTime(time,time1,newEntry){
+                    var fromTime = conversion(time);
+                    var toTime = conversion(time1);
+                    var newEntryTime = conversion(newEntry);
+                    if(fromTime <= newEntryTime && newEntryTime < toTime){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }
+            $(document).on('click', '#addCutOffBtn', function() {
+                    if ( $('#fromCutTime').val() != '' && $('#toCutTime').val() != '') {
+                     var cutOffBtnLength = $('.cutOffBtn').length;
+                     var alreadyExist = false;
+                    if (cutOffBtnLength >= 1 ) {
+                    var hideShowBtnArray = new Array();
+
+                    $('.cutOffEventBtn').each(function() {
+                        if($(this).css('display') != 'none')
+                        {
+                            hideShowBtnArray.push('true');
+                        }
+                        else {
+                            hideShowBtnArray.push('false');
+                        }
+                    });
+                    var index = 0;
+                            $('.cutOffBtn').each(function() {
+                                if (hideShowBtnArray[index] == 'true') {
+                                    var id = $(this).attr('id').split('_');
+                                     var oldTime = id[1].split('-');
+                                    var time = oldTime[0];
+                                    var time1 = oldTime[1];
+                                    if(checkAlreadyExistsTime(time,time1,$('#fromCutTime').val())){
+                                        alert("From Time already exist!");
+                                        alreadyExist = true;
+                                        return false;
+                                    }
+                                    else if(checkAlreadyExistsTime(time,time1,$('#toCutTime').val())){
+                                        alert("To Time already exist!");
+                                        alreadyExist = true;
+                                        return false;
+                                    }
+                                }
+                                index++;
+                            });
+                        }
+
+                        if(alreadyExist == false){
+                            var counter = 1;
+                            var newTextBoxDiv = $(document.createElement('span')).attr("class", 'cutOffSpan');
+                            newTextBoxDiv.after().html('<div class="pull-left cutOffEventBtn"><input type="button" class="cutOffBtn" id="cutOffBtn_'+$('#fromCutTime').val()+'-'+$('#toCutTime').val()+'_'+counter +'" value="'+$('#fromCutTime').val()+'-'+$('#toCutTime').val()+'" ><div id="cutOffBtnClose_'+$('#fromCutTime').val()+'-'+$('#toCutTime').val()+'_'+counter + '" class="eclear">x</div></div>');
+                            newTextBoxDiv.appendTo("#cutOffDiv");
+                            counter++;
+                             $('#fromCutTime').val('');
+                             $('#toCutTime').val('');
+                        }
+                    }
+                    else {
+                        alert('Please enter CutOff Time');
+                    }
+                });
+            /* Datepairpicker Start */
+                    $('.datePairExample .time').timepicker({
+                        'showDuration': true,
+                        'timeFormat': 'g:ia'
+                    });
+                    $('#cutOffTime').timepicker({
+                        'showDuration': true,
+                        'timeFormat': 'g:ia'
+                    });
+                    $('.datePairExample .date').datepicker({
+                        monthNamesShort:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                        changeMonth: true,
+                        changeYear: true,
+                        'format': 'm/d/yyyy',
+                        'autoclose': true
+                    });
+                    $('.datePairExample').datepair();
+		    /* Datepairpicker End */
+            var disableDatesArray = [];
+                function disableDates(date) {
+                    dmy = ("0" + date.getDate()).slice(-2)+ "/"+("0" + (date.getMonth() + 1)).slice(-2) + "/" + date.getFullYear();
+                    if ($.inArray(dmy, disableDatesArray) == -1) {
+                        return [true, ""];
+                    } else {
+                        return [false, "", "Unavailable"];
+                    }
+                }
+               var unAvailableDatesArray = new Array();
+                function unavailable(date) {
+                    dmy = ("0" + date.getDate()).slice(-2)+ "/"+("0" + (date.getMonth() + 1)).slice(-2) + "/" + date.getFullYear();
+                    if ($.inArray(dmy, unAvailableDatesArray) == -1) {
+                        return [true, ""];
+                    }
+                    else{
+                        return [false, "", "Unavailable"];
+                    }
+                }
+                 datePickerCall();
+function datePickerCall() {
+                    $( "#datepicker-2" ).datepicker({
+                        monthNamesShort:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                        changeMonth: true,
+                        changeYear: true,
+                        dateFormat: 'dd/mm/yy',
+                        //beforeShowDay: disableDates,
+                        minDate: 0,
+                        numberOfMonths: 1,
+                        showOtherMonths: true,
+                        dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                        onSelect: function(selectedDate) {
+                            if ($.inArray(selectedDate, disableDatesArray) == -1) {
+                                $('#addSLAModal').modal('hide');
+                                $('#exampleModalLongTitle').empty();
+                                $('#modalBody').empty();
+                                $('#modalFooter').empty();
+                                var modalBody = "<div class='form-group formGroup'><label for='recipient-name' class='col-form-label fontWeightBold'>Holiday Name:</label><input type='hidden' class='form-control' name='holidayDate' id='holidayDate' value='"+selectedDate+"'><input type='text' class='form-control' name='holidayName' id='holidayName' maxlength='20' autofocus></div>";
+                                var modalFooter = "<input type='button' id='saveHoliday' class='btn btn-primary modalBtnClass' value='Save'>";
+                                appendDynamicContent('Add Holiday', modalBody, modalFooter);
+                            }
+                        }
+                    });
+                }
+            $('#holidayNameSelect').on('change', function() {
+                if ($('#holidayNameSelect').val() == '') {
+                    //$('.formFieldShowHideHoliday').hide();
+                    alert('Select Holiday Name');
+                }
+                else {
+                    $('.formFieldShowHideHoliday').show();
+                    data={'holidayId':$('#holidayNameSelect').val()};
+                     $.ajax({
+                      url: "/getHoliday",
+                      type: "POST",
+                      dataType : "json",
+                      contentType : "application/json",
+                      data: JSON.stringify(data),
+                      success: function (result)
+                      {
+                          if (result.status == 'success') {
+                            var holidayDate = result.data;
+                            if (holidayDate.length > 0) {
+                            //$('#holidayDiv').empty();
+
+                            for(i = 0; i < holidayDate.length; i++) {
+                                var holidayDateVal = disableDatesArray.indexOf(holidayDate[i].holidayDate);
+                                if(holidayDateVal == -1) {
+                                    var counter = i;
+                                    var newTextBoxDiv = $(document.createElement('span')).attr("class", 'eHolidaySpan');
+                                    newTextBoxDiv.after().html('<div class="pull-left eHolidayEventBtn"><input type="button" class="holidayBtn" id="holidayBtn_'+holidayDate[i].holidayDate+'_'+counter +'" value="'+holidayDate[i].holidayDate+'-'+holidayDate[i].holidayReason+'" ><div id="holidayBtnClose_'+ holidayDate[i].holidayDate +'_'+counter + '" class="holidayBtnClose">x</div></div>');
+                                    newTextBoxDiv.appendTo("#holidayDiv");
+                                    disableDatesArray.push(holidayDate[i].holidayDate);
+                                    datePickerCall();
+                                }
+                            }
+                         }
+
+
+                      }
+                      }
+
+                      });
+                    $('.formFieldShowHideHoliday').show();
+                    //$('.formFieldShowHideHolidayName').show();
+                }
+            });
+
+ $(document).on('click', '#saveHoliday', function() {
+                    if ($('#holidayName').val() != '') {
+                        var counter = 1;
+                        var newTextBoxDiv = $(document.createElement('span')).attr("class", 'holidaySpan');
+                        //newTextBoxDiv.attr("id", 'holidayBtn'+$('#holidayDate').val());
+                        newTextBoxDiv.after().html('<div class="pull-left holidayEventBtn"><input type="button" class="holidayBtn" id="holidayBtn_'+$("#holidayDate").val()+'_'+counter +'" value="'+$('#holidayDate').val()+'-'+$('#holidayName').val()+'" ><div id="holidayBtnClose_'+ $('#holidayDate').val() +'_'+counter + '" class="holidayBtnClose">x</div></div>');
+                        newTextBoxDiv.appendTo("#holidayDiv");
+                        disableDatesArray.push($('#holidayDate').val());
+                        datePickerCall();
+                        $('#exampleModalCenter').modal('hide');
+                        $('#addSLAModal').modal('show');
+                        counter++;
+                    }
+                    else {
+                        alert('Please enter Holiday name');
+                    }
+                });
+
+$(document).on('click', '#HolidayModalPopupCloseBtn', function() {
+    $('#exampleModalCenter').modal('hide');
+    $('#addSLAModal').modal('show');
+});
+
+$(document).on('click', '.holidayBtnClose', function() {
+                    var arr = $(this).attr('id').split('_');
+                    $(this).parent().fadeOut('slow', function(c){
+                        disableDatesArray.splice( $.inArray(arr[1], disableDatesArray), 1 );
+                        datePickerCall();
+                        $('#'+$(this).attr('id')).remove();
+                    });
+                });
 
 $(document).on('change', '#select_suppliers', function() {
      var supId = $(this).val();
@@ -366,8 +2115,12 @@ $(document).on('change', '#select_suppliers', function() {
                 $('#dynamicDataDiv').css('display','block');
                 }
                 else{
-                    alert('No new sites found');
-                    location.reload();
+                alert('No new sites found');
+                document.getElementById('select_suppliers').value = "";
+                $('#dynamicDataDiv').css('display','none');
+                
+                // $('#select_suppliers').prop('selectedIndex',0);
+                
                 }
                 }
               }
@@ -384,6 +2137,77 @@ $(document).on('click', '#selectAllSites', function() {
   });
 
 
+$(document).on('click', '.addSlaBtn', function() {
+        var id = $(this).attr('id');
+        $('#dynamicSiteIdSla').empty();
+        $('#dynamicSiteIdSla').val(id);
+        $("#addSLAModal").trigger("reset");
+        $('#addSLAModal').modal('show');
+});
+$(document).on('click', '.addAreaBtn', function() {
+        var id = $(this).attr('id');
+        $('#dynamicSiteIdArea').empty();
+        $('#dynamicSiteIdArea').val(id);
+        $.ajax({
+                      url: "/fetchSLAData",
+                      type: "GET",
+                      dataType : "json",
+                      contentType : "application/json",
+                      success: function (result)
+                      {
+                        var data = result;
+                        if (data.status == 'success') {
+                           var SLADataValue = "";
+                            $.each(data.SLAData, function (key, val) {
+                                SLADataValue = SLADataValue + "<option value="+val.slaId+">"+val.slaType+"</option>";
+                            });
+                            $('#id_areaSla').empty().append("<option value='' selected=''>Select</option>");
+                            $('#id_areaSla').append(SLADataValue);
+                        }
+                        else if(data.status == 'error' && data.error_msg == 'sessionexpired'){
+                            alert('Session has expired.');
+                            setTimeout(function() {
+                                window.location.href = data.redirect_url;
+                            }, 2000);
+                        }else{
+                        alert(data.error_msg);
+                        }
+                      }
+                      });
+     $('#addAreaModal').modal('show');
+});$(document).on('click', '.addSiteBtn', function() {
+        var id = $(this).attr('id');
+        $('#dynamicSiteIdSite').empty();
+        $('#dynamicSiteIdSite').val(id);
+        $.ajax({
+          url: "/fetchAreaData",
+          type: "GET",
+          dataType : "json",
+          contentType : "application/json",
+          success: function (result)
+          {
+            var data = result;
+            if (data.status == 'success') {
+                var SLADataValue = "";
+                    $.each(data.areaData, function (key, val) {
+                        SLADataValue = SLADataValue + "<option value="+val.areaId+">"+val.areaName+"</option>";
+                    });
+                    $('#siteArea').empty().append("<option value='' selected=''>Select</option>");
+                    $('#siteArea').append(SLADataValue);
+            }
+            else if(data.status == 'error' && data.error_msg == 'sessionexpired'){
+                alert('Session has expired.');
+                setTimeout(function() {
+                    window.location.href = data.redirect_url;
+                }, 2000);
+            }else{
+                alert(data.error_msg);
+            }
+          }
+        });
+     $('#addSiteModal').modal('show');
+});
+
 
 $(document).on('click', '#assignSlaSubmit', function() {
 var sitesArray = [];
@@ -398,7 +2222,7 @@ if(sla == ''){
     return false;
 }
 else if(supplier == ''){
-    alert('Please Select Supplier');
+    alert('Please Select Vendor');
    $('#select_suppliers').focus();
     return false;
 }
@@ -407,7 +2231,6 @@ else if(sitesArray == ''){
     return false;
 }
 else{
-
 var data = {'sla':sla,'supplierId':supplier,'data':sitesArray};
     $.ajax({
           url: "/saveSlaForSupplierFromCus",
@@ -418,8 +2241,19 @@ var data = {'sla':sla,'supplierId':supplier,'data':sitesArray};
           success: function (data)
           {
           if (data.status == 'success') {
-            alert(data.success_msg);
-            location.reload();
+                alert(data.success_msg);
+                 setTimeout(function() {
+                    window.location.reload();
+                }, 3000);
+            }
+            else if(data.status == 'error' && data.error_msg == 'sessionexpired'){
+                alert('Session has expired.');
+                setTimeout(function() {
+                    window.location.href = data.redirect_url;
+                }, 2000);
+            }
+            else{
+            alert(data.error_msg);
             }
           }
         });
@@ -484,4 +2318,6 @@ var data = {'sla':sla,'supplierId':supplier,'data':sitesArray};
     });
 
 </script>
+
+
 {% endblock %}
