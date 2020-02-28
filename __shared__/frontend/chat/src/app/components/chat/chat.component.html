@@ -1,0 +1,35 @@
+<div class="container">
+    <div class="row">
+        <div class="col-7">
+            <h4>Contacts</h4>
+            <div *ngFor="let user of users">
+                <span *ngIf="user.status === 'Active'" class="user">
+                    {{ user.firstName }}&nbsp;{{ user.lastName }}
+                </span>
+                <!-- <span (click)="onSubmit(user.firstName, user.lastName)" *ngIf="user.status === 'Active'" class="user">
+                    {{ user.firstName }}&nbsp;{{ user.lastName }}
+                </span> -->
+            </div>
+            <br>
+            <h4>Chat Rooms</h4>
+            <div *ngFor="let room of rooms">
+                <span>{{ room.room_name }}</span>
+            </div>
+        </div>
+        
+        <div class="col-5">
+            <br><br>
+            <form [formGroup]="roomForm">
+                <input (keyup)="onKey($event)" formControlName="roomName" type="text" size="100" style="width: 100%;"/><br>
+                <input (click)="onSubmit()" type="button" value="Create Room"/><br>
+            </form>
+        </div>
+    </div>
+    
+</div>
+
+<!-- Create Chat Room<br>
+<form [formGroup]="roomForm">
+    <input (keyup)="onKey($event)" class="" formControlName="roomName" type="text" size="100"/><br>
+    <input (click)="onSubmit()" type="button" value="Create"/><br>
+</form> -->

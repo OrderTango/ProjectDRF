@@ -1,0 +1,5 @@
+<form [formGroup]="messageForm">
+    <textarea formControlName="messageContent" id="chat-log" cols="100" rows="20"></textarea><br/>
+    <input (keyup)="onKey($event)" formControlName="content"  type="text" size="100"/><br/>
+    <input (click)="onSubmit()" type="button" value="Send"/>
+</form>

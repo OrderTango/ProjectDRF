@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
+from datetime import timedelta
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -30,11 +32,16 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'tenant_schemas',
+    'corsheaders',
+    'channels',
+    'rest_framework',
     'OrderTangoApp',
     'OrderTangoSubDomainApp',
     'OrderTangoOrdermgmtApp',
     'InventorymgmtApp',
     'OrderTangoOrderFulfilmtApp',
+    'accounts',
+    'chat',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -47,6 +54,7 @@ MIDDLEWARE = [
     'OrderTango.middleware.TenantTutorialMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -54,13 +62,54 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CORS_ORIGIN_WHITELIST = (
+    "http://customer12.127.0.0.1:8000",
+    "http://customer12.localhost: 8000",
+)
+CORS_ORIGIN_ALLOW_ALL = True 
+CORS_ALLOW_CREDENTIALS = True 
+
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'Access-Control-Allow-Origin',
+]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    )
+}
+
+JWT_AUTH = {
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_EXPIRATION_DELTA': timedelta(seconds=3600),
+}
+
 ROOT_URLCONF = 'OrderTango.urls'
 PUBLIC_SCHEMA_URLCONF = 'OrderTango.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -89,6 +138,8 @@ TENANT_APPS = (
     'OrderTangoOrdermgmtApp',
     'OrderTangoOrderFulfilmtApp',
     'InventorymgmtApp',
+    'chat',
+    'accounts',
     'django.contrib.sessions',
 )
 
@@ -110,6 +161,15 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 DEFAULT_FILE_STORAGE = 'tenant_schemas.storage.TenantFileSystemStorage'
 
 WSGI_APPLICATION = 'OrderTango.wsgi.application'
+ASGI_APPLICATION = 'OrderTango.routing.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('localhost', 6379)],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
@@ -209,3 +269,9 @@ STATICFILES_DIRS=[
 
 STRIPE_SECRET_KEY = 'sk_test_35oVtTbg0vLixDBY7dwhTdaU'
 STRIPE_PUBLISHABLE_KEY = 'pk_test_UDdBZ8oiG9H2VXNdfar54wdL'
+
+try:
+    from .local_settings import *
+except ImportError as e:
+    if "local_settings" not in str(e):
+        raise e

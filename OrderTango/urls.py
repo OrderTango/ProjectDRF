@@ -17,12 +17,16 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('chat', TemplateView.as_view(template_name='drf_base.html')),
     path('', include('OrderTangoApp.urls')),
     path('', include('OrderTangoSubDomainApp.urls')),
     path('', include('OrderTangoOrdermgmtApp.urls')),
     path('', include('OrderTangoOrderFulfilmtApp.urls')),
     path('', include('InventorymgmtApp.urls')),
+    path('', include('chat.urls')),
+    path('', include('accounts.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
