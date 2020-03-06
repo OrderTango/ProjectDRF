@@ -1,5 +1,28 @@
-<form [formGroup]="messageForm">
-    <textarea formControlName="messageContent" id="chat-log" cols="100" rows="20"></textarea><br/>
-    <input (keyup)="onKey($event)" formControlName="content"  type="text" size="100"/><br/>
-    <input (click)="onSubmit()" type="button" value="Send"/>
-</form>
+<div class="container">
+    <h4 *ngIf="hasChatRoom">{{this.roomNewName}}</h4>
+    <div class="message-body">
+        <div *ngIf="hasMessages && hasChatRoom">
+            <ul class="sentMessage" *ngFor="let message of messages">
+                <li>
+                    <span class="message">{{ message.message }}</span>
+                    <span class="message-date">{{message.date_created}}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="noMessage" *ngIf="!hasMessages && hasChatRoom">
+            <span>You can now start your conversation</span>
+        </div>
+        <div class="noChatRoom" *ngIf="!hasChatRoom">
+            <span>You can now create chat room or converse with one of your peers in Contacts</span>
+        </div>
+    </div>
+    <div class="message-form">
+        <form [formGroup]="messageForm" #messageArea class="form">
+            <!-- <input (keyup)="onKey($event)" formControlName="content"  type="text" placeholder="Enter message..." size="100" [disabled]="hasNoChatRoom === true ? true: null"/><br/> -->
+            <!-- <input (keyup)="onKey($event)" formControlName="content"  type="text" placeholder="Enter message..." size="100" /><br/> -->
+            <textarea (keyup)="autoGrow()" #textArea formControlName="content" type="text" placeholder="Enter message..."></textarea>
+            <input (click)="onSubmit()" class="create-room btn btn-primary" type="button" value="Send" [disabled]="!hasChatRoom"/>
+        </form>
+    </div>
+</div>
+

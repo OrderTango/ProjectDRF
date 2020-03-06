@@ -1,23 +1,24 @@
 from rest_framework import serializers 
 
 from .views import *
-from .models import ChatRoom, ChatMessage 
+from .models import Thread, ThreadMessage, ThreadMember
 
 from OrderTangoApp.models import User 
 
 
-class ChatRoomSerializer(serializers.ModelSerializer):
+class ThreadSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ChatRoom
+        model = Thread
         fields = '__all__'
 
-    # def create(self, request, validated_data):   
-    #     user = User.objects.get(userId=getUser(self.request))
-    #     room_name = self.validated_data['room_name']
-    #     return ChatRoom.objects.create(creator=user, room_name=room_name)
 
-
-class ChatMessageSerializer(serializers.ModelSerializer):
+class ThreadMessageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ChatMessage 
+        model = ThreadMessage 
+        fields = '__all__'
+
+
+class ThreadMemberSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ThreadMember
         fields = '__all__'

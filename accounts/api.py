@@ -8,7 +8,7 @@ from chat.views import *
 from .serializers import UserSerializer
 
 
-class UserView(viewsets.ViewSet):
+class UserListView(viewsets.ViewSet):
     serializer_class = UserSerializer 
 
     def list(self, request, *args, **kwargs):
@@ -18,6 +18,9 @@ class UserView(viewsets.ViewSet):
         user = User.objects.all() 
         serializer = self.serializer_class(user, many=True)
         return Response(serializer.data)
+
+class UserView(viewsets.ViewSet):
+    serializer_class = UserSerializer
 
     def retrieve(self, request, *args, **kwargs):
         """

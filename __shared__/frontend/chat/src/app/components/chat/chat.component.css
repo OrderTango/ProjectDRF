@@ -1,0 +1,62 @@
+:root {
+   --main-font-family: Futura, Futura-Medium, "Futura Medium", "Century Gothic", CenturyGothic, "Apple Gothic", AppleGothic, "URW Gothic L", "Avant Garde", sans-serif; 
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+nav {
+    background: #ffd500;
+    padding: 0.4rem 0.8rem 0.1rem;
+}
+
+.row {
+    padding: 1rem 2rem;
+}
+
+.col-4 {
+    /* border-right: 2px solid #881999; */
+}
+
+.contacts {
+    padding-left: 2rem;
+}
+
+.contact-user {
+    font-size: 1.2rem;
+}
+
+.user {
+    cursor: pointer;
+}
+
+.room-section {
+    display: grid;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+}
+
+.chat-room {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.room {
+    
+}
+
+.room-date {
+    color: #BEBEBE;
+    font-size: xx-small;
+}
+
+.select-chat {
+    background-color: #881999;
+    color: #f0f0f0;
+    border: none;
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1.3rem;
+}

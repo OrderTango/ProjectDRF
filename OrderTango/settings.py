@@ -31,6 +31,8 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts',
+    'chat',
     'tenant_schemas',
     'corsheaders',
     'channels',
@@ -40,8 +42,6 @@ INSTALLED_APPS = [
     'OrderTangoOrdermgmtApp',
     'InventorymgmtApp',
     'OrderTangoOrderFulfilmtApp',
-    'accounts',
-    'chat',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -131,6 +131,7 @@ SHARED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.admin',
+    'chat',
 )
 
 TENANT_APPS = (
@@ -166,7 +167,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('localhost', 6379)],
+            "hosts": [('127.0.0.1', 6379)],
         },
     },
 }
@@ -178,6 +179,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'tenant_schemas.postgresql_backend',
         'NAME': 'projectDRF',
+        'OPTIONS': {'options': '-c search_path=public'},
         'USER': 'postgres',
         'PASSWORD': 'TN41at5593@',
         'HOST': '52.221.61.17',

@@ -21,7 +21,7 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('chat', TemplateView.as_view(template_name='drf_base.html')),
+    path('chat/', TemplateView.as_view(template_name='drf_base.html')),
     path('', include('OrderTangoApp.urls')),
     path('', include('OrderTangoSubDomainApp.urls')),
     path('', include('OrderTangoOrdermgmtApp.urls')),
