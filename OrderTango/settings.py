@@ -42,8 +42,6 @@ INSTALLED_APPS = [
     'OrderTangoOrdermgmtApp',
     'InventorymgmtApp',
     'OrderTangoOrderFulfilmtApp',
-    'accounts',
-    'chat',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -272,18 +270,9 @@ STATICFILES_DIRS=[
 
 STRIPE_SECRET_KEY = 'sk_test_35oVtTbg0vLixDBY7dwhTdaU'
 STRIPE_PUBLISHABLE_KEY = 'pk_test_UDdBZ8oiG9H2VXNdfar54wdL'
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> drf messaging app initial commit
 
 try:
     from .local_settings import *
 except ImportError as e:
     if "local_settings" not in str(e):
         raise e
-<<<<<<< HEAD
-=======
->>>>>>> drf messaging app initial commit
->>>>>>> drf messaging app initial commit

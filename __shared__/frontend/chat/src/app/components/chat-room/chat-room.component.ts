@@ -95,6 +95,11 @@ export class ChatRoomComponent implements OnInit, OnChanges {
     this.chatSocket = new ReconnectingWebSocket (
       `ws://customer12.localhost:8000/ws/api-chat/${room_name}/` 
     )
+    this.chatSocket.debug = true;
+
+    this.chatSocket.onopen = (e) => {
+      this.fetchMessages();
+    }
 
     this.chatSocket.debug = true;
 
@@ -152,18 +157,18 @@ export class ChatRoomComponent implements OnInit, OnChanges {
     }))
   }
 
+  onKey(event) {
+    if(event.keyCode === 13) {
+      this.onSubmit();
+    }
+  }
+
   autoGrow() {
     const textArea = this.textArea.nativeElement;
 
     textArea.style.overflow = 'scroll';
     textArea.style.height = '0px';
     textArea.style.height = textArea.scrollHeight + 'px';
-  }
-
-  onKey(event) {
-    if(event.keyCode === 13) {
-      this.onSubmit();
-    }
   }
 
   onSubmit() {
