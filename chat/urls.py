@@ -11,7 +11,7 @@ from .api import ThreadView, ThreadDetailView, ThreadMessageView, ThreadMemberVi
 
 urlpatterns = [
     path('api/thread/', ThreadView.as_view({'get': 'list', 'post': 'create'}), name='api-thread'),
-    path('api/thread/<int:pk>/', ThreadDetailView.as_view({'delete': 'destroy'}), name='api-thread-detail'),
+    path('api/thread/<int:pk>/', ThreadDetailView.as_view(), name='api-thread-detail'),
     path('api/thread/<str:room_name>/members/', ThreadMemberView.as_view(({'get': 'list'}), name='api-thread-members')),
     # path('api/thread/<int:pk>/messages/', ThreadMessageView.as_view({'get': 'list', 'post': 'create'}), name='api-thread-message'),
     # path('api/thread/<int:pk>/messages/<int:pk>/', ThreadMessageView.as_view({'get': 'retrieve'}), name='api-thread-message-detail'),

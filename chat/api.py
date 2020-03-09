@@ -47,18 +47,19 @@ class ThreadView(viewsets.ViewSet):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-class ThreadDetailView(viewsets.ViewSet):
+class ThreadDetailView(views.APIView):
     serializer_class = ThreadSerializer
 
-    def destroy(self, request, *args, **kwargs):
+    def delete(self, request, *args, **kwargs):
         """ 
         Delete thread
         """
         currentSchema = connection.schema_name 
         connection.set_schema(schema_name=currentSchema)
         print(connection.schema_name)
+        print(self.kwargs)
 
-        thread = Thread.objects.get(id=self.kwargs['room_name'])
+        thread = Thread.objects.get(id=kwargs['pk'])
         thread.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)

@@ -1,6 +1,7 @@
-import { OnChanges, SimpleChanges, Component, OnInit, ElementRef, ViewChild, Input } from '@angular/core';
+import { OnChanges, SimpleChanges, Component, OnInit, ElementRef, EventEmitter, ViewChild, Input, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal, NgbModalRef, NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 import * as ReconnectingWebSocket from 'src/assets/reconnecting-websocket.js';
 
 import { ChatService } from '../../services/chat.service';
@@ -15,6 +16,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   @ViewChild('textArea') textArea: ElementRef;
   @ViewChild('messageArea') messageArea: ElementRef;
   @Input() room_name: string;
+  @Output() roomHasMessage = new EventEmitter<boolean>();
 
   messageForm = new FormGroup({
     content: new FormControl(''),
@@ -30,19 +32,27 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   hasMessages: boolean = false;
   messages = [];
   users = [];
+  addedMembers = [];
   roomMembers = [];
   roomNewName: String = '';
+
+  addMemberModalRef: NgbModalRef;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private modal: NgbModal,
     private chatService: ChatService,
   ) { }
 
   ngOnInit(): void {
-    // this.roomName = this.activatedRoute.snapshot.paramMap.get('room_name');
+    
     this.chatService.getUser().subscribe((res) => {
       this.chatUser = res.userId
+    })
+
+    this.chatService.getUsers().subscribe((res) => {
+      this.users = Object(res);
     })
 
     this.getChatRoom(this.room_name)
@@ -51,6 +61,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    this.room_name = changes.room_name.currentValue;
     var room_name = changes.room_name.currentValue;
     this.getChatRoom(room_name)
     this.transformRoomName(room_name)
@@ -75,11 +86,6 @@ export class ChatRoomComponent implements OnInit, OnChanges {
     }else {
       this.hasChatRoom = true;
       this.createWebSocket(room_name);
-
-      // this.chatService.getChatMembers(room_name).subscribe((res) => {
-      //   this.roomMembers = Object(res);
-      //   console.log(this.roomMembers);
-      // })
     }
   }
 
@@ -87,6 +93,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
     this.chatSocket = new ReconnectingWebSocket (
       `ws://customer12.localhost:8000/ws/api-chat/${room_name}/` 
     )
+
     this.chatSocket.debug = true;
 
     this.chatSocket.onopen = (e) => {
@@ -94,17 +101,23 @@ export class ChatRoomComponent implements OnInit, OnChanges {
     }
 
     this.chatSocket.onmessage = (e) => {
-
       var data = JSON.parse(e.data);
-      let command = data['command'];
+      let command = data['command']; 
 
       if(command === 'fetch_message') {
         this.messages = data['message']
+        var message = []
+        message = this.messages[0];
+        console.log(message['members'])
+
+        this.roomMembers = message['members'];
         
         if(this.messages.length === 0) {
           this.hasMessages = false;
+          this.roomHasMessage.emit(this.hasMessages)
         }else{
           this.hasMessages = true;
+          console.log('HERE 1', this.roomHasMessage.emit(this.hasMessages))
         }
 
       }else {
@@ -112,8 +125,11 @@ export class ChatRoomComponent implements OnInit, OnChanges {
 
         if(this.messages.length === 0) {
           this.hasMessages = false;
+          this.roomHasMessage.emit(this.hasMessages)
         }else{
           this.hasMessages = true;
+          this.roomHasMessage.emit(this.hasMessages)
+          console.log(this.roomHasMessage.emit(this.hasMessages))
         }
       }
     }
@@ -130,18 +146,18 @@ export class ChatRoomComponent implements OnInit, OnChanges {
     }))
   }
 
-  onKey(event) {
-    if(event.keyCode === 13) {
-      this.onSubmit();
-    }
-  }
-
   autoGrow() {
     const textArea = this.textArea.nativeElement;
 
     textArea.style.overflow = 'scroll';
     textArea.style.height = '0px';
     textArea.style.height = textArea.scrollHeight + 'px';
+  }
+
+  onKey(event) {
+    if(event.keyCode === 13) {
+      this.onSubmit();
+    }
   }
 
   onSubmit() {
@@ -160,8 +176,32 @@ export class ChatRoomComponent implements OnInit, OnChanges {
     textArea.style.height = '54px';
   }
 
-  back() {
-    this.router.navigate([`/chat`])
+  addMemberModal(template) {
+    this.addMemberModalRef = this.modal.open(template, { backdrop: true, size: 'lg'})
+  } 
+
+  closeMemberModal() {
+    this.addMemberModalRef.close()
+  }
+
+  selectedMember(user) {
+    if(user.userId !== this.chatUser) {
+      if(!this.addedMembers.some((m) => m.userId == user.userId)) {
+        this.addedMembers.push({'userId': user.userId, 'firstName': user.firstName, 'lastName': user.lastName, 'email': user.email})
+      }
+    }
+  }
+
+  addMember() {
+    this.chatSocket.send(JSON.stringify({
+      'thread': this.room_name,
+      'command': 'new_member',
+      'members': this.addedMembers
+    }))
+  }
+
+  removeAddedMember(id) {
+    this.addedMembers = this.addedMembers.filter(room => room.id !== id);
   }
 
 }

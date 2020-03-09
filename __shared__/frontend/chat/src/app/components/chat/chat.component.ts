@@ -32,6 +32,7 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {
     this.chatService.getUser().subscribe((res) => {
       this.authUser = res;
+      console.log('fsdfsdfs', this.authUser)
     })
 
     this.chatService.getUsers().subscribe((res) => {
@@ -55,8 +56,6 @@ export class ChatComponent implements OnInit {
         }
       })
 
-      console.log(this.rooms)
-
       if(this.chat_room=== '') {
         var chat = this.rooms.slice(-1)[0];
         this.chat_room = chat.name;
@@ -78,20 +77,7 @@ export class ChatComponent implements OnInit {
 
   submitChatRoom() {
     this.chat_room= this.roomForm.value.roomName;
-    console.log('Here 2: ', this.chat_room)
     this.roomForm.reset();
-
-    // this.chatService.createChatRoom(this.authUser.userId, this.roomForm.value.roomName)
-    // .subscribe(res => {
-    //   console.log(res)
-    // this.router.navigate([`/chat/`, this.roomForm.value.roomName])
-
-    //   this.roomForm.reset()
-    // },
-    // error => {
-    //   console.log(error)
-    // }
-    // )
   }
 
   selectChatRoom(room_name) {
@@ -99,12 +85,18 @@ export class ChatComponent implements OnInit {
     console.log('Here 3: ', this.chat_room)
   }
 
-  deleteChatRoom(room) {
-    this.chatService.deleteChatRoom(room).subscribe(res => {
-      console.log(res)
-      this.chat_room = '';
+  deleteChatRoom(id) {
+    this.chatService.deleteChatRoom(id).subscribe(res => {
+      this.rooms = this.rooms.filter(room => room.id !== id);
+      var chat = this.rooms.slice(-1)[0];
+      this.chat_room = chat.name;
+      this.chat_room_name = chat.temp_name;
     }, error => {
       console.log(error)
     })
   }
+
+  getRoomMessage(event) {
+    console.log(event)
+  } 
 }

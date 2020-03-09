@@ -10,6 +10,8 @@ export class ChatService {
   csrfToken = null;
   baseurl = "http://customer12.localhost:8000"; // window.location.pathname
 
+  // baseurl = "http://ot4a1fcb01.localhost:8000"; // window.location.pathname
+
   constructor(
     private http: Http,
     private httpClient: HttpClient,
@@ -28,8 +30,9 @@ export class ChatService {
     return this.httpClient.get(`${this.baseurl}/api/thread/`, this.getHeader())
   }
 
-  deleteChatRoom(room_name): Observable<any> {
-    return this.httpClient.delete(`${this.baseurl}/api/thread/${room_name}/`, this.getHeader())
+  deleteChatRoom(id): Observable<any> {
+    console.log('DELETE THREAD: ', id)
+    return this.httpClient.delete(`${this.baseurl}/api/thread/${id}/`, this.getHeader())
   }
 
   getChatMembers(room_name): Observable<any> {

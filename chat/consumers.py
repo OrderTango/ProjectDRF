@@ -9,27 +9,48 @@ import json
 
 class ChatConsumer(WebsocketConsumer):
 
+    def new_member(self, text_data):
+        connection.schema_name = 'otfe5e60d1'
+        currentSchema = connection.schema_name 
+        connection.set_schema(schema_name=currentSchema)
+
+        member_user = text_data['members']
+        
+        members = []
+
+        for member in member_user:
+            user = User.objects.get(userId=member['userId'])
+            thread = Thread.objects.get(id=self.thread_id)
+            member = ThreadMember.objects.create(member=user, thread=thread)
+            members.append({
+                'members': member.member
+            })
+        
+        content = {
+            'command': 'new_member',
+            'members': members
+        }
+
+        self.send_chat_message(content)
+
     def fetch_messages(self, text_data):
         connection.schema_name = 'otfe5e60d1'
         currentSchema = connection.schema_name 
         connection.set_schema(schema_name=currentSchema)
 
-        print('fetch_message 1: ', currentSchema)
         sender_user = text_data['from']
         thread = Thread.objects.get(id=self.thread_id).id
-      
+        members = ThreadMember.objects.filter(thread=thread)
         messages = ThreadMessage.objects.filter(sender=sender_user, thread=thread)
+
         content = {
             'command': 'fetch_message',
-            'message': self.messages_to_json(messages)
+            'message': self.fetches_to_json(messages, members)
         }
-
-        print('HERE', messages)
 
         currentSchema = connection.schema_name 
         connection.set_schema(schema_name=currentSchema)
 
-        print('fetch_message 2: ', currentSchema)
         self.send_chat_message(content)
 
 
@@ -60,6 +81,34 @@ class ChatConsumer(WebsocketConsumer):
         print('new_message 2: ', currentSchema)
         return self.send_chat_message(content)
 
+    def fetches_to_json(self, messages, members):
+        result = [] 
+        for messages in messages:
+            result.append(self.fetch_to_json(messages, members))
+        return result 
+
+    def fetch_to_json(self, message, members):
+        return {
+            'thread': message.thread.name, 
+            'sender': message.sender.email, 
+            'message': message.message,
+            'members': self.members_to_json(members),
+            'date_created': str(message.date_created)
+        }
+
+    def members_to_json(self, messages):
+        result = []
+        for message in messages:
+            result.append(self.member_to_json(message))
+        return result 
+
+    def member_to_json(self, message):
+        return {
+            'thread': message.thread.name, 
+            'member': message.member.email,
+            'date_added': str(message.date_added)
+        }
+
     def messages_to_json(self, messages):
         result = []
         for message in messages:
@@ -76,7 +125,8 @@ class ChatConsumer(WebsocketConsumer):
 
     commands = {
         'fetch_message': fetch_messages,
-        'new_message': new_message
+        'new_message': new_message,
+        'new_member': new_member,
     }
 
     def connect(self):

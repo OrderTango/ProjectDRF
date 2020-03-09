@@ -1,5 +1,13 @@
 <div class="container">
-    <h4 *ngIf="hasChatRoom">{{this.roomNewName}}</h4>
+    <nav>
+        <div>
+            <h4 *ngIf="hasChatRoom">{{this.roomNewName}}</h4>
+            <div class="sdsfdsfs" *ngFor="let member of roomMembers">
+                {{member.member}} &nbsp;
+            </div>
+        </div>
+        <button (click)="addMemberModal(AddThreadMember)" class="btn btn-secondary">Add Member</button>
+    </nav>
     <div class="message-body">
         <div *ngIf="hasMessages && hasChatRoom">
             <ul class="sentMessage" *ngFor="let message of messages">
@@ -25,4 +33,31 @@
         </form>
     </div>
 </div>
+
+<ng-template #AddThreadMember>
+    <div class="modal-header">
+        <h4>Add Member</h4>
+        <button (click)="closeMemberModal()" type="button" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="members">
+            <div *ngFor="let member of addedMembers"  class="select">
+                <span class="selectedAddedMember">
+                    {{member.firstName}}&nbsp;{{member.lastName}}
+                    <span class="remove" (click)="removeAddedMember(member.userId)" aria-hidden="true">&times;</span>
+                </span>
+            </div>
+        </div>
+        <div class="">
+            <ul class="ss" *ngFor="let user of users">
+                <li (click)="selectedMember(user)" class="dropdown-item select-member">{{user.firstName}}&nbsp;{{user.lastName}}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="addMember()" class="btn btn-warning"> Add</button>
+    </div>
+</ng-template>
 

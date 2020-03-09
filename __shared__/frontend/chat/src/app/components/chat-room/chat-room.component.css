@@ -3,6 +3,12 @@
     border-radius: 0.7rem;
 }
 
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
 ul{
     list-style: none;
     padding: 0;
@@ -11,6 +17,10 @@ ul{
 
 li {
     list-style: none;
+}
+
+.select-member {
+    cursor: pointer;
 }
 
 .message-body {
@@ -80,4 +90,28 @@ textarea:focus {
     color: #787878;
     text-align: center;
     margin-top: 1rem;
+}
+
+.members {
+    display: flex;
+}
+
+.select {
+    border: 1px solid gray;
+    padding: 0.3rem;
+    border-radius: 1rem;
+    font-size: 0.7rem;
+    margin: 0.3rem;
+}
+
+.close {
+    cursor: pointer;
+}
+
+.remove {
+    cursor: pointer;
+}
+
+.ss {
+    margin: 0;
 }
