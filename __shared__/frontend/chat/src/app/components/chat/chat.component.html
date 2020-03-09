@@ -35,6 +35,7 @@
                         <span (click)="createChatRoom(user.firstName, user.lastName)" *ngIf="user.status === 'Active'" class="user">
                             {{ user.firstName }}&nbsp;{{ user.lastName }}
                         </span>
+                        <i class="fa fa-american-sign-language-interpreting fa-5x" aria-hidden="true"> </i>
                     </div>
                 </div>
                 <div *ngIf="isChatRoom" class="chat">
