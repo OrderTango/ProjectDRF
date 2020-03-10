@@ -1,0 +1,250 @@
+{% extends 'operationalpanelbase.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/operationalpanel.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}"/>
+<script src ="{% static 'js/script.js' %}"></script>
+<style>
+#stockCountDiv{
+    margin-left: 6%;
+    }
+
+    @media (min-width:320px) and (max-width: 480px)  {
+        .paddingLeftRightZero{
+            padding-left: 47px !important;
+            padding-right: 0px !important;
+        }
+         .addStyl{
+             font-size: 14px !important;
+             font-weight: normal !important
+        }
+         .addSty{
+             font-size: 13px !important;
+             font-weight: normal !important
+        }
+         .addsSty{
+             font-size: 14px !important;
+             font-weight: normal !important;
+        }
+    }
+@media (min-width:600px) and (max-width: 801px)  {
+
+    .paddingBottomTabs{
+        margin-left: 8% !important;
+    }
+
+}
+</style>
+<div class="row headColor">
+  <div class="col-md-2 col-sm-4 col-24" id="sideBarLeft">
+        {% include "operationalpanelsidebar.html" %}
+  </div>
+  <div class="col-md-10 paddingLeftRightZero" id="bodyContent">
+        <div class="row">
+            <div class="col-md-2 col-sm-6 col-6 navTabClass navHeading" id="onBoardTab">
+                <a href="#" class="anchorlink activeNav" id="onBoardAnchor"><img src="{% static 'images/Home.png' %}" class="sideBarIcons">Home</a>
+            </div>
+            <div class="col-md-2 col-sm-6 col-6 navTabClass" id="viewTab">
+                <a href="#" class="anchorlink" id="viewAnchor"><img src="{% static 'images/UserIcon.png' %}" class="sideBarIcons">My Account</a>
+            </div>
+       </div>
+        <div class="row pinkBgColor">
+            <a class="dashboardBody" href="#"><img class="dashboardIconBody" src="{% static 'images/DataAdministrationIcon.png' %}" alt=""/>DashBoard</a>
+        </div>
+        <div class="row contentMargin pinkBgColor">
+        <div class="row">
+        <div class="row">
+            <div class="offset-md-1 col-md-3 col-sm-11 col-24 paddingBottomTabs">
+                <div class="divcontent">
+                    <div class="divcontenttitle"><a class="divcontenttitle" href="#"><img class="DollerIconBody" src="{% static 'images/DollerIcon.png' %}" alt=""/> View DashBoard</a></div>
+                    <div>A simple guided process to place order to vendors.</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-11 col-24 paddingBottomTabs">
+                <div class="divcontent">
+                    <div class="divcontenttitle"><a class="divcontenttitle" href="#"><img class="DollerIconBody" src="{% static 'images/DollerIcon.png' %}" alt=""/> Create DashBoard</a></div>
+                  <div>Check and track the status of your orders.</div>
+                </div>
+            </div>
+          <div class="col-md-3 col-sm-11 col-24 paddingBottomTabs">
+              <div class="divcontent">
+                  <div class="divcontenttitle"><a class="divcontenttitle" href="#"><img class="DollerIconBody" src="{% static 'images/DollerIcon.png' %}" alt=""/> Amend/Delete DashBoard</a></div>
+                      <div>Check your order history. View it on graph or charts online. You can also download it.
+                          <img class="DollerIconBody pull-right" src="{% static 'images/Lock.png' %}" alt=""/>
+                      </div>
+              </div>
+          </div>
+        </div>
+        </div>
+        </div>
+
+         <div class="row pinkBgColor">
+            <a class="dashboardBody" href="#"><img class="dashboardIconBody" src="{% static 'images/SideMenuCartIcon.png' %}" alt=""/>Order Management</a>
+
+        </div>
+        <div class="row contentMargin pinkBgColor">
+        <div class="row">
+        <div class="row">
+            <div class="offset-md-1 col-md-3 col-sm-11 col-24 paddingBottomTabs">
+                <div class="divcontent">
+                    <div class="divcontenttitle"><a class="divcontenttitle" href="#"><img class="DollerIconBody" src="{% static 'images/DollerIcon.png' %}" alt=""/> Order</a></div>
+                  <div>A simple guided process to place order to vendors.</div>
+                  <div></div>
+                </div>
+          </div>
+            <div class="col-md-3 col-sm-11 col-24 paddingBottomTabs">
+                <div class="divcontent">
+                    <div class="divcontenttitle"><a class="divcontenttitle" href="#"><img class="DollerIconBody" src="{% static 'images/DollerIcon.png' %}" alt=""/> Order Status</a></div>
+                  <div>Check and track the status of your orders.</div>
+                </div>
+            </div>
+          <div class="col-md-3 col-sm-11 col-24 paddingBottomTabs">
+              <div class="divcontent">
+                  <div class="divcontenttitle"><a class="divcontenttitle" href="#"><img class="DollerIconBody" src="{% static 'images/DollerIcon.png' %}" alt=""/> Order History</a></div>
+                      <div>Check your order history. View it on graph or charts online. You can also download it.
+                      </div>
+              </div>
+          </div>
+        </div>
+        </div>
+        </div>
+
+        <div class="row pinkBgColor">
+            <a class="dashboardBody" href="#"><img class="dashboardIconBody" src="{% static 'images/Inventory.png' %}" alt=""/>Inventory Management</a>
+        </div>
+        <div class="row contentMargin pinkBgColor">
+            <div class="row">
+            <div class="row">
+            <div class="offset-md-1 col-md-3 col-sm-11 col-24 paddingBottomTabs">
+                <div class="divcontent">
+                    <div class="divcontenttitle"><a class="divcontenttitle" href="#"><img class="DollerIconBody" src="{% static 'images/DollerIcon.png' %}" alt=""/> View Inventory</a></div>
+                  <div>A simple guided process to place order to vendors.</div>
+                </div>
+          </div>
+            <div class="col-md-3 col-sm-11 col-24 paddingBottomTabs">
+                <div class="divcontent">
+                    <div class="divcontenttitle"><a class="divcontenttitle" href="#"><img class="DollerIconBody" src="{% static 'images/DollerIcon.png' %}" alt=""/> Update Inventory</a></div>
+                  <div>Check and track the status of your orders.</div>
+                </div>
+            </div>
+          <div class="col-md-3 col-sm-11 col-24 paddingBottomTabs">
+              <div class="divcontent">
+                  <div class="divcontenttitle"><a class="divcontenttitle" href="#"><img class="DollerIconBody" src="{% static 'images/DollerIcon.png' %}" alt=""/> Movement History</a></div>
+                      <div>Check your order history. View it on graph or charts online. You can also download it.</div>
+              </div>
+          </div>
+          </div>
+          </div>
+    </div>
+
+        <div class="row contentMargin pinkBgColor">
+
+            <div class="offset-md-1 col-md-3 col-sm-11 col-24 paddingBottomTabs" id="stockCountDiv">
+                <div class="divcontent">
+                    <div class="divcontenttitle"><a class="divcontenttitle" href="#"><img class="DollerIconBody" src="{% static 'images/DollerIcon.png' %}" alt=""/> Stock Count</a></div>
+                    <div>Check your order history. View it on graph or charts online. You can also download it.</div>
+                </div>
+            </div>
+
+    </div>
+
+</div>
+</div>
+{% include "rightsidebar.html" %}
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modalBorderClass">
+          <div class="modal-header">
+            <h5 class="modal-title modalTitleHead" id="exampleModalLongTitle"> </h5>
+               <span id="modalCloseBtn">
+
+              </span>
+          </div>
+          <div class="modal-body">
+              <div id="success_msg" class="success_msg"> </div>
+              <div id="error_msg" class="error_msg"> </div>
+                <form role="form" autocomplete="off">
+                    {% csrf_token %}
+                    <div id="modalBody">
+
+                    </div>
+                </form>
+          </div>
+          <div class="modal-footer" id="modalFooter">
+
+          </div>
+        </div>
+      </div>
+    </div>
+<script>
+  $(function() {
+
+        $('#slide-submenu').on('click',function() {
+            $(this).closest('.list-group').fadeOut('slide',function(){
+                $('.mini-submenu').fadeIn();
+            });
+        });
+
+        $('.mini-submenu').on('click',function(){
+            $(this).next('.list-group').toggle('slide');
+            $('.mini-submenu').hide();
+        });
+
+        $('.navTabClass').on('click', function() {
+                var id = $(this).attr('id');
+                $('.navTabClass').removeClass('navHeading');
+                $('.navTabClass > a.anchorlink').removeClass('activeNav');
+                $('#'+id+'').addClass('navHeading');
+                $('#'+id+ '> a').addClass('activeNav');
+        });
+        $('#submit').on('click', function() {
+                $('#success_msg').empty();
+                $('#error_msg').empty();
+                if ($('#domainName').val() != '') {
+                    var data = "csrfmiddlewaretoken="+$('input[name=csrfmiddlewaretoken]').val()+"&domainName="+$('#domainName').val();
+                    $.ajax({
+                      url: "/renameSchemaURL",
+                      type: "POST",
+                      dataType: "text",
+                      data: data,
+                      async:false,
+                      success: function (result)
+                      {
+                        var data = JSON.parse(result);
+                        if (data.status == 'success') {
+                            $('#success_msg').append(data.success_msg);
+                            $("#domainName").prop("disabled",true);
+                            $("#submit").prop("disabled",true);
+                            setTimeout(function() {
+                                $('#success_msg').empty();
+                                window.location.href = data.redirect_url;
+                            }, 3000);
+                        }
+                        else if (data.status == 'error' && data.error_msg != 'sessionexpired') {
+                            $('#error_msg').append(data.error_msg);
+                        }
+                        else if (data.status == 'error' && data.error_msg == 'sessionexpired') {
+                            $('#domainName').val('');
+                            $('#error_msg').append('Session expired.');
+                            $("#domainName").prop("disabled",true);
+                            $("#submit").prop("disabled",true);
+                            setTimeout(function() {
+                                window.location.href = data.redirect_url;
+                            }, 3000);
+                        }
+                      }
+                     });
+                }
+                else {
+                    $('#error_msg').append('Please enter domain name');
+                }
+            });
+
+  });
+  $(document).ready(function() {
+        if(('{{firstLogin}}') == "True"){alert("Your plan has suspended");}
+        });
+
+
+</script>
+{% endblock %}

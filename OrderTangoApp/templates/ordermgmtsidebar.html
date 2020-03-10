@@ -1,0 +1,81 @@
+{% load static %}
+<div class="col-md-2 sidebar" id="sideBar">
+            <div class="mini-submenu">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </div>
+            <div class="list-group">
+                <span href="#" class="list-group-item" id="viewAllCategory">
+                   <strong> View All Categories </strong>
+                    <span class="pull-right" id="slide-submenu">
+                        <i class="fa fa-times"></i>
+                    </span>
+                </span>
+                <a href="#" class="list-group-item" id="userAccessMenu">
+                    <img src="{% static 'images/UserIcon.png' %}" class="sideBarIcons2X"> My Account
+                </a>
+                <a href="{% url 'dashboard' %}" class="list-group-item">
+                    <img src="{% static 'images/Home.png' %}" class="sideBarIcons2X"> Home
+                </a>
+
+                <div class="list-group panel" id="onboardDropDown">
+                    <ul class="tree-container">
+                    <li class="tree-li diactive">
+                    <span class="text"><a href="#demo3" class="list-group-item list-group-itemnew list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Order Mgmt<i class="fa fa-caret-down"></i></a></span>
+                    <ul class="tree-ul tree-ulnew diactive">
+                    <li class="tree-li diactive">
+                    <span class="text onBoardSpan" id="customer_OnBoard"><a class="removeTextDecoration" href="{% url 'placeOrder' %}">Order</a></span>
+                    </li>
+                    <li class="tree-li diactive">
+                    <span class="text onBoardSpan" id="customer_ProductPanel"><a class="removeTextDecoration" href="{% url 'customerProductPanel' %}">Customer Product Panel</a></span>
+                    </li>
+                    <li class="tree-li diactive">
+                    <span class="text onBoardSpan" id="supplier_ProductPanel"><a class="removeTextDecoration" href="{% url 'supplierProductPanel' %}">Vendor Product Panel</a></span>
+                    </li>
+                    <li class="tree-li">
+                        <span class="text onBoardSpan" id="supplier_OnBoard"><a class="removeTextDecoration" href="{% url 'vieworders' %}">View Orders</a></span>
+                    </li>
+                    <li class="tree-li">
+                        <span class="text onBoardSpan" id="placedorders"><a class="removeTextDecoration" href="{% url 'placedorderdetails' %}">Placed Orders Details</a></span>
+                    </li>
+                    <li class="tree-li">
+                    <span class="text onBoardSpan" id="product_OnBoard">Reports</span>
+                    </li>
+
+                    </ul>
+                    </li>
+                    </ul>
+                    </div>
+                    <div class="list-group panel" id="onboardDropDown">
+                    <ul class="tree-container">
+                    <li class="tree-li diactive">
+                    <span class="text"><a href="#demo3" class="list-group-item list-group-itemnew list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Inventory Mgmt<i class="fa fa-caret-down"></i></a></span>
+                    <ul class="tree-ul tree-ulnew diactive">
+                    <li class="tree-li diactive">
+                    <span class="text onBoardSpan" id="customer_OnBoard">View Stocks</span>
+                    </li>
+                    <li class="tree-li">
+                    <span class="text onBoardSpan" id="supplier_OnBoard">Update Stocks</span>
+                    </li>
+                    <li class="tree-li">
+                    <span class="text onBoardSpan" id="product_OnBoard">Stock Counts</span>
+                    </li>
+                    <li class="tree-li">
+                    <span class="text onBoardSpan" id="product_OnBoard">Transfer Stocks</span>
+                    </li>
+                    <li class="tree-li">
+                    <span class="text onBoardSpan" id="product_OnBoard">Record Wastage</span>
+                    </li>
+                    </ul>
+                    </li>
+                    </ul>
+                    </div>
+                <a href="#" class="list-group-item">
+                    Good Receipts
+                </a>
+                <a href="#" class="list-group-item">
+                    Permission & Settings
+                </a>
+            </div>
+</div>

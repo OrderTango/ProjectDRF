@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/registration.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/landingpage.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/forgetpassword.css' %}"/>
+<div class="row" id="languageIconRow">
+    <div class="col text-center">
+        <ul class="nav justify-content-center" id="languageRowIcon">
+            <li class="active">
+                <img class="img-responsive languageIconClass" id="englishIcon"
+                    src="{% static 'images/landingpage/english.png' %}" alt="English"/>
+            </li>
+            <li>
+                <img class="img-responsive languageIconClass" id="hindiIcon"
+                     src="{% static 'images/landingpage/hindi.png' %}" alt="Hindi"/>
+            </li>
+            <li>
+                <img class="img-responsive languageIconClass" id="bahasaIcon"
+                     src="{% static 'images/landingpage/bahasa.png' %}" alt="Bahasa"/>
+            </li>
+            <li>
+                <img class="img-responsive languageIconClass" id="tamilIcon"
+                     src="{% static 'images/landingpage/tamil.png' %}" alt="Tamil"/>
+            </li>
+        </ul>
+    </div>
+</div>
+
+    <div class="row" id="guideRowLogin">
+        <div class="offset-1 col-11 offset-sm-1 col-sm-11 offset-md-4 col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading offset-1 col-10 offset-sm-3 col-sm-9 offset-md-3 col-md-6"> <img class="img-responsive" src="{% static 'images/register/Logo.png' %}" id="otloginlogo"/> </div><br/>
+             <form class="registrationform" role="form" action='/securitycheck/' method='POST' autocomplete="off">
+
+                 {% csrf_token %}
+                 <div class="row error justify-content-center defaultMarginTopTen">
+                     {% if messages %}{% for message in messages %} {{ message }} {% endfor %}{%endif%}
+                 </div>
+                 <div class="row justify-content-center defaultMarginTopTen">
+                     <b>{{question}}</b>
+            </div>
+            {% for field1 in form1 %}
+            <div class="form-group row justify-content-center defaultMarginTopTen">
+
+                {{ field1 }} {{ field1.errors }}
+            </div>
+            {% endfor %}
+                 <input name="emailId" maxlength="4" value="{{ email }}" id="emailId" type="hidden"/>
+                 <input name="wsid" maxlength="4" value="{{ wsid }}" id="wsid" type="hidden"/>
+                 <div class="row justify-content-center defaultMarginTopTen">
+
+                        <input type="submit" id="submitbutton" value=""><br/>
+
+                </div>
+
+             </form>
+        </div>
+        </div>
+    </div>
+
+
+
+<footer class="footer_login">
+
+</footer>
+<script>
+  $(function() {
+        $('ul#languageRowIcon li').on( 'click', function() {
+              $( this ).parent().find( 'li.active' ).removeClass( 'active' );
+              $( this ).addClass( 'active' );
+        });
+  });
+
+
+</script>
+{% endblock %}

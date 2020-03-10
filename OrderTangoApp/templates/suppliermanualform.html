@@ -1,0 +1,141 @@
+{% load static %}
+<style>
+    @media (min-width:320px) and (max-width: 480px)  {
+        #supplierDataDetailsForm {
+            padding: 5px !important;
+            margin-left: -12% !important;
+        }
+        .paddLabel{
+            padding-left: 5% !important;
+        }
+    }
+</style>
+<div id="supplierManual">
+    <div id="supplierManualTabDiv">
+        <div class="row bgColor paddingLeftRightTen" id="supplierManualTabId">
+            <div class="col-md-5 tabOptionDiv">
+                <span class="col-md-4 nonActive tabOption tabOptionActive borderLeftRadiusTab" id="tabOption0_S">
+                    <a href="#" class="customerManual uploadActive" id="basicData_Detail_Btn_S">Basic Data</a>
+                </span>
+                <span class="col-md-4 nonActive tabOption" id="tabOption1_S">
+                    <a href="#" class="customerManual" id="companyAddress_basicData_Detail_Btn_S">Company Address</a>
+                </span>
+                <span class="col-md-4 nonActive tabOption borderRightRadiusTab" id="tabOption2_S">
+                    <a href="#" class="customerManual" id="shippingAddress_companyAddress_Detail_Btn_S">Shipping Address</a>
+                </span>
+            </div>
+            <div class="col-md-7">
+                <img src="{% static 'images/register/watchvideo.png' %}" class="img-responsive pull-right watchVideo">
+            </div>
+        </div>
+    </div>
+    <div id="supplierManualFormContent">
+        <div class="col-md-12" id="supplierManualFormDiv">
+            <form class="post-form" id="supplierDataDetailsForm" role="form" autocomplete="off">
+                {% csrf_token %}
+                <div class="customerManualForm" id="basicDataDetail">
+                    <div class="form-group row customerDetailsForm ">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{supplierForm.supCompanyName.label_tag }}<span class="mandatory">*</span></label>
+                                {{ supplierForm.supCompanyName }}
+                    </div>
+
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{supplierForm.supContactNo.label_tag }}<span class="mandatory">*</span></label>
+                                {{ supplierForm.supCountryCode }}
+                                {{ supplierForm.supContactNo }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{supplierForm.supEmail.label_tag }}<span class="mandatory">*</span></label>
+                                {{ supplierForm.supEmail }}
+                    </div>
+                    <div class="offset-2 offset-sm-3 offset-md-3" id="supEmailError"></div>
+                     <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{supplierForm.supContactPerson.label_tag }}<span class="mandatory">*</span></label>
+                                {{ supplierForm.supContactPerson }}
+                    </div>
+                     <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{supplierForm.supSameEmail.label_tag }}</label>
+                                {{ supplierForm.supSameEmail }}
+                    </div>
+                     <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{supplierForm.supAlterNateEmail.label_tag }}<span class="mandatory">*</span></label>
+                                {{ supplierForm.supAlterNateEmail }}
+                    </div>
+                    <div class="offset-2 offset-sm-3 offset-md-3 paddLabel" id="supAlterNateEmailError"></div>
+                    <div class="form-group row customerDetailsForm paddLabel">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel paddLabel">{{supplierForm.supCommunicationEmail.label_tag }}<span class="mandatory">*</span></label>
+                                {{ supplierForm.supCommunicationEmail }}
+                    </div>
+                    <div class="offset-2 offset-sm-3 offset-md-3" id="supCommunicationEmailError"></div>
+                    <button type="button" class="cfNextBtn btn btn-primary" id="companyAddress_basicData_Detail_N_Btn_S">Next</button>
+                </div>
+                <div class="customerManualForm" id="companyAddressDetail">
+
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{supplierForm.supAddress_Line1.label_tag }}<span class="mandatory">*</span></label>
+                                {{ supplierForm.supAddress_Line1 }}
+                     <label class="col-5 col-md-1 col-form-label unitlabel" id="unitlabel1">Unit<span class="mandatory">*</span></label>
+                         {{ supplierForm.supUnit1 }}
+                        <p id="hyphen1">-</p>
+                        {{ supplierForm.supUnit2 }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{supplierForm.supAddress_Line2.label_tag }}<span class="mandatory">*</span></label>
+                                {{ supplierForm.supAddress_Line2 }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{supplierForm.supCountry.label_tag }}<span class="mandatory">*</span></label>
+                                {{ supplierForm.supCountry }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{supplierForm.supState.label_tag }}<span class="mandatory">*</span></label>
+                                {{ supplierForm.supState }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{supplierForm.supPostalCode.label_tag }}<span class="mandatory">*</span></label>
+                                {{ supplierForm.supPostalCode }}
+                    </div>
+                    <button type="button" class="cfBackBtn btn btn-primary" id="basicData_Detail_B_Btn_S"> Back </button>
+                    <button type="button" class="cfNextBtn btn btn-primary" id="shippingAddress_companyAddress_Detail_N_Btn_S">Next</button>
+                </div>
+                <div class="customerManualForm" id="shippingAddressDetail">
+
+                    <div class="form-group row customerDetailsForm paddLabel">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{supplierShippingForm.supSameAddress.label_tag }}</label>
+                                {{ supplierShippingForm.supSameAddress }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{supplierShippingForm.supShipCountry.label_tag }}<span class="mandatory">*</span></label>
+                                {{ supplierShippingForm.supShipCountry }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{supplierShippingForm.supShipAddress_Line1.label_tag }}<span class="mandatory">*</span></label>
+                                {{ supplierShippingForm.supShipAddress_Line1 }}
+                    <label class="col-5 col-md-1 col-form-label unitlabel" id="unitlabel">Unit<span class="mandatory">*</span></label>
+                     {{ supplierShippingForm.supShipUnit1 }}
+                    <p id="hyphen">-</p>
+                    {{ supplierShippingForm.supShipUnit2 }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{supplierShippingForm.supShipAddress_Line2.label_tag }}<span class="mandatory">*</span></label>
+                                {{ supplierShippingForm.supShipAddress_Line2 }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{supplierShippingForm.supShipState.label_tag }}<span class="mandatory">*</span></label>
+                                {{ supplierShippingForm.supShipState }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{supplierShippingForm.supShipPostalCode.label_tag }}<span class="mandatory">*</span></label>
+                                {{ supplierShippingForm.supShipPostalCode }}
+                    </div>
+                    <div class="form-group row customerDetailsForm">
+                     <label class="col-5 col-md-3 col-form-label customerDetailsFormLabel">{{supplierShippingForm.supEmailSent.label_tag }}</label>
+                                {{ supplierShippingForm.supEmailSent }}
+                    </div>
+                    <button type="button" class="cfBackBtn btn btn-primary" id="companyAddress_Detail_B_Btn_S">Back</button>
+                    <button type="button" class="btn btn-primary submitBtn" id="supplierDataSaveButton">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

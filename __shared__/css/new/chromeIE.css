@@ -1,0 +1,42 @@
+/* Chrome Browser All pages CSS START */
+    @media screen and (-webkit-min-device-pixel-ratio:0) {
+        #goDigitalImage, #twoToTango, #onBoardImage {
+          max-height: 100% !important;
+          width:100% !important;
+        }
+        #msgIcon {
+          max-height: 150px !important
+        }
+        #otp:focus {
+          outline: none !important
+        }
+    }
+/* Chrome Browser All pages CSS END */
+/* IE Browser All pages CSS START */
+    @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+        #navbarTogglerDemo02 {
+            display: block !important;
+            margin-left: 10% !important
+        }
+        #otp {
+          border: none;
+          width: 6.4ch;
+          background:
+            repeating-linear-gradient(90deg,
+                #624E9F 0,
+                #624E9F 1ch,
+                transparent 0,
+                transparent 1.6ch)
+              0 100%/100% 7px no-repeat;
+          color: #000000;
+          font-size: 4ch;
+          letter-spacing: .3ch;
+        }
+        #id_sec_answer,#id_userId,#id_email,#id_address_Line1,#id_firstName ,#id_lastName ,#id_password ,#id_companyName ,#id_address_Line1 ,#id_address_Line2 ,#id_unit, #id_postalCode ,#id_confirm_password,#id_contactNo, #id_unit1, #id_unit2 {
+            padding: 2px 10px 2px 10px !important
+        }
+        #id_countryCode {
+            padding: 2px 10px 2px 3px !important
+        }
+    }
+/* IE Browser All pages CSS END */

@@ -1,0 +1,314 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/new/validation.css' %}"/>
+<style>
+/* Hide Language Icon Start */
+.languageIcons {
+    display: none
+}
+
+/* Hide Language Icon End */
+
+#modalContainer {
+    background-color:rgba(0, 0, 0, 0.3);
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:100px;
+    left:0px;
+    z-index:10000;
+}
+
+#alertBox {
+    position:relative;
+    width:400px;
+    height:50px;
+    min-height:200px;
+    margin-top:100px;
+    border: 3px solid #984fa5;
+    border-radius: 8px;
+    background-color:#fff;
+    background-repeat:no-repeat;
+    background-position:20px 30px;
+}
+#modalContainer > #alertBox {
+    position:fixed;
+}
+
+#alertBox h1 {
+    margin:0;
+    font:bold 0.9em verdana,arial;
+    background-color:#984fa5;
+    color:#FFF;
+    border-bottom:1px solid #000;
+    padding:7px 0 2px 5px;
+}
+
+#alertBox p {
+font:1em verdana,arial;
+margin-top:50px;
+height:50px;
+padding-left:5px;
+text-align:center;
+}
+
+#alertBox #closeBtn {
+display:block;
+position:relative;
+margin:5px auto;
+margin-top:20px;
+padding:7px;
+border:2px solid #881999;
+width:70px;
+font:bold 0.8em verdana,arial;
+text-transform:uppercase;
+text-align:center;
+color:#881999;
+background-color:#ffd500;
+border-radius: 3px;
+text-decoration:none;
+}
+
+/* unrelated styles */
+
+#mContainer {
+position:relative;
+width:600px;
+margin:auto;
+padding:5px;
+border-top:2px solid #000;
+border-bottom:2px solid #000;
+font:0.7em verdana,arial;
+}
+
+h1,h2 {
+margin:0;
+padding:4px;
+font:bold 1.5em verdana;
+border-bottom:1px solid #000;
+}
+
+code {
+font-size:1.2em;
+color:#069;
+}
+
+#credits {
+position:relative;
+margin:25px auto 0px auto;
+width:350px;
+font:0.7em verdana;
+border-top:1px solid #000;
+border-bottom:1px solid #000;
+height:90px;
+padding-top:4px;
+}
+
+#credits img {
+float:left;
+margin:5px 10px 5px 0px;
+border:1px solid #000000;
+width:80px;
+height:79px;
+}
+
+.important {
+background-color:#F5FCC8;
+padding:2px;
+}
+
+code span {
+color:green;
+}
+
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6" id="logoLeft">
+             <div class="row">
+                <div class="col-md-6">
+                    <a class="navbar-brand" id="allStartFirstId" href="#"><img class="allstartatfirst"
+                                                                                    src="../static/images/register/allstartatfirst.png"></a> <br />
+                    <span id="guideIconDiv">
+                    <a href="#"><img class="registerlearnmore"
+                                                                src="../static/images/register/learnmore.png"></a>
+                        <a href="#" id="watchVideoReg"><img class="registerwatchvideo"
+                                                                src="../static/images/register/watchvideo.png"></a>
+                    </span>
+                </div>
+                <div class="col-md-6 languageIconRow languageIcons" id="languageIconDiv">
+                    <ul class="nav" id="languageIconLeft">
+                         <li class="active">
+                            <img class="img-responsive languageIconClass" id="englishIcon" src="../static/images/landingpage/english.png" alt="English" />
+                          </li>
+                          <li>
+                            <img class="img-responsive languageIconClass" id="hindiIcon" src="../static/images/landingpage/hindi.png" alt="Hindi" />
+                          </li>
+                    </ul>
+                </div>
+             </div>
+        </div>
+        <div class="col-md-6 languageIconRow" id="logoRight">
+            <div class="col-12 col-md-6">
+
+            </div>
+             <div class="col-12 col-sm-12 col-md-6 languageIcons">
+                 <ul class="nav" id="languageIconRight">
+                     <li>
+                        <img class="img-responsive languageIconClass" id="bahasaIcon" src="../static/images/landingpage/bahasa.png" alt="English" />
+                      </li>
+                      <li>
+                        <img class="img-responsive languageIconClass" id="tamilIcon" src="../static/images/landingpage/tamil.png" alt="Hindi" />
+                      </li>
+                 </ul>
+             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="bodyleft" class="col-md-6">
+            <hr size="20" class="registerhorizontalline">
+            <div class="row justify-content-center">
+                <img class="img-responsive" id="msgIcon" src="../static/images/register/msgicon.png" />
+            </div>
+             <form class="otpform" role="form" action='/validateotp/' method='POST' autocomplete="off">
+                   {% csrf_token %}
+            <div class="row justify-content-center">
+                <p id="emailSent"><b> Email Sent to </b> </p> <p id="emailIdIcon"> <b> {{ email }} </b> </p>
+                <input name="emailId" value="{{ email }}" id="emailId" type="hidden"/>
+            </div>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10" id="mailNotifiContent">
+                   <b>
+                       Please check your email to click the link  to validate your account. Alternatively, you can enter the code provided in the email to the below box.
+                   </b>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <div class="row" id="enterCodeContent">
+                 <div class="col-md-1"></div>
+                 <div class="col-md-8" id="enterCode"><b> Enter Code </b></div>
+                 <div class="col-md-3"></div>
+            </div>
+             <div class="row" id="otpDiv">
+                 <div class="offset-3 offset-sm-4 offset-md-4 col-md-3"> <input type="text" class="number" name="otp" maxlength="4" autofocus="true" id="otp" /></div>
+                 <div class="col-md-3 defaultMarginTopNew"><a class="" href="#" id="resendOTP"> <img class="roundImage" src="{% static 'images/Round.png' %}" /> Resend OTP </a></div>
+                 <div class="col-md-2 defaultMarginTopFourty">  <input type="submit" id="validateBtn" value=""> </div>
+             </div>
+           </form>
+            <div class="row error justify-content-center">
+            {% if messages %}{% for message in messages %} {{ message }} {% endfor %}{%endif%}
+            </div>
+        </div>
+        <div id="bodyright" class="col-md-6">
+            <div class="row">
+                <img class="col-12 offset-md-1 col-md-10 img-responsive" id="twoToTango" style="height:100%" src="../static/images/register/twototangonew.png">
+
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+        <div class="col-md-6" id="footerRight">
+             <div class="valfooter-right">
+                <img class="bottomImage img-responsive" src="../static/images/register/newfootimg.png">
+            </div>
+        </div>
+
+    </div>
+</div>
+<script  type="text/javascript">
+$body = $("body");
+  $(function() {
+        $('ul#languageIconLeft li').on( 'click', function() {
+              $( this ).parent().find( 'li.active' ).removeClass( 'active' );
+              $('ul#languageIconRight li').removeClass( 'active' );
+              $( this ).addClass( 'active' );
+        });
+        $('ul#languageIconRight li').on( 'click', function() {
+              $( this ).parent().find( 'li.active' ).removeClass( 'active' );
+              $('ul#languageIconLeft li').removeClass( 'active' );
+              $( this ).addClass( 'active' );
+        });
+  });
+  $(document).on('click', '#resendOTP', function() {
+  $body.addClass("loading");
+  $.ajax({
+      url: "/resendotp",
+      type: "POST",
+      dataType : "json",
+      contentType : "application/json",
+      success: function (result)
+      {
+        if (result.status == 'success') {
+        $body.removeClass("loading");
+            alert(result.success_msg);
+        }
+        else if(result.status == 'error' && result.error_msg == 'sessionexpired'){
+            alert('Session has expired.');
+                setTimeout(function() {
+                    window.location.href = data.redirect_url;
+                }, 2000);
+        }
+        else{
+            $body.removeClass("loading");
+            alert(result.error_msg);
+            setTimeout(function() {
+                    window.location.href = '/login';
+                }, 2000);
+
+        }
+      }
+      });
+  });
+
+  var ALERT_TITLE = "OrderTango";
+var ALERT_BUTTON_TEXT = "Ok";
+
+if(document.getElementById) {
+window.alert = function(txt) {
+createCustomAlert(txt);
+}
+}
+
+function createCustomAlert(txt) {
+d = document;
+
+if(d.getElementById("modalContainer")) return;
+
+mObj = d.getElementsByTagName("body")[0].appendChild(d.createElement("div"));
+mObj.id = "modalContainer";
+mObj.style.height = d.documentElement.scrollHeight + "px";
+
+alertObj = mObj.appendChild(d.createElement("div"));
+alertObj.id = "alertBox";
+if(d.all && !window.opera) alertObj.style.top = document.documentElement.scrollTop + "px";
+alertObj.style.left = (d.documentElement.scrollWidth - alertObj.offsetWidth)/2 + "px";
+alertObj.style.visiblity="visible";
+
+h1 = alertObj.appendChild(d.createElement("h1"));
+h1.appendChild(d.createTextNode(ALERT_TITLE));
+
+msg = alertObj.appendChild(d.createElement("p"));
+//msg.appendChild(d.createTextNode(txt));
+msg.innerHTML = txt;
+
+btn = alertObj.appendChild(d.createElement("a"));
+btn.id = "closeBtn";
+btn.appendChild(d.createTextNode(ALERT_BUTTON_TEXT));
+btn.href = "#";
+btn.focus();
+btn.onclick = function() { removeCustomAlert();return false; }
+
+alertObj.style.display = "block";
+
+}
+
+function removeCustomAlert() {
+document.getElementsByTagName("body")[0].removeChild(document.getElementById("modalContainer"));
+}
+</script>
+{% endblock %}
