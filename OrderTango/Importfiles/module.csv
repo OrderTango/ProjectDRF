@@ -1,4 +1,0 @@
-moduleCode,moduleName,moduleDesc,planId,modulePrice,modulePriceUnit_id
-module1,Order Management,Order Management,"1,2,3,4",1,1
-module2,Order Fulfilment,Order Fulfilment,"2,3,4",1,1
-module3,Inventory,Inventory,"3,4",1,1
