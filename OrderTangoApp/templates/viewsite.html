@@ -1,0 +1,1488 @@
+{% extends 'administrationpanelbase.html' %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/viewall.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/manualUploadForm.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'datatables/css/datatables.min.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'datatables/css/responsive.bootstrap4.min.css' %}"/>
+
+<script type="text/javascript" src="{% static 'datatables/js/datatables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'datatables/js/dataTables.responsive.min.js' %}"></script>
+<script src ="{% static 'js/jquery-ui.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+<style>
+    .sampleModalPopup {
+        max-width: 35%
+    }
+    #customerFileUpload {
+        display: none;
+    }
+    .editSite, .deleteSite, .pushSite  {
+        border: 0px;
+        font-size:14px;
+        border-radius: 5px;
+        color: #ffffff;
+        background-color: #984fa5;
+        padding:5px;
+        cursor: pointer;
+        margin-right: 5px
+    }
+    .userButtonClass, .userButtonClass:hover {
+        border: 0px;
+        font-size: 13px;
+        border-radius: 5px;
+        color: #ffffff;
+        background-color: #984fa5;
+        padding: 5px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    .odd{
+        background-color: #fff;
+    }
+    .even{
+        background-color: #f9f3fa;
+    }
+    .priceTextBox{
+        width: 80px !important;
+        border: 1px solid #c9a6c0;
+        border-radius: 8px !important;
+        text-align: center;
+    }
+    .editProductSubmitBtn, .editProductSubmitBtn:hover, .profileUpdateButtonClass, .profileUpdateButtonClass:hover, .userButtonClass, .userButtonClass:hover {
+        border: 0px;
+        font-size:14px;
+        border-radius: 5px;
+        color: #ffffff;
+        background-color: #984fa5;
+        padding:5px;
+        cursor: pointer;
+        margin-right: 5px
+    }
+    .userButtonClass, .userButtonClass:hover {
+        border: 0px;
+        font-size:14px;
+        border-radius: 5px;
+        color: #ffffff;
+        background-color: #984fa5;
+        padding:5px;
+        cursor: pointer;
+        margin-right: 5px
+    }
+    .inviteBtn,.activeBtn,.requestBtn{
+        width: 38.1% !important;
+    }
+    .mandatory {
+        color: red
+    }
+    #submitProductBtn {
+        margin-top: 10px;
+        margin-bottom: -5px
+    }
+
+    #id_siteName,#id_siteType,#id_siteArea,#id_siteAddress,#siteArea,#siteType,#siteName,#siteAddress,#editcountry,#editstate,#editaddress_Line1,#editaddress_Line2,#editpostalCode{
+        height: 30px;
+        width: 250px !important;
+        border: 1px solid #bb99c0;
+        border-radius: 8px;
+        padding: 4px !important;
+    }
+    #editunit1, #editunit2 {
+        height: 30px;
+        width: 70px !important;
+        border: 1px solid #bb99c0;
+        border-radius: 8px;
+        padding: 4px !important;
+        margin-right: 5px;
+    }
+    #id_siteDesc,#siteDesc{
+        width: 250px !important;
+        border: 1px solid #bb99c0;
+        border-radius: 8px;
+        padding: 4px !important;
+    }
+    .siteAddressArea{
+        width: 250px !important;
+        height: 120px;
+        border: 1px solid #bb99c0;
+        border-radius: 8px;
+        padding: 4px !important;
+        margin-left: 240px;
+        margin-bottom: 15px;
+    }
+    .editSiteAddressArea{
+        width: 250px !important;
+        height: 120px;
+        border: 1px solid #bb99c0;
+        border-radius: 8px;
+        padding: 4px !important;
+        margin-bottom: 15px;
+    }
+    #editSiteFormSubmit, #editSiteFormSubmit:hover {
+        border: 0px;
+        font-size: 13px;
+        border-radius: 5px;
+        color: #ffffff;
+        background-color: #984fa5;
+        padding: 5px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    #createSiteFormSubmit, #createSiteFormSubmit:hover{
+      border: 0px;
+      background: #ffd500;
+      color: #881999;
+      font-weight: bold;
+      border: 2px solid #881999;
+      border-radius: .25rem;
+      cursor: pointer;
+    }
+    .modal-body{
+        max-height:500px !important;
+        overflow-y: scroll
+    }
+    .headingColor {
+        color: #881999;
+        margin-left: 13px
+    }
+    .marginLeftFifteen {
+        margin-left: 15px
+    }
+    #viewSiteDiv, #createSiteDiv {
+        background-color: #f9f3fa;
+        padding-top: 10px;
+        padding-bottom: 10px
+    }
+    #bodyContent {
+        padding-right: 0%
+    }
+    #selectSupplier{
+        overflow-y: scroll;
+        height: 100px;
+        border: 1px solid #881999;
+        border-radius: 5px;
+    }
+@media (min-width:600px) and (max-width: 801px)  {
+
+    #viewSiteDataTable{
+        width: 176% !important;
+    }
+    .siteWidth{
+        margin-left: 50% !important;
+    }
+    .viewSiteWid{
+         margin-left: -283% !important;
+    }
+    #createSite{
+        margin-left: 4% !important;
+    }
+    #id_siteName, #id_siteType, #id_siteArea{
+        width: 193px !important;
+    }
+    .siteBtn{
+        margin-left: 50% !important;
+    }
+    #id_unit1{
+        margin-left: 0% !important;
+    }
+    #id_unit1, #id_unit2{
+        width: 90px !important;
+    }
+    #id_siteDesc{
+        width: 193px !important;
+    }
+    #createSiteFormSubmit{
+        margin-left: 158% !important;
+    }
+    #unitlabel {
+        margin-left: 16px !important;
+    }
+}
+@media (min-width:320px) and (max-width: 480px)  {
+    .buttarea {
+        margin: 2px !important;
+    }
+    .tableWid{
+        width: 135% !important;
+    }
+    .headColr{
+        margin-left: 19px !important;
+    }
+    #viewDataTable_paginate {
+        margin-left: 48% !important;
+    }
+    div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+       justify-content: center !important;
+       padding-left: 100px !important;
+    }
+    #viewSiteDataTable_paginate:before {
+        font-size: 13px !important;
+        margin-left: 43% !important;
+    }
+    #id_siteName, #id_siteType, #id_siteArea, #id_siteAddress, #siteArea, #siteType, #siteName, #siteAddress, #editcountry, #editstate, #editaddress_Line1, #editaddress_Line2, #editpostalCode {
+        height: 29px;
+        width: 133px !important;
+        border: 1px solid #bb99c0;
+        border-radius: 8px;
+        padding: 4px !important;
+        margin-left: -1%;
+    }
+    .paddingLeftZero {
+        padding-left: 4px !important;
+    }
+    id_type, #id_storeName, #id_site, #id_firstName, #id_lastName, #id_contactNo, #id_email, #id_sec_question, #id_sec_answer, #id_companyName, #id_address_Line1, #id_address_Line2, #id_country, #id_state, #id_postalCode, #id_usradd_country, #id_usradd_address_Line1{
+        height: 30px !important;
+        width: 133px !important;
+        border: 1px solid #bb99c0 !important;
+        border-radius: 8px !important;
+        padding: 4px !important;
+        margin-left: -1%;
+    }
+    #unitlabel {
+        margin-left: 56px !important;
+    }
+    #id_unit1, #id_unit2, #id_usradd_unit1, #id_usradd_unit2, #id_cusCountryCode, #id_cusUnit1, #id_cusUnit2, #id_cusShipUnit1, #id_cusShipUnit2, #id_supCountryCode, #id_supUnit1, #id_supUnit2, #id_supShipUnit1, #id_supShipUnit2 {
+        height: 30px;
+        width: 65px !important;
+        border: 1px solid #bb99c0;
+        border-radius: 8px;
+        padding: 4px !important;
+        margin-right: 7px;
+    }
+    #id_siteDesc, #siteDesc {
+        width: 131px !important;
+        border: 1px solid #bb99c0;
+        border-radius: 8px;
+        padding: 4px !important;
+    }
+    #createSiteFormSubmit, #createSiteFormSubmit:hover {
+        margin-left: 52% !important;
+    }
+    .marginLeftFifteen {
+        margin-left: 56px !important;
+    }
+}
+</style>
+<div class="row headColor">
+  <div class="col-md-2 col-sm-4 col-24" id="sideBarLeft">
+        {% include "administrationpanelsidebar.html" %}
+  </div>
+  <div class="col-md-10 paddingLeftZero" id="bodyContent">
+        <div class="row" id="viewSiteDiv">
+            <div class="col-md-6 col-sm-3 col-6 siteWidth">
+                <h4 class="headColr headingColor viewSiteWid"> View Site </h4>
+            </div>
+             <div class="col-md-6 col-sm-3 col-6">
+                <div class="pull-right">
+                     <button class="buttarea userButtonClass" id="createSite">
+                        <img class="roundImage" src="/static/images/Round.png" /> Create Site
+                     </button>
+                     <span class="input-group" id="searchOptionInputGroup">
+                                    <input type="text" id="searchOption"  maxlength="60">
+                                    <div class="input-group-append">
+                                      <span id="spanSearchIcon">
+                                        <i class="fa fa-search"></i>
+                                      </span>
+                                    </div>
+                     </span>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-8 col-10">
+                <table class="tableWid table hover dt-responsive viewDataTable" id="viewSiteDataTable" width="100%" style="font-size:85%">
+                     <thead>
+
+                     </thead>
+                 </table>
+            </div>
+        </div>
+        <div class="row" id="createSiteDiv">
+            <div class="col-md-6 col-sm-3 col-6">
+                <h4 class="headingColor"> Create Site </h4>
+            </div>
+             <div class="col-md-6 col-sm-3 col-6 siteBtn">
+                <button class="userButtonClass pull-right" id="viewSite">
+                     View Site
+                </button>
+            </div>
+                 <div class="col-md-12" id="createSiteFormDiv">
+                   <form class="post-form" id="createSiteForm" role="form" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="customerManualForm" id="userAddDetail">
+                        <div class="form-group row customerDetailsForm">
+                         <label class="col-5 col-md-3 col-form-label marginLeftFifteen customerDetailsFormLabel">{{AddSiteForm.siteType.label_tag }}<span class="mandatory">*</span></label>
+                                    {{ AddSiteForm.siteType }}
+                        </div>
+                        <div class="form-group row customerDetailsForm">
+                         <label class="col-5 col-md-3 col-form-label marginLeftFifteen customerDetailsFormLabel">{{AddSiteForm.siteArea.label_tag }}<span class="mandatory">*</span></label>
+                                    {{ AddSiteForm.siteArea }}
+                        </div>
+                        <div class="form-group row customerDetailsForm">
+                         <label class="col-5 col-md-3 col-form-label marginLeftFifteen customerDetailsFormLabel">{{AddSiteForm.siteName.label_tag }}<span class="mandatory">*</span></label>
+                                    {{ AddSiteForm.siteName }}
+                        </div>
+                  <div class="form-group row customerDetailsForm">
+                    <label class="col-5 col-md-3 col-form-label marginLeftFifteen customerDetailsFormLabel">{{AddSiteForm.country.label_tag }}<span class="mandatory">*</span></label>
+                    {{ AddSiteForm.country }}
+                  </div>
+                  <div class="form-group row customerDetailsForm">
+                    <label class="col-5 col-md-3 col-form-label marginLeftFifteen customerDetailsFormLabel">{{AddSiteForm.address_Line1.label_tag }}<span class="mandatory">*</span></label>
+                    {{ AddSiteForm.address_Line1 }}
+                    <label class="col-5 col-md-1 col-form-label unitlabel" id="unitlabel">Unit<span class="mandatory">*</span></label>
+                     {{ AddSiteForm.unit1 }}
+                    <p id="hyphen">-</p>
+                    {{ AddSiteForm.unit2 }}
+                  </div>
+                  <div class="form-group row customerDetailsForm" id="addressTwoDiv">
+                    <label class="col-5 col-md-3 col-form-label marginLeftFifteen customerDetailsFormLabel">{{AddSiteForm.address_Line2.label_tag }}<span class="mandatory">*</span></label>
+                    {{ AddSiteForm.address_Line2 }}
+                  </div>
+                  <div class="form-group row customerDetailsForm">
+                    <label class="col-5 col-md-3 col-form-label marginLeftFifteen customerDetailsFormLabel">{{AddSiteForm.state.label_tag }}<span class="mandatory">*</span></label>
+                    {{ AddSiteForm.state }}
+                  </div>
+                  <div class="form-group row customerDetailsForm">
+                    <label class="col-5 col-md-3 col-form-label marginLeftFifteen customerDetailsFormLabel">{{AddSiteForm.postalCode.label_tag }}<span class="mandatory">*</span></label>
+                    {{ AddSiteForm.postalCode }}
+
+                  </div>
+
+
+
+                        <div class="row customerDetailsForm">
+                         <label class="col-5 col-md-3 col-form-label marginLeftFifteen customerDetailsFormLabel">{{AddSiteForm.siteDesc.label_tag }}</label>
+                                    {{ AddSiteForm.siteDesc }}
+                        </div>
+
+
+
+
+                     </div>
+                    </form>
+                     <div class="offset-md-3 col-md-4 col-sm-4 col-12 ">
+                       <a href="#" id="hitBtn"><input type="button" id="createSiteFormSubmit" class="btn btn-primary" value="Submit"> </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+	</div>
+{% include "rightsidebar.html" %}
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modalBorderClass">
+          <div class="modal-header">
+            <h5 class="modal-title modalTitleHead" id="exampleModalLongTitle">Change Domain Name</h5>
+               <span id="modalCloseBtn">
+
+              </span>
+          </div>
+           <div class="modal-body">
+              <div id="success_msg" class="success_msg"> </div>
+              <div id="error_msg" class="error_msg"> </div>
+                <form role="form" autocomplete="off">
+                    {% csrf_token %}
+                    <div id="modalBody">
+
+                    </div>
+                </form>
+          </div>
+          <div class="modal-footer " id="modalFooter">
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="sampleModalPopup" tabindex="-1" role="dialog" aria-labelledby="sampleModalPopupTitle" data-toggle="modal" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered sampleModalPopup" role="document">
+        <div class="modal-content modalBorderClass">
+          <div class="modal-header">
+            <h5 class="modal-title modalTitleHead" id="exampleModalTitle"></h5>
+            <button type="button" class="close" id="popupCloseBtn" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="samplePopupBodyContent">
+
+          </div>
+          <div class="modal-footer">
+                <input type="button" id="submit" class="btn btn-primary modalBtnClass" data-dismiss="modal" aria-label="Close" value="Close">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="testsample"><!-- Place at bottom of page --></div>
+
+<div id="imageModel" class="modal" data-backdrop="static" data-keyboard="false" role="dialog" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+          <h4>Image upload</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+      </div>
+      <div class="modal-body">
+
+         <form id="updateLogo"  method="post" enctype="multipart/form-data" autocomplete="off">
+             {% csrf_token %}
+
+         <input type="file" name="fileuploaddata" value="fileupload" id="fileuploaddata">
+             <p style="font-size:13px;">allowed only Jpg,png formats below 5MB</p>
+         <input type="text" name="" value="" id="idContainer">
+
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" id="uploadImageSubmit" data-dismiss="modal">Submit</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal" id="viewProfileModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog viewProfileModal" style="max-width: 60%;">
+    <div class="modal-content" style="background-color: #f7f3fa;">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title" id="viewProfileModalTitle"> Profile </h4>
+        <button type="button" class="close viewProfileModalClose" data-dismiss="modal" aria-hidden="true">x</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body" id="profileModalBody">
+        <div class="row" >
+            <div class="col-md-12 col-sm-3 col-6 " >
+                <div class="col-md-12" id="viewProfileModalFormDiv">
+                    <form class="registrationform" id="updateProfileForm" role="form" method='POST' autocomplete="off">
+
+                        {% csrf_token %}
+                        <div id="formsec1">
+                          <div class="form-group row registrationformdiv">
+                              <label class="col-5 col-md-3 col-form-label registrationformlabel">{{profileForm.firstName.label_tag }}<span class="mandatory">*</span></label>
+                            {{ profileForm.firstName }}
+                          </div>
+                          <div class="offset-3 offset-sm-4 offset-md-3" id="firstNameError">{{ profileForm.firstName.errors }}</div>
+                          <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{profileForm.lastName.label_tag }}<span class="mandatory">*</span></label>
+                             {{ profileForm.lastName }}
+                          </div>
+                          <div class="offset-3 offset-sm-4 offset-md-3" id="lastNameError">{{ profileForm.lastName.errors }} </div>
+                       <div class="form-group row registrationformdiv hide">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{profileForm.contactNo.label_tag }}<span class="mandatory">*</span></label>
+                             {{profileForm.countryCode}}{{ profileForm.contactNo }}
+                          </div>
+                          <div class="offset-3 offset-sm-4 offset-md-3 hide" id="contactNoError">{{ profileForm.contactNo.errors }} </div>
+                        <div class="form-group row registrationformdiv hide">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{profileForm.email.label_tag }}<span class="mandatory">*</span></label>
+                             {{ profileForm.email }}
+                          </div>
+                          <div class="offset-3 offset-sm-4 offset-md-3 hide" id="emailError">{{ profileForm.email.errors }} </div>
+
+                        </div>
+                        <div id="formsec2">
+                            <div class="form-group row registrationformdiv hide">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.companyName.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.companyName }}
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="companyNameError"> {{ companyProfileForm.companyName.errors }} </div>
+
+                          <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.country.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.country }}
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="countryError"> {{ companyProfileForm.country.errors }} </div>
+                          <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.address_Line1.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.address_Line1 }}
+                            <label class="col-5 col-md-1 col-form-label unitlabel" id="unitlabel">Unit<span class="mandatory">*</span></label>
+                             {{ companyProfileForm.unit1 }}
+                            <p id="hyphen">-</p>
+                            {{ companyProfileForm.unit2 }}
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="address1Error"> {{ companyProfileForm.address_Line1.errors }} </div>
+                          <div class="form-group row registrationformdiv" id="addressTwoDiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.address_Line2.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.address_Line2 }}
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="address2Error"> {{ companyProfileForm.address_Line2.errors }} </div>
+                          <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.state.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.state }}
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="stateError"> {{ companyProfileForm.state.errors }} </div>
+                          <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.postalCode.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.postalCode }}
+
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="postalCodeError"> {{ companyProfileForm.postalCode.errors }} </div>
+                            <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{profileForm.sec_question.label_tag }}<span class="mandatory">*</span></label>
+                            {{ profileForm.sec_question }}
+
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="secQuestionError"> {{ profileForm.sec_question.errors }} </div>
+                            <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{profileForm.sec_answer.label_tag }}<span class="mandatory">*</span></label>
+                            {{ profileForm.sec_answer }}
+                            <div class="col-12 offset-sm-4 col-md-6" id="submitBtnDiv">  <input type="button" class="profileUpdateButtonClass" id="profileUpdateButton" value="Update"> </div>
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="secAnswerError"> {{ profileForm.sec_answer.errors }} </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn editProductModalClose" id="editProductModalClose" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+ <div class="modal" id="loader"><!-- Place at bottom of page --></div>
+
+ <!-- The Modal -->
+<div class="modal" id="editSiteModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog editSiteModaldia" style="max-width: 800px;">
+<div class="modal-content" style="background-color: #f7f3fa;">
+
+<!-- Modal Header -->
+<div class="modal-header">
+<h4 class="modal-title" id="editSiteModalTitle"> Edit Site Details</h4>
+<button type="button" class="close editSiteModalClose" data-dismiss="modal" aria-hidden="true">x</button>
+</div>
+
+<!-- Modal body -->
+<div class="modal-body">
+    <div class="row" >
+    <div class="col-md-12 col-sm-3 col-6 " >
+    <div class="col-md-12" id="editSiteFormDiv">
+    <form class="post-form" id="editSiteForm" role="form" autocomplete="off">
+    {% csrf_token %}
+    <div class="customerManualForm">
+    <div class="form-group row customerDetailsForm">
+    <input type="text" id="siteId">
+    </div>
+    <div class="form-group row customerDetailsForm">
+    <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{EditSiteForm.siteType.label_tag }}<span class="mandatory">*</span></label>
+    {{ EditSiteForm.siteType }}
+    </div>
+    <div class="form-group row customerDetailsForm">
+    <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{EditSiteForm.siteArea.label_tag }}<span class="mandatory">*</span></label>
+    {{ EditSiteForm.siteArea }}
+    </div>
+    <div class="form-group row customerDetailsForm">
+    <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{EditSiteForm.siteName.label_tag }}<span class="mandatory">*</span></label>
+    {{ EditSiteForm.siteName }}
+    </div>
+
+      <div class="form-group row customerDetailsForm">
+        <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{EditSiteForm.country.label_tag }}<span class="mandatory">*</span></label>
+        {{ EditSiteForm.country }}
+      </div>
+      <div class="form-group row customerDetailsForm">
+        <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{EditSiteForm.address_Line1.label_tag }}<span class="mandatory">*</span></label>
+        {{ EditSiteForm.address_Line1 }}
+        <label class="col-5 col-md-1 col-form-label unitlabel" id="unitlabel">Unit<span class="mandatory">*</span></label>
+         {{ EditSiteForm.unit1 }}
+        <p id="hyphen">-</p>
+        {{ EditSiteForm.unit2 }}
+      </div>
+      <div class="form-group row customerDetailsForm" id="addressTwoDiv">
+        <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{EditSiteForm.address_Line2.label_tag }}<span class="mandatory">*</span></label>
+        {{ EditSiteForm.address_Line2 }}
+      </div>
+      <div class="form-group row customerDetailsForm">
+        <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{EditSiteForm.state.label_tag }}<span class="mandatory">*</span></label>
+        {{ EditSiteForm.state }}
+      </div>
+      <div class="form-group row customerDetailsForm">
+        <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{EditSiteForm.postalCode.label_tag }}<span class="mandatory">*</span></label>
+        {{ EditSiteForm.postalCode }}
+
+      </div>
+
+    <div class="row customerDetailsForm">
+    <label class="col-5 col-md-4 col-form-label customerDetailsFormLabel">{{EditSiteForm.siteDesc.label_tag }}</label>
+    {{ EditSiteForm.siteDesc }}
+    </div>
+
+
+
+    </div>
+    </form>
+    <div class="offset-md-5 col-md-4 col-sm-4 col-12">
+    <input type="button" id="editSiteFormSubmit" class="btn btn-primary" value="Submit">
+    </div>
+
+    </div>
+    </div>
+    </div>
+    </div>
+
+    <!-- Modal footer -->
+    <div class="modal-footer">
+    <button type="button" class="btn editSiteModalClose" id="editSiteModalClose" data-dismiss="modal">Close</button>
+    </div>
+
+    </div>
+    </div>
+</div>
+
+<div class="modal" id="confirmModalPopup" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="sampleModalPopupTitle" data-toggle="modal" data-backdrop="static" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered confirmModalPopup" role="document">
+        <div class="modal-content modalBorderClass">
+          <div class="modal-header">
+            <h5 class="modal-title modalTitleHead" id="confirmModalPopupTitle"></h5>
+            <button type="button" class="close" id="confirmModalPopupCloseBtn" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+            <input type="hidden" id="deleteSiteId" value="">
+          <div class="modal-body" id="confirmModalPopupBodyContent">
+
+
+          </div>
+          <div class="modal-footer" style="text-align:center">
+              <div class="col-md-12">
+                   <input type="button" id="confirmModalPopupSubmit" class="btn btn-primary modalBtnClass" data-dismiss="modal" aria-label="Close" value="Confirm">
+                <input type="button" id="confirmModalPopupClose" class="btn btn-primary modalBtnClass" data-dismiss="modal" aria-label="Close" value="Cancel">
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<div class="modal fade" id="pushSiteModalPopup" tabindex="-1" role="dialog" aria-labelledby="sampleModalPopupTitle" data-toggle="modal" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered pushSiteModalPopup" role="document">
+        <div class="modal-content modalBorderClass ">
+            <div class="modal-header">
+                <h5 class="modal-title modalTitleHead" id="pushSiteModalPopupTitle"> Push Site To Vendors </h5>
+                <button type="button" class="close pushSiteModalPopupCloseBtn" id="supplierProductModalPopupCloseBtn" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">x</span>
+                </button>
+            </div>
+            <div class="modal-body" id="pushSiteModalPopupBodyContent">
+                <div class="row">
+                    <input type="text" id="dynamicSiteId" value="">
+                     <div class="col-md-4"><label>Select Vendor:</label></div>
+                   <div class="col-md-6" id="selectSupplier" style="">
+                   </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="button" id="pushSiteSubmit" class="btn btn-primary modalBtnClass pushSiteModalPopupCloseBtn"  value="Submit">
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script>
+
+    function load_states(country_id){
+    if(country_id == ''){
+    $("#id_state").empty().append('<option value="">Select</option>');
+    }
+    else{
+    $.ajax({
+    url: "/load-states",
+    data: {
+    "country_id": country_id
+    },
+    success: function (data) {
+    var states = JSON.parse(data.states);
+    var stateAppendValues = "<option value=''>Select</option>";
+    $.each(states, function (key, val) {
+    stateAppendValues = stateAppendValues + "<option value="+val.pk+">"+val.fields.stateName+"</option>";
+    });
+    $("#id_state").empty().append(stateAppendValues);
+    }
+    });
+    }
+    }
+
+   function load_edit_states(country_id){
+    if(country_id == ''){
+    $("#editstate").empty().append('<option value="">Select</option>');
+    }
+    else{
+    $.ajax({
+    url: "/load-states",
+    data: {
+    "country_id": country_id
+    },
+    success: function (data) {
+    var states = JSON.parse(data.states);
+    var stateAppendValues = "<option value=''>Select</option>";
+    $.each(states, function (key, val) {
+    stateAppendValues = stateAppendValues + "<option value="+val.pk+">"+val.fields.stateName+"</option>";
+    });
+    $("#editstate").empty().append(stateAppendValues);
+    }
+    });
+    }
+    }
+
+            /* Fetch SubReqAccData in global while click edit button */
+            var subReqAccData;
+
+            $body = $("body");
+            $('#iconsec').on('click',function() {
+                 $('#fileuploaddata').val(null);
+                 $('#imageModel').show();
+                 $('#imageModel').modal('toggle');
+            });
+
+            $('.editSiteModalClose').on('click',function() {
+                $('#editSiteForm')[0].reset();
+            });
+
+            /* Hide the Onboard DropdownMenu in Sidebar Start */
+            $('#onboardDropDown').hide();
+            /* Hide the Onboard DropdownMenu in Sidebar End */
+
+            $('#createSiteDiv').hide();
+
+            var date = new Date();
+            $("#id_DOJ").datepicker({
+                changeYear: true,
+                dateFormat: "dd/mm/yy",
+                defaultDate: 'Select',
+                onSelect: function () {
+                    selectedDate = $.datepicker.formatDate("dd/mm/yyyy", $(this).datepicker('getDate'));
+                }
+            });
+
+            $("#id_DOJ").datepicker("setDate", 'Select');
+
+            $.ajax({
+              url: "/getAllSites",
+              type: "GET",
+              dataType : "json",
+              contentType : "application/json",
+              success: function (result)
+              {
+                var data = result;
+                if (data.status == 'success') {
+                    siteData = data.totalItems[0].site;
+
+                    pullSiteTable(siteData);
+                }
+                else if(data.status == 'error' && data.error_msg == 'sessionexpired'){
+                    alert('Session has expired.');
+                    setTimeout(function() {
+                        window.location.href = data.redirect_url;
+                    }, 2000);
+                }
+                else{
+                    alert(data.error_msg);
+                }
+              }
+            });
+
+            viewSiteDataTable = $('#viewSiteDataTable').DataTable({"bFilter": false,
+                "lengthChange": false,
+                    "targets": 'no-sort',
+                    "bSort": false,
+                    "info": false,
+                    "searching": true,
+                    "order": [],
+                    "pagingType": "full_numbers",
+                    language: {
+                            paginate: {
+                                previous: false,
+                                next: false,
+                                first: '<img src="{% static 'images/leftsidearrow.png' %}" width=15 />',
+                                last: '<img src="{% static 'images/rightsidearrow.png' %}" width=15 />'
+                            }
+                        },
+                "columns": [
+                        { "title": "S.No" },
+                        { "title": "Site Name" },
+                        { "title": "Site Desc" },
+                        { "title": "Site Address" },
+                        { "title": "Site Area" },
+                        { "title": "Site Type" },
+                        { "title": "Action"}
+                    ],
+                 columnDefs: [
+                         { "width": "5%", "targets": 0 },
+                         { "width": "15%", "targets": 1 },
+                         { "width": "15%", "targets": 2 },
+                         { "width": "20%", "targets": 3 },
+                         { "width": "15%", "targets": 4 },
+                         { "width": "14%", "targets": 5 },
+                         { "width": "16%", "targets": 6 },
+                ]});
+
+            function pullSiteTable(siteData) {
+                viewSiteDataTable.clear().draw();
+                viewSiteDataTable.destroy();
+                $('#viewSiteDataTable').empty();
+                viewSiteDataTable = $('#viewSiteDataTable').DataTable({"bFilter": false,
+               "lengthChange": false,
+                    "targets": 'no-sort',
+                    "bSort": false,
+                    "info": false,
+                    "searching": true,
+                    "order": [],
+                    "pagingType": "full_numbers",
+                    language: {
+                            paginate: {
+                                previous: false,
+                                next: false,
+                                first: '<img src="{% static 'images/leftsidearrow.png' %}" width=15 />',
+                                last: '<img src="{% static 'images/rightsidearrow.png' %}" width=15 />'
+                            }
+                        },
+                "columns": [
+                        { "title": "S.No" },
+                        { "title": "Site Name" },
+                        { "title": "Site Desc" },
+                        { "title": "Site Address" },
+                        { "title": "Site Area" },
+                        { "title": "Site Type" },
+                        { "title": "Action"}
+                    ],
+                 columnDefs: [
+                          { "width": "5%", "targets": 0 },
+                         { "width": "15%", "targets": 1 },
+                         { "width": "15%", "targets": 2 },
+                         { "width": "20%", "targets": 3 },
+                         { "width": "15%", "targets": 4 },
+                         { "width": "14%", "targets": 5 },
+                         { "width": "16%", "targets": 6 },
+                ]});
+                $.each(siteData, function( index, value ) {
+                   var sno = index+1;
+                   var action = "<input class='editSite' id='edit_"+value.siteId+"' type='button' value='Edit'><input class='deleteSite' id='delete_"+value.siteId+"' type='button' value='Delete'><input class='pushSite' id='push_"+value.siteId+"' type='button' value='Push'>";
+                   if(value.siteName == 'HeadQuarter'){
+                        var action = "<input class='editSite' id='edit_"+value.siteId+"' type='button' value='Edit'>";
+                   }
+                   viewSiteDataTable.row.add([sno,value.siteName,value.siteDesc,value.siteAddress__usradd_address_Line1+"<br/>"+ value.siteAddress__usradd_state__stateName+"<br/> "+ value.siteAddress__usradd_country__countryName+"-"+ value.siteAddress__usradd_postalCode,value.siteArea__areaName,value.siteType__siteTypeName,action]).draw();
+                });
+            }
+
+            $('#createSiteForm').keydown(function(e) {
+                var key = e.which;
+                if (key == 13) {
+
+                    $('#createSiteFormSubmit').click();
+                }
+            });
+
+            $('#createSiteFormSubmit').keydown(function(e) {
+                var key = e.which;
+                if (key == 13) {
+
+                    $('#createSiteFormSubmit').click();
+                }
+            });
+
+            /*var e = jQuery.Event("keydown");
+            e.which = 13; // # Some key code value
+            $('#createSiteFormSubmit').trigger(e);*/
+
+
+            $(document).on('click', '#createSiteFormSubmit', function() {
+                siteType = $('#id_siteType').val();
+                siteArea = $('#id_siteArea').val();
+                siteName = $('#id_siteName').val();
+                country = $('#id_country').val();
+                address_Line1 = $('#id_address_Line1').val();
+                unit1 = $('#id_unit1').val();
+                unit2 = $('#id_unit2').val();
+                address_Line2 = $('#id_address_Line2').val();
+                state = $('#id_state').val();
+                postalCode = $('#id_postalCode').val();
+                siteDesc = $('#id_siteDesc').val();
+                if(siteType == ''){
+                    alert('Please Select Site Type');
+                    $("#id_siteType").focus()
+                    return false;
+                }
+                else if(siteArea == ''){
+                    alert('Please Select Site Area');
+                    $("#id_siteArea").focus()
+                    return false;
+                }
+                else if(siteName == ''){
+                    alert('Please Enter Site Name');
+                    $("#id_siteName").focus()
+                    return false;
+                }
+                else if(country == ''){
+                    alert('Please Select country');
+                    $("#id_country").focus()
+                    return false;
+                }
+                else if(address_Line1 == ''){
+                    alert('Please enter Address1');
+                    $("#id_address_Line1").focus()
+                    return false;
+                }
+                else if(unit1 == ''){
+                    alert('Please enter Unit');
+                    $("#id_unit1").focus()
+                    return false;
+                }
+                else if(unit2 == ''){
+                    alert('Please enter Unit');
+                    $("#id_unit2").focus()
+                    return false;
+                }
+                else if(address_Line2 == ''){
+                    alert('Please enter Address2');
+                    $("#id_address_Line2").focus()
+                    return false;
+                }
+                else if(state == ''){
+                    alert('Please Select State');
+                    $("#id_state").focus()
+                    return false;
+                }
+                else if(postalCode == ''){
+                    alert('Please enter Postal Code');
+                    $("#id_postalCode").focus()
+                    return false;
+                }
+                else{
+                    var data = {"siteArea":siteArea,"siteType":siteType,"siteName":siteName,"country":country,"address_Line1":address_Line1,"unit1":unit1,"unit2":unit2,"address_Line2":address_Line2,"state":state,"postalCode":postalCode,"siteDesc":siteDesc};
+                    $.ajax({
+                      url: "/createSite",
+                      type: "POST",
+                      dataType : "json",
+                      contentType : "application/json",
+                      data: JSON.stringify(data),
+                      success: function (result)
+                      {
+                        var data = result;
+                        if (data.status == 'success') {
+                            alert(data.success_msg);
+                            setTimeout(function() {
+                                location.reload();
+                            }, 2500);
+                        }
+                        else if(data.status == 'error' && data.error_msg == 'sessionexpired'){
+                            alert('Session has expired.');
+                            setTimeout(function() {
+                                window.location.href = data.redirect_url;
+                            }, 2000);
+                         }
+                        else {
+                            alert(data.error_msg);
+                        }
+                      }
+
+                    });
+                }
+            });
+
+            $('#siteId').css('display','none');
+            $('#dynamicSiteId').css('display','none');
+
+            $(document).on('click', '.editSite', function() {
+                  var idNum = $(this).attr('id').match(/\d+/);
+                  var id = idNum[0];
+                  var data = {"siteId":idNum[0],"type":"edit"};
+                  $.ajax({
+                  url: "/updateSite",
+                  type: "POST",
+                  dataType : "json",
+                  contentType : "application/json",
+                  data: JSON.stringify(data),
+                  success: function (result)
+                  {
+                    var data = result;
+                    if (data.status == 'success') {
+                     site = data.site;
+                     $.each(site, function( index, value ) {
+
+                        $.ajax({
+                                url: "/load-states",
+                                data: {
+                                  "country_id": value.siteAddress__usradd_country
+                                },
+                                success: function (data) {
+                                  var states = JSON.parse(data.states);
+                                  $("#editstate").empty();
+                                  var stateAppendValues = "<option value=''>Select</option>";
+                                     $.each(states, function (key, val) {
+                                    stateAppendValues = stateAppendValues + "<option value="+val.pk+">"+val.fields.stateName+"</option>";
+                                    });
+                                      $("#editstate").append(stateAppendValues);
+                                      $("#editstate").find('option[value="'+value.siteAddress__usradd_state+'"]').attr("selected",true);
+                                }
+                            });
+
+                         $('#siteId').val(value.siteId);
+                         $('#siteArea').find('option[value="'+value.siteArea+'"]').attr("selected",true);
+                         $('#siteType').find('option[value="'+value.siteType+'"]').attr("selected",true);
+                         $('#siteName').val(value.siteName);
+                         if(value.siteName == 'HeadQuarter'){
+                         $("#siteName").prop("disabled",true);
+                         }
+                         else{
+                            $("#siteName").prop("disabled",false);
+                         }
+                         $('#editcountry').find('option[value="'+value.siteAddress__usradd_country+'"]').attr("selected",true);
+                         $('#editaddress_Line1').val(value.siteAddress__usradd_address_Line1);
+                         $('#editaddress_Line2').val(value.siteAddress__usradd_address_Line2);
+                         $('#editunit1').val(value.siteAddress__usradd_unit1);
+                         $('#editunit2').val(value.siteAddress__usradd_unit2);
+                         //$('#editstate').find('option[value="'+value.siteAddress__usradd_state+'"]').attr("selected",true);
+                         $('#editpostalCode').val(value.siteAddress__usradd_postalCode);
+                         $('#siteDesc').val(value.siteDesc);
+
+                     });
+
+
+                      $('#editSiteModal').show();
+                      $('#editSiteModal').modal('toggle');
+
+                    }
+                   else if(data.status == 'error' && data.error_msg == 'sessionexpired'){
+                        alert('Session has expired.');
+                        setTimeout(function() {
+                            window.location.href = data.redirect_url;
+                        }, 2000);
+                    }
+                   else{
+                        alert(data.error_msg);
+                    }
+                   }
+                });
+            });
+
+
+            $(document).on('click', '#editSiteFormSubmit', function() {
+                siteId = $('#siteId').val();
+                siteArea = $('#siteArea').val();
+                siteType = $('#siteType').val();
+                siteName = $('#siteName').val();
+                editcountry = $('#editcountry').val();
+                editaddress_Line1 = $('#editaddress_Line1').val();
+                editunit1 = $('#editunit1').val();
+                editunit2 = $('#editunit2').val();
+                editaddress_Line2 = $('#editaddress_Line2').val();
+                editstate = $('#editstate').val();
+                editpostalCode = $('#editpostalCode').val();
+                siteDesc = $('#siteDesc').val();
+                if(siteType == ''){
+                    alert('Please Select Site Type');
+                    $("#siteType").focus()
+                    return false;
+                }
+                else if(siteArea == ''){
+                    alert('Please Select Site Area');
+                    $("#siteArea").focus()
+                    return false;
+                }
+                else if(siteName == ''){
+                    alert('Please Enter Site Name');
+                    $("#siteName").focus()
+                    return false;
+                }
+                else if(editcountry == ''){
+                    alert('Please Select Country');
+                    $("#editcountry").focus()
+                    return false;
+                }
+                else if(editaddress_Line1 == ''){
+                    alert('Please enter Addtess 1');
+                    $("#editaddress_Line1").focus()
+                    return false;
+                }
+                else if(editunit1 == ''){
+                    alert('Please enter Unit');
+                    $("#editunit1").focus()
+                    return false;
+                }
+                else if(editunit2 == ''){
+                    alert('Please enter Unit');
+                    $("#editunit2").focus()
+                    return false;
+                }
+                else if(editaddress_Line2 == ''){
+                    alert('Please enter Addtess 2');
+                    $("#editaddress_Line2").focus()
+                    return false;
+                }
+                else if(editstate == ''){
+                    alert('Please select state');
+                    $("#editstate").focus()
+                    return false;
+                }
+                else if(editpostalCode == ''){
+                    alert('Please enter Postal Code');
+                    $("#editpostalCode").focus()
+                    return false;
+                }
+                else{
+                    var data = {"siteId":siteId,"siteType":siteType,"siteArea":siteArea,"siteName":siteName,"editcountry":editcountry,"editaddress_Line1":editaddress_Line1,"editunit1":editunit1,"editunit2":editunit2,"editaddress_Line2":editaddress_Line2,"editstate":editstate,"editpostalCode":editpostalCode,"siteDesc":siteDesc,"type":"Update"};
+                      $.ajax({
+                      url: "/updateSite",
+                      type: "POST",
+                      dataType : "json",
+                      contentType : "application/json",
+                      data: JSON.stringify(data),
+                      success: function (result)
+                      {
+                        var data = result;
+                        if (data.status == 'success') {
+                            alert(data.success_msg);
+                          setTimeout(function() {
+                                window.location.reload();
+                            }, 3000);
+                        }
+                        else if(data.status == 'error' && data.error_msg == 'sessionexpired'){
+                                alert('Session has expired.');
+                                setTimeout(function() {
+                                    window.location.href = data.redirect_url;
+                                }, 2000);
+                         }
+                        else{
+                            alert(data.error_msg);
+                            setTimeout(function() {
+                                location.reload();
+                            }, 2500);
+                        }
+                        }
+                        });
+                    }
+            });
+
+            $(document).on('click', '.userButtonClass', function() {
+                if ($(this).attr('id') == 'createSite') {
+                    $('#viewSiteDiv').hide();
+                    $('#createSiteDiv').show();
+                }
+                else if ($(this).attr('id') == 'viewSite') {
+                    location.reload();
+                }
+            });
+
+            $(document).on('click', '.deleteSite', function() {
+                var idNum = $(this).attr('id').match(/\d+/);
+
+                var id = idNum[0];
+                  $('#confirmModalPopupTitle').empty();
+                     $('#deleteSiteId').val('');
+                     $('#confirmModalPopupBodyContent').empty();
+                     $('#confirmModalPopupTitle').append('Delete Site');
+                     $('#deleteSiteId').val(id);
+                     $('#confirmModalPopupBodyContent').append('Are you sure, you want to delete?');
+                     $('#confirmModalPopup').modal('show');
+
+            });
+
+$(document).on('click', '.pushSite', function() {
+var idNum = $(this).attr('id').match(/\d+/);
+var siteId = idNum[0];
+$('#dynamicSiteId').empty();
+$('#dynamicSiteId').val(siteId);
+ var data = {'siteId':siteId};
+        $.ajax({
+              url: "/fetchSupplierForSitePushing",
+              type: "POST",
+              dataType : "json",
+              contentType : "application/json",
+              data: JSON.stringify(data),
+              success: function (data)
+              {
+              if (data.status == 'success') {
+              var supplier = data.supplierList;
+              if(supplier.length > 0){
+              $('#selectSupplier').empty();
+                $('#selectSupplier').append("<input type='checkbox' id='selectAllSupplier' > <label> All </label><br>");
+                $.each(supplier, function( index, value ) {
+                   $('#selectSupplier').append("<input type='checkbox' class='supplier' value='"+value.supplierId+"' > <label> "+value.supCompanyName+" </label><br>");
+
+                });
+                $('#pushSiteModalPopup').modal('show');
+                }
+                     else{
+                alert("No new vendors found");
+                }
+                }
+              }
+            });
+
+});
+
+$(document).on('click', '#selectAllSupplier', function() {
+     if ($('#selectAllSupplier').prop('checked') == true) {
+        $(".supplier").prop('checked', true);
+     }
+     else if ($('#selectAllSupplier').prop('checked') == false) {
+        $(".supplier").prop('checked', false);
+     }
+  });
+
+$(document).on('click', '#pushSiteSubmit', function() {
+var suppliersArray = [];
+var siteId = $('#dynamicSiteId').val();
+$(".supplier:checked").each(function() {
+     suppliersArray.push($(this).val());
+  });
+  if(suppliersArray == ''){
+    alert('Please Select Vendor');
+    return false;
+  }
+  else{
+  $('#pushSiteModalPopup').modal("toggle");
+    var data = {'siteId':siteId,'suppliers':suppliersArray};
+        $.ajax({
+              url: "/pushingSitestoSupplier",
+              type: "POST",
+              dataType : "json",
+              contentType : "application/json",
+              data: JSON.stringify(data),
+              success: function (data)
+              {
+              if (data.status == 'success') {
+                alert(data.success_msg);
+                setTimeout(function() {
+                    location.reload();
+                }, 2500);
+                }
+              else if(data.status == 'error' && data.error_msg == 'sessionexpired'){
+                    alert('Session has expired.');
+                    setTimeout(function() {
+                        window.location.href = data.redirect_url;
+                    }, 2000);
+             }
+            else{
+                alert(data.error_msg);
+            }
+              }
+            });
+        }
+});
+
+$('#confirmModalPopupSubmit').on('click', function() {
+            var id = $('#deleteSiteId').val();
+                var data = {"siteId":id};
+                $.ajax({
+                  url: "/deleteSite",
+                  type: "POST",
+                  dataType : "json",
+                  contentType : "application/json",
+                  data: JSON.stringify(data),
+                  success: function (result)
+                  {
+                    var data = result;
+                    if (data.status == 'success') {
+                        alert(data.success_msg);
+                         setTimeout(function() {
+                                window.location.reload();
+                            }, 3000);
+                    }
+                    else if (data.status == 'error' && data.error_msg == 'sessionexpired'){
+                         alert('Session has expired.');
+                                setTimeout(function() {
+                                    window.location.href = data.redirect_url;
+                                }, 2000);
+                     }
+                     else{
+                        alert(data.error_msg);
+                     }
+                   }
+                });
+            });
+
+
+            $('#profilePicture').on('click',function() {
+              $('#fileuploaddata').val(null);
+                $('#imageModel').modal('toggle');
+                $('#imageModel').show();
+            });
+
+            $('#slide-submenu').on('click',function() {
+                $(this).closest('.list-group').fadeOut('slide',function(){
+                    $('.mini-submenu').fadeIn();
+                });
+            });
+
+        $(document).ready(function() {
+
+        $("#id_postalCode,#editpostalCode").attr('maxlength','7');
+
+        $("#id_unit1,#id_unit2,#editunit1,#editunit2").attr('maxlength','2');
+
+        $("#id_contactNo").on("keypress keyup blur",function (event) {
+           $(this).val($(this).val().replace(/[^\d].+/, ""));
+            if ((event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+         var date = new Date();
+                $("#uDOJ , #uDOD").datepicker({
+                    changeYear: true,
+                    dateFormat: "dd/mm/yy",
+                    defaultDate: 'Select',
+                    onSelect: function () {
+                        selectedDate = $.datepicker.formatDate("dd/mm/yyyy", $(this).datepicker('getDate'));
+                    }
+                });
+
+            function showMessage(status, msgTitle, msgBody) {
+                $('#exampleModalTitle').empty();
+                $('#samplePopupBodyContent').empty();
+                $('#exampleModalTitle').append(msgTitle);
+                $('#samplePopupBodyContent').append(msgBody);
+                $('.sampleModalPopup').css('max-width','35%');
+                if (status == 'error') {
+                    $('.sampleModalPopup').css('max-width','80%');
+                }
+                $('#sampleModalPopup').modal('show');
+            }
+
+            $('.customerType').hide();
+            $('#idContainer').hide();
+
+            $(document).on('click', '#companyLogoUpdateBtn', function() {
+                var form_data = new FormData();
+                var file_data = $('#companyLogo').prop('files')[0];
+                 var data = "csrfmiddlewaretoken="+$('input[name=csrfmiddlewaretoken]').val()+"companyLogoPath="+file_data;
+                    $.ajax({
+                      url: "/logoupdate",
+                      type: "POST",
+                      dataType: "text",
+                      data: data,
+                      async:false,
+                      success: function (data)
+                      {
+
+                      }
+                    });
+            });
+
+			$('#domainName').val('');
+
+			$('#exampleModalCenter').on('shown.bs.modal', function() {
+              $('#domainName').focus();
+            });
+
+			$('#popupCloseBtn').on('click', function() {
+                $('#domainName').val('');
+                $('#successmsg').empty();
+                $('#errormsg').empty();
+            });
+
+
+            $('#domainName').on('keypress', function (event) {
+                var regex = new RegExp("^[a-zA-Z0-9]+$");
+                var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+                if (!regex.test(key)) {
+                   event.preventDefault();
+                   return false;
+                }
+            });
+
+
+
+
+              $('#submit').on('click', function() {
+                $('#success_msg').empty();
+                $('#error_msg').empty();
+                if ($('#domainName').val() != '') {
+                    var data = "csrfmiddlewaretoken="+$('input[name=csrfmiddlewaretoken]').val()+"&domainName="+$('#domainName').val();
+                    $.ajax({
+                      url: "/renameSchemaURL",
+                      type: "POST",
+                      dataType: "text",
+                      data: data,
+                      async:false,
+                      success: function (result)
+                      {
+                        var data = JSON.parse(result);
+                        if (data.status == 'success') {
+                            $('#success_msg').append(data.success_msg);
+                            $("#domainName").prop("disabled",true);
+                            $("#submit").prop("disabled",true);
+                            setTimeout(function() {
+                                $('#success_msg').empty();
+                                window.location.href = data.redirect_url;
+                            }, 3000);
+                        }
+                        else if (data.status == 'error' && data.error_msg == 'sessionexpired') {
+                            $('#domainName').val('');
+                            $('#error_msg').append('Session expired.');
+                            $("#domainName").prop("disabled",true);
+                            $("#submit").prop("disabled",true);
+                            setTimeout(function() {
+                                window.location.href = data.redirect_url;
+                            }, 3000);
+                        }
+                        else{
+                            $('#error_msg').append(data.error_msg);
+                        }
+                      }
+                     });
+                }
+                else {
+                    $('#error_msg').append('Please enter domain name');
+                }
+            });
+
+            $('.mini-submenu').on('click',function(){
+                $(this).next('.list-group').toggle('slide');
+                $('.mini-submenu').hide();
+            })
+
+            checkTreeCollapse();
+
+            function checkTreeCollapse() {
+                $(".tree-container li.tree-li").removeClass("is-child")
+                $(".tree-container li.tree-li").each(function () {
+                    if ($(this).find("ul.tree-ul li").length > 0) {
+                        $(this).addClass("is-child")
+                    }
+                });
+                $(".tree-container li.tree-li span.text").unbind("click");
+                $(".tree-container li.tree-li.is-child span.text").click(function () {
+                    $(this).parent(".tree-li").toggleClass("diactive");
+                    $(this).parent(".tree-li").find(".tree-ul:first").toggleClass("diactive");
+                });
+            }
+
+            /* Customize search option for DataTable Start */
+                $('#searchOption').on( 'keyup', function () {
+                      $('#viewSiteDataTable').DataTable().search(this.value).draw();
+                });
+            /* Customize search option for DataTable End */
+
+            $('.navTabClass').on('click', function() {
+                var id = $(this).attr('id');
+                $('.navTabClass').removeClass('navHeading');
+                $('.navTabClass > a.anchorlink').removeClass('activeNav');
+                $('#'+id+'').addClass('navHeading');
+                $('#'+id+ '> a').addClass('activeNav');
+            });
+
+            window.scrollTo(0,0);
+            window.document.body.scrollTop++;
+
+    });
+
+
+</script>
+{% endblock %}

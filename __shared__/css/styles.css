@@ -1,0 +1,184 @@
+.headColor {
+    background-color: #fdfafd
+}
+table.dataTable {
+    margin-top: -3px !important;
+}
+#viewDataTable_wrapper {
+    padding-left: 0px !important;
+    margin-top: -7px;
+    margin-left: -5px
+}
+thead {
+    background-color: #eddcf0
+}
+.dataTables_filter {
+    display: none
+}
+#searchOption, #searchOptionOrder {
+    width: 120px;
+    height: 28px;
+    border: none;
+    border-radius: 8px;
+    padding-left: 5px
+}
+input#searchOption:focus, input#searchOptionOrder:focus  {
+   outline: none
+}
+#searchOptionInputGroup, #searchOptionInputGroupOrder {
+    display: -webkit-inline-box;
+    background: white;
+    border: none;
+    height: 30px;
+    width: 150px !important;
+    border: 1px solid #bb99c0;
+    border-radius: 5px;
+    margin-left: 5px
+}
+#spanSearchIcon, #spanSearchIconOrder {
+    padding: 6px
+}
+.tableBgColor {
+    background-color: #f9f3fa;
+    margin-right: -15px !important
+}
+.pendingBtn {
+    background-color: #fbb03b !important
+}
+.establishedBtn {
+    background-color: #7ac943 !important
+}
+.rejectedBtn {
+    background-color: #ff0000 !important
+}
+.roundImage {
+    height: 15px;
+    margin-bottom: 3px
+}
+#viewDataTable_paginate {
+    padding-bottom: 0.85em !important
+}
+div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+    justify-content: flex-start !important;
+}
+#viewDataTable_paginate {
+    margin-left: -10% !important
+}
+.page-item.disabled .page-link {
+    color: #984fa5;
+    border: none;
+    font-weight: bold;
+}
+.page-item.last .page-link {
+    color: #984fa5;
+    border: none;
+}
+.page-item .page-link  {
+    color: #984fa5;
+    border: none;
+}
+.page-item.active .page-link {
+    color: #984fa5;
+    border: none;
+    font-weight: bold;
+}
+.page-link, .page-item.disabled .page-link, .page-item.active .page-link,.page-link:hover, .page-item.disabled .page-link:hover, .page-item.active .page-link:hover {
+    background: #f9f3fa
+}
+.page-link {
+    padding: .5rem .30rem;
+}
+.page-item .page-link:after {
+    content: '\002C';
+}
+.page-item.first .page-link:after, .page-item.last .page-link:after, .page-item:nth-last-of-type(2) > .page-link:after {
+    content: '';
+}
+div.dataTables_wrapper div.dataTables_paginate {
+    text-align: left !important
+}
+#viewProductDataTable_paginate:before, #viewAuthAdminDetailsTable_paginate:before, #viewPlanDetailsTable_paginate:before, #viewPlacedOrderDataTable_paginate:before, #addProductTable_paginate:before, #addCustomerTable_paginate:before, #viewOrderTable_paginate:before, #viewDataTable_paginate:before, #viewOrderTable_paginate:before, #viewUserDataTable_paginate:before, #viewAreaTable_paginate:before, #viewSiteDataTable_paginate:before, #viewSLATable_paginate:before  {
+    content: 'Show 10 row per page';
+    color: #5f5f5f;
+    font-weight: bold;
+    font-size: 13px;
+}
+.pagination:before {
+    content: 'Page';
+    margin-top: 0.25em;
+    color: #984fa5
+}
+.iconMF {
+	height: 40px;
+	margin-top: 10px;
+}
+#iconMF {
+	height: 40px;
+	margin-top: 10px;
+}
+#iconsec{
+    margin-top : 20px
+}
+#sideBarRight {
+    background: #fff;
+    border-left: 2px solid #f4ecf3 !important;
+}
+.todotag{
+    font-weight: bold;
+    font-size: 13px;
+    border-bottom: 3px solid black;
+}
+.todocontent{
+    padding-top:10px;
+    font-size: 11px;
+}
+.notificationtag{
+    font-weight: bold;
+    font-size: 13px;
+    border-bottom: 3px solid black;
+}
+.notificationcontent{
+    font-size: 11px;
+}
+.sideBarAlignClass {
+    margin-top: 4%;
+    margin-left: 15%;
+    margin-bottom: 2%;
+    width: 75%
+}
+.count{
+    color: white;
+    background-color: #f55f58;
+    padding: 1px 6px 1px 6px;
+    border-radius: 6px;
+}
+#bodyContent {
+    background-color: #fff;
+    padding-top: 2%
+}
+.sampleModalPopup {
+        max-width: 35%
+    }
+#customerFileUpload {
+    display: none;
+}
+
+.userButtonClass, .userButtonOkClass, .userButtonClass:hover, .userButtonClass:hover  {
+    border: 2px solid #881999;
+    background: #ffd500;
+    color: #881999;
+    font-weight: bold;
+   border-radius: 5px;
+    padding: 10px 20px ;
+    text-decoration: none;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.manadatory{
+    color: red;
+    font-weight: bold;
+}
+#back, #add {
+    width:100px;
+}
