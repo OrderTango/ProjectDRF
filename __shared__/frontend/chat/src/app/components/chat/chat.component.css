@@ -32,19 +32,20 @@ nav {
 }
 
 .room-section {
-    display: grid;
-    cursor: pointer;
+    /* display: grid;
+    cursor: pointer; */
     margin-bottom: 0.5rem;
 }
 
 .chat-room {
     margin-top: 1rem;
+    margin-bottom: 1.5rem;
     display: flex;
     justify-content: space-between;
 }
 
 .room {
-    
+    cursor: pointer;
 }
 
 .room-date {
@@ -59,4 +60,42 @@ nav {
     width: 100%;
     padding: 0.5rem;
     font-size: 1.3rem;
+}
+
+.back {
+    cursor: pointer;
+}
+
+.input-room {
+    width: 100%;
+}
+
+.delete-thread {
+    float: right;
+}
+
+.inside-rooms {
+    margin-bottom: 1.5rem;
+}
+
+.chat {
+    width: 100%;
+    padding: 1rem;
+}
+
+.nav-tabs {
+    width: 100%;
+}
+
+.nav-item {
+    width: 50%;
+}
+
+.nav-link {
+    text-align: center;
+}
+
+.nav-link.active {
+    color: #881999;
+    font-weight: 500;
 }

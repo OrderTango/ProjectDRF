@@ -73,78 +73,71 @@ class ThreadDetailView(views.APIView):
 class ThreadMessageView(viewsets.ViewSet):
     serializer_class = ThreadMessageSerializer
 
-    def list(self, request, *args, **kwargs):
-        """
-        Get thread message
-        """
-        connection.schema_name = 'public'
-        currentSchema = connection.schema_name 
-        connection.set_schema(schema_name=currentSchema)
+    # def list(self, request, *args, **kwargs):
+    #     """
+    #     Get thread message
+    #     """
+    #     connection.schema_name = 'public'
+    #     currentSchema = connection.schema_name 
+    #     connection.set_schema(schema_name=currentSchema)
 
-        user = User.objects.get(userId=getUser(request))
-        thread = Thread.objects.get(id=self.kwargs['id'])
-        queryset = ThreadMessage.objects.filter(sender=user, thread=thread)
-        serializer = self.serializer_class(queryset, many=True)
+    #     user = User.objects.get(userId=getUser(request))
+    #     thread = Thread.objects.get(id=self.kwargs['id'])
+    #     queryset = ThreadMessage.objects.filter(sender=user, thread=thread)
+    #     serializer = self.serializer_class(queryset, many=True)
 
-        connection.schema_name = 'public'
-        currentSchema = connection.schema_name 
-        connection.set_schema(schema_name=currentSchema)
+    #     connection.schema_name = 'public'
+    #     currentSchema = connection.schema_name 
+    #     connection.set_schema(schema_name=currentSchema)
 
-        return Response(serializer.data)
+    #     return Response(serializer.data)
 
-    def create(self, request, *args, **kwargs):
-        """
-        Create message
-        """
-        user = User.objects.get(userId=getUser(request))
-        thread = Thread.objects.get(thread=self.kwargs['id'])
-        queryset = ThreadMessage.objects.create(sender=user, thread=thread, message=self.request.data['message'])
-        serializer = self.serializer_class(queryset)
+    # def create(self, request, *args, **kwargs):
+    #     """
+    #     Create message
+    #     """
+    #     user = User.objects.get(userId=getUser(request))
+    #     thread = Thread.objects.get(thread=self.kwargs['id'])
+    #     queryset = ThreadMessage.objects.create(sender=user, thread=thread, message=self.request.data['message'])
+    #     serializer = self.serializer_class(queryset)
 
-        try: 
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        except: 
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+    #     try: 
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     except: 
+    #         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-    def retrieve(self, request, *args, **kwargs):
-        """
-        Retrieve message
-        """
-        user = User.objects.get(userId=getUser(request))
-        thread = Thread.objects.get(id=self.kwargs['id'])
-        thread_message = ThreadMessage.objects.get(id=self.kwargs['id'])
-        queryset = ThreadMessage.objects.filter(id=thread_message, sender=user, thread=thread)
-        serializer = self.serializer_class(queryset)
-        return Response(serializer.data)
+    # def retrieve(self, request, *args, **kwargs):
+    #     """
+    #     Retrieve message
+    #     """
+    #     user = User.objects.get(userId=getUser(request))
+    #     thread = Thread.objects.get(id=self.kwargs['id'])
+    #     thread_message = ThreadMessage.objects.get(id=self.kwargs['id'])
+    #     queryset = ThreadMessage.objects.filter(id=thread_message, sender=user, thread=thread)
+    #     serializer = self.serializer_class(queryset)
+    #     return Response(serializer.data)
 
     # def update()
 
     # def delete
 
 
+class ThreadMemberView(views.APIView):
+    serializer_class = ThreadSerializer
 
-class ThreadMemberView(viewsets.ViewSet):
-    serializer_class = ThreadMemberSerializer 
-
-    def list(self, request, *args, **kwargs):
+    def delete(self, request, *args, **kwargs):
+        """ 
+        Delete thread
         """
-        List all thread members
-        """
-
-        connection.schema_name = 'public'
         currentSchema = connection.schema_name 
         connection.set_schema(schema_name=currentSchema)
+        print(connection.schema_name)
+        print(self.kwargs)
+        thread = Thread.objects.get(name=kwargs['thread'])
+        user = User.objects.get(userId=kwargs['pk'])
+        member = ThreadMember.objects.get(thread=thread, member=user)
+        member.delete()
 
-        user = User.objects.get(userId=getUser(request))
-        # members = ThreadMember.objects.filter(member=user) # get threadmember where user is a member
-        thread = Thread.objects.get(name=self.kwargs['room_name']).name
-        members = ThreadMember.objects.filter(thread=thread)
-        serializer = self.serializer_class(members, many=True) 
-
-        connection.schema_name = 'public'
-        currentSchema = connection.schema_name 
-        connection.set_schema(schema_name=currentSchema)
-
-        return Response(serializer.data)
+        return Response(status=status.HTTP_204_NO_CONTENT)
     
                 

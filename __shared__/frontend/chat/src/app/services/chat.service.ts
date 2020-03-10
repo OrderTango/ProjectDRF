@@ -17,13 +17,17 @@ export class ChatService {
     private httpClient: HttpClient,
   ) { }
 
-
   getUsers(): Observable<any> {
-    return this.httpClient.get(`${this.baseurl}/api-accounts`, this.getHeader())
+    return this.httpClient.get(`${this.baseurl}/api/accounts/`, this.getHeader())
   }
 
   getUser(): Observable<any> {
-    return this.httpClient.get(`${this.baseurl}/api-user-account/`, this.getHeader())
+    return this.httpClient.get(`${this.baseurl}/api/user/account/`, this.getHeader())
+  }
+
+  getOrg(id): Observable<any> {
+    console.log('HERE HERE: ', id)
+    return this.httpClient.get(`${this.baseurl}/api/org/${id}/`, this.getHeader())
   }
 
   getChatRooms(): Observable<any> {
@@ -35,20 +39,9 @@ export class ChatService {
     return this.httpClient.delete(`${this.baseurl}/api/thread/${id}/`, this.getHeader())
   }
 
-  getChatMembers(room_name): Observable<any> {
-    return this.httpClient.get(`${this.baseurl}/api/thread/${room_name}/members/`, this.getHeader())
+  removeRoomMember(room, id): Observable<any> {
+    return this.httpClient.delete(`${this.baseurl}/api/${room}/${id}/members/`, this.getHeader())
   }
-  // createChatRoom(creator, room_name): Observable<any> {
-  //   return this.httpClient.post(`${this.baseurl}/api-chat/`, {'creator': creator, 'room_name': room_name}, this.getHeader())
-  // }
-
-  // createMessage(room_name, message_content): Observable<any> {
-  //   return this.httpClient.post(`${this.baseurl}/api-chat/${room_name}`, {'content': message_content}, this.getHeader())
-  // }
-
-  // getMessages(room_name): Observable<any> {
-  //   return this.httpClient.get(`${this.baseurl}/api-chat/${room_name}`, this.getHeader())
-  // }
 
   getCSRFToken(name) {
     var xsrfCookies = document.cookie.split(';')

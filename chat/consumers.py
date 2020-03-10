@@ -90,6 +90,7 @@ class ChatConsumer(WebsocketConsumer):
     def fetch_to_json(self, message, members):
         return {
             'thread': message.thread.name, 
+            'thread_id': message.thread.id,
             'sender': message.sender.email, 
             'message': message.message,
             'members': self.members_to_json(members),
@@ -106,6 +107,7 @@ class ChatConsumer(WebsocketConsumer):
         return {
             'thread': message.thread.name, 
             'member': message.member.email,
+            'member_id': message.member.userId,
             'date_added': str(message.date_added)
         }
 

@@ -10,8 +10,9 @@ import { ChatService } from '../../services/chat.service';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-
+  roomMessage = [];
   authUser = null;
+  organization = null;
   users = []
   rooms = []
   createRoom: Boolean = false;
@@ -33,6 +34,11 @@ export class ChatComponent implements OnInit {
     this.chatService.getUser().subscribe((res) => {
       this.authUser = res;
       console.log('fsdfsdfs', this.authUser)
+
+      this.chatService.getOrg(this.authUser.userId).subscribe((res) => {
+        this.organization = res;
+        console.log('ORGANIZATION: ', this.organization)
+      })
     })
 
     this.chatService.getUsers().subscribe((res) => {
@@ -41,6 +47,8 @@ export class ChatComponent implements OnInit {
 
     this.chatService.getChatRooms().subscribe((res) => {
       this.rooms = Object(res);
+
+      console.log('Rooms: ', this.rooms)
 
       this.rooms.forEach(r => {
         // Transform user-named thread name
@@ -72,12 +80,15 @@ export class ChatComponent implements OnInit {
 
   createChatRoom(firstName, lastName) {
     this.chat_room = `${firstName}${lastName}`;
+    // this.rooms.push({id: '#', name: this.chat_room, date_created: "###", is_archived: false, temp_name: this.chat_room})
     console.log('Here 1: ', this.chat_room)
   }
 
   submitChatRoom() {
     this.chat_room= this.roomForm.value.roomName;
+    // this.rooms.push({id: '#', name: this.chat_room, date_created: "###", is_archived: false, temp_name: this.chat_room})
     this.roomForm.reset();
+    this.createRoom = false;
   }
 
   selectChatRoom(room_name) {
@@ -96,7 +107,16 @@ export class ChatComponent implements OnInit {
     })
   }
 
-  getRoomMessage(event) {
-    console.log(event)
-  } 
+  getRoomMessage(message: any) {
+    this.roomMessage = message; 
+
+    // if(this.roomMessage.length !== 0) {
+    //   if(!this.rooms.some((r) => r.id == this.roomMessage['thread_id'])) {
+    //     this.rooms.push({id: this.roomMessage['thread_id'], name: this.roomMessage['thread'], date_created: this.roomMessage['date_created'], is_archived: false, temp_name: this.roomMessage['thread']})
+    //   }
+    // }
+
+    // console.log(this.rooms)
+    // console.log('Room Message: ', this.roomMessage);
+  }
 }

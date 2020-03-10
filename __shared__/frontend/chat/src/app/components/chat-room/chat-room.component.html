@@ -3,7 +3,8 @@
         <div>
             <h4 *ngIf="hasChatRoom">{{this.roomNewName}}</h4>
             <div class="sdsfdsfs" *ngFor="let member of roomMembers">
-                {{member.member}} &nbsp;
+                {{member.member}} &nbsp; 
+                <!-- <span class="remove" (click)="removeMember(member.thread, member.member_id)" aria-hidden="true">&times;</span> -->
             </div>
         </div>
         <button (click)="addMemberModal(AddThreadMember)" class="btn btn-secondary">Add Member</button>

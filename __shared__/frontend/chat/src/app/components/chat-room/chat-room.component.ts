@@ -16,7 +16,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   @ViewChild('textArea') textArea: ElementRef;
   @ViewChild('messageArea') messageArea: ElementRef;
   @Input() room_name: string;
-  @Output() roomHasMessage = new EventEmitter<boolean>();
+  @Output() roomMessage = new EventEmitter<any>();
 
   messageForm = new FormGroup({
     content: new FormControl(''),
@@ -28,6 +28,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   private chatUser: string;
   private socketMessages = [];
   isAuthUser: boolean;
+  thisUser = null;
   hasChatRoom: boolean = false;
   hasMessages: boolean = false;
   messages = [];
@@ -49,6 +50,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
     
     this.chatService.getUser().subscribe((res) => {
       this.chatUser = res.userId
+      this.thisUser = res;
     })
 
     this.chatService.getUsers().subscribe((res) => {
@@ -106,30 +108,34 @@ export class ChatRoomComponent implements OnInit, OnChanges {
 
       if(command === 'fetch_message') {
         this.messages = data['message']
-        var message = []
-        message = this.messages[0];
-        console.log(message['members'])
+        this.roomMessage.emit(this.messages)
+        console.log(this.messages)
 
-        this.roomMembers = message['members'];
-        
-        if(this.messages.length === 0) {
-          this.hasMessages = false;
-          this.roomHasMessage.emit(this.hasMessages)
+        if(this.messages.length !== 0) {
+          var message = []
+          message = this.messages[0];
+          console.log(message)
+
+          this.roomMembers = message['members'];
+
+          if(message['message'] === null) {
+            this.hasMessages = false;
+            console.log(message['message'])
+            
+          }else{
+            this.hasMessages = true;
+          }
+
         }else{
-          this.hasMessages = true;
-          console.log('HERE 1', this.roomHasMessage.emit(this.hasMessages))
+          this.hasMessages = false;
         }
-
       }else {
         this.messages.push(data['message']); 
 
         if(this.messages.length === 0) {
           this.hasMessages = false;
-          this.roomHasMessage.emit(this.hasMessages)
         }else{
           this.hasMessages = true;
-          this.roomHasMessage.emit(this.hasMessages)
-          console.log(this.roomHasMessage.emit(this.hasMessages))
         }
       }
     }
@@ -163,17 +169,15 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   onSubmit() {
     var message = this.messageForm.value.content; 
 
-    console.log(this.chatUser)
-
-    this.chatSocket.send(JSON.stringify({
-      'message': message,
-      'command': 'new_message',
-      'from': this.chatUser
-    }));
-
-    this.messageForm.reset();
-    const textArea = this.textArea.nativeElement;
-    textArea.style.height = '54px';
+    if(message !== '') {
+      this.chatSocket.send(JSON.stringify({
+        'message': message,
+        'command': 'new_message',
+        'from': this.chatUser
+      }));
+  
+      this.messageForm.reset();
+    }
   }
 
   addMemberModal(template) {
@@ -193,15 +197,27 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
   addMember() {
-    this.chatSocket.send(JSON.stringify({
-      'thread': this.room_name,
-      'command': 'new_member',
-      'members': this.addedMembers
-    }))
+    if(this.addedMembers.length !== 0) {
+      this.chatSocket.send(JSON.stringify({
+        'thread': this.room_name,
+        'command': 'new_member',
+        'members': this.addedMembers
+      }))
+    }
   }
 
   removeAddedMember(id) {
     this.addedMembers = this.addedMembers.filter(room => room.id !== id);
+  }
+
+  removeMember(room, id) {
+    this.chatService.removeRoomMember(room, id).subscribe(res => {
+      if(this.thisUser.userId !== id) {
+        this.roomMembers = this.roomMembers.filter(member => member.member_id !== id);
+      }
+    }, error => {
+      console.log(error)
+    })
   }
 
 }

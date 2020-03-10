@@ -2,11 +2,23 @@ from rest_framework import status, viewsets, views
 from rest_framework.response import Response 
 from rest_framework.permissions import IsAuthenticated, AllowAny 
 
-from OrderTangoApp.models import User 
+from OrderTangoApp.models import User, Company 
 from chat.views import *
 
-from .serializers import UserSerializer
+from .serializers import UserSerializer, CompanySerializer
 
+
+class CompanyView(viewsets.ViewSet):
+    serializer_class = CompanySerializer 
+
+    def retrieve(self, request, *args, **kwargs):
+        """
+        Get Company details
+        """
+        print(kwargs)
+        company = Company.objects.get(companyId=kwargs['pk'])
+        serializer = self.serializer_class(company)
+        return Response(serializer.data)
 
 class UserListView(viewsets.ViewSet):
     serializer_class = UserSerializer 
@@ -15,8 +27,10 @@ class UserListView(viewsets.ViewSet):
         """ 
         List all the Users
         """
-        user = User.objects.all() 
-        serializer = self.serializer_class(user, many=True)
+        user = User.objects.get(userId=getUser(request))
+        company = Company.objects.get(companyId=user.userCompanyId)
+        users = User.objects.filter(userCompanyId=company) 
+        serializer = self.serializer_class(users, many=True)
         return Response(serializer.data)
 
 class UserView(viewsets.ViewSet):
