@@ -42,17 +42,6 @@ export class ChatService {
   removeRoomMember(room, id): Observable<any> {
     return this.httpClient.delete(`${this.baseurl}/api/${room}/${id}/members/`, this.getHeader())
   }
-  // createChatRoom(creator, room_name): Observable<any> {
-  //   return this.httpClient.post(`${this.baseurl}/api-chat/`, {'creator': creator, 'room_name': room_name}, this.getHeader())
-  // }
-
-  // createMessage(room_name, message_content): Observable<any> {
-  //   return this.httpClient.post(`${this.baseurl}/api-chat/${room_name}`, {'content': message_content}, this.getHeader())
-  // }
-
-  // getMessages(room_name): Observable<any> {
-  //   return this.httpClient.get(`${this.baseurl}/api-chat/${room_name}`, this.getHeader())
-  // }
 
   getCSRFToken(name) {
     var xsrfCookies = document.cookie.split(';')

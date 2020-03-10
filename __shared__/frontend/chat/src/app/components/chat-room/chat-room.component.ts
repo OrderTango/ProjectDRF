@@ -57,10 +57,6 @@ export class ChatRoomComponent implements OnInit, OnChanges {
       this.users = Object(res);
     })
 
-    this.chatService.getUsers().subscribe((res) => {
-      this.users = Object(res);
-    })
-
     this.getChatRoom(this.room_name)
     this.transformRoomName(this.room_name)
     this.messageForm.reset();
