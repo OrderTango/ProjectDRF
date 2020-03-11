@@ -5,14 +5,17 @@ from channels.generic.websocket import WebsocketConsumer
 from OrderTangoApp.models import User
 from .models import Thread, ThreadMessage, ThreadMember
 import json 
+import functools
 
 
 class ChatConsumer(WebsocketConsumer):
-
+    i = 0
     def new_member(self, text_data):
-        connection.schema_name = 'otfe5e60d1'
+        # connection.schema_name = 'otfe5e60d1'
+        connection.schema_name = 'otdc659634'
         currentSchema = connection.schema_name 
         connection.set_schema(schema_name=currentSchema)
+        print('new_member: ', connection.schema_name)
 
         member_user = text_data['members']
         
@@ -34,17 +37,21 @@ class ChatConsumer(WebsocketConsumer):
         self.send_chat_message(content)
 
     def fetch_messages(self, text_data):
-        connection.schema_name = 'otfe5e60d1'
-        currentSchema = connection.schema_name 
+
+        connection.schema_name = 'otdc659634'
+        currentSchema = connection.schema_name
         connection.set_schema(schema_name=currentSchema)
+        print('fetch_messages: ', connection.schema_name)
 
         sender_user = text_data['from']
-        thread = Thread.objects.get(id=self.thread_id).id
-        members = ThreadMember.objects.filter(thread=thread)
-        messages = ThreadMessage.objects.filter(sender=sender_user, thread=thread)
+        thread = Thread.objects.get(id=self.thread_id)
+        members = ThreadMember.objects.filter(thread=thread.id)
+        messages = ThreadMessage.objects.filter(sender=sender_user, thread=thread.id)
 
         content = {
             'command': 'fetch_message',
+            'thread': thread.name,
+            'thread_id': thread.id,
             'message': self.fetches_to_json(messages, members)
         }
 
@@ -53,9 +60,9 @@ class ChatConsumer(WebsocketConsumer):
 
         self.send_chat_message(content)
 
-
     def new_message(self, text_data):
-        connection.schema_name = 'otfe5e60d1'
+        # connection.schema_name = 'otfe5e60d1'
+        connection.schema_name = 'otdc659634'
         currentSchema = connection.schema_name 
         connection.set_schema(schema_name=currentSchema)
 
@@ -75,10 +82,6 @@ class ChatConsumer(WebsocketConsumer):
             'message': self.message_to_json(message)
         }
 
-        currentSchema = connection.schema_name 
-        connection.set_schema(schema_name=currentSchema)
-
-        print('new_message 2: ', currentSchema)
         return self.send_chat_message(content)
 
     def fetches_to_json(self, messages, members):
@@ -93,6 +96,7 @@ class ChatConsumer(WebsocketConsumer):
             'thread_id': message.thread.id,
             'sender': message.sender.email, 
             'message': message.message,
+            'message_id': message.id,
             'members': self.members_to_json(members),
             'date_created': str(message.date_created)
         }
@@ -132,8 +136,10 @@ class ChatConsumer(WebsocketConsumer):
     }
 
     def connect(self):
-        connection.schema_name = 'otfe5e60d1'
+        # connection.schema_name = 'otfe5e60d1'
+        connection.schema_name = 'otdc659634'
         currentSchema = connection.schema_name 
+        self.schema_used = currentSchema
         connection.set_schema(schema_name=currentSchema)
 
         print('connect 1: ', currentSchema)
@@ -169,7 +175,6 @@ class ChatConsumer(WebsocketConsumer):
         self.commands[text_data['command']](self, text_data)
 
     def send_chat_message(self, message):
-        # message = text_data_json['message']
 
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
@@ -183,14 +188,12 @@ class ChatConsumer(WebsocketConsumer):
     def send_message(self, message):
         self.send(text_data=json.dumps(message))
 
-    # Receive message from room group
     def chat_message(self, event):
         message = event['message']
 
         # Send message to WebSocket
         self.send(text_data=json.dumps(message))
 
-        # self.send(text_data=json.dumps({
-        #     'message': message
-        # }))
+    
+
         

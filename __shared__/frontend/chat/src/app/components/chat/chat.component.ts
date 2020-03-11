@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
+import { NgbModal, NgbModalRef, NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 
 import { ChatService } from '../../services/chat.service';
 
@@ -20,6 +21,10 @@ export class ChatComponent implements OnInit {
   chat_room: String = '';
   chat_room_name: String = '';
   chat_id = null;
+  delThread = null;
+
+  deleteThreadConfirmModalRef: NgbModalRef;
+  deleteThreadSuccessModalRef: NgbModalRef;
 
   roomForm = new FormGroup({
     roomName: new FormControl(''),
@@ -27,6 +32,7 @@ export class ChatComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private modal: NgbModal, 
     private chatService: ChatService,
   ) { }
 
@@ -80,43 +86,59 @@ export class ChatComponent implements OnInit {
 
   createChatRoom(firstName, lastName) {
     this.chat_room = `${firstName}${lastName}`;
-    // this.rooms.push({id: '#', name: this.chat_room, date_created: "###", is_archived: false, temp_name: this.chat_room})
     console.log('Here 1: ', this.chat_room)
   }
 
   submitChatRoom() {
     this.chat_room= this.roomForm.value.roomName;
-    // this.rooms.push({id: '#', name: this.chat_room, date_created: "###", is_archived: false, temp_name: this.chat_room})
     this.roomForm.reset();
     this.createRoom = false;
   }
 
   selectChatRoom(room_name) {
     this.chat_room = room_name;
-    console.log('Here 3: ', this.chat_room)
   }
 
-  deleteChatRoom(id) {
+  deleteChatRoom(template, id) {
     this.chatService.deleteChatRoom(id).subscribe(res => {
       this.rooms = this.rooms.filter(room => room.id !== id);
       var chat = this.rooms.slice(-1)[0];
       this.chat_room = chat.name;
       this.chat_room_name = chat.temp_name;
+      this.closeDeleteModal()
+      this.deleteThreadSuccess(template)
     }, error => {
       console.log(error)
     })
   }
 
   getRoomMessage(message: any) {
-    this.roomMessage = message; 
+    
+    message.forEach(msg => {
+      this.roomMessage = msg;
+    })
 
-    // if(this.roomMessage.length !== 0) {
-    //   if(!this.rooms.some((r) => r.id == this.roomMessage['thread_id'])) {
-    //     this.rooms.push({id: this.roomMessage['thread_id'], name: this.roomMessage['thread'], date_created: this.roomMessage['date_created'], is_archived: false, temp_name: this.roomMessage['thread']})
-    //   }
-    // }
+    if(this.roomMessage.length !== 0) {
+      if(!this.rooms.some((r) => r.id == this.roomMessage['thread_id'])) {
+        this.rooms.push({id: this.roomMessage['thread_id'], name: this.roomMessage['thread'], date_created: this.roomMessage['date_created'], is_archived: false, temp_name: this.roomMessage['thread']})
+      }
+    }
+  }
 
-    // console.log(this.rooms)
-    // console.log('Room Message: ', this.roomMessage);
+  deleteThread(template, id) {
+    this.delThread = id;
+    this.deleteThreadConfirmModalRef = this.modal.open(template, { backdrop: true, size: 'sm', centered: true })
+  }
+
+  deleteThreadSuccess(template) {
+    this.deleteThreadSuccessModalRef = this.modal.open(template, { backdrop: true, size: 'sm', centered: true })
+  }
+
+  closeDeleteModal() {
+    this.deleteThreadConfirmModalRef.close()
+  }
+
+  closeDeleteSuccessModal() {
+    this.deleteThreadSuccessModalRef.close()
   }
 }

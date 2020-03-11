@@ -99,3 +99,17 @@ nav {
     color: #881999;
     font-weight: 500;
 }
+
+.delete-body {
+    padding: 4rem 2rem 2rem 2rem;
+    text-align: center;
+}
+
+.sucess-header {
+    border: none;
+}
+
+.success-body {
+    padding: 2rem 2rem 4rem 2rem;
+    text-align: center;
+}

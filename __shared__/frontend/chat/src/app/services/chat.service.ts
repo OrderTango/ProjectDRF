@@ -8,9 +8,9 @@ import { Observable } from 'rxjs';
 })
 export class ChatService {
   csrfToken = null;
-  baseurl = "http://customer12.localhost:8000"; // window.location.pathname
+  // baseurl = "http://customer12.localhost:8000"; // window.location.pathname
 
-  // baseurl = "http://ot4a1fcb01.localhost:8000"; // window.location.pathname
+  baseurl = "http://ragavi2113.localhost:8000"; // window.location.pathname
 
   constructor(
     private http: Http,

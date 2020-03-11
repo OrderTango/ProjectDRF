@@ -32,6 +32,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   hasChatRoom: boolean = false;
   hasMessages: boolean = false;
   messages = [];
+  msg = [];
   users = [];
   addedMembers = [];
   roomMembers = [];
@@ -92,8 +93,12 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
   createWebSocket(room_name) {
+    // this.chatSocket = new ReconnectingWebSocket (
+    //   `ws://customer12.localhost:8000/ws/api-chat/${room_name}/` 
+    // )
+
     this.chatSocket = new ReconnectingWebSocket (
-      `ws://customer12.localhost:8000/ws/api-chat/${room_name}/` 
+      `ws://ragavi2113.localhost:8000/ws/api-chat/${room_name}/` 
     )
 
     this.chatSocket.debug = true;
@@ -114,8 +119,8 @@ export class ChatRoomComponent implements OnInit, OnChanges {
 
       if(command === 'fetch_message') {
         this.messages = data['message']
-        this.roomMessage.emit(this.messages)
-        console.log(this.messages)
+        this.msg.push({'thread_id': data['thread_id'], 'thread': data['thread']})
+        this.roomMessage.emit(this.msg)
 
         if(this.messages.length !== 0) {
           var message = []
@@ -126,8 +131,6 @@ export class ChatRoomComponent implements OnInit, OnChanges {
 
           if(message['message'] === null) {
             this.hasMessages = false;
-            console.log(message['message'])
-            
           }else{
             this.hasMessages = true;
           }
@@ -136,7 +139,11 @@ export class ChatRoomComponent implements OnInit, OnChanges {
           this.hasMessages = false;
         }
       }else {
-        this.messages.push(data['message']); 
+        var msg = data['message']
+        
+        if(!this.messages.some((m) =>  msg['message_id'] == m['message_id'])) {
+          this.messages.push(data['message']); 
+        }
 
         if(this.messages.length === 0) {
           this.hasMessages = false;
@@ -187,7 +194,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
   addMemberModal(template) {
-    this.addMemberModalRef = this.modal.open(template, { backdrop: true, size: 'lg'})
+    this.addMemberModalRef = this.modal.open(template, { backdrop: true, size: 'lg', centered: true })
   } 
 
   closeMemberModal() {
