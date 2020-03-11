@@ -117,7 +117,7 @@ WSGI_APPLICATION = 'OrderTango.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'tenant_schemas.postgresql_backend',
-        'NAME': 'syiok1',
+        'NAME': 'syiok2',
         'USER': 'postgres',
         'PASSWORD': 'TN41at5593@',
         'HOST': '52.221.61.17',
