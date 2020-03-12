@@ -10,7 +10,7 @@ export class ChatService {
   csrfToken = null;
   // baseurl = "http://customer12.localhost:8000"; // window.location.pathname
 
-  baseurl = "http://ragavi2113.localhost:8000"; // window.location.pathname
+  baseurl = "http://dateman08.localhost:8000"; // window.location.pathname
 
   constructor(
     private http: Http,
@@ -21,13 +21,20 @@ export class ChatService {
     return this.httpClient.get(`${this.baseurl}/api/accounts/`, this.getHeader())
   }
 
+  getSubUsers(): Observable<any> {
+    return this.httpClient.get(`${this.baseurl}/api/sub-accounts/`, this.getHeader())
+  }
+
   getUser(): Observable<any> {
     return this.httpClient.get(`${this.baseurl}/api/user/account/`, this.getHeader())
   }
 
-  getOrg(id): Observable<any> {
-    console.log('HERE HERE: ', id)
-    return this.httpClient.get(`${this.baseurl}/api/org/${id}/`, this.getHeader())
+  getSubUser(): Observable<any> {
+    return this.httpClient.get(`${this.baseurl}/api/sub-user/account/`, this.getHeader())
+  }
+
+  getOrg(): Observable<any> {
+    return this.httpClient.get(`${this.baseurl}/api/org/`, this.getHeader())
   }
 
   getChatRooms(): Observable<any> {

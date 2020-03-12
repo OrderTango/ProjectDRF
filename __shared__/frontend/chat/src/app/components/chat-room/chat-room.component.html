@@ -7,14 +7,15 @@
                 <!-- <span class="remove" (click)="removeMember(member.thread, member.member_id)" aria-hidden="true">&times;</span> -->
             </div>
         </div>
-        <button (click)="addMemberModal(AddThreadMember)" class="btn btn-secondary">Add Member</button>
+        <button *ngIf="hasChatRoom" (click)="addMemberModal(AddThreadMember)" class="btn btn-secondary">Add Member</button>
     </nav>
     <div class="message-body">
         <div *ngIf="hasMessages && hasChatRoom">
             <ul class="sentMessage" *ngFor="let message of messages">
-                <li>
+                <li []>
                     <span class="message">{{ message.message }}</span>
                     <span class="message-date">{{message.date_created}}</span>
+                    <span><button>...</button></span>
                 </li>
             </ul>
         </div>
@@ -27,8 +28,6 @@
     </div>
     <div class="message-form">
         <form [formGroup]="messageForm" #messageArea class="form">
-            <!-- <input (keyup)="onKey($event)" formControlName="content"  type="text" placeholder="Enter message..." size="100" [disabled]="hasNoChatRoom === true ? true: null"/><br/> -->
-            <!-- <input (keyup)="onKey($event)" formControlName="content"  type="text" placeholder="Enter message..." size="100" /><br/> -->
             <textarea (keyup)="autoGrow()" #textArea formControlName="content" type="text" placeholder="Enter message..."></textarea>
             <input (click)="onSubmit()" class="create-room btn btn-primary" type="button" value="Send" [disabled]="!hasChatRoom"/>
         </form>
@@ -47,7 +46,7 @@
             <div *ngFor="let member of addedMembers"  class="select">
                 <span class="selectedAddedMember">
                     {{member.firstName}}&nbsp;{{member.lastName}}
-                    <span class="remove" (click)="removeAddedMember(member.userId)" aria-hidden="true">&times;</span>
+                    <span class="remove" (click)="removeAddedMember(member.id)" aria-hidden="true">&times;</span>
                 </span>
             </div>
         </div>

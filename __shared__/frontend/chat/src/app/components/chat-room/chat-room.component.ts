@@ -5,6 +5,7 @@ import { NgbModal, NgbModalRef, NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 import * as ReconnectingWebSocket from 'src/assets/reconnecting-websocket.js';
 
 import { ChatService } from '../../services/chat.service';
+import { ObjectUnsubscribedError } from 'rxjs';
 
 @Component({
   selector: 'app-chat-room',
@@ -24,7 +25,6 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   })
 
   private chatSocket;
-  // private roomName: string;
   private chatUser: string;
   private socketMessages = [];
   isAuthUser: boolean;
@@ -34,6 +34,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   messages = [];
   msg = [];
   users = [];
+  subUsers = [];
   addedMembers = [];
   roomMembers = [];
   roomNewName: String = '';
@@ -50,12 +51,84 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     
     this.chatService.getUser().subscribe((res) => {
-      this.chatUser = res.userId
-      this.thisUser = res;
+      this.chatUser = res.userId;
+
+      this.thisUser = {
+        'id': res.userId, 
+        'firstName': res.firstName, 
+        'lastName': res.lastName, 
+        'email': res.email,
+        'contactNo': res.contactNo,
+        'profilepic': res.profilepic,
+        'lastLogin': res.lastLogin,
+        'activityLog': res.activityLog,
+        'status': res.status,
+        'createdDateTime': res.createdDateTime,
+        'updatedDateTime': res.updatedDateTime
+      }
     })
 
+    this.chatService.getSubUser().subscribe((res) => {
+      this.chatUser = res.subUserId
+
+      this.thisUser = {
+        'id': res.subUserId, 
+        'firstName': res.firstName, 
+        'lastName': res.lastName, 
+        'email': res.email,
+        'contactNo': res.contactNo,
+        'profilepic': res.profilepic,
+        'lastLogin': res.lastLogin,
+        'activityLog': res.activityLog,
+        'status': res.status,
+        'createdDateTime': res.createdDateTime,
+        'updatedDateTime': res.updatedDateTime
+      }
+      console.log('THIS USER: ', this.thisUser)
+    })
+
+    // this.chatService.getUsers().subscribe((res) => {
+    //   this.users = Object(res)
+    // })
+
+    // this.chatService.getSubUsers().subscribe((res) => {
+    //   this.subUsers = Object(res)
+    // })
+
     this.chatService.getUsers().subscribe((res) => {
-      this.users = Object(res);
+      Object(res).forEach(user => {
+        this.users.push({
+          'id': user.userId, 
+          'firstName': user.firstName, 
+          'lastName': user.lastName, 
+          'email': user.email,
+          'contactNo': user.contactNo,
+          'profilepic': user.profilepic,
+          'lastLogin': user.lastLogin,
+          'activityLog': user.activityLog,
+          'status': user.status,
+          'createdDateTime': user.createdDateTime,
+          'updatedDateTime': user.updatedDateTime
+        })
+      })
+    })
+
+    this.chatService.getSubUsers().subscribe((res) => {
+      Object(res).forEach(user => {
+        this.users.push({
+          'id': user.subUserId, 
+          'firstName': user.firstName, 
+          'lastName': user.lastName, 
+          'email': user.email,
+          'contactNo': user.contactNo,
+          'profilepic': user.profilepic,
+          'lastLogin': user.lastLogin,
+          'activityLog': user.activityLog,
+          'status': user.status,
+          'createdDateTime': user.createdDateTime,
+          'updatedDateTime': user.updatedDateTime
+        })
+      })
     })
 
     this.getChatRoom(this.room_name)
@@ -98,7 +171,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
     // )
 
     this.chatSocket = new ReconnectingWebSocket (
-      `ws://ragavi2113.localhost:8000/ws/api-chat/${room_name}/` 
+      `ws://dateman08.localhost:8000/ws/api-chat/${room_name}/` 
     )
 
     this.chatSocket.debug = true;
@@ -160,7 +233,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
 
   fetchMessages() {
     this.chatSocket.send(JSON.stringify({
-      'from': this.chatUser,
+      'from': this.thisUser,
       'command': 'fetch_message'
     }))
   }
@@ -186,7 +259,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
       this.chatSocket.send(JSON.stringify({
         'message': message,
         'command': 'new_message',
-        'from': this.chatUser
+        'from': this.thisUser
       }));
   
       this.messageForm.reset();
@@ -202,9 +275,9 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
   selectedMember(user) {
-    if(user.userId !== this.chatUser) {
-      if(!this.addedMembers.some((m) => m.userId == user.userId)) {
-        this.addedMembers.push({'userId': user.userId, 'firstName': user.firstName, 'lastName': user.lastName, 'email': user.email})
+    if(user.id !== this.chatUser) {
+      if(!this.addedMembers.some((m) => m.id == user.id)) {
+        this.addedMembers.push({'id': user.id, 'firstName': user.firstName, 'lastName': user.lastName, 'email': user.email})
       }
     }
   }
@@ -225,7 +298,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
 
   removeMember(room, id) {
     this.chatService.removeRoomMember(room, id).subscribe(res => {
-      if(this.thisUser.userId !== id) {
+      if(this.thisUser.id !== id) {
         this.roomMembers = this.roomMembers.filter(member => member.member_id !== id);
       }
     }, error => {

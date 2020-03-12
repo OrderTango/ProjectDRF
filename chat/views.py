@@ -10,10 +10,16 @@ from OrderTangoApp.models import *
 
 
 def getUser(request):
-    string_user = request.session['user']
-    obj_user = json.loads(string_user)
-    session_user = list(map(itemgetter('pk'), obj_user))
-    return session_user[0]
+    if 'user' in request.session:
+        string_user = request.session['user']
+        obj_user = json.loads(string_user)
+        session_user = list(map(itemgetter('pk'), obj_user))
+        return session_user[0]
+    elif 'subUser' in request.session:
+        string_user = request.session['subUser']
+        obj_user = json.loads(string_user)
+        session_user = list(map(itemgetter('pk'), obj_user))
+        return session_user[0]
 
 def getToken(user):
     user = User.objects.get(userId=user)

@@ -1,18 +1,18 @@
+import json 
+import functools
+
 from django.db import connection
+
 from asgiref.sync import async_to_sync 
 from channels.generic.websocket import WebsocketConsumer 
 
 from OrderTangoApp.models import User
+from OrderTangoSubDomainApp.models import Subuser
 from .models import Thread, ThreadMessage, ThreadMember
-import json 
-import functools
 
 
 class ChatConsumer(WebsocketConsumer):
-    i = 0
     def new_member(self, text_data):
-        # connection.schema_name = 'otfe5e60d1'
-        connection.schema_name = 'otdc659634'
         currentSchema = connection.schema_name 
         connection.set_schema(schema_name=currentSchema)
         print('new_member: ', connection.schema_name)
@@ -22,67 +22,94 @@ class ChatConsumer(WebsocketConsumer):
         members = []
 
         for member in member_user:
-            user = User.objects.get(userId=member['userId'])
-            thread = Thread.objects.get(id=self.thread_id)
-            member = ThreadMember.objects.create(member=user, thread=thread)
-            members.append({
-                'members': member.member
-            })
-        
+            try:
+                user = User.objects.get(userId=member['id'], email=member['email'])
+                thread = Thread.objects.get(id=self.thread_id)
+                member = ThreadMember.objects.create(user_member=user, thread=thread)
+                members.append({
+                    'members': member.member
+                })
+            except:
+                try:
+                    subUser = Subuser.objects.get(subUserId=member['id'], email=member['email'])
+                    thread = Thread.objects.get(id=self.thread_id)
+                    member = ThreadMember.objects.create(subuser_member=subuser, thread=thread)
+
+                    members.append({
+                        'members': member.member
+                    })
+                except:
+                    return Response(status=status.HTTP_404_NOT_FOUND)
+
         content = {
             'command': 'new_member',
             'members': members
         }
 
-        self.send_chat_message(content)
+        self.send_chat_message(content)                
+        
 
     def fetch_messages(self, text_data):
-
-        connection.schema_name = 'otdc659634'
         currentSchema = connection.schema_name
         connection.set_schema(schema_name=currentSchema)
         print('fetch_messages: ', connection.schema_name)
 
-        sender_user = text_data['from']
         thread = Thread.objects.get(id=self.thread_id)
         members = ThreadMember.objects.filter(thread=thread.id)
-        messages = ThreadMessage.objects.filter(sender=sender_user, thread=thread.id)
+        messages = ThreadMessage.objects.filter(thread=thread)
 
         content = {
             'command': 'fetch_message',
-            'thread': thread.name,
-            'thread_id': thread.id,
+            'thread': thread.name, 
+            'thread_id': thread.id, 
             'message': self.fetches_to_json(messages, members)
         }
-
-        currentSchema = connection.schema_name 
-        connection.set_schema(schema_name=currentSchema)
 
         self.send_chat_message(content)
 
     def new_message(self, text_data):
-        # connection.schema_name = 'otfe5e60d1'
-        connection.schema_name = 'otdc659634'
         currentSchema = connection.schema_name 
         connection.set_schema(schema_name=currentSchema)
 
         print('new_message 1: ', currentSchema)
 
         sender = text_data['from']
-        sender_user = User.objects.filter(userId=sender)[0]
+        # sender_user = User.objects.filter(userId=sender)[0]
         thread = Thread.objects.get(id=self.thread_id)
-        ThreadMember.objects.get_or_create(member=sender_user, thread=thread)
-        message = ThreadMessage.objects.create(
-            thread=thread,
-            sender=sender_user, 
-            message=text_data['message'])
-        
-        content = {
-            'command': 'new_message',
-            'message': self.message_to_json(message)
-        }
 
-        return self.send_chat_message(content)
+        try: 
+            user = User.objects.get(userId=sender['id'], email=sender['email'])
+            ThreadMember.objects.get_or_create(user_member=user, thread=thread)
+
+            message = ThreadMessage.objects.create(
+                thread=thread,
+                user_sender=user, 
+                message=text_data['message']
+            )
+            
+            content = {
+                'command': 'new_message',
+                'message': self.message_to_json(message)
+            }
+
+            return self.send_chat_message(content)
+
+        except:
+            subuser = Subuser.objects.get(subUserId=sender['id'], email=sender['email'])
+            ThreadMember.objects.get_or_create(subuser_member=subuser, thread=thread)
+
+            message = ThreadMessage.objects.create(
+                thread=thread,
+                subuser_sender=subuser,
+                message=text_data['message']
+            )
+
+            content = {
+                'command': 'new_message',
+                'message': self.message_to_json(message)
+            }
+
+            return self.send_chat_message(content)
 
     def fetches_to_json(self, messages, members):
         result = [] 
@@ -94,7 +121,8 @@ class ChatConsumer(WebsocketConsumer):
         return {
             'thread': message.thread.name, 
             'thread_id': message.thread.id,
-            'sender': message.sender.email, 
+            'user_sender': message.user_sender.email,
+            'subuser_sender': message.subuser_sender.email, 
             'message': message.message,
             'message_id': message.id,
             'members': self.members_to_json(members),
@@ -110,8 +138,10 @@ class ChatConsumer(WebsocketConsumer):
     def member_to_json(self, message):
         return {
             'thread': message.thread.name, 
-            'member': message.member.email,
-            'member_id': message.member.userId,
+            'user_member_id': message.user_member.userId,
+            'user_member': message.user_member.email,
+            'subuser_member_id': message.subuser_member.subUserId,
+            'subuser_member': message.subuser_member.email,
             'date_added': str(message.date_added)
         }
 
@@ -124,7 +154,8 @@ class ChatConsumer(WebsocketConsumer):
     def message_to_json(self, message):
         return {
             'thread': message.thread.name,
-            'sender': message.sender.email,
+            'user_sender': message.user_sender.email,
+            'subuser_sender': message.subuser_sender.email,
             'message': message.message,
             'date_created': str(message.date_created)
         }
@@ -136,8 +167,6 @@ class ChatConsumer(WebsocketConsumer):
     }
 
     def connect(self):
-        # connection.schema_name = 'otfe5e60d1'
-        connection.schema_name = 'otdc659634'
         currentSchema = connection.schema_name 
         self.schema_used = currentSchema
         connection.set_schema(schema_name=currentSchema)
@@ -194,6 +223,3 @@ class ChatConsumer(WebsocketConsumer):
         # Send message to WebSocket
         self.send(text_data=json.dumps(message))
 
-    
-
-        

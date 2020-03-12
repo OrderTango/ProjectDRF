@@ -31,7 +31,6 @@
             <div class="row">
                 <div *ngIf="!isChatRoom" class="contacts">
                     <h4>Contacts</h4>
-                    <i class="fa fa-user fa-5x"></i>
                     <div class="contact-user" *ngFor="let user of users">
                         <span (click)="createChatRoom(user.firstName, user.lastName)" *ngIf="user.status === 'Active'" class="user">
                             {{ user.firstName }}&nbsp;{{ user.lastName }}

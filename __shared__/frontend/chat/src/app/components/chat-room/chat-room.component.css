@@ -37,6 +37,8 @@ li {
 .message-date {
     color: #BEBEBE;
     font-size: xx-small;
+    display: block;
+    margin-top: 0.6rem;
 }
 
 .message-form {

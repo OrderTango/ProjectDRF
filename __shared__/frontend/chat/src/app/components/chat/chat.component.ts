@@ -15,6 +15,7 @@ export class ChatComponent implements OnInit {
   authUser = null;
   organization = null;
   users = []
+  subUsers = []
   rooms = []
   createRoom: Boolean = false;
   isChatRoom: Boolean = true;
@@ -38,23 +39,59 @@ export class ChatComponent implements OnInit {
 
   ngOnInit(): void {
     this.chatService.getUser().subscribe((res) => {
-      this.authUser = res;
-      console.log('fsdfsdfs', this.authUser)
+      if(res.length !== 0) {
+        this.authUser = res;
+      }
+    })
 
-      this.chatService.getOrg(this.authUser.userId).subscribe((res) => {
-        this.organization = res;
-        console.log('ORGANIZATION: ', this.organization)
-      })
+    this.chatService.getSubUser().subscribe((res) => {
+      if(res.length !== 0) {
+        this.authUser = res;
+      }
+    })
+
+    this.chatService.getOrg().subscribe((res) => {
+      this.organization = res;
     })
 
     this.chatService.getUsers().subscribe((res) => {
-      this.users = Object(res);
+      Object(res).forEach(user => {
+        this.users.push({
+          'id': user.userId, 
+          'firstName': user.firstName, 
+          'lastName': user.lastName, 
+          'email': user.email,
+          'contactNo': user.contactNo,
+          'profilepic': user.profilepic,
+          'lastLogin': user.lastLogin,
+          'activityLog': user.activityLog,
+          'status': user.status,
+          'createdDateTime': user.createdDateTime,
+          'updatedDateTime': user.updatedDateTime
+        })
+      })
+    })
+
+    this.chatService.getSubUsers().subscribe((res) => {
+      Object(res).forEach(user => {
+        this.users.push({
+          'id': user.subUserId, 
+          'firstName': user.firstName, 
+          'lastName': user.lastName, 
+          'email': user.email,
+          'contactNo': user.contactNo,
+          'profilepic': user.profilepic,
+          'lastLogin': user.lastLogin,
+          'activityLog': user.activityLog,
+          'status': user.status,
+          'createdDateTime': user.createdDateTime,
+          'updatedDateTime': user.updatedDateTime
+        })
+      })
     })
 
     this.chatService.getChatRooms().subscribe((res) => {
       this.rooms = Object(res);
-
-      console.log('Rooms: ', this.rooms)
 
       this.rooms.forEach(r => {
         // Transform user-named thread name
