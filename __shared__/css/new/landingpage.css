@@ -1,0 +1,131 @@
+#GuideOnRow {
+    margin-top: 40px;
+    margin-right: 10px;
+    margin-left: 5px;
+    margin-bottom: 10px
+}
+.paddingLeftZero {
+    padding-left: 0px
+}
+#guideOnImage, #orderTangoAccount {
+    width: 300px;
+}
+.paragraphClass {
+    margin-bottom: 0px !important
+}
+#languageIconRow {
+    background-color: #E0D6B7;
+    height: 40px;
+    margin-right: 0px !important
+}
+.languageIconClass {
+    height: 20px;
+    margin-top: 10px;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+.active {
+    border-bottom: 3px solid black;
+    padding-bottom: 3px
+}
+#guideRow {
+    margin-top: 40px;
+    padding-bottom: 40px;
+    box-shadow: 5px 5px 5px #b3aeae;
+    margin-right: 0px;
+}
+#readyToRegisterId {
+    margin-right: 40px
+}
+#validateId, #onBoardId {
+    margin-left: 20px; 
+    margin-right: 40px
+}
+.guideImages {
+    width: 300px
+}
+.learnMoreDiv {
+    text-align: center; 
+    margin-top: 10px
+}
+#reg_learnMore, #reg_watchVideo, #val_learnMore, #val_watchVideo, #onb_learnMore, #onb_watchVideo {
+    width: 100px
+}
+#unLockRow {
+    margin-top: 30px; 
+    margin-bottom: 20px;
+    margin-right: 0px
+}
+#unLockIcon {
+    width: 360px;
+}
+.footer{
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  height: 40px; /* Set the fixed height of the footer here */
+  line-height: 60px; /* Vertically center the text there */
+  background-color: #92928c;
+}
+@media (min-width:320px) and (max-width: 480px)  {
+	#guideSteps {
+        padding-top: 10px;
+        padding-bottom: 5px; 
+    }
+    #languageIconRow {
+        height: 80px;
+        margin-right: 0px !important
+    }
+    #readyToRegisterId {
+        text-align: center;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        margin-right: 0px !important;
+        padding-right: 0px !important
+    }
+    #validateId, #onBoardId {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        margin-right: 0px !important;
+        padding-right: 0px !important
+    }
+    #guideRow {
+        margin-right: 0px !important
+    }
+    #unLockRow { 
+        margin-right: 0px !important
+    }
+    #unLockIcon {
+        width: 320px
+    }
+	.navbar-brand {
+		margin-left: 5px;
+	}
+}
+@media (min-width:600px) and (max-width:801px) {
+	#guideSteps {
+        padding-top: 20px;
+        padding-bottom: 10px; 
+    }
+    #guideSteps {
+        padding-top: 20px;
+        padding-bottom: 10px; 
+    }
+    .guideImages {
+        width: 425px;
+    }
+    #readyToRegisterId {
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 10px
+    }
+    #validateId, #onBoardId {
+        text-align: center;
+        margin-left: 10px;
+        margin-top: 10px;
+        margin-bottom: 10px
+    }
+    #reg_learnMore, #reg_watchVideo, #val_learnMore, #val_watchVideo, #onb_learnMore, #onb_watchVideo {
+        width: 125px
+    }
+}

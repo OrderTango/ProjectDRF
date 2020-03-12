@@ -1,0 +1,16 @@
+{% autoescape off %}
+Hi {{ otp.firstName }} {{ otp.lastName }},
+{% if domain == "vendor" %}
+{{user.userCompanyId.companyName}} added you as {{domain}}
+
+Use the below link to view the customer and you can accept/reject the customer
+
+http://{{ domain_url }}{{main_url}}{% url 'acceptCustomer' uidb64=uid token=token %}?wsid={{wsid}}
+{% else %}
+{{user.userCompanyId.companyName}} added you as {{domain}}
+
+Use the below link to view the vendor and you can accept/reject the vendor
+
+http://{{ domain_url }}{{main_url}}{% url 'acceptSupplier' uidb64=uid token=token %}?wsid={{wsid}}
+{% endif %}
+{% endautoescape %}

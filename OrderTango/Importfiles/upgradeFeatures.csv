@@ -1,0 +1,11 @@
+categoryDetail,categoryPrice,categoryPriceUnit_id,modelName
+User,1,1,Subuser
+Area,1,1,Area
+Purchase Order,1,1,ShoppingCart
+Sale Order,1,1,OrderPlacementfromCustomer
+Basic Report,1,1,basicReport
+SLA,1,1,serviceLevelAgreement
+Vendor,1,1,Supplier
+Customer,1,1,Customer
+Product,1,1,ItemMaster
+Site,1,1,Sites

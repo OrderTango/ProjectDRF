@@ -1,0 +1,8 @@
+storageListCode,storageListName,storageListDesc,planDetail_id
+Free,Free,Free,1
+Free++,Free++,Free++,
+Advanced,Advanced,Advanced,2
+Professional,Professional,Professional,3
+Enterprise,Enterprise,Enterprise,4
+On-demand,On-demand,On-demand,
+Custom,Custom,Custom,

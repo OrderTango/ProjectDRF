@@ -1,0 +1,127 @@
+body {
+	font-family: Futura, Futura-Medium, "Futura Medium", "Century Gothic", CenturyGothic, "Apple Gothic", AppleGothic, "URW Gothic L", "Avant Garde", sans-serif;
+}
+.removePaddingFromContainerFluidClass {
+	padding: 0px !important
+}
+.navBgColor {
+	background: #ffd500 !important
+}
+.navLinkColor {
+	font-size: 16px !important;
+	font-weight: bold;
+	line-height: 24px !important;
+	color: #484847 !important;
+}
+.nav-item {
+	padding-left: 10px;
+	padding-right: 10px
+}
+.navbar {
+	padding: 3px 20px;
+	box-shadow: 5px 5px 5px #b3aeae !important;
+	z-index: 1;
+}
+.navbar-brand {
+	margin-left: 25px
+}
+
+.input-group-addon {
+	padding: .5rem .75rem;
+	margin-bottom: 0;
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 1.25;
+	color: #495057;
+	text-align: center;
+	background-color: #e9ecef;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+.borderRadius {
+	border-top-right-radius: 10px !important;
+	border-bottom-right-radius: 10px;
+	width: 160px !important
+}
+#signUpLi {
+	margin-right: 50px
+}
+.split{
+    height: 100%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    overflow-x: hidden;
+    padding-top: 20px;
+
+}
+.left{
+    left: 0;
+    background-color: #fffdf2;
+}
+.right{
+    right: 0;
+    background-color: #f7f5fa;
+}
+.allstartatfirst{
+    width: 200px;
+}
+.registerenglish{
+    width: 60px;
+}
+.registerchinese{
+    width: 45px;
+    padding-left: 10px;
+}
+.registerenglishdiv{
+    margin-top: 20px;
+}
+.registerchinesediv{
+    margin-top: 20px;
+}
+.registerlearnmore{
+    width: 100px;
+}
+.registerwatchvideo{
+    width: 100px;
+}
+.learnandvideobtn{
+    margin-left: 10px;
+}
+#registerhorizontalline{
+    width: 94%;
+    border-bottom: 3px solid #ffd500;
+}
+.bgImageBody {
+    position: absolute;
+    bottom: 60;
+}
+@font-face {
+  font-family: Futura;
+  src: url('.../Futura Medium.otf') format("otf");
+  font-weight: normal;
+}
+#valuedcustomer{
+    font: caption;
+    font-family: Futura, Futura-Medium, "Futura Medium", "Century Gothic", CenturyGothic, "Apple Gothic", AppleGothic, "URW Gothic L", "Avant Garde", sans-serif;
+    margin-left: 20px;
+    font-size: 19px;
+	font-weight: bolder;
+	color: #683594;
+}
+#formsec1{
+    margin-left:30px;
+}
+.firstnamediv{
+    height: 25px;
+    font-size: 15px
+}
+#firstname{
+    height: 30px;
+    width: 150px !important;
+    border: 1px solid #ffd500;
+    border-radius: 8px;
+}
+.firstnamelabel{
+    font-weight: bold;
+}

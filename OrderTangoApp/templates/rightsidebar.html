@@ -1,0 +1,429 @@
+{% load static %}
+<script type="text/javascript" src="{% static 'js/fusioncharts.js' %}"></script>
+<style>
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+a.notificationStatus {
+    color: #7f7f7f;
+    font-size: 12px
+}
+#companyNameFont {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+    width: 80%;
+    text-align: center;
+    word-break: break-word;
+}
+#viewAllNoti{
+    border: 0px;
+    font-size: 13px;
+    border-radius: 5px;
+    color: #ffffff;
+    background-color: #984fa5;
+    padding: 5px 5px 3px;
+    cursor: pointer;
+    text-decoration: none;
+}
+#notificationBody{
+    height: 110px;
+    overflow-y: scroll;
+}
+#sidebar {
+    width: 250px;
+    position: fixed;
+    top: 11%;
+    right: -270px;
+    height: 90% !important;
+    z-index: 999;
+    background: #fff;
+    border: 1px solid #881999;
+    transition: all 0.3s;
+    overflow-y: scroll;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+</style>
+<!-- Right Sidebar  -->
+        <nav id="sidebar">
+              <ul class="navbar-primary-menu">
+                <li class="overflowAuto">
+                    <a href="#" class="pull-left"><span id="dismiss"><img class="img-responsive imageUpload" height="25" src="{% static 'images/close.png' %}" alt=""/></span></a>
+                </li>
+                <li>
+                  <div class="row justify-content-center">
+                      {% if company.companyImage %}
+                        <img class="img-responsive imageUpload" id="iconCompanyLogo" src="{{ company.companyImage.url }}" alt=""/>
+                       {% else %}
+                       <img class="img-responsive imageUpload" id="iconCompanyLogo" src="{% static 'images/companyLogo.png' %}" alt=""/>
+                       {% endif %}
+                  </div>
+                  <div class="row justify-content-center">
+                      <span class="commonFontSize" id="companyNameFont"><center>{{ company.companyName }} <br/> {{ company.companyCode }}</center> </span>
+                 <input id="alertCompany" value="{{ company.companyName }}" type="hidden"/>
+                  </div>
+                </li>
+                <li>
+                    <div class="row">
+                        <div class="sideBarAlignClass">
+                           <div class="notify">
+                               <div class="notificationtag" id="notificationtag"><img class="sideBarIcons" src="{% static 'images/NotificationsIcon.png' %}" href="{% url 'operationalpanel' %}" alt=""/> <span class="nav-label"> Notification <span class="count">{{ leng }}</span></span> <input type="button" id="viewAllNoti" value="View All"></button> </div>
+                            <div id="notificationBody">
+                                {% if noti %}
+                                {% for noti in noti %}
+                                <div class="notificationcontent"><a class="notificationStatus" id="{{noti.type}}_{{noti.sendFromId}}_{{noti.notificationId}}" href="#"> {{noti.desc}}</a></div>
+                                {% endfor %}
+                                {% else %}
+                                <div class="notificationcontent">No notifications to show<br/></div>
+                                {% endif %}
+                            </div>
+                        </div>
+                            </div>
+                    </div>
+                </li>
+                <li>
+                  <div id="chart-container">FusionCharts will render here</div>
+                </li>
+              </ul>
+        </nav>
+
+    <!-- Right Sidebar  -->
+
+
+<div class="modal" id="loader"><!-- Place at bottom of page --></div>
+
+<div class="modal" id="notificationConfirmModel" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog ">
+    <div class="modal-content ">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title modalTitleHead">Notification confirmation</h4>
+        <button type="button" class="close" id="btnclose" data-dismiss="modal">&times;</button>
+	  </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="row" >
+            <div class="col-md-12 col-sm-3 col-6 formGroup " >
+               Are you sure, you want to assign sla?
+
+            </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer row "  style="text-align:center">
+           <div class="col-md-12">
+              <input type="button" class="btn modalBtnClass "  id="notificationConfirmSubmit" data-dismiss="modal" value="Accept"></input>
+              <input type="button" class="btn modalBtnClass " id="notificationConfirmReject"  data-dismiss="modal" value="Reject" ></input>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+
+    FusionCharts.ready(function() {
+    $.ajax({
+          url: "/getMemoryDetails",
+          type: "GET",
+          dataType : "json",
+          contentType : "application/json",
+          success: function (result)
+          {
+            var data = result;
+            if (data.status == 'success') {
+                  var demographicsChart = new FusionCharts({
+                    type: 'pie2d',
+                    renderAt: 'chart-container',
+                    width: '250',
+                    height: '250',
+                    dataFormat: 'json',
+                    dataSource: {
+                      "chart": {
+                        "caption": "Account Storage",
+                        //"subCaption": "Last Year",
+                        "startingAngle": "120",
+                        "decimals": "2",
+                        "showLabels": "0",
+                        "showLegend": "1",
+                        "enableMultiSlicing": "0",
+                        "slicingDistance": "10",
+                        //To show the values in percentage
+                        "showPercentValues": "0",
+                        "showPercentInTooltip": "0",
+                        "plotTooltext": "Storage Type : $label<br>Total Size : $datavalue",
+                        "pieRadius": "40",
+                        "paletteColors": "#0075C2,#881999,#F45B00,#ffc107,#28a745",
+                        "bgColor": "white",
+                        "showBorder": "0",
+                      },
+                      "data": [{
+                        "label": "Free Space",
+                        "value": data.totalItems[0].FreeSpace
+                      }, {
+                        "label": "Media",
+                        "value": data.totalItems[0].Media
+                      },
+                      {
+                        "label": "Master Data",
+                        "value": data.totalItems[0].MasterData
+                      },{
+                        "label": "Transaction",
+                        "value": data.totalItems[0].Transaction
+                      },{
+                        "label": "Report",
+                        "value": data.totalItems[0].Report
+                      }]
+                    }
+                  });
+                  demographicsChart.render();
+
+            }
+            else if(result.status == 'error' && result.error_msg == 'sessionexpired'){
+                alert('Session has expired');
+                setTimeout(function() {
+                    window.location.href = data.redirect_url;
+                }, 2000);
+            }else{
+                alert(result.error_msg);
+            }
+          }
+        });
+});
+
+$(document).ready(function() {
+    $(document).on('click', '#btnclose', function(){
+        location.reload();
+    });
+    $body = $("body");
+    $(document).on('click', '#viewAllNoti', function() {
+        window.location.href = "/viewallnotifications";
+    });
+
+    $(document).on('click', '.notificationStatus', function() {
+        var id = $(this).attr('id');
+        var res = id.split("_");
+        var sendFromId = res[1];
+        var notificationId = res[2];
+        var type = res[0];
+        console.log(type);
+        $body.addClass("loading");
+
+        if(type == "SiteAssign")
+        {
+            $('#notificationConfirmModel').modal();
+            $('#notificationConfirmSubmit').on('click',function() {
+            var data = { "sendFromId": sendFromId, 'id': notificationId ,'type': 'accept' };
+            $.ajax({
+            url: "/sitesAddingForSla",
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (result)
+            {
+                $body.removeClass("loading");
+                if (result.status == 'success') {
+                    setTimeout(function() {
+                    $(".notify").load(location.href + " .notify");
+                    },2000);
+                    alert(result.success_msg);
+                }else if(result.status == 'error' && result.error_msg == 'sessionexpired'){
+                    setTimeout(function() {
+                        window.location.href = data.redirect_url;
+                    }, 2000);
+                    alert('Session has expired.');
+                }
+            else{
+                alert(result.error_msg);
+            }
+
+        }
+
+        });
+    });
+
+    $('#notificationConfirmReject').on('click',function() {
+        $body.removeClass("loading");
+        var data = { "sendFromId": sendFromId, 'id': notificationId ,'type': 'reject' };
+            $.ajax({
+            url: "/sitesAddingForSla",
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (result)
+            {
+            $body.removeClass("loading");
+            if (result.status == 'success') {
+                setTimeout(function() {
+                    $(".notify").load(location.href + " .notify");
+                },2000);
+                alert(result.success_msg);
+            }else if(result.status == 'error' && result.error_msg == 'sessionexpired'){
+                setTimeout(function() {
+                    window.location.href = data.redirect_url;
+                }, 2000);
+                alert('Session has expired.');
+            }
+            else{
+                alert(result.error_msg);
+            }
+
+            }
+
+            });
+        });
+    }
+    else if(type == "customer")
+    {
+        $body.removeClass("loading");
+        window.location.href = "/fetchAllCustomerForSlaAssign?wsid="+sendFromId+'&notificationId='+notificationId;
+    }
+    else if(type == "assignProductForCustomer")
+    {
+        $body.removeClass("loading");
+        window.location.href = "/fetchSupplierProductMerging?id="+sendFromId+'&notificationId='+notificationId;
+    }
+    else if(type == "href")
+    {
+        $body.removeClass("loading");
+        window.location.href = sendFromId+'&notificationId='+notificationId;
+    }
+    else if(type == "placeOrder")
+    {
+        var data ="id="+sendFromId+'&notificationId='+notificationId;
+        $.ajax({
+        url: "/notificationStatus",
+        type: "POST",
+        dataType: "json",
+        data: data,
+        success: function (result)
+        {
+            $body.removeClass("loading");
+            if (result.status == 'success') {
+                window.location.href = "/vieworders";
+            }else if(result.status == 'error' && result.error_msg == 'sessionexpired'){
+                setTimeout(function() {
+                    window.location.href = data.redirect_url;
+                }, 2000);
+                alert('Session has expired.');
+            }else{
+                alert(result.error_msg);
+            }
+
+        }
+
+        });
+    }
+    else
+    {
+        var data ="id="+sendFromId+'&notificationId='+notificationId;
+        $.ajax({
+        url: "/notificationStatus",
+        type: "POST",
+        dataType: "json",
+        data: data,
+        success: function (result)
+        {
+
+            $body.removeClass("loading");
+            if (result.status == 'success') {
+                if(type == "DisconnectedSupplier"){
+                    alert("Relationship has been disconnected");
+                }
+                else if(type == "DisconnectedCustomer"){
+                    alert("Relationship has been disconnected");
+                }
+                else if(type == "Connected"){
+                    alert("Connection has been established successfully");
+                }
+                else if(type == "removeCustomerOrSupplierOrProduct"){
+                    alert("Assigned product(s) has been removed successfully");
+                }
+                else if(type == "DeleteVendor"){
+                    alert("Customer has removed you from their vendor list");
+                }
+                else if(type == "DeleteCustomer"){
+                    alert("Customer has removed you from their customer list");
+                }
+                else if(type == "CustomerAcceptRequest"){
+                    alert("Customer has accepted your request");
+                }
+                else if(type == "CustomerRejectRequest"){
+                    alert("Customer has rejected your request");
+                }
+                else if(type == "AcceptSLA"){
+                    alert("Assigned SLA was accepted successfully");
+                }
+                else if(type == "RejectSLA"){
+                    alert("Assigned SLA was rejected by customer");
+                }
+                else if(type == "ProductAdded"){
+                    alert("New product(s) has been added to existing list");
+                }
+                else if(type == "ProductRejected"){
+                    alert("Customer has been rejected your assign product");
+                }
+                else if(type == "UpdatePriceCatelog"){
+                    alert("Product price updated");
+                }
+                else if(type == "itemRemoveForCustomer"){
+                    alert("Vendor has removed Product from their product list");
+                }
+                else if(type == "addOrMergingOrRejectProducts"){
+                    alert("Your catalog list updated");
+                }
+                else if(type == "profileUpdate"){
+                    alert("Profile info has been changed");
+                }
+                else if(type == "OrderAccept"){
+                    alert("Your order has been accepted");
+                }
+                else if(type == "OrderReject"){
+                    alert("Your order has been rejected");
+                }
+                else if(type == "OrderClosed"){
+                    alert("Your order has been closed");
+                }
+                else if(type == "cancelPlacedOrder"){
+                    alert("Order has been canceled");
+                }
+                else{
+                    alert("Success");
+                }
+                setTimeout(function() {
+                $(".notify").load(location.href + " .notify");
+                },2000);
+
+            }else if(result.status == 'error' && result.error_msg == 'sessionexpired'){
+                setTimeout(function() {
+                    window.location.href = data.redirect_url;
+                }, 2000);
+                alert('Session has expired.');
+            }else{
+                alert(result.error_msg);
+            }
+
+        }
+
+        });
+    }
+
+    });
+    });
+</script>

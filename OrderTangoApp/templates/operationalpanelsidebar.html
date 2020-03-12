@@ -1,0 +1,403 @@
+<style>
+#signInUserName{
+  width: 80%;
+  text-align: center;
+  word-break: break-word;
+}
+.navbar-global {
+  background-color: indigo;
+}
+
+.navbar-global .navbar-brand {
+  color: white;
+}
+
+.navbar-global .navbar-user > li > a
+{
+  color: white;
+}
+
+.navbar-primary {
+  bottom: 0px;
+  left: 0px;
+  position: relative;
+  top: 0px;
+  z-index: 8;
+  overflow: hidden;
+  -webkit-transition: all 0.1s ease-in-out;
+  -moz-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+}
+
+.navbar-primary.collapsed {
+  width: 70px;
+}
+
+.navbar-primary.collapsed .glyphicon {
+  font-size: 22px;
+}
+
+.navbar-primary.collapsed .nav-label {
+  display: none;
+}
+
+.navbar-primary-right {
+  bottom: 0px;
+  right: 0px;
+  position: relative;
+  z-index: 8;
+  overflow: hidden;
+  -webkit-transition: all 0.1s ease-in-out;
+  -moz-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+}
+
+.navbar-primary-right.collapsed-right {
+  width: 60px;
+}
+
+.navbar-primary-right.collapsed-right .glyphicon {
+  font-size: 22px;
+}
+
+.navbar-primary-right.collapsed-right .nav-label {
+  display: none;
+}
+
+.navbar-primary-menu,
+.navbar-primary-menu li {
+  margin:0; padding:0;
+  list-style: none;
+}
+
+.navbar-primary-menu li a {
+  display: block;
+  padding: 2px 4px 2px 10px;
+  text-align: left;
+  color: black;
+}
+
+.navbar-primary-menu li a:hover {
+  text-decoration: none;
+  color: black;
+}
+
+.navbar-primary-menu li a .glyphicon {
+  margin-right: 6px;
+}
+
+.navbar-primary-menu li a:hover .glyphicon {
+  color: orchid;
+}
+
+#adminManagementIcon {
+  background: #9e4faa;
+  padding-bottom: 15%;
+}
+#orderManagementIcon {
+  background: #ffd500;
+  padding-bottom: 3%;
+}
+#adminManagementIcon li a {
+  color: #ffffff;
+  font-size: 13px !important;
+}
+#adminManagementIcon li a span {
+  margin-left: 2%;
+}
+#orderManagementIcon li a {
+  color: #474747;
+  font-size: 13px !important;
+}
+#orderManagementIcon li a span {
+  margin-left: 2%;
+}
+.overflowAuto {
+    overflow: auto
+}
+.adminHead {
+    color: #fff;
+    font-weight: bold
+}
+.operationHead {
+    font-weight: bold
+}
+/* ---------------------------------------------------
+    Right SIDEBAR STYLE
+----------------------------------------------------- */
+
+#sidebar {
+    width: 250px;
+    position: fixed;
+    top: 11%;
+    right: -270px;
+    height: 100%;
+    z-index: 999;
+    background: #fff;
+    border: 1px solid #ffd500;
+    transition: all 0.3s;
+    overflow-y: scroll;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+#sidebar.active {
+    right: 0;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 998;
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+}
+.overlay.active {
+    display: block;
+    opacity: 1;
+}
+a[data-toggle="collapse"] {
+    position: relative;
+}
+/* Right Sidebar Style */
+#sideBarLeft {
+    background-color: #ffffff;
+}
+/* Menu Alignment Style Start */
+.menuChildClass {
+    margin-left: 10%
+}
+.menuGrandChildClass {
+    margin-left: 20%
+}
+#profileInfoDiv {
+    margin-top: 5%;
+    margin-bottom: 5%
+}
+/* Menu Alignment Style End */
+</style>
+{% load static %}
+<nav class="navbar-primary">
+  <ul class="navbar-primary-menu">
+    <li class="overflowAuto" id="overFlowLeft">
+        <a href="#" class="btn-expand-collapse-left"><span class="nav-label pull-right"><img class="img-responsive imageUpload" height="25" src="{% static 'images/close.png' %}" alt=""/></span></a>
+    </li>
+    <li id="profileInfoDiv">
+      <div class="row justify-content-center" id="logoCompany">
+          {% if user.profilepic %}
+            <img class="img-responsive imageUpload iconMF" id="iconMF" src="{{ user.profilepic.url }}" alt=""/>
+          {% else %}
+            <img class="img-responsive imageUpload iconMF" id="iconMF" src="{% static 'images/user-icon-1.png' %}" alt=""/>
+          {% endif %}
+      </div>
+      <div class="row justify-content-center">
+        <span class="nav-label commonFontSize">Signed in As </span>
+      </div>
+      <div class="row justify-content-center">
+        <span id="signInUserName" class="nav-label commonFontSize">{{ user.firstName }} {{ user.lastName }}</span>
+      </div>
+    </li>
+  </ul>
+  <ul class="navbar-primary-menu" id="orderManagementIcon">
+    <li>
+        <div class="row justify-content-center" id="logoCompany">
+            <i class="flaticon-admin-1O"></i>
+        </div>
+        <div class="row justify-content-center">
+            <span class="nav-label commonFontSize operationHead">Operations</span>
+        </div>
+    </li>
+      {% if subUserProfile == "Yes" and 'operationalpanel' in urls or subUserProfile == "No"%}
+    <li class="sidebarSubMenu" id="operationalpanel"><a href="#"><i class="flaticon-four-squares-with-frame-shapeO"></i> <span class="nav-label">Dashboard</span></a></li>
+   {%endif%}
+        {% if subUserProfile == "Yes" and 'placeOrder' in urls or subUserProfile == "Yes" and 'customerProductPanel' in urls or subUserProfile == "Yes" and 'supplierProductPanel' in urls or subUserProfile == "Yes" and 'productsalescatalog' in urls or subUserProfile == "Yes" and 'productpurchasecatalog' in urls or subUserProfile == "Yes" and 'vieworders' in urls or subUserProfile == "No"%}
+    <li> <a href="#ordermgmtmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="flaticon-boxO"></i>
+                <span class="nav-label">Order Management</span></a>
+        <ul class="collapse list-unstyled menuChildClass" id="ordermgmtmenu">
+            {% if subUserProfile == "Yes" and 'placeOrder' in urls or subUserProfile == "No" %}
+            <li class="sidebarSubMenu" id="placeOrder"><a href="#"><i class="flaticon-planningO"></i><span class="nav-label">Order</span></a></li>
+            {%endif%}{% if subUserProfile == "Yes" and 'customerProductPanel' in urls or subUserProfile == "No" %}
+            <li class="sidebarSubMenu" id="customerProductPanel"><a href="#"><i class="flaticon-meetingO"></i><span class="nav-label">Customer Catalog</span></a></li>
+            {%endif%}{% if subUserProfile == "Yes" and 'supplierProductPanel' in urls or subUserProfile == "No" %}
+            <li class="sidebarSubMenu" id="supplierProductPanel"><a href="#"><i class="flaticon-collaborationO"></i><span class="nav-label">Vendor Catalog</span></a></li>
+            {%endif%}<!--{% if subUserProfile == "Yes" and 'productsalescatalog' in urls or subUserProfile == "No" %}
+            <li class="sidebarSubMenu" id="productsalescatalog"><a href="#"><i class="flaticon-collaborationO"></i><span class="nav-label">Sales Catalog</span></a></li>
+            {%endif%}{% if subUserProfile == "Yes" and 'productpurchasecatalog' in urls or subUserProfile == "No" %}
+            <li class="sidebarSubMenu" id="productpurchasecatalog"><a href="#"><i class="flaticon-collaborationO"></i><span class="nav-label">Purchase Catalog</span></a></li>
+            {%endif%}-->{% if subUserProfile == "Yes" and 'vieworders' in urls or subUserProfile == "No" %}
+            {% if 'Order Fulfilment' in subscribedModules %}
+            <li class="sidebarSubMenu" id="vieworders"><a href="#"><i class="flaticon-packing-listO"></i><span class="nav-label">View Orders</span></a></li>
+            {%endif%}
+            <li class="" id=""><a href="#"><i class="flaticon-analyticsO"></i><span class="nav-label">Reports</span></a></li>
+            {%endif%}
+        </ul>
+    </li>{%endif%}
+      {% if 'Inventory' in subscribedModules %}
+    <li>
+        <a href="#inventorymgmtmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="flaticon-inventoryO"></i>
+            <span class="nav-label">Inventory Management</span></a>
+        <ul class="collapse list-unstyled menuChildClass" id="inventorymgmtmenu">
+            <li><a href="#"><i class="flaticon-magnifier-on-calendar-pageO"></i><span class="nav-label">View Stocks</span></a></li>
+            <li><a href="#"><i class="flaticon-updateO"></i><span class="nav-label">Update Stocks</span></a></li>
+            <li><a href="#"><i class="flaticon-abacusO"></i><span class="nav-label">Stock Counts</span></a></li>
+            <li><a href="#"><i class="flaticon-trackingO"></i><span class="nav-label">Transfer Stocks</span></a></li>
+            <li><a href="#"><i class="flaticon-documentO"></i><span class="nav-label">Record Wastage</span></a></li>
+        </ul>
+    </li>
+      {%endif%}
+    </li>
+  </ul>
+  <ul class="navbar-primary-menu" id="adminManagementIcon">
+    <li>
+        <div class="row justify-content-center" id="logoCompany">
+            <!--<img class="img-responsive imageUpload iconMF"  src="{% static 'images/ad_op_icon.png' %}" alt=""/>-->
+            <i class="flaticon-user-avatar-with-check-mark"></i>
+        </div>
+        <div class="row justify-content-center">
+            <span class="nav-label commonFontSize adminHead">Admin</span>
+        </div>
+    </li>
+      {% if subUserProfile == "Yes" and 'dashboard' in urls or subUserProfile == "No"%}
+    <li class="sidebarSubMenu" id="dashboard"><a href="#"><i class="flaticon-four-squares-with-frame-shape"></i> <span class="nav-label">Dashboard</span></a></li>
+    <li>
+            <a href="#dataadministrationmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                <i class="flaticon-file"></i> <span class="nav-label">Data Administration</span>
+            </a>
+            <ul class="collapse list-unstyled menuChildClass" id="dataadministrationmenu">
+                <li>
+                    <a href="#onboardingmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="flaticon-pilot-hat"></i>
+                        <span class="nav-label">Onboarding</span></a>
+                </li>
+                <ul class="collapse list-unstyled menuGrandChildClass" id="onboardingmenu">
+                    <li class="sidebarSubMenu" id="administrationpanel?module=customer">
+                        <a href="#"><i class="flaticon-customer"></i><span class="nav-label">Customer</span></a>
+                    </li>
+                    <li class="sidebarSubMenu" id="administrationpanel?module=vendor">
+                        <a href="#"><i class="flaticon-shopping-groceries"></i><span class="nav-label">Vendor</span></a>
+                    </li>
+                    <li class="sidebarSubMenu" id="administrationpanel?module=product">
+                        <a href="#"><i class="flaticon-product"></i><span class="nav-label">Product</span></a>
+                    </li>
+                </ul>
+            </ul>
+
+    </li>
+      {%endif%}
+      {% if subUserProfile == "Yes" and 'viewUser' in urls or subUserProfile == "No"%}
+    <li>
+        <a href="#useradministrationmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            <i class="flaticon-user-key-on-screen"></i> <span class="nav-label">User Administration</span>
+        </a>
+        <ul class="collapse list-unstyled menuChildClass" id="useradministrationmenu">
+            <li class="sidebarSubMenu" id="viewUser"><a href="#"><i class="flaticon-zoom"></i> <span class="nav-label">View User</span></a></li>
+        </ul>
+    </li>{%endif%}
+      {% if subUserProfile == "Yes" and 'createOrViewSLA' in urls or subUserProfile == "No" %}
+    <li class="sidebarSubMenu" id="createOrViewSLA"><a href="#"><i class="flaticon-signing-the-contract"></i> <span class="nav-label">Service Level Agreement</span></a></li>
+      {%endif%}
+      {% if subUserProfile == "Yes" and 'fetchAllCustomerForSlaAssign' in urls or subUserProfile == "Yes" and 'fetchAllSupplierForSlaAssign' in urls or subUserProfile == "Yes" and 'viewSupplierSLA' in urls or subUserProfile == "No" %}
+     <li>
+        <a href="#assignSla" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            <i class="flaticon-signing-the-contract"></i> <span class="nav-label">Assign SLA</span>
+        </a>
+        <ul class="collapse list-unstyled menuChildClass" id="assignSla">
+            {% if subUserProfile == "Yes" and 'fetchAllCustomerForSlaAssign' in urls or subUserProfile == "No"%}
+           <li class="sidebarSubMenu" id="fetchAllCustomerForSlaAssign">
+            <a href="#"><i class="flaticon-customer"></i><span class="nav-label">Customer</span></a>
+            </li>{%endif%}
+            {% if subUserProfile == "Yes" and 'fetchAllSupplierForSlaAssign' in urls or subUserProfile == "No" %}
+            <li class="sidebarSubMenu" id="fetchAllSupplierForSlaAssign">
+                <a href="#"><i class="flaticon-shopping-groceries"></i><span class="nav-label">Vendor</span></a>
+            </li>{%endif%}
+            {% if subUserProfile == "Yes" and 'viewSupplierSLA' in urls or subUserProfile == "No" %}
+            <li class="sidebarSubMenu" id="viewSupplierSLA">
+                <a href="#"><i class="flaticon-shopping-groceries"></i><span class="nav-label">View Vendor SLA</span></a>
+            </li>{%endif%}
+        </ul>
+    </li>{%endif%}
+      {% if subUserProfile == "Yes" and 'viewArea' in urls or subUserProfile == "Yes" and 'viewSite' in urls or subUserProfile == "No"%}
+      <li>
+        <a href="#companyhierarchymenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            <i class="flaticon-hierarchical-structure"></i><span class="nav-label">Company Hierarchy</span>
+        </a>
+        <ul class="collapse list-unstyled menuChildClass" id="companyhierarchymenu">
+            {% if subUserProfile == "Yes" and 'viewArea' in urls or subUserProfile == "No" %}
+            <li class="sidebarSubMenu" id="viewArea"><a href="#"><i class="flaticon-map"></i> <span class="nav-label">Area</span></a></li>
+           {%endif%}
+            {% if subUserProfile == "Yes" and 'viewSite' in urls or subUserProfile == "No" %}
+            <li class="sidebarSubMenu" id="viewSite">
+                <a href="#"  >
+                    <i class="flaticon-viral-marketing"></i> <span class="nav-label">Site</span>
+                </a>
+            </li>
+            {%endif%}
+
+        </ul>
+    </li>{%endif%}
+    <li>
+        <a href="#securitymenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            <i class="flaticon-protection"></i> <span class="nav-label">Security & Permission</span>
+        </a>
+        <ul class="collapse list-unstyled menuChildClass" id="securitymenu">
+            <li><a href="#"><i class="flaticon-login"></i> <span class="nav-label">User Access</span></a></li>
+            <li><a href="#"><i class="flaticon-audit"></i> <span class="nav-label">Audit Logs</span></a></li>
+            <li><a href="#"><i class="flaticon-api"></i> <span class="nav-label">Integration / API</span></a></li>
+            <li><a href="#"><i class="flaticon-protection"></i> <span class="nav-label">Security & Permission</span></a></li>
+        </ul>
+    </li>
+  </ul>
+</nav>
+
+<div class="modal" id="unauthorizedModalPopup" tabindex="-1" role="dialog" aria-labelledby="sampleModalPopupTitle" data-toggle="modal" data-backdrop="static" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered unauthorizedModalPopup" role="document">
+        <div class="modal-content modalBorderClass">
+          <div class="modal-header">
+            <h5 class="modal-title modalTitleHead" id="unauthorizeModalTitle">{{company.companyName}}</h5>
+            <button type="button" class="close" id="unauthorizeCloseBtn" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="unauthorize">
+             <p>You didn't have access this.</p>
+          </div>
+          <div class="modal-footer">
+                <input type="button" class="btn btn-primary modalBtnClass" data-dismiss="modal" aria-label="Close" value="Close">
+          </div>
+        </div>
+      </div>
+    </div>
+
+<script>
+
+    $(document).on('click', '.sidebarSubMenu', function(){
+     var id = $(this).attr('id');
+      var res = id.split("?");
+        $.ajax({
+              url: "/getAccessUrlPrevilage?url="+res[0],
+              type: "GET",
+              dataType : "json",
+              contentType : "application/json",
+              success: function (result)
+              {
+                var data = result;
+                if (data.status == 'success') {
+                    if(data.previlage == true){
+                        window.location.href = "/"+id;
+                    }
+                    else{
+                        $('#unauthorizedModalPopup').modal('show');
+                    }
+                }
+                else if(data.status == 'error' && data.error_msg == 'sessionexpired'){
+                     window.location.href = data.redirect_url;
+                }
+                else{
+                    alert(data.error_msg);
+                }
+              }
+          });
+    });
+
+</script>

@@ -1,0 +1,8 @@
+storageSizeCode,storageAllocation_id,storageSizeName,storageSizeDesc,storagePrice,currencyType_id
+50MB,1,50MB,50MB,0,
+100MB,2,100MB,100MB,0,
+500MB,3,500MB,500MB,0,
+1GB,4,1GB,1GB,0,
+3GB,5,3GB,3GB,0,
+5GB,6,5GB,5GB,0,
+Custom,7,Custom,Custom,0,

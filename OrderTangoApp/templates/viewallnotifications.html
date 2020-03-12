@@ -1,0 +1,697 @@
+{% extends 'administrationpanelbase.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/administrationpanel.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/manualUploadForm.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'datatables/css/datatables.min.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'datatables/css/responsive.bootstrap4.min.css' %}"/>
+
+<script type="text/javascript" src="{% static 'datatables/js/datatables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'datatables/js/dataTables.responsive.min.js' %}"></script>
+<script src ="{% static 'js/jquery-ui.js' %}"></script>
+<script src ="{% static 'js/script.js' %}"></script>
+<style>
+
+   
+    #notificationDiv{
+        margin-left:4%;
+    }
+    #headingNoti {
+        color: #881999 !important;
+        margin-left: 13px !important;
+    }
+    a.notificationStatus {
+        color: #000 !important;
+        font-size: 12px !important;
+    }
+    .sampleModalPopup {
+        max-width: 35%
+    }
+    #customerFileUpload {
+        display: none;
+    }
+    #profileModalBody{
+        max-height: calc(100vh - 200px);
+        overflow-y: auto;
+    }
+    .modal-dialog {
+        max-width: 800px;
+    }
+    .mandatory {
+        color: red
+    }
+    .ui-dialog-content{
+            color:red !important;
+            font-size: 17px ;
+        }
+    .ui-dialog{
+        width: 35% !important;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%) !important;
+        background-color: white;
+
+    }
+    .ui-dialog-buttonpane{
+        padding: 0em !important;
+    }
+    .ui-dialog-titlebar{
+        background-color: #cbc1e8;
+        color: black;
+        font-weight: bold;
+    }
+    .ui-dialog-buttonset{
+        justify-content: middle;
+    }
+    .notifyStatus{
+        border: 0px;
+        font-size: 13px;
+        border-radius: 5px;
+        color: #ffffff;
+        background-color: #984fa5;
+        padding: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        width: 50%;
+    }
+    #bodyContent {
+        margin-left: -15px;
+        background-color: #f9f3fa;
+    }
+@media (min-width:320px) and (max-width: 480px)  {
+    #basicDataDetailsForm{
+        margin-left:20px !important;
+    }
+    #id_firstName,#id_lastName,#id_email,#id_site,#id_companyName,#id_address_Line1,#id_address_Line2,#id_country,#id_state,#id_postalCode,#id_usradd_country,#id_usradd_address_Line1,#id_usradd_address_Line2,#id_usradd_state,#id_usradd_postalCode{
+        width:175px !important;
+    }
+    #id_countryCode{
+        width:40px !important;
+    }
+    #id_contactNo{
+        width:130px !important;
+    }
+    #id_unit1,#id_unit2,#id_usradd_unit1,#id_usradd_unit2{
+       width:78px !important;
+    }
+}
+</style>
+ <div class="row">
+      <div class="col-md-2 col-sm-4 col-24" id="sideBarLeft">
+            {% include "administrationpanelsidebar.html" %}
+      </div>
+      <div class="col-md-10 paddingLeftZero" id="bodyContent">
+        <div id="notificationDiv">
+            <div class="row">
+                <div class="col-md-6 col-sm-3 col-6">
+                    <h4 id="headingNoti"> Notifications </h4>
+                </div>
+
+                <div class="col-md-6 col-sm-9 bgColorModule" id="bothUploadOption">
+                      <span class="input-group" id="searchOptionInputGroup">
+                        <input type="text" id="searchOption"  maxlength="60">
+                        <div class="input-group-append">
+                          <span id="spanSearchIcon">
+                            <i class="fa fa-search"></i>
+                          </span>
+                        </div>
+                      </span>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-3 col-6">
+                     <table class="table hover dt-responsive viewNotificationTable" id="viewNotificationTable" width="100%">
+                         <thead>
+
+                         </thead>
+                     </table>
+                </div>
+            </div>
+
+
+        </div>
+      </div>
+ </div>
+{% include "rightsidebar.html" %}
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modalBorderClass">
+          <div class="modal-header">
+            <h5 class="modal-title modalTitleHead" id="exampleModalLongTitle"> </h5>
+              <span id="modalCloseBtn">
+
+              </span>
+          </div>
+          <div class="modal-body">
+              <div id="success_msg" class="success_msg"> </div>
+              <div id="error_msg" class="error_msg"> </div>
+                <form role="form" autocomplete="off">
+                    {% csrf_token %}
+                    <div id="modalBody">
+
+                    </div>
+                </form>
+          </div>
+          <div class="modal-footer" id="modalFooter">
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="sampleModalPopup" tabindex="-1" role="dialog" aria-labelledby="sampleModalPopupTitle" data-toggle="modal" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered sampleModalPopup" role="document">
+        <div class="modal-content modalBorderClass">
+          <div class="modal-header">
+            <h5 class="modal-title modalTitleHead" id="exampleModalTitle"></h5>
+            <button type="button" class="close sampleModalPopupCloseBtn" id="popupCloseBtn" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">x</span>
+            </button>
+          </div>
+          <div class="modal-body" id="samplePopupBodyContent">
+
+          </div>
+          <div class="modal-footer">
+                <input type="button" id="submit" class="btn btn-primary modalBtnClass sampleModalPopupCloseBtn" data-dismiss="modal" aria-label="Close" value="Close">
+          </div>
+        </div>
+      </div>
+    </div>
+
+<div class="modal" id="viewProfileModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog viewProfileModal" style="max-width: 60%;">
+    <div class="modal-content" style="background-color: #f7f3fa;">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title" id="viewProfileModalTitle"> Profile </h4>
+        <button type="button" class="close viewProfileModalClose" data-dismiss="modal" aria-hidden="true">x</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body" id="profileModalBody">
+        <div class="row" >
+            <div class="col-md-12 col-sm-3 col-6 " >
+                <div class="col-md-12" id="viewProfileModalFormDiv">
+                    <form class="registrationform" id="updateProfileForm" role="form" method='POST' autocomplete="off">
+
+                        {% csrf_token %}
+                        <div id="formsec1">
+                          <div class="form-group row registrationformdiv">
+                              <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.firstName.label_tag }}<span class="mandatory">*</span></label>
+                            {{ ProfileForm.firstName }}
+                          </div>
+                          <div class="offset-3 offset-sm-4 offset-md-3" id="firstNameError">{{ ProfileForm.firstName.errors }}</div>
+                          <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.lastName.label_tag }}<span class="mandatory">*</span></label>
+                             {{ ProfileForm.lastName }}
+                          </div>
+                          <div class="offset-3 offset-sm-4 offset-md-3" id="lastNameError">{{ ProfileForm.lastName.errors }} </div>
+                        <div class="form-group row registrationformdiv hide">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.contactNo.label_tag }}<span class="mandatory">*</span></label>
+                             {{ProfileForm.countryCode}}{{ ProfileForm.contactNo }}
+                          </div>
+                          <div class="offset-3 offset-sm-4 offset-md-3 hide" id="contactNoError">{{ ProfileForm.contactNo.errors }} </div>
+                        <div class="form-group row registrationformdiv hide">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.email.label_tag }}<span class="mandatory">*</span></label>
+                             {{ ProfileForm.email }}
+                          </div>
+                          <div class="offset-3 offset-sm-4 offset-md-3 hide" id="emailError">{{ ProfileForm.email.errors }} </div>
+
+                        </div>
+                        <div id="formsec2">
+                            <div class="form-group row registrationformdiv hide">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.companyName.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.companyName }}
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="companyNameError"> {{ companyProfileForm.companyName.errors }} </div>
+
+
+                          <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.country.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.country }}
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="countryError"> {{ companyProfileForm.country.errors }} </div>
+                          <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.address_Line1.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.address_Line1 }}
+                            <label class="col-5 col-md-1 col-form-label unitlabel" id="unitlabel">Unit<span class="mandatory">*</span></label>
+                             {{ companyProfileForm.unit1 }}
+                            <p id="hyphen">-</p>
+                            {{ companyProfileForm.unit2 }}
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="address1Error"> {{ companyProfileForm.address_Line1.errors }} </div>
+                          <div class="form-group row registrationformdiv" id="addressTwoDiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.address_Line2.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.address_Line2 }}
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="address2Error"> {{ companyProfileForm.address_Line2.errors }} </div>
+                          <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.state.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.state }}
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="stateError"> {{ companyProfileForm.state.errors }} </div>
+                          <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{companyProfileForm.postalCode.label_tag }}<span class="mandatory">*</span></label>
+                            {{ companyProfileForm.postalCode }}
+
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="postalCodeError"> {{ companyProfileForm.postalCode.errors }} </div>
+                            <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.sec_question.label_tag }}<span class="mandatory">*</span></label>
+                            {{ ProfileForm.sec_question }}
+
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="secQuestionError"> {{ ProfileForm.sec_question.errors }} </div>
+                            <div class="form-group row registrationformdiv">
+                            <label class="col-5 col-md-3 col-form-label registrationformlabel">{{ProfileForm.sec_answer.label_tag }}<span class="mandatory">*</span></label>
+                            {{ ProfileForm.sec_answer }}
+                            <div class="col-12 offset-sm-4 col-md-6" id="submitBtnDiv">  <input type="button" class="profileUpdateButtonClass" id="profileUpdateButton" value="Update"> </div>
+                          </div>
+                            <div class="offset-3 offset-sm-4 offset-md-3" id="secAnswerError"> {{ ProfileForm.sec_answer.errors }} </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn editProductModalClose" id="editProductModalClose" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+    <div class="modal" id="loader"><!-- Place at bottom of page --></div>
+
+<script>
+
+           $body = $("body");
+           function load_states(country_id) {
+                if(country_id == ''){
+                $("#id_cusState").empty().append('<option value="">Select</option>');
+                }
+                else{
+                    $.ajax({
+                    url: "/load-states",
+                    data: {
+                    "country_id": country_id
+                    },
+                    success: function (data) {
+                        var states = JSON.parse(data.states);
+                        var stateAppendValues = "";
+                        $.each(states, function (key, val) {
+                        stateAppendValues = stateAppendValues + "<option value="+val.pk+">"+val.fields.stateName+"</option>";
+                        });
+                        $("#id_cusState").empty().append(stateAppendValues);
+                    }
+                    });
+                }
+           }
+
+            function load_shipping_states(country_id) {
+                $.ajax({
+                    url: "/load-states",
+                    data: {
+                      "country_id": country_id
+                    },
+                    success: function (data) {
+                      var states = JSON.parse(data.states);
+                      var stateAppendValues = "";
+                         $.each(states, function (key, val) {
+                        stateAppendValues = stateAppendValues + "<option value="+val.pk+">"+val.fields.stateName+"</option>";
+                        });
+                          $("#id_cusShipState").empty().append(stateAppendValues);
+                    }
+                });
+            }
+
+
+            $('#slide-submenu').on('click',function() {
+                $(this).closest('.list-group').fadeOut('slide',function(){
+                    $('.mini-submenu').fadeIn();
+                });
+            });
+
+        $(document).on('click', '.paginate_button', function() {
+            $("html, body").animate({ scrollTop: 0 }, 200);
+        });
+
+        $(document).ready(function() {
+
+         var viewNotificationTable = $('#viewNotificationTable').DataTable( {"bFilter": false,
+                    "lengthChange": false,
+                    "targets": 'no-sort',
+                    "bSort": false,
+                    "info": false,
+                    "searching": true,
+                    "order": [],
+                    "pagingType": "full_numbers",
+                    "bStateSave": true,
+                    language: {
+                            paginate: {
+                                previous: false,
+                                next: false,
+                                first: '<img src="{% static 'images/leftsidearrow.png' %}" width=15 />',
+                                last: '<img src="{% static 'images/rightsidearrow.png' %}" width=15 />'
+                            }
+                        },
+                    "columns": [
+                            { "title": "S.No" },
+                            { "title": "Notifications" },
+                            { "title": "Action" },
+
+                        ],
+                        columnDefs: [
+                             { "width": "20%", "targets": 0 },
+                             { "width": "60%", "targets": 1 },
+                             { "width": "20%", "targets": 1 },
+                    ],
+                        responsive: {
+                            details: {
+                                renderer: $.fn.dataTable.Responsive.renderer.tableAll()
+                            }
+                        }
+         });
+
+var newNotificationList;
+
+function refresh() {
+$.ajax({
+      url: "/viewNotification",
+      type: "POST",
+      dataType : "json",
+      contentType : "application/json",
+      success: function (result)
+      {
+      var data = result;
+      if (data.status == 'success') {
+      var notificationList = data.totalItems[0].totalItem;
+      if(notificationList > newNotificationList){
+       viewNotificationTable.destroy();
+      $('#viewNotificationTable').empty();
+      viewNotificationTable = $('#viewNotificationTable').DataTable( {"bFilter": false,
+                    "lengthChange": false,
+                    "targets": 'no-sort',
+                    "bSort": false,
+                    "info": false,
+                    "searching": true,
+                    "order": [],
+                    "pagingType": "full_numbers",
+                    language: {
+                            paginate: {
+                                previous: false,
+                                next: false,
+                                first: '<img src="{% static 'images/leftsidearrow.png' %}" width=15 />',
+                                last: '<img src="{% static 'images/rightsidearrow.png' %}" width=15 />'
+                            }
+                        },
+                    "columns": [
+                            { "title": "S.No" },
+                            { "title": "Notifications" },
+                            { "title": "Action" },
+
+                        ],
+                        columnDefs: [
+                             { "width": "20%", "targets": 0 },
+                             { "width": "60%", "targets": 1 },
+                             { "width": "20%", "targets": 1 },
+                    ],
+                        responsive: {
+                            details: {
+                                renderer: $.fn.dataTable.Responsive.renderer.tableAll()
+                            }
+                        }
+         });
+
+      newNotificationList = notificationList;
+            $.each(notificationList, function( index, value ) {
+             var sno = index+1;
+             if(value.viewed == 'No'){
+               var action = "<input type='button' class='notifyStatus' id='"+value.type+"_"+value.sendFromId+"_"+value.notificationId+"_"+value.viewed+"' value='Click To View'>";
+             }
+             else{
+                var action = "<input type='button' class='notifyStatus' id='"+value.type+"_"+value.sendFromId+"_"+value.notificationId+"_"+value.viewed+"' value='Viewed'>";
+             }
+                viewNotificationTable.row.add([sno,value.desc,action]).draw();
+             });
+      }
+      }
+      }
+      });
+
+    setTimeout(refresh, 10000);
+}
+
+$(function(){
+    refresh();
+});
+
+            /* Customize search option for DataTable Start */
+                $('#searchOption').on( 'keyup', function () {
+                      $('#viewNotificationTable').DataTable().search(this.value).draw();
+                });
+            /* Customize search option for DataTable End */
+
+                  $.ajax({
+                  url: "/viewNotification",
+                  type: "POST",
+                  dataType : "json",
+                  contentType : "application/json",
+                  success: function (result)
+                  {
+                    var data = result;
+
+                  if (data.status == 'success') {
+                  var notificationList = data.totalItems[0].totalItem;
+                  newNotificationList = notificationList;
+                        $.each(notificationList, function( index, value ) {
+                         var sno = index+1;
+                         if(value.viewed == 'No'){
+                           var action = "<input type='button' class='notifyStatus' id='"+value.type+"_"+value.sendFromId+"_"+value.notificationId+"_"+value.viewed+"' value='Click To View'>";
+                         }
+                         else{
+                            var action = "<input type='button' class='notifyStatus' id='"+value.type+"_"+value.sendFromId+"_"+value.notificationId+"_"+value.viewed+"' value='Viewed'>";
+                         }
+                            viewNotificationTable.row.add([sno,value.desc,action]).draw();
+                         });
+
+                  }
+                  else {
+                        alert('No Data Found');
+                  }
+                  }
+                });
+
+$(document).on('click', '.notifyStatus', function() {
+     var id = $(this).attr('id');
+    var res = id.split("_");
+    var sendFromId = res[1];
+    var notificationId = res[2];
+    var viewed = res[3];
+    var type = res[0];
+    console.log(type);
+    $body.addClass("loading");
+    if(type == "SiteAssign" && viewed == 'No')
+    {
+
+    $('#notificationConfirmModel').modal();
+    $('#notificationConfirmSubmit').on('click',function() {
+        //var data ="sendFromId="+sendFromId+'&id='+notificationId+'&type=accept';
+        var data = { "sendFromId": sendFromId, 'id': notificationId ,'type': 'accept' };
+        $.ajax({
+        url: "/sitesAddingForSla",
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function (result)
+        {
+
+            $body.removeClass("loading");
+            if (result.status == 'success') {
+                setTimeout(function() {
+                location.reload();
+                },2000);
+                alert(result.success_msg);
+            }
+            else if(result.error_msg == 'sessionexpired'){
+                 alert('Session expired.');
+                setTimeout(function() {
+                    window.location.href = data.redirect_url;
+                }, 3000);
+            }
+           else{
+                alert(result.error_msg);
+            }
+
+        }
+
+        });
+        });
+    }
+    else if(type == "customer" && viewed == 'No')
+    {
+        $body.removeClass("loading");
+        window.location.href = "/fetchAllCustomerForSlaAssign?wsid="+sendFromId+'&notificationId='+notificationId;
+    }
+    else if(type == "assignProductForCustomer" && viewed == 'No')
+    {
+        $body.removeClass("loading");
+        window.location.href = "/fetchSupplierProductMerging?id="+sendFromId+'&notificationId='+notificationId;
+    }
+    else if(type == "href" && viewed == 'No')
+    {
+        $body.removeClass("loading");
+        window.location.href = sendFromId+'&notificationId='+notificationId;
+    }
+    else if(viewed == 'No')
+    {
+        var data ="id="+sendFromId+'&notificationId='+notificationId;
+        $.ajax({
+        url: "/notificationStatus",
+        type: "POST",
+        dataType: "json",
+        data: data,
+        success: function (result)
+        {
+
+            $body.removeClass("loading");
+            if (result.status == 'success') {
+                if(type == "DisconnectedSupplier"){
+                    alert("Relationship has been disconnected");
+                }
+                else if(type == "DisconnectedCustomer"){
+                    alert("Relationship has been disconnected");
+                }
+                else if(type == "Connected"){
+                    alert("Connection has been established successfully");
+                }
+                else if(type == "removeCustomerOrSupplierOrProduct"){
+                    alert("Assigned product(s) has been removed successfully");
+                }
+                else if(type == "DeleteVendor"){
+                    alert("Customer has removed you from their vendor list");
+                }
+                else if(type == "DeleteCustomer"){
+                    alert("Customer has removed you from their customer list");
+                }
+                else if(type == "CustomerAcceptRequest"){
+                    alert("Customer has accepted your request");
+                }
+                else if(type == "CustomerRejectRequest"){
+                    alert("Customer has rejected your request");
+                }
+                else if(type == "AcceptSLA"){
+                    alert("Assigned SLA was accepted successfully");
+                }
+                else if(type == "RejectSLA"){
+                    alert("Assigned SLA was rejected by customer");
+                }
+                else if(type == "ProductAdded"){
+                    alert("New product(s) has been added to existing list");
+                }
+                else if(type == "ProductRejected"){
+                    alert("Customer has been rejected your assign product");
+                }
+                else if(type == "UpdatePriceCatelog"){
+                    alert("Product price updated");
+                }
+                else if(type == "itemRemoveForCustomer"){
+                    alert("Vendor has removed Product from their product list");
+                }
+                else if(type == "addOrMergingOrRejectProducts"){
+                    alert("Your catalog list updated");
+                }
+                else if(type == "profileUpdate"){
+                    alert("Profile info has been changed");
+                }
+                else if(type == "OrderAccept"){
+                    alert("Your order has been accepted");
+                }
+                else if(type == "OrderReject"){
+                    alert("Your order has been rejected");
+                }
+                else if(type == "OrderClosed"){
+                    alert("Your order has been closed");
+                }
+                else if(type == "cancelPlacedOrder"){
+                    alert("Order has been canceled");
+                }
+                else{
+                    alert("Success");
+                }
+                setTimeout(function() {
+                location.reload();
+                },2000);
+            }
+            else if(result.error_msg == 'sessionexpired'){
+                 alert('Session expired.');
+                setTimeout(function() {
+                    window.location.href = data.redirect_url;
+                }, 3000);
+            }
+           else{
+                alert(result.error_msg);
+            }
+
+        }
+
+        });
+    }else{
+    $body.removeClass("loading");
+    alert("This process already done");
+    return false;
+    }
+
+    });
+
+    $(document).on('click', '#companyLogoUpdateBtn', function() {
+        var form_data = new FormData();
+        var file_data = $('#companyLogo').prop('files')[0];
+         var data = "csrfmiddlewaretoken="+$('input[name=csrfmiddlewaretoken]').val()+"companyLogoPath="+file_data;
+            $.ajax({
+              url: "/logoupdate",
+              type: "POST",
+              dataType: "text",
+              data: data,
+              async:false,
+              success: function (data)
+              {
+
+              }
+            });
+    });
+
+    $('#domainName').val('');
+
+    $('#exampleModalCenter').on('shown.bs.modal', function() {
+      $('#domainName').focus();
+    });
+
+    $('#popupCloseBtn').on('click', function() {
+        $('#domainName').val('');
+        $('#successmsg').empty();
+        $('#errormsg').empty();
+    });
+
+
+    $('.mini-submenu').on('click',function(){
+        $(this).next('.list-group').toggle('slide');
+        $('.mini-submenu').hide();
+    })
+
+
+    });
+
+</script>
+
+
+{% endblock %}

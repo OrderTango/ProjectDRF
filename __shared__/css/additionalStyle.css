@@ -1,0 +1,27 @@
+/* Media Query CSS For All pages START */
+@media (min-width:320px) and (max-width: 480px)  {
+    .tableCSSForResponsive {
+        margin-left: 0.5%
+    }
+    div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+        justify-content: flex-start !important;
+    }
+    .editAreaModal {
+        max-width: 100% !important
+    }
+    #id_areaName, #id_areaSla, #id_areaDesc {
+        width: 150px !important
+    }
+    #eAreaName, #eAreaSla, #eAreaDesc {
+        width: 140px !important
+    }
+    .labelForResponsive {
+        margin-left: 0px !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    #areaFormDiv {
+        margin-top: 10px;
+        margin-bottom: 10px
+    }
+}
