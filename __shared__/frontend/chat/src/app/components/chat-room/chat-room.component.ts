@@ -181,7 +181,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
 
   createWebSocket(room_name) {
     // this.chatSocket = new ReconnectingWebSocket (
-    //   `ws://customer12.localhost:8000/ws/api-chat/${room_name}/` 
+    //   `ws://${window.location.origin}/ws/api-chat/${room_name}/` 
     // )
     console.log('JKASDA')
     this.chatSocket = new ReconnectingWebSocket (
