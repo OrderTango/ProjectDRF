@@ -117,3 +117,11 @@ textarea:focus {
 .ss {
     margin: 0;
 }
+
+.user {
+    text-align: left;
+}
+
+.subuser {
+    text-align: right;
+}

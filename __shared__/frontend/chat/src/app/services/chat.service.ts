@@ -10,7 +10,8 @@ export class ChatService {
   csrfToken = null;
   // baseurl = "http://customer12.localhost:8000"; // window.location.pathname
 
-  baseurl = "http://dateman08.localhost:8000"; // window.location.pathname
+  // baseurl = "http://mushu08.localhost:8000"; // window.location.pathname
+  baseurl = window.location.origin
 
   constructor(
     private http: Http,
@@ -18,6 +19,7 @@ export class ChatService {
   ) { }
 
   getUsers(): Observable<any> {
+    console.log(this.baseurl)
     return this.httpClient.get(`${this.baseurl}/api/accounts/`, this.getHeader())
   }
 

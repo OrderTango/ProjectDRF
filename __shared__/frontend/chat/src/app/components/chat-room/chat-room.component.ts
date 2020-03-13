@@ -66,34 +66,42 @@ export class ChatRoomComponent implements OnInit, OnChanges {
         'createdDateTime': res.createdDateTime,
         'updatedDateTime': res.updatedDateTime
       }
+    }, error => {
+      console.log(error)
     })
 
-    this.chatService.getSubUser().subscribe((res) => {
-      this.chatUser = res.subUserId
+    // this.chatService.getSubUser().subscribe((res) => {
+    //   this.chatUser = res.subUserId
 
-      this.thisUser = {
-        'id': res.subUserId, 
-        'firstName': res.firstName, 
-        'lastName': res.lastName, 
-        'email': res.email,
-        'contactNo': res.contactNo,
-        'profilepic': res.profilepic,
-        'lastLogin': res.lastLogin,
-        'activityLog': res.activityLog,
-        'status': res.status,
-        'createdDateTime': res.createdDateTime,
-        'updatedDateTime': res.updatedDateTime
-      }
-      console.log('THIS USER: ', this.thisUser)
+    //   this.thisUser = {
+    //     'id': res.subUserId, 
+    //     'firstName': res.firstName, 
+    //     'lastName': res.lastName, 
+    //     'email': res.email,
+    //     'contactNo': res.contactNo,
+    //     'profilepic': res.profilepic,
+    //     'lastLogin': res.lastLogin,
+    //     'activityLog': res.activityLog,
+    //     'status': res.status,
+    //     'createdDateTime': res.createdDateTime,
+    //     'updatedDateTime': res.updatedDateTime
+    //   }
+    //   console.log('THIS USER: ', this.thisUser)
+    // }, error => {
+    //   console.log(error)
+    // })
+
+    this.chatService.getUsers().subscribe((res) => {
+      this.users = Object(res)
+    }, error => {
+      console.log(error)
     })
 
-    // this.chatService.getUsers().subscribe((res) => {
-    //   this.users = Object(res)
-    // })
-
-    // this.chatService.getSubUsers().subscribe((res) => {
-    //   this.subUsers = Object(res)
-    // })
+    this.chatService.getSubUsers().subscribe((res) => {
+      this.subUsers = Object(res)
+    }, error => {
+      console.log(error)
+    })
 
     this.chatService.getUsers().subscribe((res) => {
       Object(res).forEach(user => {
@@ -111,6 +119,8 @@ export class ChatRoomComponent implements OnInit, OnChanges {
           'updatedDateTime': user.updatedDateTime
         })
       })
+    }, error => {
+      console.log(error)
     })
 
     this.chatService.getSubUsers().subscribe((res) => {
@@ -129,6 +139,8 @@ export class ChatRoomComponent implements OnInit, OnChanges {
           'updatedDateTime': user.updatedDateTime
         })
       })
+    }, error => {
+      console.log(error)
     })
 
     this.getChatRoom(this.room_name)
@@ -157,9 +169,11 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
   getChatRoom(room_name) {
+    console.log('ROOM: ', room_name)
     if(room_name === '' || room_name === undefined) {
       this.hasChatRoom = false;
     }else {
+      console.log('JOJAS')
       this.hasChatRoom = true;
       this.createWebSocket(room_name);
     }
@@ -169,26 +183,24 @@ export class ChatRoomComponent implements OnInit, OnChanges {
     // this.chatSocket = new ReconnectingWebSocket (
     //   `ws://customer12.localhost:8000/ws/api-chat/${room_name}/` 
     // )
-
+    console.log('JKASDA')
     this.chatSocket = new ReconnectingWebSocket (
-      `ws://dateman08.localhost:8000/ws/api-chat/${room_name}/` 
+      `ws://mushu08.localhost:8000/ws/api-chat/${room_name}/`,
     )
+    console.log(this.chatSocket)
 
     this.chatSocket.debug = true;
 
     this.chatSocket.onopen = (e) => {
-      this.fetchMessages();
-    }
-
-    this.chatSocket.debug = true;
-
-    this.chatSocket.onopen = (e) => {
+      console.log('HERE OnOPEN')
       this.fetchMessages();
     }
 
     this.chatSocket.onmessage = (e) => {
       var data = JSON.parse(e.data);
       let command = data['command']; 
+
+      console.log('DATA: ', data)
 
       if(command === 'fetch_message') {
         this.messages = data['message']
@@ -232,6 +244,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
   fetchMessages() {
+    console.log('HERE 2 ', this.chatSocket.send(JSON.stringify({'from': this.thisUser, 'command': 'fetch_message'})))
     this.chatSocket.send(JSON.stringify({
       'from': this.thisUser,
       'command': 'fetch_message'
@@ -254,7 +267,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
 
   onSubmit() {
     var message = this.messageForm.value.content; 
-
+    console.log('HERE 3')
     if(message !== '') {
       this.chatSocket.send(JSON.stringify({
         'message': message,

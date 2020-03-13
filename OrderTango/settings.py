@@ -135,7 +135,6 @@ SHARED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.admin',
-    'chat',
 )
 
 TENANT_APPS = (
@@ -171,7 +170,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
+            "hosts": [('localhost', 6379)],
         },
     },
 }
@@ -182,7 +181,7 @@ CHANNEL_LAYERS = {
 DATABASES = {
     'default': {
         'ENGINE': 'tenant_schemas.postgresql_backend',
-        'NAME': 'syiok2',
+        'NAME': 'syiok1',
         'USER': 'postgres',
         'PASSWORD': 'TN41at5593@',
         'HOST': '52.221.61.17',

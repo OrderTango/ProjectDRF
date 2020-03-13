@@ -12,7 +12,7 @@
     <div class="message-body">
         <div *ngIf="hasMessages && hasChatRoom">
             <ul class="sentMessage" *ngFor="let message of messages">
-                <li []>
+                <li [ngClass]="{'subuser': message.user_sender === null, 'user': message.user_sender !== null}">
                     <span class="message">{{ message.message }}</span>
                     <span class="message-date">{{message.date_created}}</span>
                     <span><button>...</button></span>

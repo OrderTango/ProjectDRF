@@ -2,6 +2,7 @@ import json
 
 from operator import itemgetter
 
+from django.db import connection
 from django.shortcuts import render
 from rest_framework_jwt.settings import api_settings
 
@@ -10,10 +11,15 @@ from OrderTangoApp.models import *
 
 
 def getUser(request):
+    connection.schema_name = 'ot385ee74d'
+    currentSchema = connection.schema_name 
+    connection.set_schema(schema_name=currentSchema)
+
     if 'user' in request.session:
         string_user = request.session['user']
         obj_user = json.loads(string_user)
         session_user = list(map(itemgetter('pk'), obj_user))
+        print('USER: ', session_user[0])
         return session_user[0]
     elif 'subUser' in request.session:
         string_user = request.session['subUser']
