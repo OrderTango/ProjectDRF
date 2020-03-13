@@ -1,7 +1,7 @@
 # ProjectDRF
 
 
-##A. SETTING UP THE DJANGO PROJECT##
+## A. SETTING UP THE DJANGO PROJECT 
 
 
 a1. Pull branch
@@ -28,7 +28,7 @@ a5. Run server.
 
 
 
-##B. SETTING UP THE ANGULAR PROJECT##
+## B. SETTING UP THE ANGULAR PROJECT
 
 
 b1. Make sure that you have installed node and npm in your computer.
@@ -55,7 +55,7 @@ b5. Build the Angular project.
 
 
 
-##C. TO CREATE AND LOGIN USER AND SUBUSER##
+## C. TO CREATE AND LOGIN USER AND SUBUSER
 
 
 c1. Go to `localhost:8000`
@@ -85,7 +85,7 @@ c8. To login subuser, logout first from your current user and login subuser usin
 
 
 
-##D. USING THE APP##
+## D. USING THE APP
 
 
 d1. Copy the url of your current page and replace the url after `8000/` with `chat/` to another tab.
