@@ -180,12 +180,11 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
   createWebSocket(room_name) {
-    // this.chatSocket = new ReconnectingWebSocket (
-    //   `ws://${window.location.origin}/ws/api-chat/${room_name}/` 
-    // )
-    console.log('JKASDA')
+    
+    let baseurl = window.location.origin.replace(/^http(s?):\/\//i, "");
+
     this.chatSocket = new ReconnectingWebSocket (
-      `ws://mushu08.localhost:8000/ws/api-chat/${room_name}/`,
+      `ws://${baseurl}/ws/api-chat/${room_name}/`,
     )
     console.log(this.chatSocket)
 
@@ -296,6 +295,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
   addMember() {
+    console.log('here 2323')
     if(this.addedMembers.length !== 0) {
       this.chatSocket.send(JSON.stringify({
         'thread': this.room_name,

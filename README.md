@@ -19,10 +19,13 @@ a3. Install all packages inside the project.
     `pip install requirements.txt`
 
 
-a4. Install redis on your computer and run it.
+a4. Change email in settings.py
+
+
+a5. Install redis on your computer and run it.
     
 
-a5. Run server.
+a6. Run server.
 
     `python manage.py/runserver`
 

@@ -2,6 +2,7 @@ import json
 import functools
 
 from django.db import connection
+from django.http import HttpResponse
 
 from asgiref.sync import async_to_sync 
 from channels.generic.websocket import WebsocketConsumer 
@@ -33,15 +34,24 @@ class ChatConsumer(WebsocketConsumer):
                 })
             except:
                 try:
+                    print(member['id'], member['email'])
                     subUser = Subuser.objects.get(subUserId=member['id'], email=member['email'])
+                    print('SUBUSER: ', subUser)
                     thread = Thread.objects.get(id=self.thread_id)
+                    print('THREAD: ', thread)
                     member = ThreadMember.objects.create(subuser_member=subuser, thread=thread)
+
+                    print('MEMBER inside: ', member)
 
                     members.append({
                         'members': member.member
                     })
+
+                    print('MEMBERRS INSIDE: ', members)
                 except:
-                    return Response(status=status.HTTP_404_NOT_FOUND)
+                    return HttpResponse("No members.")
+
+        print('MEMBERS: ', members)
 
         content = {
             'command': 'new_member',
@@ -59,7 +69,6 @@ class ChatConsumer(WebsocketConsumer):
         thread = Thread.objects.get(id=self.thread_id)
         members = ThreadMember.objects.filter(thread=thread.id)
         messages = ThreadMessage.objects.filter(thread=thread)
-        print('FETCHED MESSAGES: ', messages)
 
         content = {
             'command': 'fetch_message',
@@ -122,24 +131,27 @@ class ChatConsumer(WebsocketConsumer):
         return result 
 
     def fetch_to_json(self, message, members):
-        if message.user_sender.email is None:
-            message.user_sender.email = ''
+        if message.user_sender is not None:
+            return {
+                'thread': message.thread.name, 
+                'thread_id': message.thread.id,
+                'user_sender': message.user_sender.email,
+                'message': message.message,
+                'message_id': message.id,
+                'members': self.members_to_json(members),
+                'date_created': str(message.date_created)
+            }
 
-        if message.subuser_sender.email is None:
-            message.subuser_sender.email = ''
-
-        
-
-        return {
-            'thread': message.thread.name, 
-            'thread_id': message.thread.id,
-            'user_sender': message.user_sender.email,
-            'subuser_sender': message.subuser_sender.email, 
-            'message': message.message,
-            'message_id': message.id,
-            'members': self.members_to_json(members),
-            'date_created': str(message.date_created)
-        }
+        if message.subuser_sender is not None:
+            return {
+                'thread': message.thread.name, 
+                'thread_id': message.thread.id,
+                'subuser_sender': message.subuser_sender.email, 
+                'message': message.message,
+                'message_id': message.id,
+                'members': self.members_to_json(members),
+                'date_created': str(message.date_created)
+            }
 
     def members_to_json(self, messages):
         result = []
@@ -148,27 +160,21 @@ class ChatConsumer(WebsocketConsumer):
         return result 
 
     def member_to_json(self, message):
-        if message.user_member.email is None:
-            message.user_member.email = ''
-
-        if message.user_member.userId is None:
-            message.user_member.userId = ''
-
-        if message.subuser_member.email is None:
-            message.subuser_member.email = ''
-
-        if message.user_member.subUserId is None:
-            message.user_member.subUserId = ''
-
-        return {
+        if message.user_member is not None:
+            return {
             'thread': message.thread.name, 
             'user_member_id': message.user_member.userId,
             'user_member': message.user_member.email,
+            'date_added': str(message.date_added)
+        }
+
+        if message.subuser_member is not None:
+            return {
+            'thread': message.thread.name, 
             'subuser_member_id': message.subuser_member.subUserId,
             'subuser_member': message.subuser_member.email,
             'date_added': str(message.date_added)
         }
-
     def messages_to_json(self, messages):
         result = []
         for message in messages:
@@ -176,15 +182,17 @@ class ChatConsumer(WebsocketConsumer):
         return result
 
     def message_to_json(self, message):
-        if message.subuser_sender.email is None:
-            message.subuser_sender.email = ''
-
-        if message.user_sender.email is None:
-            message.user_sender.email = ''
-
-        return {
+        if message.subuser_sender is not None:
+            return {
             'thread': message.thread.name,
             'user_sender': message.user_sender.email,
+            'message': message.message,
+            'date_created': str(message.date_created)
+        }
+
+        if message.user_sender is not None:
+            return {
+            'thread': message.thread.name,
             'subuser_sender': message.subuser_sender.email,
             'message': message.message,
             'date_created': str(message.date_created)
@@ -233,12 +241,10 @@ class ChatConsumer(WebsocketConsumer):
 
     # Receive message from WebSocket
     def receive(self, text_data):
-        console.log('HERE 1')
         text_data = json.loads(text_data)
         self.commands[text_data['command']](self, text_data)
 
     def send_chat_message(self, message):
-        console.log('HERE 2')
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
@@ -249,11 +255,9 @@ class ChatConsumer(WebsocketConsumer):
         )
 
     def send_message(self, message):
-        console.log('HERE 3')
         self.send(text_data=json.dumps(message))
 
     def chat_message(self, event):
-        console.log('HERE 4')
         message = event['message']
 
         # Send message to WebSocket
