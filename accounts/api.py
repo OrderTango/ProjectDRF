@@ -50,10 +50,9 @@ class UserView(viewsets.ViewSet):
         Get user details
         """
         
-        if 'user' in request.session:
-            user = User.objects.get(userId=getUser(request))
-            serializer = self.serializer_class(user)
-            return Response(serializer.data)
+        user = User.objects.get(userId=getUser(request))
+        serializer = self.serializer_class(user)
+        return Response(serializer.data)
 
     def destroy(self, request, *args, **kwargs):
         """
@@ -83,7 +82,6 @@ class SubUserView(viewsets.ViewSet):
         """
         Get sub user details 
         """
-        if 'subUser' in request.session:
-            sub_user = Subuser.objects.get(subUserId=getUser(request))
-            serializer = self.serializer_class(sub_user)
-            return Response(serializer.data)
+        sub_user = Subuser.objects.get(subUserId=getUser(request))
+        serializer = self.serializer_class(sub_user)
+        return Response(serializer.data)

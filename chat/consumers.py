@@ -1,3 +1,4 @@
+import re
 import json 
 import functools
 
@@ -34,20 +35,13 @@ class ChatConsumer(WebsocketConsumer):
                 })
             except:
                 try:
-                    print(member['id'], member['email'])
                     subUser = Subuser.objects.get(subUserId=member['id'], email=member['email'])
-                    print('SUBUSER: ', subUser)
                     thread = Thread.objects.get(id=self.thread_id)
-                    print('THREAD: ', thread)
-                    member = ThreadMember.objects.create(subuser_member=subuser, thread=thread)
-
-                    print('MEMBER inside: ', member)
+                    m = ThreadMember.objects.get_or_create(subuser_member=subUser, thread=thread)
 
                     members.append({
-                        'members': member.member
+                        'members': m
                     })
-
-                    print('MEMBERRS INSIDE: ', members)
                 except:
                     return HttpResponse("No members.")
 
@@ -85,10 +79,29 @@ class ChatConsumer(WebsocketConsumer):
         connection.set_schema(schema_name=currentSchema)
 
         print('new_message 1: ', currentSchema)
-        print('NEW MESSAGE: ', text_data)
-        sender = text_data['from']
-        # sender_user = User.objects.filter(userId=sender)[0]
+
         thread = Thread.objects.get(id=self.thread_id)
+        room = self.scope['url_route']['kwargs']['room_name']
+
+        if(any(x.isupper() for x in room)):
+            member_name = re.sub(r"(?<=\w)([A-Z])", r" \1", room).split()
+
+            try: 
+                member_user = User.objects.get(firstName=member_name[0], lastName=member[1])
+                ThreadMember.objects.get_or_create(user_member=member_user, thread=thread)
+
+                self.get_or_create_sender(text_data, thread)
+
+            except:
+                member_subuser = Subuser.objects.get(firstName=member_name[0], lastName=member_name[1])
+                ThreadMember.objects.get_or_create(subuser_member=member_subuser, thread=thread)
+
+                self.get_or_create_sender(text_data, thread)
+        else:
+            self.get_or_create_sender(text_data, thread)
+
+    def get_or_create_sender(self, text_data, thread):
+        sender = text_data['from']
 
         try: 
             user = User.objects.get(userId=sender['id'], email=sender['email'])

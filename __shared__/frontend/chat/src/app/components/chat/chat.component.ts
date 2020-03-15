@@ -20,6 +20,8 @@ export class ChatComponent implements OnInit {
   createRoom: Boolean = false;
   isChatRoom: Boolean = true;
   chat_room: String = '';
+  chat_member_firstName: String = '';
+  chat_member_lastName: String = '';
   chat_room_name: String = '';
   chat_id = null;
   delThread = null;
@@ -123,6 +125,8 @@ export class ChatComponent implements OnInit {
 
   createChatRoom(firstName, lastName) {
     this.chat_room = `${firstName}${lastName}`;
+    this.chat_member_firstName = firstName;
+    this.chat_member_lastName = lastName;
     console.log('Here 1: ', this.chat_room)
   }
 
@@ -143,7 +147,10 @@ export class ChatComponent implements OnInit {
       this.chat_room = chat.name;
       this.chat_room_name = chat.temp_name;
       this.closeDeleteModal()
-      this.deleteThreadSuccess(template)
+      setTimeout(() => {
+        this.deleteThreadSuccess(template)
+      }, 3000);
+      
     }, error => {
       console.log(error)
     })

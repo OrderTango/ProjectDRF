@@ -5,7 +5,7 @@ import { NgbModal, NgbModalRef, NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 import * as ReconnectingWebSocket from 'src/assets/reconnecting-websocket.js';
 
 import { ChatService } from '../../services/chat.service';
-import { ObjectUnsubscribedError } from 'rxjs';
+
 
 @Component({
   selector: 'app-chat-room',
@@ -17,6 +17,8 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   @ViewChild('textArea') textArea: ElementRef;
   @ViewChild('messageArea') messageArea: ElementRef;
   @Input() room_name: string;
+  @Input() member_fn: string;
+  @Input() member_ln: string;
   @Output() roomMessage = new EventEmitter<any>();
 
   messageForm = new FormGroup({
@@ -29,8 +31,10 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   private socketMessages = [];
   isAuthUser: boolean;
   thisUser = null;
+  messageId = null;
   hasChatRoom: boolean = false;
   hasMessages: boolean = false;
+  isAuthSender: boolean = false;
   messages = [];
   msg = [];
   users = [];
@@ -40,6 +44,8 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   roomNewName: String = '';
 
   addMemberModalRef: NgbModalRef;
+  deleteMessageModalRef: NgbModalRef;
+  deleteMessageSuccessModalRef: NgbModalRef;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -70,29 +76,23 @@ export class ChatRoomComponent implements OnInit, OnChanges {
       console.log(error)
     })
 
-    // this.chatService.getSubUser().subscribe((res) => {
-    //   this.chatUser = res.subUserId
+    this.chatService.getSubUser().subscribe((res) => {
+      this.chatUser = res.subUserId
 
-    //   this.thisUser = {
-    //     'id': res.subUserId, 
-    //     'firstName': res.firstName, 
-    //     'lastName': res.lastName, 
-    //     'email': res.email,
-    //     'contactNo': res.contactNo,
-    //     'profilepic': res.profilepic,
-    //     'lastLogin': res.lastLogin,
-    //     'activityLog': res.activityLog,
-    //     'status': res.status,
-    //     'createdDateTime': res.createdDateTime,
-    //     'updatedDateTime': res.updatedDateTime
-    //   }
-    //   console.log('THIS USER: ', this.thisUser)
-    // }, error => {
-    //   console.log(error)
-    // })
-
-    this.chatService.getUsers().subscribe((res) => {
-      this.users = Object(res)
+      this.thisUser = {
+        'id': res.subUserId, 
+        'firstName': res.firstName, 
+        'lastName': res.lastName, 
+        'email': res.email,
+        'contactNo': res.contactNo,
+        'profilepic': res.profilepic,
+        'lastLogin': res.lastLogin,
+        'activityLog': res.activityLog,
+        'status': res.status,
+        'createdDateTime': res.createdDateTime,
+        'updatedDateTime': res.updatedDateTime
+      }
+      console.log('THIS USER: ', this.thisUser)
     }, error => {
       console.log(error)
     })
@@ -180,7 +180,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
   createWebSocket(room_name) {
-    
+
     let baseurl = window.location.origin.replace(/^http(s?):\/\//i, "");
 
     this.chatSocket = new ReconnectingWebSocket (
@@ -208,10 +208,65 @@ export class ChatRoomComponent implements OnInit, OnChanges {
 
         if(this.messages.length !== 0) {
           var message = []
+          var sender = []
           message = this.messages[0];
-          console.log(message)
 
-          this.roomMembers = message['members'];
+          this.messages.forEach(m => {
+            console.log(m)
+            m['isAuthUser'] = '';
+            
+            if("user_sender" in m) {
+              console.log(m.user_sender, this.thisUser.email)
+              if(m.user_sender === this.thisUser.email) {
+                // this.messages.forEach(item => item['isAuthUser'] = true);
+                m.isAuthUser = true;
+              }else{
+                // this.messages.forEach(item => item['isAuthUser'] = false);
+                m.isAuthUser = false;
+              }
+            }else if("subuser_sender" in m) {
+              console.log(m.subuser_sender, this.thisUser.email)
+              if(m.subuser_sender === this.thisUser.email) {
+                // this.messages.forEach(item => item['isAuthUser'] = true);
+                m.isAuthUser = true;
+              }else{
+                // this.messages.forEach(item => item['isAuthUser'] = false);
+                m.isAuthUser = false;
+              }
+            }
+          })
+
+          console.log(this.messages)
+
+          if(message['members'].length === 0) {
+            this.roomMembers = [];
+          }
+
+          message['members'].forEach(m => {
+            let member_name = '';
+            let member_id = null;
+
+            if("user_member" in m) {
+              member_name = m.user_member;
+              member_id = m.user_member_id;
+            }else if("subuser_member") {
+              member_name = m.subuser_member;
+              member_id = m.subuser_member_id;
+            }
+            
+            if(member_id !== null) {
+              if(member_id !== undefined) {
+                if(!this.roomMembers.some((rm) => rm.member_id == member_id)) {
+                  this.roomMembers.push({
+                    'thread': m.thread,
+                    'member_id': member_id,
+                    'member': member_name,
+                    'date_added': m.date_added
+                  })
+                }
+              }
+            }
+          })
 
           if(message['message'] === null) {
             this.hasMessages = false;
@@ -276,6 +331,37 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   
       this.messageForm.reset();
     }
+  }
+
+  deleteMessage(template, id) {
+    this.messageId = id;
+    this.deleteMessageModalRef = this.modal.open(template, { backdrop: true, size: 'sm', centered: true })
+  }
+
+  deleteUserMessage(template) {
+    // this.chatSocket.send(JSON.stringify({
+    //   'thread': this.room_name,
+    //   'command': 'delete_message',
+    //   'message_id': this.messageId
+    // }))
+
+    // this.messages = this.messages.filter(m => m.message_id !== this.messageId)
+    this.closeDeleteModal();
+    setTimeout(() => {
+      this.deleteMessageSuccess(template)
+    }, 3000);
+  }
+
+  deleteMessageSuccess(template) {
+    this.deleteMessageSuccessModalRef = this.modal.open(template, { backdrop: true, size: 'sm', centered: true })
+  }
+
+  closeDeleteModal() {
+    this.deleteMessageModalRef.close()
+  }
+
+  closeDeleteSuccessModal() {
+    this.deleteMessageSuccessModalRef.close()
   }
 
   addMemberModal(template) {

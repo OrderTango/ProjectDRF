@@ -13,7 +13,8 @@ from .views import *
 from .models import Thread, ThreadMessage, ThreadMember
 from .serializers import ThreadSerializer, ThreadMessageSerializer, ThreadMemberSerializer
 
-from OrderTangoApp.models import *
+from OrderTangoApp.models import User
+from OrderTangoSubDomainApp.models import Subuser
 
 class ThreadView(viewsets.ViewSet):
     serializer_class = ThreadSerializer
@@ -27,8 +28,17 @@ class ThreadView(viewsets.ViewSet):
         connection.set_schema(schema_name=currentSchema)
         print(connection.schema_name)
 
-        queryset = Thread.objects.filter(is_archived=False)
-        serializer = self.serializer_class(queryset, many=True)
+        if 'user' in request.session:
+            user = User.objects.get(userId=getUser(request))
+            queryset = Thread.objects.filter(is_archived=False, threadmember__user_member=user)
+            print('THREADS', queryset)
+            serializer = self.serializer_class(queryset, many=True)
+
+        if 'subUser' in request.session:
+            sub_user = Subuser.objects.get(subUserId=getUser(request))
+            queryset = Thread.objects.filter(is_archived=False, threadmember__subuser_member=sub_user)
+            print('THREADS', queryset)
+            serializer = self.serializer_class(queryset, many=True)
 
         return Response(serializer.data)
 

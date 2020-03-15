@@ -1,13 +1,4 @@
 <div class="container-fluid">
-    <!-- <nav><h2>Hi {{authUser.firstName}}&nbsp;{{authUser.lastName}}!</h2></nav> -->
-    <!-- <nav class="navbar navbar-expand-lg navbar-light navBgColor">
-        <a class="navbar-brand" href="#"><img src="assets/images/logo/Logo.png" style="width: 200px; height: 50px"
-                                              class="img-responsive"/></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
-                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </nav> -->
     <div class="row">
         <div class="col-4">
             <h3>{{organization.companyName}}</h3>
@@ -21,12 +12,6 @@
                       <a [ngClass]="{'active': isChatRoom === false}" class="nav-link">Contacts</a>
                     </li>
                   </ul>
-                <!-- <div class="col-6">
-                    <button (click)="isChatRoom = true" class="select-chat">Chats</button>
-                </div>
-                <div class="col-6">
-                    <button (click)="isChatRoom = false" class="select-chat">Contacts</button>
-                </div> -->
             </div>
             <div class="row">
                 <div *ngIf="!isChatRoom" class="contacts">
@@ -65,7 +50,7 @@
             </div>
         </div>
         <div class="col-8">  
-            <app-chat-room (roomMessage)="getRoomMessage($event)" [room_name]='this.chat_room'></app-chat-room>
+            <app-chat-room (roomMessage)="getRoomMessage($event)" [room_name]='this.chat_room' [member_fn]='this.chat_member_firstName' [member_ln]='this.chat_member_lastName'></app-chat-room>
         </div>
     </div>
 </div>
