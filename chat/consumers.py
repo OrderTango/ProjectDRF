@@ -29,9 +29,11 @@ class ChatConsumer(WebsocketConsumer):
             try:
                 user = User.objects.get(userId=member['id'], email=member['email'])
                 thread = Thread.objects.get(id=self.thread_id)
-                member = ThreadMember.objects.create(user_member=user, thread=thread)
+                member = ThreadMember.objects.get_or_create(user_member=user, thread=thread)
+                print('New Member', member)
                 members.append({
                     'members': member.member
+
                 })
             except:
                 try:
@@ -40,19 +42,35 @@ class ChatConsumer(WebsocketConsumer):
                     m = ThreadMember.objects.get_or_create(subuser_member=subUser, thread=thread)
 
                     members.append({
-                        'members': m
+                        'members': m.member
                     })
                 except:
                     return HttpResponse("No members.")
 
-        print('MEMBERS: ', members)
-
+        print('MMM', members)
         content = {
             'command': 'new_member',
             'members': members
         }
 
-        self.send_chat_message(content)                
+        self.send_chat_message(content)     
+
+    def delete_message(self, text_data):
+        connection.schema_name = 'ot385ee74d'
+        currentSchema = connection.schema_name 
+        connection.set_schema(schema_name=currentSchema)
+        print('delete_message: ', connection.schema_name)
+        print(text_data['thread'], text_data['message_id'])
+
+        thread = Thread.objects.get(name=text_data['thread']).id
+        message = ThreadMessage.objects.get(id=text_data['message_id'], thread=thread)
+        message.delete()
+
+        content = {
+            'command': 'delete_message'
+        }
+
+        self.send_chat_message(content)
         
 
     def fetch_messages(self, text_data):
@@ -68,39 +86,45 @@ class ChatConsumer(WebsocketConsumer):
             'command': 'fetch_message',
             'thread': thread.name, 
             'thread_id': thread.id, 
-            'message': self.fetches_to_json(messages, members)
+            'message': self.fetches_to_json(messages),
+            'members': self.members_to_json(members)
         }
 
         self.send_chat_message(content)
 
     def new_message(self, text_data):
+            connection.schema_name = 'ot385ee74d'
+            currentSchema = connection.schema_name 
+            connection.set_schema(schema_name=currentSchema)
+
+            print('new_message 1: ', currentSchema)
+
+            thread = Thread.objects.get(id=self.thread_id)
+            room = self.scope['url_route']['kwargs']['room_name']
+
+            self.get_or_create_sender(text_data, thread)
+
+            # if(any(x.isupper() for x in room)):
+            #     member_name = re.sub(r"(?<=\w)([A-Z])", r" \1", room).split()
+
+            #     try: 
+            #         member_user = User.objects.get(firstName=member_name[0], lastName=member[1]) # Here
+            #         ThreadMember.objects.get_or_create(user_member=member_user, thread=thread)
+
+            #         self.get_or_create_sender(text_data, thread)
+
+            #     except:
+            #         member_subuser = Subuser.objects.get(firstName=member_name[0], lastName=member_name[1]) #Here
+            #         ThreadMember.objects.get_or_create(subuser_member=member_subuser, thread=thread)
+
+            #         self.get_or_create_sender(text_data, thread)
+            # else:
+            #     self.get_or_create_sender(text_data, thread)
+
+    def get_or_create_sender(self, text_data, thread):
         connection.schema_name = 'ot385ee74d'
         currentSchema = connection.schema_name 
         connection.set_schema(schema_name=currentSchema)
-
-        print('new_message 1: ', currentSchema)
-
-        thread = Thread.objects.get(id=self.thread_id)
-        room = self.scope['url_route']['kwargs']['room_name']
-
-        if(any(x.isupper() for x in room)):
-            member_name = re.sub(r"(?<=\w)([A-Z])", r" \1", room).split()
-
-            try: 
-                member_user = User.objects.get(firstName=member_name[0], lastName=member[1])
-                ThreadMember.objects.get_or_create(user_member=member_user, thread=thread)
-
-                self.get_or_create_sender(text_data, thread)
-
-            except:
-                member_subuser = Subuser.objects.get(firstName=member_name[0], lastName=member_name[1])
-                ThreadMember.objects.get_or_create(subuser_member=member_subuser, thread=thread)
-
-                self.get_or_create_sender(text_data, thread)
-        else:
-            self.get_or_create_sender(text_data, thread)
-
-    def get_or_create_sender(self, text_data, thread):
         sender = text_data['from']
 
         try: 
@@ -137,13 +161,13 @@ class ChatConsumer(WebsocketConsumer):
 
             return self.send_chat_message(content)
 
-    def fetches_to_json(self, messages, members):
+    def fetches_to_json(self, messages):
         result = [] 
         for messages in messages:
-            result.append(self.fetch_to_json(messages, members))
+            result.append(self.fetch_to_json(messages))
         return result 
 
-    def fetch_to_json(self, message, members):
+    def fetch_to_json(self, message):
         if message.user_sender is not None:
             return {
                 'thread': message.thread.name, 
@@ -151,7 +175,6 @@ class ChatConsumer(WebsocketConsumer):
                 'user_sender': message.user_sender.email,
                 'message': message.message,
                 'message_id': message.id,
-                'members': self.members_to_json(members),
                 'date_created': str(message.date_created)
             }
 
@@ -162,7 +185,6 @@ class ChatConsumer(WebsocketConsumer):
                 'subuser_sender': message.subuser_sender.email, 
                 'message': message.message,
                 'message_id': message.id,
-                'members': self.members_to_json(members),
                 'date_created': str(message.date_created)
             }
 
@@ -214,10 +236,12 @@ class ChatConsumer(WebsocketConsumer):
     commands = {
         'fetch_message': fetch_messages,
         'new_message': new_message,
+        'delete_message': delete_message,
         'new_member': new_member,
     }
 
     def connect(self):
+        print('HERE')
         connection.schema_name = 'ot385ee74d'
         currentSchema = connection.schema_name 
         self.schema_used = currentSchema

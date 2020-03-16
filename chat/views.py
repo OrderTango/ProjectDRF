@@ -19,7 +19,6 @@ def getUser(request):
         string_user = request.session['user']
         obj_user = json.loads(string_user)
         session_user = list(map(itemgetter('pk'), obj_user))
-        print('USER: ', session_user[0])
         return session_user[0]
     elif 'subUser' in request.session:
         string_user = request.session['subUser']

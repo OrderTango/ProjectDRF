@@ -19,7 +19,6 @@ export class ChatService {
   ) { }
 
   getUsers(): Observable<any> {
-    console.log(this.baseurl)
     return this.httpClient.get(`${this.baseurl}/api/accounts/`, this.getHeader())
   }
 

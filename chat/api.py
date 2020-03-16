@@ -26,18 +26,15 @@ class ThreadView(viewsets.ViewSet):
         # connection.schema_name = 'public'
         currentSchema = connection.schema_name 
         connection.set_schema(schema_name=currentSchema)
-        print(connection.schema_name)
 
         if 'user' in request.session:
             user = User.objects.get(userId=getUser(request))
             queryset = Thread.objects.filter(is_archived=False, threadmember__user_member=user)
-            print('THREADS', queryset)
             serializer = self.serializer_class(queryset, many=True)
 
         if 'subUser' in request.session:
             sub_user = Subuser.objects.get(subUserId=getUser(request))
             queryset = Thread.objects.filter(is_archived=False, threadmember__subuser_member=sub_user)
-            print('THREADS', queryset)
             serializer = self.serializer_class(queryset, many=True)
 
         return Response(serializer.data)

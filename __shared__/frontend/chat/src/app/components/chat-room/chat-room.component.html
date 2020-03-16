@@ -12,18 +12,17 @@
     <div class="message-body">
         <div *ngIf="hasMessages && hasChatRoom">
             <ul class="sentMessage" *ngFor="let message of messages">
-                <li [ngClass]="{'authUser': message.isAuthUser, 'notAuthUser': !message.isAuthUser}">
-                    <span class="message">{{ message.message }}</span>
-                    <span [ngClass]="{'dateAligned': !message.isAuthUser}" class="message-date">{{message.date_created}}</span>
-                    <!-- <span [ngClass]="{'authMsgDropdown': message.isAuthUser, 'msgDropdown': !message.isAuthUser}"><button class="msgBtn">...</button></span> -->
-                    <div [ngClass]="{'authMsgDropdown': message.isAuthUser, 'msgDropdown': !message.isAuthUser}" class="dropright">
+                <li [ngClass]="{'authUser': message?.isAuthUser, 'notAuthUser': !message?.isAuthUser}">
+                    <span class="message">{{ message?.message }}</span>
+                    <div [ngClass]="{'authMsgDropdown': message?.isAuthUser, 'msgDropdown': !message?.isAuthUser}" class="dropright">
                         <button class="msgBtn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             ...
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a (click)="deleteMessage(DeleteMessage, message.message_id)" class="dropdown-item">Delete</a>
+                            <a (click)="deleteMessage(DeleteMessage, message?.message_id)" class="dropdown-item">Delete</a>
                         </div>
                     </div>
+                    <span [ngClass]="{'dateAligned': !message?.isAuthUser}" class="message-date">{{message?.date_created}}</span>
                 </li>
             </ul>
         </div>
@@ -65,7 +64,19 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button (click)="addMember()" class="btn btn-warning"> Add</button>
+        <button (click)="addMember(AddSuccess)" class="btn btn-warning"> Add</button>
+        <button (click)="closeMemberModal()" class="btn btn-secondary">Cancel</button>
+    </div>
+</ng-template>
+
+<ng-template #AddSuccess>
+    <div class="sucess-header modal-header">
+        <button (click)="closeAddSuccessModal()" type="button" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="success-body modal-body">
+        <p>Member Added!</p>
     </div>
 </ng-template>
 

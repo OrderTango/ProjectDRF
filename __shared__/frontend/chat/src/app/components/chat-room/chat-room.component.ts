@@ -1,4 +1,4 @@
-import { OnChanges, SimpleChanges, Component, OnInit, ElementRef, EventEmitter, ViewChild, Input, Output } from '@angular/core';
+import { OnChanges, AfterViewInit, SimpleChanges, Component, OnInit, ElementRef, EventEmitter, ViewChild, Input, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalRef, NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
@@ -44,6 +44,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   roomNewName: String = '';
 
   addMemberModalRef: NgbModalRef;
+  addMemberSuccessModalRef: NgbModalRef;
   deleteMessageModalRef: NgbModalRef;
   deleteMessageSuccessModalRef: NgbModalRef;
 
@@ -57,42 +58,46 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     
     this.chatService.getUser().subscribe((res) => {
-      this.chatUser = res.userId;
+      if(res.length !== 0) {
+        this.chatUser = res.userId;
 
-      this.thisUser = {
-        'id': res.userId, 
-        'firstName': res.firstName, 
-        'lastName': res.lastName, 
-        'email': res.email,
-        'contactNo': res.contactNo,
-        'profilepic': res.profilepic,
-        'lastLogin': res.lastLogin,
-        'activityLog': res.activityLog,
-        'status': res.status,
-        'createdDateTime': res.createdDateTime,
-        'updatedDateTime': res.updatedDateTime
+        this.thisUser = {
+          'id': res.userId, 
+          'firstName': res.firstName, 
+          'lastName': res.lastName, 
+          'email': res.email,
+          'contactNo': res.contactNo,
+          'profilepic': res.profilepic,
+          'lastLogin': res.lastLogin,
+          'activityLog': res.activityLog,
+          'status': res.status,
+          'createdDateTime': res.createdDateTime,
+          'updatedDateTime': res.updatedDateTime
+        }
       }
+      
     }, error => {
       console.log(error)
     })
 
     this.chatService.getSubUser().subscribe((res) => {
-      this.chatUser = res.subUserId
+      if(res.length !== 0) {
+        this.chatUser = res.subUserId
 
-      this.thisUser = {
-        'id': res.subUserId, 
-        'firstName': res.firstName, 
-        'lastName': res.lastName, 
-        'email': res.email,
-        'contactNo': res.contactNo,
-        'profilepic': res.profilepic,
-        'lastLogin': res.lastLogin,
-        'activityLog': res.activityLog,
-        'status': res.status,
-        'createdDateTime': res.createdDateTime,
-        'updatedDateTime': res.updatedDateTime
+        this.thisUser = {
+          'id': res.subUserId, 
+          'firstName': res.firstName, 
+          'lastName': res.lastName, 
+          'email': res.email,
+          'contactNo': res.contactNo,
+          'profilepic': res.profilepic,
+          'lastLogin': res.lastLogin,
+          'activityLog': res.activityLog,
+          'status': res.status,
+          'createdDateTime': res.createdDateTime,
+          'updatedDateTime': res.updatedDateTime
+        }
       }
-      console.log('THIS USER: ', this.thisUser)
     }, error => {
       console.log(error)
     })
@@ -149,8 +154,13 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    console.log(changes.room_name.currentValue)
+    if(changes.room_name.currentValue === '') {
+      this.hasChatRoom = false;
+    }
     this.room_name = changes.room_name.currentValue;
     var room_name = changes.room_name.currentValue;
+    this.roomMembers = []
     this.getChatRoom(room_name)
     this.transformRoomName(room_name)
   }
@@ -169,11 +179,9 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
   getChatRoom(room_name) {
-    console.log('ROOM: ', room_name)
     if(room_name === '' || room_name === undefined) {
       this.hasChatRoom = false;
     }else {
-      console.log('JOJAS')
       this.hasChatRoom = true;
       this.createWebSocket(room_name);
     }
@@ -185,26 +193,31 @@ export class ChatRoomComponent implements OnInit, OnChanges {
 
     this.chatSocket = new ReconnectingWebSocket (
       `ws://${baseurl}/ws/api-chat/${room_name}/`,
-    )
+    );
+
     console.log(this.chatSocket)
+
+    console.log(baseurl)
 
     this.chatSocket.debug = true;
 
     this.chatSocket.onopen = (e) => {
-      console.log('HERE OnOPEN')
+      this.add()
       this.fetchMessages();
+      console.log(this.roomMembers)
     }
 
     this.chatSocket.onmessage = (e) => {
       var data = JSON.parse(e.data);
       let command = data['command']; 
-
-      console.log('DATA: ', data)
+      console.log(data)
 
       if(command === 'fetch_message') {
         this.messages = data['message']
         this.msg.push({'thread_id': data['thread_id'], 'thread': data['thread']})
         this.roomMessage.emit(this.msg)
+
+        console.log('fsdfsGHERE', this.messages)
 
         if(this.messages.length !== 0) {
           var message = []
@@ -212,58 +225,21 @@ export class ChatRoomComponent implements OnInit, OnChanges {
           message = this.messages[0];
 
           this.messages.forEach(m => {
-            console.log(m)
             m['isAuthUser'] = '';
             
             if("user_sender" in m) {
               console.log(m.user_sender, this.thisUser.email)
               if(m.user_sender === this.thisUser.email) {
-                // this.messages.forEach(item => item['isAuthUser'] = true);
                 m.isAuthUser = true;
               }else{
-                // this.messages.forEach(item => item['isAuthUser'] = false);
                 m.isAuthUser = false;
               }
             }else if("subuser_sender" in m) {
               console.log(m.subuser_sender, this.thisUser.email)
               if(m.subuser_sender === this.thisUser.email) {
-                // this.messages.forEach(item => item['isAuthUser'] = true);
                 m.isAuthUser = true;
               }else{
-                // this.messages.forEach(item => item['isAuthUser'] = false);
                 m.isAuthUser = false;
-              }
-            }
-          })
-
-          console.log(this.messages)
-
-          if(message['members'].length === 0) {
-            this.roomMembers = [];
-          }
-
-          message['members'].forEach(m => {
-            let member_name = '';
-            let member_id = null;
-
-            if("user_member" in m) {
-              member_name = m.user_member;
-              member_id = m.user_member_id;
-            }else if("subuser_member") {
-              member_name = m.subuser_member;
-              member_id = m.subuser_member_id;
-            }
-            
-            if(member_id !== null) {
-              if(member_id !== undefined) {
-                if(!this.roomMembers.some((rm) => rm.member_id == member_id)) {
-                  this.roomMembers.push({
-                    'thread': m.thread,
-                    'member_id': member_id,
-                    'member': member_name,
-                    'date_added': m.date_added
-                  })
-                }
               }
             }
           })
@@ -277,6 +253,37 @@ export class ChatRoomComponent implements OnInit, OnChanges {
         }else{
           this.hasMessages = false;
         }
+
+        if(data['members'].length === 0) {
+          this.roomMembers = [];
+        }
+
+        data['members'].forEach(m => {
+          let member_name = '';
+          let member_id = null;
+
+          if("user_member" in m) {
+            member_name = m.user_member;
+            member_id = m.user_member_id;
+          }else if("subuser_member") {
+            member_name = m.subuser_member;
+            member_id = m.subuser_member_id;
+          }
+          
+          if(member_id !== null) {
+            if(member_id !== undefined) {
+              if(!this.roomMembers.some((rm) => rm.member_id == member_id)) {
+                this.roomMembers.push({
+                  'thread': m.thread,
+                  'member_id': member_id,
+                  'member': member_name,
+                  'date_added': m.date_added
+                })
+              }
+            }
+          }
+        })
+
       }else {
         var msg = data['message']
         
@@ -321,7 +328,6 @@ export class ChatRoomComponent implements OnInit, OnChanges {
 
   onSubmit() {
     var message = this.messageForm.value.content; 
-    console.log('HERE 3')
     if(message !== '') {
       this.chatSocket.send(JSON.stringify({
         'message': message,
@@ -339,17 +345,15 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
   deleteUserMessage(template) {
-    // this.chatSocket.send(JSON.stringify({
-    //   'thread': this.room_name,
-    //   'command': 'delete_message',
-    //   'message_id': this.messageId
-    // }))
+    this.chatSocket.send(JSON.stringify({
+      'thread': this.room_name,
+      'command': 'delete_message',
+      'message_id': this.messageId
+    }))
 
-    // this.messages = this.messages.filter(m => m.message_id !== this.messageId)
+    this.messages = this.messages.filter(m => m.message_id !== this.messageId)
     this.closeDeleteModal();
-    setTimeout(() => {
-      this.deleteMessageSuccess(template)
-    }, 3000);
+    this.deleteMessageSuccess(template)
   }
 
   deleteMessageSuccess(template) {
@@ -365,11 +369,20 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
   addMemberModal(template) {
+    console.log(this.thisUser)
     this.addMemberModalRef = this.modal.open(template, { backdrop: true, size: 'lg', centered: true })
   } 
 
+  addMemberSuccess(template) {
+    this.addMemberSuccessModalRef = this.modal.open(template, { backdrop: true, size: 'sm', centered: true })
+  }
+
   closeMemberModal() {
     this.addMemberModalRef.close()
+  }
+
+  closeAddSuccessModal() {
+    this.addMemberSuccessModalRef.close()
   }
 
   selectedMember(user) {
@@ -380,15 +393,35 @@ export class ChatRoomComponent implements OnInit, OnChanges {
     }
   }
 
-  addMember() {
+  addMember(template) {
     console.log('here 2323')
     if(this.addedMembers.length !== 0) {
+      if(!this.addedMembers.some((m) => m.email === this.thisUser.email)) {
+        this.addedMembers.push({'id': this.thisUser.id, 'firstName': this.thisUser.firstName, 'lastName': this.thisUser.lastName, 'email': this.thisUser.email})
+      }
+
       this.chatSocket.send(JSON.stringify({
         'thread': this.room_name,
         'command': 'new_member',
         'members': this.addedMembers
       }))
     }
+    this.closeMemberModal();
+    this.addMemberSuccess(template);
+  }
+
+  add() {
+    if(this.roomMembers.length !== 0) {
+      if(this.addedMembers.length === 0) {
+        this.addedMembers.push({'id': this.thisUser.id, 'firstName': this.thisUser.firstName, 'lastName': this.thisUser.lastName, 'email': this.thisUser.email})
+      }
+    }
+
+    this.chatSocket.send(JSON.stringify({
+      'thread': this.room_name,
+      'command': 'new_member',
+      'members': this.addedMembers
+    }))
   }
 
   removeAddedMember(id) {

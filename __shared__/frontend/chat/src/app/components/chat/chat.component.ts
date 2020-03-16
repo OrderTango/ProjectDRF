@@ -93,7 +93,13 @@ export class ChatComponent implements OnInit {
     })
 
     this.chatService.getChatRooms().subscribe((res) => {
-      this.rooms = Object(res);
+      Object(res).forEach(o => {
+        if(!this.rooms.some((r) => r.id == o.id)) {
+          this.rooms.push({
+            'id': o.id, 'name': o.name, 'date_created': o.date_created, 'is_archived': o.is_archived
+          })
+        }
+      })
 
       this.rooms.forEach(r => {
         // Transform user-named thread name
@@ -147,9 +153,7 @@ export class ChatComponent implements OnInit {
       this.chat_room = chat.name;
       this.chat_room_name = chat.temp_name;
       this.closeDeleteModal()
-      setTimeout(() => {
-        this.deleteThreadSuccess(template)
-      }, 3000);
+      this.deleteThreadSuccess(template)
       
     }, error => {
       console.log(error)
