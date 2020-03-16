@@ -7,7 +7,7 @@
                 <span class="remove" (click)="removeMember(member.thread, member.member_id)" aria-hidden="true">&times;</span>
             </div>
         </div>
-        <button *ngIf="hasChatRoom" (click)="addMemberModal(AddThreadMember)" class="btn btn-secondary">Add Member</button>
+        <button *ngIf="hasChatRoom" (click)="addMemberModal(AddThreadMember)" class="btn btn-secondary add-member">Add Member</button>
     </nav>
     <div class="message-body">
         <div *ngIf="hasMessages && hasChatRoom">

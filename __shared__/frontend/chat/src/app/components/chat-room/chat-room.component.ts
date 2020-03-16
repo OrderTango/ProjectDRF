@@ -17,9 +17,11 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   @ViewChild('textArea') textArea: ElementRef;
   @ViewChild('messageArea') messageArea: ElementRef;
   @Input() room_name: string;
+  @Input() room_id = '';
   @Input() member_fn: string;
   @Input() member_ln: string;
   @Output() roomMessage = new EventEmitter<any>();
+  @Output() userThreads = new EventEmitter<any>();
 
   messageForm = new FormGroup({
     content: new FormControl(''),
@@ -40,8 +42,10 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   users = [];
   subUsers = [];
   addedMembers = [];
+  tempMembers = [];
   roomMembers = [];
   roomNewName: String = '';
+  threads = [];
 
   addMemberModalRef: NgbModalRef;
   addMemberSuccessModalRef: NgbModalRef;
@@ -154,15 +158,45 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes.room_name.currentValue)
-    if(changes.room_name.currentValue === '') {
-      this.hasChatRoom = false;
+    if(changes.hasOwnProperty('room_name')) {
+
+      if(changes.room_name.currentValue === '') {
+        this.hasChatRoom = false;
+      }
+
+      this.room_name = changes.room_name.currentValue;
+      var room_name = changes.room_name.currentValue;
+      this.roomMembers = []
+      this.getChatRoom(room_name)
+      this.transformRoomName(room_name)
+    }else if(changes.hasOwnProperty('room_id')) {
+
+      if(changes.room_id.currentValue !== '') {
+        this.room_id = changes.room_id.currentValue;
+        this.deleteChatRoom(this.room_id)
+      }
     }
-    this.room_name = changes.room_name.currentValue;
-    var room_name = changes.room_name.currentValue;
-    this.roomMembers = []
-    this.getChatRoom(room_name)
-    this.transformRoomName(room_name)
+  }
+
+  deleteChatRoom(room_id) {
+    console.log(room_id)
+    this.chatSocket.send(JSON.stringify({
+      'thread': room_id,
+      'command': 'delete_thread'
+    }))
+
+    this.threads = this.threads.filter(thread => thread.id !== room_id)
+    this.userThreads.emit(this.threads)
+
+    console.log(this.threads)
+
+    if(this.threads.length !== 0) {
+      var chat = this.threads.slice(-1)[0];
+      this.room_name= chat.thread;
+      this.transformRoomName(this.room_name)
+    }else{
+      this.room_name = '';
+    }
   }
 
   transformRoomName(room_name) {
@@ -195,10 +229,6 @@ export class ChatRoomComponent implements OnInit, OnChanges {
       `ws://${baseurl}/ws/api-chat/${room_name}/`,
     );
 
-    console.log(this.chatSocket)
-
-    console.log(baseurl)
-
     this.chatSocket.debug = true;
 
     this.chatSocket.onopen = (e) => {
@@ -210,12 +240,15 @@ export class ChatRoomComponent implements OnInit, OnChanges {
     this.chatSocket.onmessage = (e) => {
       var data = JSON.parse(e.data);
       let command = data['command']; 
-      console.log(data)
+      console.log('DATA: ', data)
 
       if(command === 'fetch_message') {
         this.messages = data['message']
         this.msg.push({'thread_id': data['thread_id'], 'thread': data['thread']})
         this.roomMessage.emit(this.msg)
+
+        this.threads = data['threads'];
+        this.userThreads.emit(this.threads)
 
         console.log('fsdfsGHERE', this.messages)
 
@@ -389,21 +422,23 @@ export class ChatRoomComponent implements OnInit, OnChanges {
     if(user.id !== this.chatUser) {
       if(!this.addedMembers.some((m) => m.id == user.id)) {
         this.addedMembers.push({'id': user.id, 'firstName': user.firstName, 'lastName': user.lastName, 'email': user.email})
+        this.tempMembers.push({'id': user.id, 'firstName': user.firstName, 'lastName': user.lastName, 'email': user.email})
       }
     }
   }
 
   addMember(template) {
-    console.log('here 2323')
     if(this.addedMembers.length !== 0) {
       if(!this.addedMembers.some((m) => m.email === this.thisUser.email)) {
         this.addedMembers.push({'id': this.thisUser.id, 'firstName': this.thisUser.firstName, 'lastName': this.thisUser.lastName, 'email': this.thisUser.email})
       }
+     
+      console.log(this.tempMembers)
 
       this.chatSocket.send(JSON.stringify({
         'thread': this.room_name,
         'command': 'new_member',
-        'members': this.addedMembers
+        'members': this.tempMembers
       }))
     }
     this.closeMemberModal();
@@ -411,7 +446,9 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
   add() {
-    if(this.roomMembers.length !== 0) {
+    this.tempMembers = [];
+
+    if(this.roomMembers.length === 0) {
       if(this.addedMembers.length === 0) {
         this.addedMembers.push({'id': this.thisUser.id, 'firstName': this.thisUser.firstName, 'lastName': this.thisUser.lastName, 'email': this.thisUser.email})
       }
@@ -422,6 +459,25 @@ export class ChatRoomComponent implements OnInit, OnChanges {
       'command': 'new_member',
       'members': this.addedMembers
     }))
+
+    console.log(this.member_ln, this.member_fn, `${this.member_fn} ${this.member_ln}`)
+
+    if(this.member_fn !== '' && this.member_ln !== '') {
+      if(this.roomNewName === `${this.member_fn} ${this.member_ln}`)
+      this.users.forEach((u) => {
+        if(this.member_fn && u.lastName === this.member_ln) {
+          this.addedMembers.push({'id': u.id, 'firstName': u.firstName, 'lastName': u.lastName, 'email': u.email})
+          this.tempMembers.push({'id': u.id, 'firstName': u.firstName, 'lastName': u.lastName, 'email': u.email})
+        }
+      })
+      
+      this.chatSocket.send(JSON.stringify({
+        'thread': this.room_name,
+        'command': 'new_member',
+        'members': this.tempMembers
+      }))
+
+    }
   }
 
   removeAddedMember(id) {

@@ -50,7 +50,7 @@
             </div>
         </div>
         <div class="col-8">  
-            <app-chat-room (roomMessage)="getRoomMessage($event)" [room_name]='this.chat_room' [member_fn]='this.chat_member_firstName' [member_ln]='this.chat_member_lastName'></app-chat-room>
+            <app-chat-room (roomMessage)="getRoomMessage($event)" (userThreads)="getUserThreads($event)" [room_name]='this.chat_room' [room_id]='chat_room_id' [member_fn]='this.chat_member_firstName' [member_ln]='this.chat_member_lastName'></app-chat-room>
         </div>
     </div>
 </div>

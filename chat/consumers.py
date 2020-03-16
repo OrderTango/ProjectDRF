@@ -15,6 +15,7 @@ from .models import Thread, ThreadMessage, ThreadMember
 
 
 class ChatConsumer(WebsocketConsumer):
+
     def new_member(self, text_data):
         connection.schema_name = 'ot385ee74d'
         currentSchema = connection.schema_name 
@@ -22,27 +23,34 @@ class ChatConsumer(WebsocketConsumer):
         print('new_member: ', connection.schema_name)
 
         member_user = text_data['members']
+        print('Fsf', member_user)
         
         members = []
 
         for member in member_user:
+            print('MKE', member)
             try:
                 user = User.objects.get(userId=member['id'], email=member['email'])
                 thread = Thread.objects.get(id=self.thread_id)
                 member = ThreadMember.objects.get_or_create(user_member=user, thread=thread)
                 print('New Member', member)
                 members.append({
-                    'members': member.member
-
+                    'member_id': member.user_member.userId,
+                    'member_email': member.user_member.email,
+                    'thread': member.thread,
                 })
             except:
+                print('HERE fdh')
                 try:
-                    subUser = Subuser.objects.get(subUserId=member['id'], email=member['email'])
+                    print('HERE fdhsfds')
+                    subuser = Subuser.objects.get(subUserId=member['id'], email=member['email'])
                     thread = Thread.objects.get(id=self.thread_id)
-                    m = ThreadMember.objects.get_or_create(subuser_member=subUser, thread=thread)
+                    m = ThreadMember.objects.get_or_create(subuser_member=subuser, thread=thread)
 
                     members.append({
-                        'members': m.member
+                        'member_id': m.subuser_member.subUserId,
+                        'member_email': m.subuser_member.email,
+                        'thread': m.thread,
                     })
                 except:
                     return HttpResponse("No members.")
@@ -50,10 +58,25 @@ class ChatConsumer(WebsocketConsumer):
         print('MMM', members)
         content = {
             'command': 'new_member',
-            'members': members
+            'members': self.new_members_to_json(members)
         }
 
         self.send_chat_message(content)     
+
+    def delete_thread(self, text_data):
+        connection.schema_name = 'ot385ee74d'
+        currentSchema = connection.schema_name 
+        connection.set_schema(schema_name=currentSchema)
+        print('delete_message: ', connection.schema_name)
+
+        thread = Thread.objects.get(id=text_data['thread'])
+        thread.delete() 
+
+        content = {
+            'command': 'delete_thread'
+        }
+
+        self.send_chat_message(content)
 
     def delete_message(self, text_data):
         connection.schema_name = 'ot385ee74d'
@@ -78,19 +101,50 @@ class ChatConsumer(WebsocketConsumer):
         currentSchema = connection.schema_name
         connection.set_schema(schema_name=currentSchema)
         print('fetch_messages: ', connection.schema_name)
-        thread = Thread.objects.get(id=self.thread_id)
-        members = ThreadMember.objects.filter(thread=thread.id)
-        messages = ThreadMessage.objects.filter(thread=thread)
 
-        content = {
-            'command': 'fetch_message',
-            'thread': thread.name, 
-            'thread_id': thread.id, 
-            'message': self.fetches_to_json(messages),
-            'members': self.members_to_json(members)
-        }
+        sender = text_data['from']
+        print('sender: ', sender['id'], sender['email'])
 
-        self.send_chat_message(content)
+        try: 
+            user = User.objects.get(userId=sender['id'], email=sender['email'])
+            threads = Thread.objects.filter(is_archived=False, threadmember__user_member=user)
+
+            thread = Thread.objects.get(id=self.thread_id)
+            members = ThreadMember.objects.filter(thread=thread.id)
+            messages = ThreadMessage.objects.filter(thread=thread)
+
+            content = {
+                'command': 'fetch_message',
+                'thread': thread.name, 
+                'thread_id': thread.id, 
+                'threads': self.threads_to_json(threads),
+                'message': self.fetches_to_json(messages),
+                'members': self.members_to_json(members)
+            }
+
+            self.send_chat_message(content)
+
+        except:
+            try:
+                subuser = Subuser.objects.get(subUserId=sender['id'], email=sender['email'])
+                threads = Thread.objects.filter(is_archived=False, threadmember__subuser_member=subuser)
+
+                thread = Thread.objects.get(id=self.thread_id)
+                members = ThreadMember.objects.filter(thread=thread.id)
+                messages = ThreadMessage.objects.filter(thread=thread)
+
+                content = {
+                    'command': 'fetch_message',
+                    'thread': thread.name, 
+                    'thread_id': thread.id, 
+                    'threads': self.threads_to_json(threads),
+                    'message': self.fetches_to_json(messages),
+                    'members': self.members_to_json(members)
+                }
+
+                self.send_chat_message(content)
+            except:
+                return HttpResponse("No threads found.")
 
     def new_message(self, text_data):
             connection.schema_name = 'ot385ee74d'
@@ -161,6 +215,19 @@ class ChatConsumer(WebsocketConsumer):
 
             return self.send_chat_message(content)
 
+    def threads_to_json(self, threads):
+        result = [] 
+        for thread in threads:
+            result.append(self.thread_to_json(thread))
+        return result 
+
+    def thread_to_json(self, thread):
+        return {
+            'thread': thread.name,
+            'thread_id': thread.id,
+            'date_created': str(thread.date_created)
+        }
+
     def fetches_to_json(self, messages):
         result = [] 
         for messages in messages:
@@ -210,6 +277,20 @@ class ChatConsumer(WebsocketConsumer):
             'subuser_member': message.subuser_member.email,
             'date_added': str(message.date_added)
         }
+
+    def new_members_to_json(self, members):
+        result = []
+        for member in members:
+            result.append(self.new_member_to_json(member))
+        return result 
+
+    def new_member_to_json(self, member):
+        return {
+            'thread': member.thread,
+            'member_id': member.member_id,
+            'member_email': member.member_email
+        }
+
     def messages_to_json(self, messages):
         result = []
         for message in messages:
@@ -237,11 +318,11 @@ class ChatConsumer(WebsocketConsumer):
         'fetch_message': fetch_messages,
         'new_message': new_message,
         'delete_message': delete_message,
+        'delete_thread': delete_thread,
         'new_member': new_member,
     }
 
     def connect(self):
-        print('HERE')
         connection.schema_name = 'ot385ee74d'
         currentSchema = connection.schema_name 
         self.schema_used = currentSchema
