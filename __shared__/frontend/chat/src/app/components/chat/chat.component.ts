@@ -151,32 +151,39 @@ export class ChatComponent implements OnInit {
 
   deleteChatRoom(template, id) {
     this.chat_room_id = id;
-    this.closeDeleteModal()
+    // this.closeDeleteModal()
     
-    this.deleteThreadSuccess(template);
-    setTimeout(() => {
-      this.deleteThreadSuccessModalRef.close()
-    }, 1500);
+    // this.deleteThreadSuccess(template);
+    // setTimeout(() => {
+    //   this.deleteThreadSuccessModalRef.close()
+    // }, 1500);
 
-    // this.chat_room_id = id;
-    // this.chatService.deleteChatRoom(id).subscribe(res => {
+    this.chat_room_id = id;
+    this.chatService.deleteChatRoom(id).subscribe(res => {
 
-    //     this.rooms = this.rooms.filter(room => room.id !== id);
+        this.rooms = this.rooms.filter(room => room.id !== id);
         
-    //     if(this.rooms.length !== 0) {
-    //       var chat = this.rooms.slice(-1)[0];
-    //       this.chat_room = chat.name;
-    //       this.chat_room_name = chat.temp_name;
-    //     }else{
-    //       this.chat_room = '';
-    //     }
+        if(this.rooms.length !== 0) {
+          var chat = this.rooms.slice(-1)[0];
+          this.chat_room = chat.name;
+          this.chat_room_name = chat.temp_name;
+        }else{
+          this.chat_room = '';
+        }
 
-    //   this.closeDeleteModal()
-    //   this.deleteThreadSuccess(template)
+        this.closeDeleteModal()
+    
+        this.deleteThreadSuccess(template);
+        setTimeout(() => {
+          this.deleteThreadSuccessModalRef.close()
+        }, 1500);
+
+      // this.closeDeleteModal()
+      // this.deleteThreadSuccess(template)
       
-    // }, error => {
-    //   console.log(error)
-    // })
+    }, error => {
+      console.log(error)
+    })
   }
 
   getRoomMessage(message: any) {
@@ -192,37 +199,37 @@ export class ChatComponent implements OnInit {
     }
   }
 
-  getUserThreads(threads: any) {
-    this.rooms = [];
+  // getUserThreads(threads: any) {
+  //   this.rooms = [];
 
-    threads.forEach(t => {
-      this.rooms.push({id: t.thread_id, name: t.thread, date_created: t.date_created, is_archived: false, temp_name: t.thread})
-    })
+  //   threads.forEach(t => {
+  //     this.rooms.push({id: t.thread_id, name: t.thread, date_created: t.date_created, is_archived: false, temp_name: t.thread})
+  //   })
 
-    console.log(this.rooms)
+  //   console.log(this.rooms)
 
-    this.rooms.forEach(r => {
-      // Transform user-named thread name
-      if(r.name.match(/[A-Z][a-z]+|[0-9]+/g)) {
-        if(!(/\d/.test(r.name))) {
-          var name = r.name.match(/[A-Z][a-z]+|[0-9]+/g).join(" ")
-          r['temp_name']=name;
-        }else{
-          r['temp_name']=r.name;
-        }
-      }else{
-        r['temp_name']=r.name;
-      }
-    })
+  //   this.rooms.forEach(r => {
+  //     // Transform user-named thread name
+  //     if(r.name.match(/[A-Z][a-z]+|[0-9]+/g)) {
+  //       if(!(/\d/.test(r.name))) {
+  //         var name = r.name.match(/[A-Z][a-z]+|[0-9]+/g).join(" ")
+  //         r['temp_name']=name;
+  //       }else{
+  //         r['temp_name']=r.name;
+  //       }
+  //     }else{
+  //       r['temp_name']=r.name;
+  //     }
+  //   })
 
-    if(this.chat_room=== '') {
-      var chat = this.rooms.slice(-1)[0];
-      this.chat_room = chat.name;
-      this.chat_room_name = chat.temp_name;
-    }
+  //   if(this.chat_room=== '') {
+  //     var chat = this.rooms.slice(-1)[0];
+  //     this.chat_room = chat.name;
+  //     this.chat_room_name = chat.temp_name;
+  //   }
         
 
-  }
+  // }
 
   deleteThread(template, id) {
     this.delThread = id;

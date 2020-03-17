@@ -11,7 +11,7 @@
     </nav>
     <div #autoScrollBody class="message-body">
         <div *ngIf="hasMessages && hasChatRoom">
-            <ul class="sentMessage" *ngFor="let message of messages">
+            <ul class="sentMessage" *ngFor="let message of messages.slice().reverse()">
                 <li [ngClass]="{'authUser': message?.isAuthUser, 'notAuthUser': !message?.isAuthUser}">
                     <span class="message">{{ message?.message }}</span>
                     <div [ngClass]="{'authMsgDropdown': message?.isAuthUser, 'msgDropdown': !message?.isAuthUser}" class="dropright">

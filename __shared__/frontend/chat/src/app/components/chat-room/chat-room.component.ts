@@ -184,18 +184,18 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
 
       if(changes.room_id.currentValue !== '') {
         this.room_id = changes.room_id.currentValue;
-        this.deleteChatRoom(this.room_id)
+        // this.deleteChatRoom(this.room_id)
       }
     }
   }
 
-  deleteChatRoom(room_id) {
-    this.chatSocket.send(JSON.stringify({
-      'from': this.thisUser,
-      'thread': room_id,
-      'command': 'delete_thread'
-    }))
-  }
+  // deleteChatRoom(room_id) {
+  //   this.chatSocket.send(JSON.stringify({
+  //     'from': this.thisUser,
+  //     'thread': room_id,
+  //     'command': 'delete_thread'
+  //   }))
+  // }
 
   transformRoomName(room_name) {
     if(room_name.match(/[A-Z][a-z]+|[0-9]+/g)) {
@@ -327,31 +327,31 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
           this.hasMessages = true;
         }
       }else if(command === 'delete_thread') {
-        console.log(this.room_id)
-        this.threads = data['threads']
-        this.userThreads.emit(this.threads)
-        console.log(this.threads)
-        this.room_name = '';
-        this.roomNewName = '';
-        this.roomMembers = [];
+        // console.log(this.room_id)
+        // this.threads = data['threads']
+        // this.userThreads.emit(this.threads)
+        // console.log(this.threads)
+        // this.room_name = '';
+        // this.roomNewName = '';
+        // this.roomMembers = [];
 
-        if(this.threads === undefined)  {
-          this.room_name = '';
-          this.hasChatRoom = false;
+        // if(this.threads === undefined)  {
+        //   this.room_name = '';
+        //   this.hasChatRoom = false;
 
-          this.roomMembers = [];
-        }
+        //   this.roomMembers = [];
+        // }
 
-        if(this.threads.length !== 0) {
-          var chat = this.threads.slice(-1)[0];
-          this.room_name= chat.thread;
-          this.getChatRoom(this.room_name);
-          this.transformRoomName(this.room_name)
-        }else{
-          this.room_name = '';
-          this.hasChatRoom = false;
-          this.roomMembers = [];
-        }
+        // if(this.threads.length !== 0) {
+        //   var chat = this.threads.slice(-1)[0];
+        //   this.room_name= chat.thread;
+        //   this.getChatRoom(this.room_name);
+        //   this.transformRoomName(this.room_name)
+        // }else{
+        //   this.room_name = '';
+        //   this.hasChatRoom = false;
+        //   this.roomMembers = [];
+        // }
       }else if(command === 'delete_message') {
         this.fetchMessages()
       }

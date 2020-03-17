@@ -26,12 +26,10 @@ class ChatConsumer(WebsocketConsumer):
         members = []
 
         for member in member_user:
-            print('MKE', member)
             try:
                 user = User.objects.get(userId=member['id'], email=member['email'])
                 thread = Thread.objects.get(id=self.thread_id)
                 member = ThreadMember.objects.get_or_create(user_member=user, thread=thread)
-                print('New Member', member)
                 members.append({
                     'member_id': member.user_member.userId,
                     'member_email': member.user_member.email,
@@ -51,7 +49,6 @@ class ChatConsumer(WebsocketConsumer):
                 except:
                     return HttpResponse("No members.")
 
-        print('MMM', members)
         content = {
             'command': 'new_member',
             'members': self.new_members_to_json(members)
