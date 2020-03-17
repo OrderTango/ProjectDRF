@@ -172,6 +172,7 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
 
       if(changes.room_name.currentValue === '') {
         this.hasChatRoom = false;
+        this.messages = [];
       }
 
       this.room_name = changes.room_name.currentValue;
