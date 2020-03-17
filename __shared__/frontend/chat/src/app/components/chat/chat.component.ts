@@ -150,6 +150,14 @@ export class ChatComponent implements OnInit {
   }
 
   deleteChatRoom(template, id) {
+    this.chat_room_id = id;
+    this.closeDeleteModal()
+    
+    this.deleteThreadSuccess(template);
+    setTimeout(() => {
+      this.deleteThreadSuccessModalRef.close()
+    }, 1500);
+
     // this.chat_room_id = id;
     // this.chatService.deleteChatRoom(id).subscribe(res => {
 
@@ -218,13 +226,12 @@ export class ChatComponent implements OnInit {
 
   deleteThread(template, id) {
     this.delThread = id;
-    this.chat_room_id = id;
     this.deleteThreadConfirmModalRef = this.modal.open(template, { backdrop: true, size: 'sm', centered: true })
   }
 
-  // deleteThreadSuccess(template) {
-  //   this.deleteThreadSuccessModalRef = this.modal.open(template, { backdrop: true, size: 'sm', centered: true })
-  // }
+  deleteThreadSuccess(template) {
+    this.deleteThreadSuccessModalRef = this.modal.open(template, { backdrop: true, size: 'sm', centered: true })
+  }
 
   closeDeleteModal() {
     this.deleteThreadConfirmModalRef.close()

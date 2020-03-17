@@ -21,9 +21,7 @@ class ChatConsumer(WebsocketConsumer):
         currentSchema = connection.schema_name 
         connection.set_schema(schema_name=currentSchema)
         print('new_member: ', connection.schema_name)
-
         member_user = text_data['members']
-        print('Fsf', member_user)
         
         members = []
 
@@ -40,9 +38,7 @@ class ChatConsumer(WebsocketConsumer):
                     'thread': member.thread,
                 })
             except:
-                print('HERE fdh')
                 try:
-                    print('HERE fdhsfds')
                     subuser = Subuser.objects.get(subUserId=member['id'], email=member['email'])
                     thread = Thread.objects.get(id=self.thread_id)
                     m = ThreadMember.objects.get_or_create(subuser_member=subuser, thread=thread)
@@ -50,7 +46,7 @@ class ChatConsumer(WebsocketConsumer):
                     members.append({
                         'member_id': m.subuser_member.subUserId,
                         'member_email': m.subuser_member.email,
-                        'thread': m.thread,
+                        'thread': thread.name,
                     })
                 except:
                     return HttpResponse("No members.")
@@ -69,14 +65,37 @@ class ChatConsumer(WebsocketConsumer):
         connection.set_schema(schema_name=currentSchema)
         print('delete_message: ', connection.schema_name)
 
-        thread = Thread.objects.get(id=text_data['thread'])
-        thread.delete() 
+        sender = text_data['from']
+        print(sender)
 
-        content = {
-            'command': 'delete_thread'
-        }
+        try: 
+            user = User.objects.get(userId=sender['id'], email=sender['email'])
+            thread = Thread.objects.get(id=text_data['thread'])
+            thread.delete() 
+            threads = Thread.objects.filter(is_archived=False, threadmember__user_member=user)
 
-        self.send_chat_message(content)
+            content = {
+                'command': 'delete_thread',
+                'threads': self.threads_to_json(threads)
+            }
+
+            self.send_chat_message(content)
+
+        except:
+            try:
+                subuser = Subuser.objects.get(subUserId=sender['id'], email=sender['email'])
+                thread = Thread.objects.get(id=text_data['thread'])
+                thread.delete() 
+                threads = Thread.objects.filter(is_archived=False, threadmember__subuser_member=subuser)
+                
+                content = {
+                    'command': 'delete_thread',
+                    'threads': self.threads_to_json(threads)
+                }
+
+                self.send_chat_message(content)
+            except:
+                return HttpResponse("No threads found.")
 
     def delete_message(self, text_data):
         connection.schema_name = 'ot385ee74d'
@@ -100,15 +119,12 @@ class ChatConsumer(WebsocketConsumer):
         connection.schema_name = 'ot385ee74d'
         currentSchema = connection.schema_name
         connection.set_schema(schema_name=currentSchema)
-        print('fetch_messages: ', connection.schema_name)
 
         sender = text_data['from']
-        print('sender: ', sender['id'], sender['email'])
 
         try: 
             user = User.objects.get(userId=sender['id'], email=sender['email'])
             threads = Thread.objects.filter(is_archived=False, threadmember__user_member=user)
-
             thread = Thread.objects.get(id=self.thread_id)
             members = ThreadMember.objects.filter(thread=thread.id)
             messages = ThreadMessage.objects.filter(thread=thread)

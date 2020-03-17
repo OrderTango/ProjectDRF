@@ -1,4 +1,4 @@
-import { OnChanges, AfterViewInit, SimpleChanges, Component, OnInit, ElementRef, EventEmitter, ViewChild, Input, Output } from '@angular/core';
+import { OnChanges, SimpleChanges, Component, OnInit, ElementRef, EventEmitter, ViewChild, Input, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalRef, NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
@@ -21,6 +21,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   @Input() member_fn: string;
   @Input() member_ln: string;
   @Output() roomMessage = new EventEmitter<any>();
+  @Output() threadDelete = new EventEmitter<any>();
   @Output() userThreads = new EventEmitter<any>();
 
   messageForm = new FormGroup({
@@ -37,6 +38,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   hasChatRoom: boolean = false;
   hasMessages: boolean = false;
   isAuthSender: boolean = false;
+  noThreads: boolean = false;
   messages = [];
   msg = [];
   users = [];
@@ -179,24 +181,11 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
   deleteChatRoom(room_id) {
-    console.log(room_id)
     this.chatSocket.send(JSON.stringify({
+      'from': this.thisUser,
       'thread': room_id,
       'command': 'delete_thread'
     }))
-
-    this.threads = this.threads.filter(thread => thread.id !== room_id)
-    this.userThreads.emit(this.threads)
-
-    console.log(this.threads)
-
-    if(this.threads.length !== 0) {
-      var chat = this.threads.slice(-1)[0];
-      this.room_name= chat.thread;
-      this.transformRoomName(this.room_name)
-    }else{
-      this.room_name = '';
-    }
   }
 
   transformRoomName(room_name) {
@@ -310,14 +299,13 @@ export class ChatRoomComponent implements OnInit, OnChanges {
                   'thread': m.thread,
                   'member_id': member_id,
                   'member': member_name,
-                  'date_added': m.date_added
                 })
               }
             }
           }
         })
 
-      }else {
+      }else if(command === 'new_message') {
         var msg = data['message']
         
         if(!this.messages.some((m) =>  msg['message_id'] == m['message_id'])) {
@@ -329,6 +317,32 @@ export class ChatRoomComponent implements OnInit, OnChanges {
         }else{
           this.hasMessages = true;
         }
+      }else if(command === 'delete_thread') {
+        console.log(this.room_id)
+        this.threads = data['threads']
+        this.userThreads.emit(this.threads)
+        console.log(this.threads)
+        this.room_name = '';
+        this.roomNewName = '';
+        this.roomMembers = [];
+
+        if(this.threads === undefined)  {
+          this.room_name = '';
+          this.hasChatRoom = false;
+
+          this.roomMembers = [];
+        }
+
+        if(this.threads.length !== 0) {
+          var chat = this.threads.slice(-1)[0];
+          this.room_name= chat.thread;
+          this.getChatRoom(this.room_name);
+          this.transformRoomName(this.room_name)
+        }else{
+          this.room_name = '';
+          this.hasChatRoom = false;
+          this.roomMembers = [];
+        }
       }
     }
 
@@ -338,7 +352,6 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
   fetchMessages() {
-    console.log('HERE 2 ', this.chatSocket.send(JSON.stringify({'from': this.thisUser, 'command': 'fetch_message'})))
     this.chatSocket.send(JSON.stringify({
       'from': this.thisUser,
       'command': 'fetch_message'
@@ -428,11 +441,8 @@ export class ChatRoomComponent implements OnInit, OnChanges {
   }
 
   addMember(template) {
+    console.log(this.addedMembers)
     if(this.addedMembers.length !== 0) {
-      if(!this.addedMembers.some((m) => m.email === this.thisUser.email)) {
-        this.addedMembers.push({'id': this.thisUser.id, 'firstName': this.thisUser.firstName, 'lastName': this.thisUser.lastName, 'email': this.thisUser.email})
-      }
-     
       console.log(this.tempMembers)
 
       this.chatSocket.send(JSON.stringify({
@@ -440,9 +450,23 @@ export class ChatRoomComponent implements OnInit, OnChanges {
         'command': 'new_member',
         'members': this.tempMembers
       }))
+
+      this.tempMembers.forEach(tm => {
+        if(!this.roomMembers.some((rm) => rm.member_id == tm.id)) {
+          this.roomMembers.push({
+            'thread': tm.thread,
+            'member_id': tm.id,
+            'member': tm.email,
+          })
+        }
+      })
     }
+
     this.closeMemberModal();
     this.addMemberSuccess(template);
+    setTimeout(() => {
+      this.addMemberSuccessModalRef.close()
+    }, 1500);
   }
 
   add() {
@@ -452,13 +476,13 @@ export class ChatRoomComponent implements OnInit, OnChanges {
       if(this.addedMembers.length === 0) {
         this.addedMembers.push({'id': this.thisUser.id, 'firstName': this.thisUser.firstName, 'lastName': this.thisUser.lastName, 'email': this.thisUser.email})
       }
-    }
 
-    this.chatSocket.send(JSON.stringify({
-      'thread': this.room_name,
-      'command': 'new_member',
-      'members': this.addedMembers
-    }))
+      this.chatSocket.send(JSON.stringify({
+        'thread': this.room_name,
+        'command': 'new_member',
+        'members': this.addedMembers
+      }))
+    }
 
     console.log(this.member_ln, this.member_fn, `${this.member_fn} ${this.member_ln}`)
 
