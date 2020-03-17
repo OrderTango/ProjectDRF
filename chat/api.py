@@ -84,8 +84,6 @@ class ThreadMemberView(views.APIView):
         """
         currentSchema = connection.schema_name 
         connection.set_schema(schema_name=currentSchema)
-        print(connection.schema_name)
-        print(self.kwargs)
         thread = Thread.objects.get(name=kwargs['thread'])
         
         user = SubUser.objects.get(userId=kwargs['pk'])

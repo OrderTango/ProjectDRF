@@ -103,24 +103,44 @@ export class ChatComponent implements OnInit {
         }
       })
 
-      this.rooms.forEach(r => {
-        // Transform user-named thread name
-        if(r.name.match(/[A-Z][a-z]+|[0-9]+/g)) {
-          if(!(/\d/.test(r.name))) {
-            var name = r.name.match(/[A-Z][a-z]+|[0-9]+/g).join(" ")
-            r['temp_name']=name;
-          }else{
-            r['temp_name']=r.name;
-          }
-        }else{
-          r['temp_name']=r.name;
-        }
-      })
+      this.transformRoomName();
 
       if(this.chat_room=== '') {
         var chat = this.rooms.slice(-1)[0];
         this.chat_room = chat.name;
         this.chat_room_name = chat.temp_name;
+      }
+    })
+  }
+
+  transformRoomName() {
+    this.rooms.forEach(r => {
+      // Transform user-named thread name
+      if(r.name.match(/[A-Z][a-z]+|[0-9]+/g)) {
+        if(!(/\d/.test(r.name))) {
+          var name = r.name.match(/[A-Z][a-z]+|[0-9]+/g).join(" ")
+          var spaceCount = (name.split(' ').length - 1)
+
+          if(spaceCount === 3) {
+            var n = 2;
+            var a = name.split(' ')
+            var first = a.slice(0, n).join(' ')
+            var second = a.slice(n).join(' ')
+          
+            if(first === `${this.authUser.firstName} ${this.authUser.lastName}`) {
+              r['temp_name'] = second;
+            }else{
+              r['temp_name'] = first;
+            }
+          }else{
+            r['temp_name'] = r.name;
+          }
+          // r['temp_name']=name;
+        }else{
+          r['temp_name']=r.name;
+        }
+      }else{
+        r['temp_name']=r.name;
       }
     })
   }
@@ -132,10 +152,11 @@ export class ChatComponent implements OnInit {
   }
 
   createChatRoom(firstName, lastName) {
-    this.chat_room = `${firstName}${lastName}`;
+    this.chat_room = `${firstName}${lastName}${this.authUser.firstName}${this.authUser.lastName}`;
     this.chat_member_firstName = firstName;
     this.chat_member_lastName = lastName;
     this.chat_room_id = '';
+    console.log(this.chat_room)
   }
 
   submitChatRoom() {
@@ -196,6 +217,8 @@ export class ChatComponent implements OnInit {
       if(!this.rooms.some((r) => r.id == this.roomMessage['thread_id'])) {
         this.rooms.push({id: this.roomMessage['thread_id'], name: this.roomMessage['thread'], date_created: this.roomMessage['date_created'], is_archived: false, temp_name: this.roomMessage['thread']})
       }
+
+      this.transformRoomName();
     }
   }
 

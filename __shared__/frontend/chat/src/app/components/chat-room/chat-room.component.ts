@@ -202,7 +202,24 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
     if(room_name.match(/[A-Z][a-z]+|[0-9]+/g)) {
       if(!(/\d/.test(room_name))) {
         var name = room_name.match(/[A-Z][a-z]+|[0-9]+/g).join(" ")
-        this.roomNewName = name;
+        var spaceCount = name.split(' ').length - 1;
+
+        if(spaceCount === 3) {
+          var n = 2;
+          var a = name.split(' ')
+          var first = a.slice(0, n).join(' ')
+          var second = a.slice(n).join(' ');
+
+          if(first === `${this.thisUser.firstName} ${this.thisUser.lastName}`) {
+            this.roomNewName = second;
+          }else {
+            this.roomNewName = first;
+          }
+        }else{
+          this.roomNewName = room_name;
+        }
+
+        // this.roomNewName = name; 
       }else{
         this.roomNewName = room_name;
       }
@@ -217,6 +234,7 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
     }else {
       this.hasChatRoom = true;
       this.createWebSocket(room_name);
+      this.transformRoomName(room_name)
     }
   }
 
@@ -231,15 +249,16 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
     this.chatSocket.debug = true;
 
     this.chatSocket.onopen = (e) => {
+      console.log('HERE onopen')
       this.add()
       this.fetchMessages();
-      console.log(this.roomMembers)
     }
 
     this.chatSocket.onmessage = (e) => {
       var data = JSON.parse(e.data);
       let command = data['command']; 
       console.log('DATA: ', data)
+      this.transformRoomName(room_name)
 
       if(command === 'fetch_message') {
         this.messages = data['message']
@@ -359,7 +378,12 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
     }
 
     this.chatSocket.onclose = (e) => {
+      console.log(e)
       console.error('Chat socket closed unexpectedly');
+    }
+
+    this.chatSocket.onerror = (e) => {
+      console.log('ERROR', e)
     }
   }
 
@@ -502,7 +526,7 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
       }))
     }
 
-    console.log(this.member_ln, this.member_fn, `${this.member_fn} ${this.member_ln}`)
+    console.log(this.member_ln, this.member_fn)
 
     if(this.member_fn !== '' && this.member_ln !== '') {
       if(this.roomNewName === `${this.member_fn} ${this.member_ln}`)

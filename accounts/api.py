@@ -49,16 +49,22 @@ class UserView(viewsets.ViewSet):
         """
         Get user details
         """
-        
-        user = User.objects.get(userId=getUser(request))
-        serializer = self.serializer_class(user)
-        return Response(serializer.data)
+        current_schema = connection.schema_name 
+        connection.set_schema(schema_name=current_schema)
+
+        company_schema = Schema.objects.get(schema_name=current_schema).schemaCompanyName
+        company = Company.objects.get(companyName=company_schema)
+
+        if 'user' in request.session:
+            user = User.objects.get(userId=getUser(request), userCompanyId=company)
+            serializer = self.serializer_class(user)
+            return Response(serializer.data)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, *args, **kwargs):
         """
         Delete user
         """
-        # user_id = self.kwargs['pk']
         user = User.objects.get(userId=getUser(request))
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -73,7 +79,7 @@ class SubUserListView(viewsets.ViewSet):
         sub_users = Subuser.objects.all() 
         serializer = self.serializer_class(sub_users, many=True)
         return Response(serializer.data)
-
+     
 
 class SubUserView(viewsets.ViewSet):
     serializer_class = SubUserSerializer
@@ -82,6 +88,8 @@ class SubUserView(viewsets.ViewSet):
         """
         Get sub user details 
         """
-        sub_user = Subuser.objects.get(subUserId=getUser(request))
-        serializer = self.serializer_class(sub_user)
-        return Response(serializer.data)
+        if 'subUser' in request.session:
+            sub_user = Subuser.objects.get(subUserId=getUser(request))
+            serializer = self.serializer_class(sub_user)
+            return Response(serializer.data)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
