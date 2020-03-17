@@ -26,13 +26,13 @@
                 <div *ngIf="isChatRoom" class="chat">
                     <div class="chat-room">
                         <h4>Chats</h4>
-                        <button *ngIf="!createRoom" (click)="createRoom = true" class="btn btn-primary">Create</button>
+                        <button *ngIf="!createRoom" (click)="createRoom = true" class="btn purple white-font">Create</button>
                     </div>
                     <div *ngIf="rooms.length !== 0 && !createRoom">
                         <div class="inside-rooms" *ngFor="let room of rooms">
                             <span class="room-section" *ngIf="!room.is_archived">
                                 <span (click)="selectChatRoom(room.name)" class="room">{{ room.temp_name }}&nbsp;&nbsp;</span>
-                                <button (click)="deleteThread(DeleteThread, room.id)" class="delete-thread btn btn-warning">Delete</button>
+                                <button (click)="deleteThread(DeleteThread, room.id)" class="delete-thread btn btn-warning yellow-green-font">Delete</button>
                             </span> 
                         </div>
                     </div>
@@ -40,10 +40,10 @@
                         <span><i>You don't have any chat room</i></span>
                     </div>
                     <div *ngIf="createRoom" class="">
-                        <span class="back" (click)="createRoom=false">(<- Back)</span>&nbsp;Create Chat Room<br>
+                        <span class="back" (click)="createRoom=false">[<- Back]</span>&nbsp;Create Chat Room<br>
                         <form [formGroup]="roomForm">
-                            <input (keyup)="onKey($event)" class="input-room" formControlName="roomName" type="text" size="100"/><br>
-                            <input (click)="submitChatRoom()" class="btn btn-primary" type="button" value="Create"/><br>
+                            <input (keyup)="onKey($event)" class="input-room" formControlName="roomName" type="text" size="100"/><br><br>
+                            <input (click)="submitChatRoom()" class="btn purple white-font" type="button" value="Create"/><br>
                         </form>
                     </div>
                 </div>

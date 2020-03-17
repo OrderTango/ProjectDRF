@@ -7,9 +7,9 @@
                 <span class="remove" (click)="removeMember(member.thread, member.member_id)" aria-hidden="true">&times;</span>
             </div>
         </div>
-        <button *ngIf="hasChatRoom" (click)="addMemberModal(AddThreadMember)" class="btn btn-secondary add-member">Add Member</button>
+        <button *ngIf="hasChatRoom" (click)="addMemberModal(AddThreadMember)" class="btn purple white-font add-member">Add Member</button>
     </nav>
-    <div class="message-body">
+    <div #autoScrollBody class="message-body">
         <div *ngIf="hasMessages && hasChatRoom">
             <ul class="sentMessage" *ngFor="let message of messages">
                 <li [ngClass]="{'authUser': message?.isAuthUser, 'notAuthUser': !message?.isAuthUser}">
@@ -36,7 +36,7 @@
     <div class="message-form">
         <form [formGroup]="messageForm" #messageArea class="form">
             <textarea (keyup)="autoGrow()" #textArea formControlName="content" type="text" placeholder="Enter message..."></textarea>
-            <input (click)="onSubmit()" class="create-room btn btn-primary" type="button" value="Send" [disabled]="!hasChatRoom"/>
+            <input (click)="onSubmit()" class="create-room btn purple white-font" type="button" value="Send" [disabled]="!hasChatRoom"/>
         </form>
     </div>
 </div>

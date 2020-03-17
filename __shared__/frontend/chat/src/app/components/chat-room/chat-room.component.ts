@@ -1,4 +1,4 @@
-import { OnChanges, SimpleChanges, Component, OnInit, ElementRef, EventEmitter, ViewChild, Input, Output } from '@angular/core';
+import { OnChanges, SimpleChanges, Component, OnInit, ElementRef, EventEmitter, ViewChild, Input, Output, AfterViewChecked } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalRef, NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
@@ -12,10 +12,11 @@ import { ChatService } from '../../services/chat.service';
   templateUrl: './chat-room.component.html',
   styleUrls: ['./chat-room.component.css']
 })
-export class ChatRoomComponent implements OnInit, OnChanges {
+export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
 
   @ViewChild('textArea') textArea: ElementRef;
   @ViewChild('messageArea') messageArea: ElementRef;
+  @ViewChild('autoScrollBody') autoScrollArea: ElementRef;
   @Input() room_name: string;
   @Input() room_id = '';
   @Input() member_fn: string;
@@ -157,9 +158,16 @@ export class ChatRoomComponent implements OnInit, OnChanges {
     this.getChatRoom(this.room_name)
     this.transformRoomName(this.room_name)
     this.messageForm.reset();
+
+    this.scrollBottom();
   }
 
+  ngAfterViewChecked() {        
+    this.scrollBottom();        
+  } 
+
   ngOnChanges(changes: SimpleChanges) {
+    this.scrollBottom()
     if(changes.hasOwnProperty('room_name')) {
 
       if(changes.room_name.currentValue === '') {
@@ -169,6 +177,7 @@ export class ChatRoomComponent implements OnInit, OnChanges {
       this.room_name = changes.room_name.currentValue;
       var room_name = changes.room_name.currentValue;
       this.roomMembers = []
+      this.addedMembers = []
       this.getChatRoom(room_name)
       this.transformRoomName(room_name)
     }else if(changes.hasOwnProperty('room_id')) {
@@ -524,6 +533,12 @@ export class ChatRoomComponent implements OnInit, OnChanges {
     }, error => {
       console.log(error)
     })
+  }
+
+  scrollBottom(): void{
+    try {
+        this.autoScrollArea.nativeElement.scrollTop = this.autoScrollArea.nativeElement.scrollHeight;
+    } catch(err) { } 
   }
 
 }
