@@ -109,7 +109,7 @@ class ChatConsumer(WebsocketConsumer):
         message.delete()
 
         content = {
-            'command': 'delete_message'
+            'command': 'delete_message',
         }
 
         self.send_chat_message(content)

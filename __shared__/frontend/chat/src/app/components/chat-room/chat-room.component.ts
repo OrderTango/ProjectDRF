@@ -343,6 +343,8 @@ export class ChatRoomComponent implements OnInit, OnChanges {
           this.hasChatRoom = false;
           this.roomMembers = [];
         }
+      }else if(command === 'delete_message') {
+        this.fetchMessages()
       }
     }
 
@@ -404,6 +406,10 @@ export class ChatRoomComponent implements OnInit, OnChanges {
 
   deleteMessageSuccess(template) {
     this.deleteMessageSuccessModalRef = this.modal.open(template, { backdrop: true, size: 'sm', centered: true })
+
+    setTimeout(() => {
+      this.deleteMessageSuccessModalRef .close()
+    }, 1500);
   }
 
   closeDeleteModal() {
@@ -450,6 +456,8 @@ export class ChatRoomComponent implements OnInit, OnChanges {
         'command': 'new_member',
         'members': this.tempMembers
       }))
+
+      this.fetchMessages();
 
       this.tempMembers.forEach(tm => {
         if(!this.roomMembers.some((rm) => rm.member_id == tm.id)) {

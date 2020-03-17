@@ -18,7 +18,7 @@
                         <button class="msgBtn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             ...
                         </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <div *ngIf="message?.isAuthUser" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a (click)="deleteMessage(DeleteMessage, message?.message_id)" class="dropdown-item">Delete</a>
                         </div>
                     </div>
