@@ -65,6 +65,7 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
   ngOnInit(): void {
     
     this.chatService.getUser().subscribe((res) => {
+      console.log('User', res.length !== 0, res)
       if(res.length !== 0) {
         this.chatUser = res.userId;
 
@@ -81,6 +82,9 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
           'createdDateTime': res.createdDateTime,
           'updatedDateTime': res.updatedDateTime
         }
+
+        this.getChatRoom(this.room_name)
+        this.transformRoomName(this.room_name)
       }
       
     }, error => {
@@ -104,6 +108,9 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
           'createdDateTime': res.createdDateTime,
           'updatedDateTime': res.updatedDateTime
         }
+
+        this.getChatRoom(this.room_name)
+        this.transformRoomName(this.room_name)
       }
     }, error => {
       console.log(error)
@@ -155,8 +162,6 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
       console.log(error)
     })
 
-    this.getChatRoom(this.room_name)
-    this.transformRoomName(this.room_name)
     this.messageForm.reset();
 
     this.scrollBottom();
@@ -178,6 +183,7 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
       this.room_name = changes.room_name.currentValue;
       var room_name = changes.room_name.currentValue;
       this.roomMembers = []
+      this.messages = []
       this.addedMembers = []
       this.getChatRoom(room_name)
       this.transformRoomName(room_name)
@@ -249,7 +255,7 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
     this.chatSocket.debug = true;
 
     this.chatSocket.onopen = (e) => {
-      console.log('HERE onopen')
+      console.log('WebSocket is now Open')
       this.add()
       this.fetchMessages();
     }
@@ -260,6 +266,58 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
       console.log('DATA: ', data)
       this.transformRoomName(room_name)
 
+      if(command === 'new_message') {
+        var msg = data['message']
+
+        if(!this.messages.some((m) => msg['message_id'] === m['message_id'])) {
+          if("user_sender" in msg) {
+            if(msg['user_sender'] === this.thisUser.email) {
+              this.messages.push({
+                'thread': msg['thread'],
+                'thread_id': msg['thread_id'],
+                'user_sender': msg['user_sender'],
+                'message': msg['message'],
+                'message_id': msg['message_id'],
+                'date_created': msg['date_created'],
+                'isAuthUser': true
+              })
+            }else{
+              this.messages.push({
+                'thread': msg['thread'],
+                'thread_id': msg['thread_id'],
+                'user_sender': msg['user_sender'],
+                'message': msg['message'],
+                'message_id': msg['message_id'],
+                'date_created': msg['date_created'],
+                'isAuthUser': false
+              })
+            }
+          }else if("subuser_sender" in msg) {
+            if(msg['subuser_sender'] === this.thisUser.email) {
+              this.messages.push({
+                'thread': msg['thread'],
+                'thread_id': msg['thread_id'],
+                'subuser_sender': msg['subuser_sender'],
+                'message': msg['message'],
+                'message_id': msg['message_id'],
+                'date_created': msg['date_created'],
+                'isAuthUser': true
+              })
+            }else{
+              this.messages.push({
+                'thread': msg['thread'],
+                'thread_id': msg['thread_id'],
+                'subuser_sender': msg['subuser_sender'],
+                'message': msg['message'],
+                'message_id': msg['message_id'],
+                'date_created': msg['date_created'],
+                'isAuthUser': false
+              })
+            }
+          }
+        }   
+      }
+
       if(command === 'fetch_message') {
         this.messages = data['message']
         this.msg.push({'thread_id': data['thread_id'], 'thread': data['thread']})
@@ -268,7 +326,7 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
         this.threads = data['threads'];
         this.userThreads.emit(this.threads)
 
-        console.log('fsdfsGHERE', this.messages)
+        console.log('Fetch Messages: ', this.messages)
 
         if(this.messages.length !== 0) {
           var message = []
@@ -279,14 +337,12 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
             m['isAuthUser'] = '';
             
             if("user_sender" in m) {
-              console.log(m.user_sender, this.thisUser.email)
               if(m.user_sender === this.thisUser.email) {
                 m.isAuthUser = true;
               }else{
                 m.isAuthUser = false;
               }
             }else if("subuser_sender" in m) {
-              console.log(m.subuser_sender, this.thisUser.email)
               if(m.subuser_sender === this.thisUser.email) {
                 m.isAuthUser = true;
               }else{
@@ -333,19 +389,6 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
             }
           }
         })
-
-      }else if(command === 'new_message') {
-        var msg = data['message']
-        
-        if(!this.messages.some((m) =>  msg['message_id'] == m['message_id'])) {
-          this.messages.push(data['message']); 
-        }
-
-        if(this.messages.length === 0) {
-          this.hasMessages = false;
-        }else{
-          this.hasMessages = true;
-        }
       }else if(command === 'delete_thread') {
         // console.log(this.room_id)
         // this.threads = data['threads']
@@ -481,9 +524,7 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
   }
 
   addMember(template) {
-    console.log(this.addedMembers)
     if(this.addedMembers.length !== 0) {
-      console.log(this.tempMembers)
 
       this.chatSocket.send(JSON.stringify({
         'thread': this.room_name,
@@ -525,8 +566,6 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
         'members': this.addedMembers
       }))
     }
-
-    console.log(this.member_ln, this.member_fn)
 
     if(this.member_fn !== '' && this.member_ln !== '') {
       if(this.roomNewName === `${this.member_fn} ${this.member_ln}`)
