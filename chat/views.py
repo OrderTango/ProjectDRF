@@ -4,6 +4,7 @@ from operator import itemgetter
 
 from django.db import connection
 from django.shortcuts import render
+
 from rest_framework_jwt.settings import api_settings
 
 from OrderTango.settings import *

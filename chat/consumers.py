@@ -10,18 +10,29 @@ from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer 
 from channels.exceptions import StopConsumer
 
-from OrderTangoApp.models import User
+from OrderTangoApp.models import User, Schema
 from OrderTangoSubDomainApp.models import Subuser
 from .models import Thread, ThreadMessage, ThreadMember
+
+from chat.views import *
 
 
 class ChatConsumer(WebsocketConsumer):
 
+    def set_connection_schema(self):
+        header = self.scope['headers'][0]
+        get_domain = header[1]
+        text = get_domain.decode('utf-8')
+        domain_name = re.split('(?<!\d)[:]|[:](?!\d)', text)
+        schema = Schema.objects.get(domain_url=domain_name[0]).schema_name
+        print('Schema: ', schema)
+
+        currentSchema = schema 
+        connection.set_schema(schema_name=currentSchema) 
+
     def new_member(self, text_data):
-        connection.schema_name = 'ot385ee74d'
-        currentSchema = connection.schema_name 
-        connection.set_schema(schema_name=currentSchema)
-        print('new_member: ', connection.schema_name)
+        self.set_connection_schema()
+        print('new_member')
         member_user = text_data['members']
         
         members = []
@@ -71,11 +82,8 @@ class ChatConsumer(WebsocketConsumer):
         self.send_chat_message(content)     
 
     def delete_thread(self, text_data):
-        connection.schema_name = 'ot385ee74d'
-        currentSchema = connection.schema_name 
-        connection.set_schema(schema_name=currentSchema)
-        print('delete_message: ', connection.schema_name)
-
+        self.set_connection_schema()
+        print('delete_thread')
         sender = text_data['from']
 
         try: 
@@ -108,11 +116,8 @@ class ChatConsumer(WebsocketConsumer):
                 return HttpResponse("No threads found.")
 
     def delete_message(self, text_data):
-        connection.schema_name = 'ot385ee74d'
-        currentSchema = connection.schema_name 
-        connection.set_schema(schema_name=currentSchema)
-        print('delete_message: ', connection.schema_name)
-
+        self.set_connection_schema()
+        print('delete_message')
         thread = Thread.objects.get(name=text_data['thread']).id
         message = ThreadMessage.objects.get(id=text_data['message_id'], thread=thread)
         message.delete()
@@ -125,10 +130,8 @@ class ChatConsumer(WebsocketConsumer):
         
 
     def fetch_messages(self, text_data):
-        connection.schema_name = 'ot385ee74d'
-        currentSchema = connection.schema_name
-        connection.set_schema(schema_name=currentSchema)
-
+        self.set_connection_schema()
+        print('fetch_messages')
         sender = text_data['from']
 
         try: 
@@ -169,16 +172,11 @@ class ChatConsumer(WebsocketConsumer):
             self.send_chat_message(content)
 
     def new_message(self, text_data):
-        connection.schema_name = 'ot385ee74d'
-        currentSchema = connection.schema_name 
-        connection.set_schema(schema_name=currentSchema)
-
-        print('new_message 1: ', currentSchema)
+        self.set_connection_schema()
+        print('new_message')
 
         thread = Thread.objects.get(id=self.thread_id)
         room = self.scope['url_route']['kwargs']['room_name']
-
-        # self.get_or_create_sender(text_data, thread)
 
         sender = text_data['from']
 
@@ -324,13 +322,9 @@ class ChatConsumer(WebsocketConsumer):
     }
 
     def connect(self):
-        connection.schema_name = 'ot385ee74d'
-        currentSchema = connection.schema_name 
-        self.schema_used = currentSchema
-        connection.set_schema(schema_name=currentSchema)
-
-        print('connect 1: ', currentSchema)
-
+        self.set_connection_schema()
+        print('connect')
+        
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = 'chat_%s' % self.room_name 
 
