@@ -116,7 +116,7 @@ export class ChatComponent implements OnInit {
   transformRoomName() {
     this.rooms.forEach(r => {
       // Transform user-named thread name
-      if(r.name.match(/[A-Z][a-z]+|[0-9]+/g)) {
+      if(r.name.match(/[A-Z][a-z]+|[0-9]+/g) && !r.name.includes('_____')) {
         if(!(/\d/.test(r.name))) {
           var name = r.name.match(/[A-Z][a-z]+|[0-9]+/g).join(" ")
           var spaceCount = (name.split(' ').length - 1)
@@ -139,6 +139,9 @@ export class ChatComponent implements OnInit {
         }else{
           r['temp_name']=r.name;
         }
+      }else if(r.name.includes('_____')) {
+        var name = r.name.split('_____').join(" ");
+        r['temp_name'] = name;
       }else{
         r['temp_name']=r.name;
       }
@@ -156,11 +159,16 @@ export class ChatComponent implements OnInit {
     this.chat_member_firstName = firstName;
     this.chat_member_lastName = lastName;
     this.chat_room_id = '';
-    console.log(this.chat_room)
   }
 
   submitChatRoom() {
-    this.chat_room= this.roomForm.value.roomName;
+    let room = this.roomForm.value.roomName
+    if(/\s/.test(room)) {
+      this.chat_room = room.split(' ').join('_____')
+    }else{
+      this.chat_room = room;
+    }
+    // this.chat_room=this.roomForm.value.roomName;
     this.roomForm.reset();
     this.createRoom = false;
     this.chat_room_id = '';

@@ -65,7 +65,6 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
   ngOnInit(): void {
     
     this.chatService.getUser().subscribe((res) => {
-      console.log('User', res.length !== 0, res)
       if(res.length !== 0) {
         this.chatUser = res.userId;
 
@@ -205,7 +204,7 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
   // }
 
   transformRoomName(room_name) {
-    if(room_name.match(/[A-Z][a-z]+|[0-9]+/g)) {
+    if(room_name.match(/[A-Z][a-z]+|[0-9]+/g) && !room_name.includes('_____')) {
       if(!(/\d/.test(room_name))) {
         var name = room_name.match(/[A-Z][a-z]+|[0-9]+/g).join(" ")
         var spaceCount = name.split(' ').length - 1;
@@ -229,6 +228,9 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
       }else{
         this.roomNewName = room_name;
       }
+    }else if(room_name.includes('_____')) {
+      var name = room_name.split('_____').join(" ")
+      this.roomNewName = name
     }else{
      this.roomNewName = room_name;
     }
@@ -247,7 +249,6 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
   createWebSocket(room_name) {
 
     let baseurl = window.location.origin.replace(/^http(s?):\/\//i, "");
-    console.log('ROOM NAME', room_name)
 
     this.chatSocket = new ReconnectingWebSocket (
       `ws://${baseurl}/ws/api-chat/${room_name}/`,
@@ -270,14 +271,11 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
       if(command === 'new_message') {
         var msg = data['message']
 
-        console.log(this.messages, this.messages.length)
-
         if(!this.messages.some((m) => msg['message_id'] === m['message_id'])) {
-          console.log('HERE 1')
           this.getUserSender(msg);
           this.hasMessages=true;
         }
-        
+
       }else if(command === 'fetch_message') {
         this.messages = data['message']
         this.msg.push({'thread_id': data['thread_id'], 'thread': data['thread']})
@@ -506,7 +504,6 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
   }
 
   addMemberModal(template) {
-    console.log(this.thisUser)
     this.addMemberModalRef = this.modal.open(template, { backdrop: true, size: 'lg', centered: true })
   } 
 
