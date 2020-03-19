@@ -137,7 +137,7 @@ class ChatConsumer(WebsocketConsumer):
             thread = Thread.objects.get(id=self.thread_id)
             members = ThreadMember.objects.filter(thread=thread.id)
             messages = ThreadMessage.objects.filter(thread=thread)
-            print('HERE 1')
+
             content = {
                 'command': 'fetch_message',
                 'thread': thread.name, 
@@ -146,7 +146,7 @@ class ChatConsumer(WebsocketConsumer):
                 'message': self.fetches_to_json(messages),
                 'members': self.members_to_json(members)
             }
-            print('HERE 2')
+            
             self.send_chat_message(content)
 
         except ObjectDoesNotExist:
@@ -300,7 +300,7 @@ class ChatConsumer(WebsocketConsumer):
             return {
                 'thread': message.thread.name,
                 'thread_id': message.thread.id,
-                'subuser_sender': message.user_sender.email,
+                'user_sender': message.user_sender.email,
                 'message': message.message,
                 'message_id': message.id,
                 'date_created': str(message.date_created)
@@ -309,7 +309,7 @@ class ChatConsumer(WebsocketConsumer):
             return {
                 'thread': message.thread.name,
                 'thread_id': message.thread.id,
-                'user_sender': message.subuser_sender.email,
+                'subuser_sender': message.subuser_sender.email,
                 'message': message.message,
                 'message_id': message.id,
                 'date_created': str(message.date_created)

@@ -40,7 +40,7 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
   hasMessages: boolean = false;
   isAuthSender: boolean = false;
   noThreads: boolean = false;
-  messages = [];
+  messages : Array<any> = [];
   msg = [];
   users = [];
   subUsers = [];
@@ -247,6 +247,7 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
   createWebSocket(room_name) {
 
     let baseurl = window.location.origin.replace(/^http(s?):\/\//i, "");
+    console.log('ROOM NAME', room_name)
 
     this.chatSocket = new ReconnectingWebSocket (
       `ws://${baseurl}/ws/api-chat/${room_name}/`,
@@ -269,56 +270,15 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
       if(command === 'new_message') {
         var msg = data['message']
 
-        if(!this.messages.some((m) => msg['message_id'] === m['message_id'])) {
-          if("user_sender" in msg) {
-            if(msg['user_sender'] === this.thisUser.email) {
-              this.messages.push({
-                'thread': msg['thread'],
-                'thread_id': msg['thread_id'],
-                'user_sender': msg['user_sender'],
-                'message': msg['message'],
-                'message_id': msg['message_id'],
-                'date_created': msg['date_created'],
-                'isAuthUser': true
-              })
-            }else{
-              this.messages.push({
-                'thread': msg['thread'],
-                'thread_id': msg['thread_id'],
-                'user_sender': msg['user_sender'],
-                'message': msg['message'],
-                'message_id': msg['message_id'],
-                'date_created': msg['date_created'],
-                'isAuthUser': false
-              })
-            }
-          }else if("subuser_sender" in msg) {
-            if(msg['subuser_sender'] === this.thisUser.email) {
-              this.messages.push({
-                'thread': msg['thread'],
-                'thread_id': msg['thread_id'],
-                'subuser_sender': msg['subuser_sender'],
-                'message': msg['message'],
-                'message_id': msg['message_id'],
-                'date_created': msg['date_created'],
-                'isAuthUser': true
-              })
-            }else{
-              this.messages.push({
-                'thread': msg['thread'],
-                'thread_id': msg['thread_id'],
-                'subuser_sender': msg['subuser_sender'],
-                'message': msg['message'],
-                'message_id': msg['message_id'],
-                'date_created': msg['date_created'],
-                'isAuthUser': false
-              })
-            }
-          }
-        }   
-      }
+        console.log(this.messages, this.messages.length)
 
-      if(command === 'fetch_message') {
+        if(!this.messages.some((m) => msg['message_id'] === m['message_id'])) {
+          console.log('HERE 1')
+          this.getUserSender(msg);
+          this.hasMessages=true;
+        }
+        
+      }else if(command === 'fetch_message') {
         this.messages = data['message']
         this.msg.push({'thread_id': data['thread_id'], 'thread': data['thread']})
         this.roomMessage.emit(this.msg)
@@ -435,6 +395,54 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
       'from': this.thisUser,
       'command': 'fetch_message'
     }))
+  }
+
+  getUserSender(msg) {
+    if("user_sender" in msg) {
+      if(msg['user_sender'] === this.thisUser.email) {
+        this.messages.push({
+          'thread': msg['thread'],
+          'thread_id': msg['thread_id'],
+          'user_sender': msg['user_sender'],
+          'message': msg['message'],
+          'message_id': msg['message_id'],
+          'date_created': msg['date_created'],
+          'isAuthUser': true
+        })
+      }else{
+        this.messages.push({
+          'thread': msg['thread'],
+          'thread_id': msg['thread_id'],
+          'user_sender': msg['user_sender'],
+          'message': msg['message'],
+          'message_id': msg['message_id'],
+          'date_created': msg['date_created'],
+          'isAuthUser': false
+        })
+      }
+    }else if("subuser_sender" in msg) {
+      if(msg['subuser_sender'] === this.thisUser.email) {
+        this.messages.push({
+          'thread': msg['thread'],
+          'thread_id': msg['thread_id'],
+          'subuser_sender': msg['subuser_sender'],
+          'message': msg['message'],
+          'message_id': msg['message_id'],
+          'date_created': msg['date_created'],
+          'isAuthUser': true
+        })
+      }else{
+        this.messages.push({
+          'thread': msg['thread'],
+          'thread_id': msg['thread_id'],
+          'subuser_sender': msg['subuser_sender'],
+          'message': msg['message'],
+          'message_id': msg['message_id'],
+          'date_created': msg['date_created'],
+          'isAuthUser': false
+        })
+      }
+    }
   }
 
   autoGrow() {
