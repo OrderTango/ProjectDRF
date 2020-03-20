@@ -6,7 +6,7 @@
             <div class="row">
                 <ul class="nav nav-tabs">
                     <li (click)="isChatRoom = true" class="nav-item">
-                      <a [ngClass]="{'active': isChatRoom === true}" class="nav-link">Chats</a>
+                      <a [ngClass]="{'active': isChatRoom === true}" class="nav-link">Rooms</a>
                     </li>
                     <li (click)="isChatRoom = false" class="nav-item">
                       <a [ngClass]="{'active': isChatRoom === false}" class="nav-link">Contacts</a>
@@ -26,7 +26,7 @@
                 <div *ngIf="isChatRoom" class="chat">
                     <div class="chat-room">
                         <h4>Chats</h4>
-                        <button *ngIf="!createRoom" (click)="createRoom = true" class="btn purple white-font">Create</button>
+                        <button *ngIf="!createRoom" (click)="createRoom = true" class="btn purple white-font">Create Room</button>
                     </div>
                     <div *ngIf="rooms.length !== 0 && !createRoom">
                         <div class="inside-rooms" *ngFor="let room of rooms">
@@ -42,7 +42,7 @@
                     <div *ngIf="createRoom" class="">
                         <span class="back" (click)="createRoom=false">[<- Back]</span>&nbsp;Create Chat Room<br>
                         <form [formGroup]="roomForm">
-                            <input (keyup)="onKey($event)" class="input-room" formControlName="roomName" type="text" size="100"/><br><br>
+                            <input (keyup)="onKey($event)" class="input-room" formControlName="roomName" placeholder="Enter room name..." type="text" size="100"/><br><br>
                             <input (click)="submitChatRoom()" class="btn purple white-font" type="button" value="Create"/><br>
                         </form>
                     </div>

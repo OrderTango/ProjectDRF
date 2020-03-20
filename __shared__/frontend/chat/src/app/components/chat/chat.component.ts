@@ -155,10 +155,19 @@ export class ChatComponent implements OnInit {
   }
 
   createChatRoom(firstName, lastName) {
-    this.chat_room = `${firstName}${lastName}${this.authUser.firstName}${this.authUser.lastName}`;
-    this.chat_member_firstName = firstName;
-    this.chat_member_lastName = lastName;
-    this.chat_room_id = '';
+    let r = `${this.authUser.firstName}${this.authUser.lastName}${firstName}${lastName}`
+
+    if(!this.rooms.some((rm) => r === rm.name)) {
+      this.chat_room = `${firstName}${lastName}${this.authUser.firstName}${this.authUser.lastName}`;
+      this.chat_member_firstName = firstName;
+      this.chat_member_lastName = lastName;
+      this.chat_room_id = '';
+    }else{
+      this.chat_room = r;
+      this.chat_member_firstName = firstName;
+      this.chat_member_lastName = lastName;
+      this.chat_room_id = '';
+    }
   }
 
   submitChatRoom() {

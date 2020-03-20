@@ -93,6 +93,7 @@ nav {
 
 .nav-link {
     text-align: center;
+    cursor: pointer;
 }
 
 .nav-link.active {

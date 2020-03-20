@@ -15,7 +15,6 @@ ul{
     padding: 0;
     margin: 1.2rem;
     display: flow-root;
-    max-width: 75%;
 }
 
 li {
@@ -28,7 +27,7 @@ li {
 }
 
 .message-body {
-    height: 700px;
+    height: 500px;
     overflow: scroll;
 }
 
