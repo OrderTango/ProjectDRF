@@ -12,7 +12,6 @@ from OrderTangoApp.models import *
 
 
 def getUser(request):
-    connection.schema_name = 'ot385ee74d'
     currentSchema = connection.schema_name 
     connection.set_schema(schema_name=currentSchema)
 
