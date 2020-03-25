@@ -250,8 +250,14 @@ export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked {
 
     let baseurl = window.location.origin.replace(/^http(s?):\/\//i, "");
 
+    let wsProtocol = 'ws';
+
+    if(window.location.protocol === 'https:'){
+      wsProtocol = 'wss';
+    }
+
     this.chatSocket = new ReconnectingWebSocket (
-      `ws://${baseurl}/ws/api-chat/${room_name}/`,
+      `${wsProtocol}://${baseurl}/ws/api-chat/${room_name}/`,
     );
 
     this.chatSocket.debug = true;
